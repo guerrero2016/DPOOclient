@@ -5,7 +5,9 @@ import java.awt.*;
 
 public class ProjectSelectionView extends JFrame {
 
-    JPanel gridPanel;
+    private JPanel gridPanel;
+    private JPanel lastFlowPanel;
+    private int nGhostBox;
 
     public ProjectSelectionView () {
 
@@ -21,24 +23,35 @@ public class ProjectSelectionView extends JFrame {
 
     public void createProjectBoxes (int nBoxes) {
         final int nRows = calculateNumberRows(nBoxes);
-        final int nGhostBox = calculateGhostBoxes(nBoxes, nRows);
+        nGhostBox = calculateGhostBoxes(nBoxes, nRows);
 
         gridPanel = new JPanel(new GridLayout(nRows,1));
-        JPanel flowPanel = new JPanel(new FlowLayout());
 
         for (int i = 0; i < nBoxes; i++) {
             if (i%4 == 0) {
-                flowPanel = new JPanel(new FlowLayout());
-                gridPanel.add(flowPanel);
+                lastFlowPanel = new JPanel(new FlowLayout());
+                gridPanel.add(lastFlowPanel);
             }
-            flowPanel.add(new ProjectBoxView("a", Color.BLUE));
+            addProjectBox("TUPRIMA", Color.BLUE);
         }
+
+        addGhostBoxes();
 
         add(gridPanel, BorderLayout.NORTH);
     }
 
+    private void addGhostBoxes () {
+        for (int i = 0; i < nGhostBox; i++) {
+            addProjectBox("", gridPanel.getBackground());
+        }
+    }
+
+    public void addProjectBox (String title, Color color) {
+        lastFlowPanel.add(new ProjectBoxView(title, color));
+    }
+
     private int calculateGhostBoxes (int nBoxes, int nRows) {
-        return 4 - (nBoxes - 4*nRows);
+        return 4 - (nBoxes - 4*(nRows-1));
     }
 
     private int calculateNumberRows (int nBoxes) {
