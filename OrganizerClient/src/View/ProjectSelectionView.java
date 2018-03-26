@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ProjectSelectionView extends JFrame {
 
@@ -11,15 +12,25 @@ public class ProjectSelectionView extends JFrame {
     private int nGhostBox;
     private int nRows;
 
+    private ArrayList<ProjectBoxView> projectBoxViews;
+
     public ProjectSelectionView () {
+
+        projectBoxViews = new ArrayList<>();
 
         setLayout(new BorderLayout());
 
-
-        createProjectBoxes(4);
-        addProjectBox("TUPRIMA",Color.BLUE);
-        addProjectBox("Lactosito", Color.CYAN);
-
+        createProjectBoxes(7);
+        addProjectBox("La",Color.CYAN);
+        addProjectBox("La",Color.CYAN);
+        addProjectBox("La",Color.CYAN);
+        addProjectBox("La",Color.CYAN);
+        addProjectBox("La",Color.CYAN);
+        addProjectBox("La",Color.CYAN);
+        //addProjectBox("LActosito",Color.CYAN);
+        //addProjectBox("LActosito",Color.CYAN);
+        //addProjectBox("LActosito",Color.CYAN);
+        //addProjectBox("LActosito",Color.CYAN);
 
         setSize(800,500);
         setVisible(true);
@@ -38,7 +49,9 @@ public class ProjectSelectionView extends JFrame {
                 lastFlowPanel = new JPanel(new FlowLayout());
                 gridPanel.add(lastFlowPanel);
             }
-            lastFlowPanel.add(new ProjectBoxView("ASD", Color.RED));
+            ProjectBoxView projectBoxView = new ProjectBoxView("asd",Color.RED);
+            projectBoxViews.add(projectBoxView);
+            lastFlowPanel.add(projectBoxView);
         }
 
         addGhostBoxes();
@@ -54,29 +67,27 @@ public class ProjectSelectionView extends JFrame {
     }
 
     public void addProjectBox (String title, Color color) {
+        ProjectBoxView projectBoxView = new ProjectBoxView(title, color);
         if (nGhostBox == 0) {
             nRows++;
             nGhostBox = 3;
 
             lastFlowPanel = new JPanel(new FlowLayout());
-            lastFlowPanel.add(new ProjectBoxView(title, color));
+            lastFlowPanel.add(projectBoxView);
             addGhostBoxes();
             addFlowPanelToGrid();
         } else {
             deleteGhostBoxes();
-            lastFlowPanel.add(new ProjectBoxView(title, color));
+            lastFlowPanel.add(projectBoxView);
             nGhostBox--;
             addGhostBoxes();
         }
+        projectBoxViews.add(projectBoxView);
     }
 
     private void addFlowPanelToGrid () {
-        final JPanel newGridPanel = new JPanel(new GridLayout(nRows,1));
-        for (int i = 0; i < nRows - 1; i++) {
-            newGridPanel.add(gridPanel.getComponent(i));
-        }
-        newGridPanel.add(lastFlowPanel);
-        gridPanel = newGridPanel;
+        ((GridLayout) gridPanel.getLayout()).setRows(nRows);
+        gridPanel.add(lastFlowPanel);
         scrollPane.getViewport().setView(gridPanel);
     }
 
@@ -91,7 +102,7 @@ public class ProjectSelectionView extends JFrame {
     }
 
     private int calculateNumberRows (int nBoxes) {
-        if (nBoxes % 4 == 3) {
+        if (nBoxes % 4 != 0) {
             return (nBoxes / 4) + 1;
         } else {
             return (nBoxes / 4);
