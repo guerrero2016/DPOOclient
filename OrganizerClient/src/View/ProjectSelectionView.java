@@ -20,17 +20,9 @@ public class ProjectSelectionView extends JFrame {
 
         setLayout(new BorderLayout());
 
-        createProjectBoxes(7);
-        addProjectBox("La",Color.CYAN);
-        addProjectBox("La",Color.CYAN);
-        addProjectBox("La",Color.CYAN);
-        addProjectBox("La",Color.CYAN);
-        addProjectBox("La",Color.CYAN);
-        addProjectBox("La",Color.CYAN);
-        //addProjectBox("LActosito",Color.CYAN);
-        //addProjectBox("LActosito",Color.CYAN);
-        //addProjectBox("LActosito",Color.CYAN);
-        //addProjectBox("LActosito",Color.CYAN);
+        createProjectBoxes(new String[]{"1", "2"}, new Color[]{Color.RED, Color.BLACK});
+        addProjectBox("3",Color.CYAN);
+        removeBoxAt(1);
 
         setSize(800,500);
         setVisible(true);
@@ -38,7 +30,9 @@ public class ProjectSelectionView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void createProjectBoxes (int nBoxes) {
+    public void createProjectBoxes (String [] titles, Color[] colors) {
+        int nBoxes = titles.length;
+
         nRows = calculateNumberRows(nBoxes);
         nGhostBox = calculateGhostBoxes(nBoxes);
 
@@ -49,7 +43,7 @@ public class ProjectSelectionView extends JFrame {
                 lastFlowPanel = new JPanel(new FlowLayout());
                 gridPanel.add(lastFlowPanel);
             }
-            ProjectBoxView projectBoxView = new ProjectBoxView("asd",Color.RED);
+            ProjectBoxView projectBoxView = new ProjectBoxView(titles[i],colors[i]);
             projectBoxViews.add(projectBoxView);
             lastFlowPanel.add(projectBoxView);
         }
@@ -64,6 +58,18 @@ public class ProjectSelectionView extends JFrame {
         for (int i = 0; i < nGhostBox; i++) {
             lastFlowPanel.add(new ProjectBoxView("", gridPanel.getBackground()));
         }
+    }
+
+    private void removeBoxAt (int index) {
+        projectBoxViews.remove(index);
+        Color [] colors = new Color[projectBoxViews.size()];
+        String [] titles = new String[projectBoxViews.size()];
+
+        for (int i = 0; i < projectBoxViews.size(); i++) {
+            colors[i] = projectBoxViews.get(i).getBackground();
+            titles[i] = projectBoxViews.get(i).getTitle();
+        }
+        createProjectBoxes(titles, colors);
     }
 
     public void addProjectBox (String title, Color color) {

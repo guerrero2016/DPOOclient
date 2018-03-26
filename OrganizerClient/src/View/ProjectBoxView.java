@@ -11,9 +11,12 @@ public class ProjectBoxView extends JPanel {
     final int MAX_CHARS = 17;
 
     final JLabel titleLabel;
+    private String title;
 
     public ProjectBoxView (String title, Color color) {
         setLayout(new BorderLayout());
+
+        this.title  = title;
 
         titleLabel = new JLabel(configureLabelMaxTextWidth(title));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -26,6 +29,10 @@ public class ProjectBoxView extends JPanel {
         add(Box.createRigidArea(new Dimension(1,HEIGHT/2)), BorderLayout.NORTH);
         add(Box.createRigidArea(new Dimension(1,HEIGHT/2)), BorderLayout.SOUTH);
         add(titleLabel,BorderLayout.CENTER);
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void registerMouseListener (MouseListener controller) {
