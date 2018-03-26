@@ -22,7 +22,10 @@ public class ProjectSelectionView extends JFrame {
 
         createProjectBoxes(new String[]{"1", "2"}, new Color[]{Color.RED, Color.BLACK});
         addProjectBox("3",Color.CYAN);
-        removeBoxAt(1);
+        addProjectBox("3",Color.CYAN);
+        addProjectBox("3",Color.CYAN);
+
+        removeBoxAt(2);
 
         setSize(800,500);
         setVisible(true);
@@ -69,6 +72,7 @@ public class ProjectSelectionView extends JFrame {
             colors[i] = projectBoxViews.get(i).getBackground();
             titles[i] = projectBoxViews.get(i).getTitle();
         }
+        projectBoxViews.removeAll(projectBoxViews);
         createProjectBoxes(titles, colors);
     }
 
