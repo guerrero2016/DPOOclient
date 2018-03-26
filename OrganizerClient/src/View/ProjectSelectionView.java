@@ -13,23 +13,26 @@ public class ProjectSelectionView extends JFrame {
     private int nRows;
 
     private ArrayList<ProjectBoxView> projectBoxViews;
+    private final JButton logOutButton;
+    private final JButton addProjectButton;
 
     public ProjectSelectionView () {
 
         projectBoxViews = new ArrayList<>();
-
         setLayout(new BorderLayout());
 
-        createProjectBoxes(new String[]{"1", "2"}, new Color[]{Color.RED, Color.BLACK});
-        addProjectBox("3",Color.CYAN);
-        addProjectBox("3",Color.CYAN);
-        addProjectBox("3",Color.CYAN);
+        JPanel southPanel = new JPanel(new BorderLayout());
+        logOutButton = new JButton("Tancar sessió");
+        addProjectButton = new JButton("+");
 
-        removeBoxAt(2);
+        southPanel.add(logOutButton, BorderLayout.WEST);
+        southPanel.add(addProjectButton, BorderLayout.EAST);
 
+        add(southPanel, BorderLayout.SOUTH);
         setSize(800,500);
         setVisible(true);
         setResizable(false);
+        setTitle("LSOrganizer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
