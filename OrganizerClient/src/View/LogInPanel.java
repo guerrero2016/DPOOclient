@@ -1,9 +1,13 @@
 package View;
 
+import Controller.IdentifyController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class LogInPanel extends JPanel{
+    public static final String LOG = "ENTRAR";
+    public static final String SIGN = "CREAR COMPTE";
 
     private JTextField jtfUsername;
     private JPasswordField jpfPassword;
@@ -60,7 +64,7 @@ public class LogInPanel extends JPanel{
         c.gridwidth = 2;
         JPanel aux3 = new JPanel(new BorderLayout());
         aux3.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-        jbLogIn = new JButton("ENTRAR");
+        jbLogIn = new JButton(LOG);
         aux3.add(jbLogIn);
         jpBorder.add(aux3, c);
 
@@ -71,13 +75,18 @@ public class LogInPanel extends JPanel{
         jpSign.setBorder(BorderFactory.createTitledBorder("No tens compte?"));
         JPanel aux4 = new JPanel(new BorderLayout());
         aux4.setBorder(BorderFactory.createEmptyBorder(10,30,10,30));
-        jbSignIn = new JButton("REGISTRAR-SE");
+        jbSignIn = new JButton(SIGN);
         aux4.add(jbSignIn, BorderLayout.CENTER);
 
         jpSign.add(aux4, BorderLayout.CENTER);
 
         this.add(jpSign, BorderLayout.PAGE_END);
 
+    }
+
+    public void addControllerButton (IdentifyController ic) {
+        jbSignIn.addActionListener(ic);
+        jbLogIn.addActionListener(ic);
     }
 
 }

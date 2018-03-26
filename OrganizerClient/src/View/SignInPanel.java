@@ -1,9 +1,13 @@
 package View;
 
+import Controller.IdentifyController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class SignInPanel extends JPanel {
+    public static final String SIGN = "REGISTRAR-SE";
+    public static final String LOG = "INICIA SESSIÓ";
 
     private JTextField jtfEmail;
     private JTextField jtfUsername;
@@ -95,7 +99,7 @@ public class SignInPanel extends JPanel {
         c.gridwidth = 2;
         JPanel aux5 = new JPanel(new BorderLayout());
         aux5.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        jbSignIn = new JButton("REGISTRAR-SE");
+        jbSignIn = new JButton(SIGN);
         aux5.add(jbSignIn);
         jpBorder.add(aux5, c);
 
@@ -106,12 +110,17 @@ public class SignInPanel extends JPanel {
         jpLog.setBorder(BorderFactory.createTitledBorder("Ja tens compte?"));
         JPanel aux6 = new JPanel(new BorderLayout());
         aux6.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
-        jbLogIn = new JButton("INICIAR SESSIÓ");
+        jbLogIn = new JButton(LOG);
         aux6.add(jbLogIn, BorderLayout.CENTER);
 
         jpLog.add(aux6, BorderLayout.CENTER);
 
         this.add(jpLog, BorderLayout.PAGE_END);
 
+    }
+
+    public void addControllerButton (IdentifyController ic) {
+        jbLogIn.addActionListener(ic);
+        jbSignIn.addActionListener(ic);
     }
 }
