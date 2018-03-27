@@ -9,7 +9,7 @@ public class Tag {
     private Color color;
 
     public Tag(String name, Color color) {
-        this.name = name.toString();
+        this.name = new String(name);
         this.color = color;
     }
 
@@ -18,7 +18,7 @@ public class Tag {
     }
 
     public void setName(String name) {
-        this.name = name.toString();
+        this.name = new String(name);
     }
 
     public Color getColor() {
