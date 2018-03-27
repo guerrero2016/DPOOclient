@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ProjectSelectionView extends JFrame {
@@ -16,6 +17,8 @@ public class ProjectSelectionView extends JFrame {
     private final JButton logOutButton;
     private final JButton addProjectButton;
 
+    public static final String ADD_PROJECT_ACTION_COMMAND = "AddProject";
+
     public ProjectSelectionView () {
 
         projectBoxViews = new ArrayList<>();
@@ -28,12 +31,18 @@ public class ProjectSelectionView extends JFrame {
         southPanel.add(logOutButton, BorderLayout.WEST);
         southPanel.add(addProjectButton, BorderLayout.EAST);
 
+        addProjectButton.setActionCommand(this.ADD_PROJECT_ACTION_COMMAND);
+
         add(southPanel, BorderLayout.SOUTH);
         setSize(800,500);
         setVisible(true);
         setResizable(false);
         setTitle("LSOrganizer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void registerController (ActionListener controller) {
+        addProjectButton.addActionListener(controller);
     }
 
     public void createProjectBoxes (String [] titles, Color[] colors) {

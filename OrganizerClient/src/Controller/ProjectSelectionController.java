@@ -1,12 +1,18 @@
 package Controller;
 
+import View.ProjectSelectionView;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class ProjectSelectionController implements MouseListener {
+public class ProjectSelectionController implements MouseListener, ActionListener {
 
-    public ProjectSelectionController () {
+    private final ProjectSelectionView view;
 
+    public ProjectSelectionController (ProjectSelectionView view) {
+        this.view = view;
     }
 
     @Override
@@ -32,5 +38,13 @@ public class ProjectSelectionController implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals(ProjectSelectionView.ADD_PROJECT_ACTION_COMMAND)) {
+            final ProjectCreationController  projectCreationController = new ProjectCreationController();
+            projectCreationController.createAddProjectView();
+        }
     }
 }
