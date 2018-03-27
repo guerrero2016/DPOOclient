@@ -1,7 +1,9 @@
 package Controller;
 
+import View.ProjectBoxView;
 import View.ProjectSelectionView;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -13,11 +15,16 @@ public class ProjectSelectionController implements MouseListener, ActionListener
 
     public ProjectSelectionController (ProjectSelectionView view) {
         this.view = view;
+        String[] names = new String []{"AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP"};
+        Color[] colors = new Color[] {Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN};
+        view.createProjectBoxes(names, colors);
+        view.setVisible(true);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(e.getSource().toString());
+        final String projectName = ((ProjectBoxView) e.getSource()).getTitle();
+        System.out.println(projectName);
     }
 
     @Override

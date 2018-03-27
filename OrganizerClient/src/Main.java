@@ -1,5 +1,4 @@
 import Controller.ProjectSelectionController;
-import View.AddProjectView;
 import View.ProjectSelectionView;
 
 public class Main {

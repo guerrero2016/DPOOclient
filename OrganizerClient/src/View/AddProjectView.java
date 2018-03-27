@@ -3,7 +3,6 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 public class AddProjectView extends JFrame {

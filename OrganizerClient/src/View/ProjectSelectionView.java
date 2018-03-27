@@ -1,5 +1,7 @@
 package View;
 
+import Controller.ProjectSelectionController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -28,21 +30,27 @@ public class ProjectSelectionView extends JFrame {
         logOutButton = new JButton("Tancar sessió");
         addProjectButton = new JButton("+");
 
+        gridPanel = new JPanel(new GridLayout(0,1));
+        scrollPane = new JScrollPane(gridPanel);
+
         southPanel.add(logOutButton, BorderLayout.WEST);
         southPanel.add(addProjectButton, BorderLayout.EAST);
 
         addProjectButton.setActionCommand(this.ADD_PROJECT_ACTION_COMMAND);
 
+        add(scrollPane, BorderLayout.NORTH);
         add(southPanel, BorderLayout.SOUTH);
         setSize(800,500);
-        setVisible(true);
         setResizable(false);
         setTitle("LSOrganizer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void registerController (ActionListener controller) {
+    public void registerController (ProjectSelectionController controller) {
         addProjectButton.addActionListener(controller);
+        for (ProjectBoxView projectBoxView: projectBoxViews) {
+            projectBoxView.registerMouseListener(controller);
+        }
     }
 
     public void createProjectBoxes (String [] titles, Color[] colors) {
@@ -65,8 +73,7 @@ public class ProjectSelectionView extends JFrame {
 
         addGhostBoxes();
 
-        scrollPane = new JScrollPane(gridPanel);
-        add(scrollPane, BorderLayout.NORTH);
+        scrollPane.getViewport().setView(gridPanel);
     }
 
     private void addGhostBoxes () {
