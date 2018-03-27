@@ -8,8 +8,6 @@ public class Main {
         ProjectSelectionView projectSelectionView = new ProjectSelectionView();
         ProjectSelectionController projectSelectionController = new ProjectSelectionController(projectSelectionView);
         projectSelectionView.registerController(projectSelectionController);
-
-        new ProjectInfoView();
     }
 
 

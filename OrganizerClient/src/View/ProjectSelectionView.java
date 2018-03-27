@@ -1,10 +1,10 @@
 package View;
 
+import Controller.ProjectCreationController;
 import Controller.ProjectSelectionController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ProjectSelectionView extends JFrame {
@@ -14,10 +14,10 @@ public class ProjectSelectionView extends JFrame {
     private JPanel lastFlowPanel;
     private int nGhostBox;
     private int nRows;
-
     private ArrayList<ProjectBoxView> projectBoxViews;
     private final JButton logOutButton;
     private final JButton addProjectButton;
+    private ProjectSelectionController projectSelectionController;
 
     public static final String ADD_PROJECT_ACTION_COMMAND = "AddProject";
 
@@ -47,6 +47,7 @@ public class ProjectSelectionView extends JFrame {
     }
 
     public void registerController (ProjectSelectionController controller) {
+        this.projectSelectionController = controller;
         addProjectButton.addActionListener(controller);
         for (ProjectBoxView projectBoxView: projectBoxViews) {
             projectBoxView.registerMouseListener(controller);
@@ -96,7 +97,9 @@ public class ProjectSelectionView extends JFrame {
     }
 
     public void addProjectBox (String title, Color color) {
+        setVisible(false);
         ProjectBoxView projectBoxView = new ProjectBoxView(title, color);
+        projectBoxView.registerMouseListener(projectSelectionController);
         if (nGhostBox == 0) {
             nRows++;
             nGhostBox = 3;
@@ -112,6 +115,7 @@ public class ProjectSelectionView extends JFrame {
             addGhostBoxes();
         }
         projectBoxViews.add(projectBoxView);
+        setVisible(true);
     }
 
     private void addFlowPanelToGrid () {

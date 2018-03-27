@@ -21,7 +21,7 @@ public class ProjectBoxView extends JPanel {
         titleLabel = new JLabel(configureLabelMaxTextWidth(title));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
 
-        final int marginX = (WIDTH/2) - (getTextWidth(title)/2);
+        final int marginX = (WIDTH/2) - (getTextWidth(titleLabel.getText())/2);
 
         setBackground(color);
         add(Box.createRigidArea(new Dimension(marginX,1)), BorderLayout.EAST);

@@ -1,5 +1,7 @@
 package View;
 
+import Controller.ProjectCreationController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
@@ -10,6 +12,7 @@ public class AddProjectView extends JFrame {
     private final JTextField nameTextField;
     private final Color[] COLORS = new Color[]{Color.RED, Color.BLUE, Color.CYAN, Color.YELLOW, Color.WHITE, Color.ORANGE, Color.green, Color.gray};
     private ArrayList<JPanel> colorsPanels;
+    private final JButton createButton;
 
     public AddProjectView () {
 
@@ -28,6 +31,11 @@ public class AddProjectView extends JFrame {
         colorsPanel.add(colorLabel, BorderLayout.NORTH);
         colorsPanel.add(palettePanel, BorderLayout.CENTER);
 
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        createButton = new JButton("Afegir");
+        buttonPanel.add(createButton);
+
+        add(buttonPanel,BorderLayout.SOUTH);
         add(northPanel, BorderLayout.NORTH);
         add(colorsPanel, BorderLayout.CENTER);
 
@@ -58,10 +66,11 @@ public class AddProjectView extends JFrame {
         return palettePanel;
     }
 
-    public void registerMouseListener (MouseListener controller) {
+    public void registerMouseListener (ProjectCreationController controller) {
         for (JPanel colorPanel: colorsPanels) {
             colorPanel.addMouseListener(controller);
         }
+        createButton.addActionListener(controller);
     }
 
 }

@@ -24,7 +24,12 @@ public class ProjectSelectionController implements MouseListener, ActionListener
     @Override
     public void mouseClicked(MouseEvent e) {
         final String projectName = ((ProjectBoxView) e.getSource()).getTitle();
-        System.out.println(projectName);
+        final ProjectInfoController projectInfoController = new ProjectInfoController();
+        projectInfoController.createView(projectName, "Lactosito");
+    }
+
+    public void createProject (String title, Color color) {
+        view.addProjectBox(title, color);
     }
 
     @Override
@@ -50,7 +55,7 @@ public class ProjectSelectionController implements MouseListener, ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(ProjectSelectionView.ADD_PROJECT_ACTION_COMMAND)) {
-            final ProjectCreationController  projectCreationController = new ProjectCreationController();
+            final ProjectCreationController  projectCreationController = new ProjectCreationController(this);
             projectCreationController.createAddProjectView();
         }
     }
