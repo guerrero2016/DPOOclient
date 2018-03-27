@@ -1,4 +1,5 @@
 import Controller.ProjectSelectionController;
+import View.ProjectInfoView;
 import View.ProjectSelectionView;
 
 public class Main {
@@ -7,6 +8,8 @@ public class Main {
         ProjectSelectionView projectSelectionView = new ProjectSelectionView();
         ProjectSelectionController projectSelectionController = new ProjectSelectionController(projectSelectionView);
         projectSelectionView.registerController(projectSelectionController);
+
+        new ProjectInfoView();
     }
 
 
