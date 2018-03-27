@@ -11,7 +11,7 @@ public class ProjectSelectionController implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        System.out.println(e.getSource().toString());
     }
 
     @Override
