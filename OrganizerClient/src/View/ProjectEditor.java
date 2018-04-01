@@ -24,8 +24,9 @@ public class ProjectEditor extends JFrame {
     private final static String CATEGORIES_TITLE = "Categories";
     private final static String NEW_CATEGORY = "New Category";
     private final static String ADD = "ADD";
+    private final static String DESCRIPTION_TITLE = "Description";
 
-    private final Image smallEditorIcon;
+    private final Image mediumEditorIcon;
     private final Image deleteIcon;
     private final Image leftIcon;
     private final Image rightIcon;
@@ -44,26 +45,32 @@ public class ProjectEditor extends JFrame {
 
     private JPanel jpCategory;
     private JPanel jpCategoryTitle;
+    private JPanel jpTaskTitle;
+    private final Image smallEditorIcon;
+    private JTextArea jtaDescription;
+    private JPanel jpTask;
 
     public ProjectEditor(String projectName) throws IOException {
 
         //Load icons
         Image bigEditorIcon = ImageIO.read(new File(IMG_PATH + EDITOR_ICON)).
                 getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        mediumEditorIcon = ImageIO.read(new File(IMG_PATH + EDITOR_ICON)).
+                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+        smallEditorIcon = ImageIO.read(new File(IMG_PATH + EDITOR_ICON)).
+                getScaledInstance(12, 12, Image.SCALE_SMOOTH);
         Image backgroundIcon = ImageIO.read(new File(IMG_PATH + BACKGROUND_ICON)).
                 getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        smallEditorIcon = ImageIO.read(new File(IMG_PATH + EDITOR_ICON)).
-                getScaledInstance(14, 14, Image.SCALE_SMOOTH);
         deleteIcon = ImageIO.read(new File(IMG_PATH + DELETE_ICON)).
-                getScaledInstance(14, 14, Image.SCALE_SMOOTH);
+                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
         leftIcon = ImageIO.read(new File(IMG_PATH + LEFT_ICON)).
-                getScaledInstance(7, 14, Image.SCALE_SMOOTH);
+                getScaledInstance(14, 16, Image.SCALE_SMOOTH);
         rightIcon = ImageIO.read(new File(IMG_PATH + RIGHT_ICON)).
-                getScaledInstance(7, 14, Image.SCALE_SMOOTH);
+                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
         upIcon = ImageIO.read(new File(IMG_PATH + UP_ICON)).
-                getScaledInstance(14, 7, Image.SCALE_SMOOTH);
+                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
         downIcon = ImageIO.read(new File(IMG_PATH + DOWN_ICON)).
-                getScaledInstance(14, 7, Image.SCALE_SMOOTH);
+                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
 
         //Load fonts
         bigFont = new Font(Font.DIALOG, Font.BOLD, 20);
@@ -141,8 +148,8 @@ public class ProjectEditor extends JFrame {
 
         //Category panel
         jpCategory = new JPanel();
-        jpCategory.setMinimumSize(new Dimension(150, 150));
         jpCategory.setLayout(new BoxLayout(jpCategory, BoxLayout.PAGE_AXIS));
+        jpCategory.setMinimumSize(new Dimension(150, 150));
 
         //Category title panel
         jpCategoryTitle = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -155,7 +162,7 @@ public class ProjectEditor extends JFrame {
         jpCategoryTitle.add(jlCategoryTitle);
 
         //Editor category button
-        final JButton jbCategoryEditor = new JButton(new ImageIcon(smallEditorIcon));
+        final JButton jbCategoryEditor = new JButton(new ImageIcon(mediumEditorIcon));
         jbCategoryEditor.setBorder(BorderFactory.createEmptyBorder());
         jpCategoryTitle.add(jbCategoryEditor);
 
@@ -174,7 +181,77 @@ public class ProjectEditor extends JFrame {
         jbCategoryRight.setBorder(BorderFactory.createEmptyBorder());
         jpCategoryTitle.add(jbCategoryRight);
 
+
+
+
+
         //Tasks
+        jpTask = new JPanel();
+        jpTask.setLayout(new BoxLayout(jpTask, BoxLayout.PAGE_AXIS));
+
+        //Task title panel
+        jpTaskTitle = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        final JScrollPane jspTaskTitle = new JScrollPane(jpTaskTitle);
+        jpTask.add(jspTaskTitle);
+
+        //TODO: Change params
+        //Task title
+        final JLabel jlTaskTitle = new JLabel("Task name");
+        jlTaskTitle.setFont(mediumFont);
+        jpTaskTitle.add(jlTaskTitle);
+
+        //Editor task button
+        final JButton jbTaskEditor = new JButton(new ImageIcon(mediumEditorIcon));
+        jbTaskEditor.setBorder(BorderFactory.createEmptyBorder());
+        jpTaskTitle.add(jbTaskEditor);
+
+        //Delete task button
+        final JButton jbTaskDelete = new JButton(new ImageIcon(deleteIcon));
+        jbTaskDelete.setBorder(BorderFactory.createEmptyBorder());
+        jpTaskTitle.add(jbTaskDelete);
+
+        //Up task button
+        final JButton jbTaskUp = new JButton(new ImageIcon(upIcon));
+        jbTaskUp.setBorder(BorderFactory.createEmptyBorder());
+        jpTaskTitle.add(jbTaskUp);
+
+        //Down task button
+        final JButton jbTaskDown = new JButton(new ImageIcon(downIcon));
+        jbTaskDown.setBorder(BorderFactory.createEmptyBorder());
+        jpTaskTitle.add(jbTaskDown);
+
+        //Task description
+        final JPanel jpDescription = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        jpTask.add(jpDescription);
+
+        //Description title
+        final JLabel jlDescription = new JLabel(DESCRIPTION_TITLE);
+        jlDescription.setFont(smallFont);
+        jpDescription.add(jlDescription);
+
+        //Description editor
+        final JButton jbDescriptionEditor = new JButton(new ImageIcon(smallEditorIcon));
+        jbDescriptionEditor.setBorder(BorderFactory.createEmptyBorder());
+        jpDescription.add(jbDescriptionEditor);
+
+        //Description text
+        jtaDescription = new JTextArea();
+        jtaDescription.setEditable(false);
+        jpTask.add(jtaDescription);
+
+        //Task padding panel
+        final JPanel jpTaskPadding = new JPanel();
+        jpTaskPadding.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jpCategory.add(jpTaskPadding);
+
+        //Task scrollable panel
+        final JScrollPane jspTask = new JScrollPane(jpTask);
+        jspTask.setBorder(BorderFactory.createLineBorder(Color.black));
+        jpTaskPadding.add(jspTask);
+
+
+
+
 
         //Category scrollable panel
         final JScrollPane jspCategory = new JScrollPane(jpCategory);
@@ -194,7 +271,8 @@ public class ProjectEditor extends JFrame {
         super.setVisible(b);
 
         if(b) {
-            jpCategory.setPreferredSize(new Dimension(jpCategoryTitle.getWidth(), cpCenter.getHeight() - 35));
+            jpCategory.setSize(jpCategoryTitle.getWidth(), cpCenter.getHeight() - 35);
+            jtaDescription.setPreferredSize(new Dimension(jpTask.getWidth(), 50));
         }
 
     }
