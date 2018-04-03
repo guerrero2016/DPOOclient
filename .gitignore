@@ -2,49 +2,49 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/dictionaries
+OrganizerClient/.idea/**/workspace.xml
+OrganizerClient/.idea/**/tasks.xml
+OrganizerClient/.idea/dictionaries
 
 # Sensitive or high-churn files
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
+OrganizerClient/.idea/**/dataSources/
+OrganizerClient/.idea/**/dataSources.ids
+OrganizerClient/.idea/**/dataSources.local.xml
+OrganizerClient/.idea/**/sqlDataSources.xml
+OrganizerClient/.idea/**/dynamic.xml
+OrganizerClient/.idea/**/uiDesigner.xml
 
 # Gradle
-.idea/**/gradle.xml
-.idea/**/libraries
+OrganizerClient/.idea/**/gradle.xml
+OrganizerClient/.idea/**/libraries
 
 # CMake
-cmake-build-debug/
-cmake-build-release/
+OrganizerClient/cmake-build-debug/
+OrganizerClient/cmake-build-release/
 
 # Mongo Explorer plugin
-.idea/**/mongoSettings.xml
+OrganizerClient/.idea/**/mongoSettings.xml
 
 # File-based project format
-*.iws
+OrganizerClient/*.iws
 
 # IntelliJ
-out/
+OrganizerClient/out/
 
 # mpeltonen/sbt-idea plugin
-.idea_modules/
+OrganizerClient/.idea_modules/
 
 # JIRA plugin
-atlassian-ide-plugin.xml
+OrganizerClient/atlassian-ide-plugin.xml
 
 # Cursive Clojure plugin
-.idea/replstate.xml
+OrganizerClient/.idea/replstate.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties
+OrganizerClient/com_crashlytics_export_strings.xml
+OrganizerClient/crashlytics.properties
+OrganizerClient/crashlytics-build.properties
+OrganizerClient/fabric.properties
 
 # Editor-based Rest Client
-.idea/httpRequests
+OrganizerClient/.idea/httpRequests
