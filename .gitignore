@@ -1,4 +1,7 @@
+# User-specific stuff
+OrganizerClient/.idea/**/workspace.xml
+OrganizerClient/.idea/**/tasks.xml
+OrganizerClient/.idea/dictionaries
+
 # IntelliJ
-.idea/
-*.iml
-*.iws
+OrganizerClient/out/
