@@ -1,12 +1,6 @@
-import Controller.ProjectSelectionController;
-import View.ProjectEditor;
-import View.ProjectSelectionView;
+import View.ProjectView;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -15,12 +9,23 @@ public class Main {
         //ProjectSelectionController projectSelectionController = new ProjectSelectionController(projectSelectionView);
         //projectSelectionView.registerController(projectSelectionController);
         try {
-            ProjectEditor projectEditor = new ProjectEditor("Sample project");
-            projectEditor.updateCategories(new ArrayList<>());
-            projectEditor.setBackground(ImageIO.read(new File("C:/Users/christian/desktop/background.png")));
-            projectEditor.setVisible(true);
+
+            ProjectView projectView = new ProjectView("Project name");
+
+            for (int i = 0; i < 10; i++) {
+                projectView.addNewCategory(null);
+            }
+
+            projectView.setVisible(true);
+            projectView.setCategoryName("Long category rename", 0);
+            projectView.setCategoryName("Category rename", 2);
+            projectView.removeCategory(1);
+
+            projectView.swapCategoriesPosition(0, 2);
+            projectView.addNewCategory(null);
+
         } catch(IOException e) {
-            System.exit(1);
+            //Image icons not loaded properly
         }
     }
 
