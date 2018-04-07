@@ -1,4 +1,4 @@
-package View;
+package View.project;
 
 public class ResizableProjectContent implements Runnable {
 

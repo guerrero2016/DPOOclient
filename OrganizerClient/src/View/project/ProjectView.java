@@ -1,7 +1,9 @@
-package View;
+package View.project;
 
 import Model.Category;
+import Model.Tag;
 import Model.Task;
+import Model.User;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -35,6 +37,9 @@ public class ProjectView extends JFrame {
     private final Image bigDeleteIcon;
     private final Image mediumDeleteIcon;
 
+    private final Image mediumLeftIcon;
+    private final Image mediumRightIcon;
+
     private final Font bigFont;
     private final Font mediumFont;
 
@@ -47,8 +52,6 @@ public class ProjectView extends JFrame {
     private final JButton jbCategoryAdder;
 
     private ArrayList<CategoryContent> categoriesContent;
-    private final Image mediumLeftIcon;
-    private final Image mediumRightIcon;
 
     public ProjectView(String projectName) throws IOException {
 
@@ -88,7 +91,6 @@ public class ProjectView extends JFrame {
         final JPanel jpProjectTitle = new JPanel(new FlowLayout(FlowLayout.LEFT));
         jpMainView.add(jpProjectTitle, BorderLayout.PAGE_START);
 
-        //TODO: Change params
         //Project name
         jlProjectName = new JLabel();
 
@@ -100,7 +102,7 @@ public class ProjectView extends JFrame {
         }
 
         jlProjectName.setFont(bigFont);
-        jlProjectName.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+        jlProjectName.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         jpProjectTitle.add(jlProjectName);
 
         //Project editor button
@@ -126,7 +128,7 @@ public class ProjectView extends JFrame {
 
         //New category title
         final JLabel jlCategoryTitle = new JLabel(NEW_CATEGORY_TITLE);
-        jlCategoryTitle.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+        jlCategoryTitle.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         jpNewCategory.add(jlCategoryTitle, BorderLayout.LINE_START);
 
         //New category name field
@@ -192,31 +194,35 @@ public class ProjectView extends JFrame {
         }
     }
 
-    public int getSelectedTask(int categoryPosition) {
+    public Task getSelectedTask(int categoryPosition) {
 
         if(categoryPosition < categoriesContent.size()) {
 
-            JList<String> jlTasks = categoriesContent.get(categoryPosition).getJlTasks();
+            JList<Task> jlTasks = categoriesContent.get(categoryPosition).getJlTasks();
 
             if(jlTasks.isSelectionEmpty()) {
-                return -1;
+                return null;
             }
 
-            return jlTasks.getSelectedIndex();
+            return jlTasks.getSelectedValue();
 
         }
 
-        return -1;
+        return null;
 
     }
 
     public void setTasksList(ArrayList<Task> tasks, int categoryPosition) {
         if(categoryPosition < categoriesContent.size()) {
 
-            JList<String> jlTasks = categoriesContent.get(categoryPosition).getJlTasks();
-            //TODO: Change params
-            String taskList[] = {""};
-            jlTasks.setListData(taskList);
+            JList<Task> jlTasks = categoriesContent.get(categoryPosition).getJlTasks();
+            DefaultListModel<Task> tasksList = new DefaultListModel<>();
+
+            for(int i = 0; i < tasks.size(); i++) {
+                tasksList.addElement(tasks.get(i));
+            }
+
+            jlTasks.setModel(tasksList);
 
         }
     }
@@ -267,7 +273,7 @@ public class ProjectView extends JFrame {
         //Category name
         final JLabel jlCategoryName = new JLabel("Category name");
         jlCategoryName.setFont(mediumFont);
-        jlCategoryName.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+        jlCategoryName.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         jpCategoryTitle.add(jlCategoryName);
         categoryContent.setJlCategoryName(jlCategoryName);
 
@@ -299,15 +305,22 @@ public class ProjectView extends JFrame {
         final JScrollPane jspCategories = new JScrollPane();
         jpCategory.add(jspCategories, BorderLayout.CENTER);
 
-        //TODO: Delete sample list and change list representation
+        //TODO: Delete sample list and 'setModel'
         //Task list
-        int length = 50;
-        String list[] = new String[length];
-        for(int i = 0; i < list.length; i++) {
-            list[i] = "Task very long to handle it without scroll " + (i + 1);
+        DefaultListModel<Task> list = new DefaultListModel<>();
+        for(int i = 0; i < 20; i++) {
+            ArrayList<Tag> tags = new ArrayList<>();
+            tags.add(new Tag("Cyan tag", Color.CYAN));
+            tags.add(new Tag("Green tag", Color.GREEN));
+            tags.add(new Tag("Orange tag", Color.ORANGE));
+            ArrayList<User> users = new ArrayList<>();
+            Task task = new Task("Task very long to handle it without scroll " + (i + 1), "Description", tags, users);
+            list.addElement(task);
         }
-        final JList<String> jlTasks = new JList<>(list);
-        jlTasks.setFont(mediumFont);
+
+        final JList<Task> jlTasks = new JList<>();
+        jlTasks.setCellRenderer(new TaskList(mediumFont));
+        jlTasks.setModel(list);
         jspCategories.getViewport().setView(jlTasks);
         categoryContent.setJlTasks(jlTasks);
 
@@ -317,7 +330,7 @@ public class ProjectView extends JFrame {
 
         //New task title
         final JLabel jlTaskTitle = new JLabel(NEW_TASK_TITLE);
-        jlTaskTitle.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+        jlTaskTitle.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         jpTaskAdder.add(jlTaskTitle, BorderLayout.LINE_START);
 
         //New task name field

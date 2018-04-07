@@ -1,4 +1,6 @@
-package View;
+package View.project;
+
+import Model.Task;
 
 import javax.swing.*;
 
@@ -10,7 +12,7 @@ public class CategoryContent {
     private JButton jbCategoryDelete;
     private JButton jbCategoryLeft;
     private JButton jbCategoryRight;
-    private JList<String> jlTasks;
+    private JList<Task> jlTasks;
     private JTextField jtfTaskName;
     private JButton jbTaskAdder;
 
@@ -65,11 +67,11 @@ public class CategoryContent {
         this.jbCategoryRight = jbCategoryRight;
     }
 
-    public JList<String> getJlTasks() {
+    public JList<Task> getJlTasks() {
         return jlTasks;
     }
 
-    public void setJlTasks(JList<String> jlTasks) {
+    public void setJlTasks(JList<Task> jlTasks) {
         this.jlTasks = jlTasks;
     }
 

@@ -8,14 +8,14 @@ public class Task {
     private String name;
     private String description;
     private ArrayList<Tag> tags;
-    private ArrayList<String> members;  //Check if only need username
+    private ArrayList<User> members;  //Check if only need username
 
     public Task() {
         tags = new ArrayList<>();
         members = new ArrayList<>();
     }
 
-    public Task(String name, String description, ArrayList<Tag> tags, ArrayList<String> members) {
+    public Task(String name, String description, ArrayList<Tag> tags, ArrayList<User> members) {
         this.name = new String(name);
         this.description = new String(description);
         this.tags = new ArrayList<>(tags);
@@ -38,6 +38,10 @@ public class Task {
         this.description = new String(description);
     }
 
+    public int getTotalTags() {
+        return tags.size();
+    }
+
     public ArrayList<Tag> getTags() {
         return tags;
     }
@@ -46,11 +50,11 @@ public class Task {
         this.tags = new ArrayList<>(tags);
     }
 
-    public ArrayList<String> getMembers() {
+    public ArrayList<User> getMembers() {
         return members;
     }
 
-    public void setMembers(ArrayList<String> members) {
+    public void setMembers(ArrayList<User> members) {
         this.members = new ArrayList<>(members);
     }
 
