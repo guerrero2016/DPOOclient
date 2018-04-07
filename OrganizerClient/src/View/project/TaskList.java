@@ -4,6 +4,7 @@ import Model.Task;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class TaskList implements ListCellRenderer<Task> {
 
@@ -14,7 +15,8 @@ public class TaskList implements ListCellRenderer<Task> {
     }
 
     @Override
-    public Component getListCellRendererComponent(JList<? extends Task> list, Task task, int index, boolean isSelected, boolean cellHasFocus) {
+    public Component getListCellRendererComponent(JList<? extends Task> list, Task task, int index, boolean isSelected,
+                                                  boolean cellHasFocus) {
 
         TaskListComponent taskComponent = new TaskListComponent(task, font);
         taskComponent.setOpaque(true);

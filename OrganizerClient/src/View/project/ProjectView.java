@@ -1,9 +1,6 @@
 package View.project;
 
-import Model.Category;
-import Model.Tag;
-import Model.Task;
-import Model.User;
+import Model.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,34 +11,37 @@ import java.util.ArrayList;
 
 public class ProjectView extends JFrame {
 
-    private final static int MAX_PROJECT_LENGTH = 30;
-    private final static int MAX_CATEGORY_LENGTH = 15;
-
     private final static String IMG_PATH = "img/";
     private final static String EDITOR_ICON_FILE = "editor_icon.png";
     private final static String DELETE_ICON_FILE = "delete_icon.png";
     private final static String LEFT_ICON_FILE = "left_icon.png";
     private final static String RIGHT_ICON_FILE = "right_icon.png";
 
+    private final static int WINDOW_WIDTH = 800;
+    private final static int WINDOW_HEIGHT = 500;
+    private final static String WINDOW_TITLE = "Project";
+
     private final static int MARGIN = 30;
     private final static int CATEGORY_WIDTH = 300;
 
-    private final static String PROJECT_TITLE = "Project";
+    private final static int MAX_PROJECT_LENGTH = 30;
+    private final static int MAX_CATEGORY_LENGTH = 15;
+
     private final static String NEW_CATEGORY_TITLE = "New Category";
     private final static String NEW_TASK_TITLE = "New Task";
     private final static String ADD_TITLE = "+";
 
-    private final Image bigEditorIcon;
-    private final Image mediumEditorIcon;
+    private Image bigEditorIcon;
+    private Image mediumEditorIcon;
 
-    private final Image bigDeleteIcon;
-    private final Image mediumDeleteIcon;
+    private Image bigDeleteIcon;
+    private Image mediumDeleteIcon;
 
-    private final Image mediumLeftIcon;
-    private final Image mediumRightIcon;
+    private Image mediumLeftIcon;
+    private Image mediumRightIcon;
 
-    private final Font bigFont;
-    private final Font mediumFont;
+    private Font bigFont;
+    private Font mediumFont;
 
     private final JPanel jpCategories;
     private final JScrollPane jspCategories;
@@ -53,35 +53,17 @@ public class ProjectView extends JFrame {
 
     private ArrayList<CategoryContent> categoriesContent;
 
-    public ProjectView(String projectName) throws IOException {
+    public ProjectView(Project project) throws IOException {
 
-        setSize(new Dimension(800, 500));
+        setSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         setResizable(false);
-        setTitle(PROJECT_TITLE);
+        setTitle(WINDOW_TITLE);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);    //TODO: Change close operation
         setLocationRelativeTo(null);
 
-        //Load editor icon
-        bigEditorIcon = ImageIO.read(new File(IMG_PATH + EDITOR_ICON_FILE)).
-                getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        mediumEditorIcon = ImageIO.read(new File(IMG_PATH + EDITOR_ICON_FILE)).
-                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-
-        //Load delete icon
-        bigDeleteIcon = ImageIO.read(new File(IMG_PATH + DELETE_ICON_FILE)).
-                getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        mediumDeleteIcon = ImageIO.read(new File(IMG_PATH + DELETE_ICON_FILE)).
-                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-
-        //Load order icons
-        mediumLeftIcon = ImageIO.read(new File(IMG_PATH + LEFT_ICON_FILE)).
-                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-        mediumRightIcon = ImageIO.read(new File(IMG_PATH + RIGHT_ICON_FILE)).
-                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-
-        //Load fonts
-        bigFont = new Font(Font.DIALOG, Font.BOLD, 20);
-        mediumFont = new Font(Font.DIALOG, Font.BOLD, 16);
+        //Load settings
+        loadIcons();
+        loadFonts();
 
         //Main panel
         final JPanel jpMainView = new JPanel(new BorderLayout());
@@ -94,6 +76,8 @@ public class ProjectView extends JFrame {
         //Project name
         jlProjectName = new JLabel();
 
+        //TODO: Change params
+        String projectName = "Project name";
         if(projectName.length() > MAX_PROJECT_LENGTH) {
             String shortProjectName = projectName.substring(0, MAX_PROJECT_LENGTH) + "...";
             jlProjectName.setText(shortProjectName);
@@ -140,9 +124,41 @@ public class ProjectView extends JFrame {
         jbCategoryAdder = new JButton(ADD_TITLE);
         jpNewCategory.add(jbCategoryAdder, BorderLayout.LINE_END);
 
-        //Prepare for future categories
+        //Categories
         categoriesContent = new ArrayList<>();
 
+        //TODO: Change 'i' limit and change params
+        for(int i = 0; i < 0; i++) {
+            addNewCategory(null);
+        }
+
+    }
+
+    private void loadIcons() throws IOException {
+
+        //Load editor icon
+        bigEditorIcon = ImageIO.read(new File(IMG_PATH + EDITOR_ICON_FILE)).
+                getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        mediumEditorIcon = ImageIO.read(new File(IMG_PATH + EDITOR_ICON_FILE)).
+                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+
+        //Load delete icon
+        bigDeleteIcon = ImageIO.read(new File(IMG_PATH + DELETE_ICON_FILE)).
+                getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        mediumDeleteIcon = ImageIO.read(new File(IMG_PATH + DELETE_ICON_FILE)).
+                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+
+        //Load order icons
+        mediumLeftIcon = ImageIO.read(new File(IMG_PATH + LEFT_ICON_FILE)).
+                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+        mediumRightIcon = ImageIO.read(new File(IMG_PATH + RIGHT_ICON_FILE)).
+                getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+
+    }
+
+    private void loadFonts() {
+        bigFont = new Font(Font.DIALOG, Font.BOLD, 20);
+        mediumFont = new Font(Font.DIALOG, Font.BOLD, 16);
     }
 
     public void setProjectName(String projectName) {
@@ -212,13 +228,29 @@ public class ProjectView extends JFrame {
 
     }
 
+    public void addTask(Task task, int categoryPosition) {
+        if(categoryPosition < categoriesContent.size()) {
+            JList<Task> jlTasks = categoriesContent.get(categoryPosition).getJlTasks();
+            jlTasks.add(new TaskListComponent(task, mediumFont));
+        }
+    }
+
+    public void removeTask(int categoryPosition, int taskPosition) {
+        if(categoryPosition < categoriesContent.size()) {
+            JList<Task> jlTasks = categoriesContent.get(categoryPosition).getJlTasks();
+            if(taskPosition < jlTasks.getMaxSelectionIndex()) {
+                jlTasks.remove(taskPosition);
+            }
+        }
+    }
+
     public void setTasksList(ArrayList<Task> tasks, int categoryPosition) {
         if(categoryPosition < categoriesContent.size()) {
 
             JList<Task> jlTasks = categoriesContent.get(categoryPosition).getJlTasks();
             DefaultListModel<Task> tasksList = new DefaultListModel<>();
 
-            for(int i = 0; i < tasks.size(); i++) {
+            for(int i = 0; tasks != null && i < tasks.size(); i++) {
                 tasksList.addElement(tasks.get(i));
             }
 
@@ -305,22 +337,9 @@ public class ProjectView extends JFrame {
         final JScrollPane jspCategories = new JScrollPane();
         jpCategory.add(jspCategories, BorderLayout.CENTER);
 
-        //TODO: Delete sample list and 'setModel'
         //Task list
-        DefaultListModel<Task> list = new DefaultListModel<>();
-        for(int i = 0; i < 20; i++) {
-            ArrayList<Tag> tags = new ArrayList<>();
-            tags.add(new Tag("Cyan tag", Color.CYAN));
-            tags.add(new Tag("Green tag", Color.GREEN));
-            tags.add(new Tag("Orange tag", Color.ORANGE));
-            ArrayList<User> users = new ArrayList<>();
-            Task task = new Task("Task very long to handle it without scroll " + (i + 1), "Description", tags, users);
-            list.addElement(task);
-        }
-
         final JList<Task> jlTasks = new JList<>();
         jlTasks.setCellRenderer(new TaskList(mediumFont));
-        jlTasks.setModel(list);
         jspCategories.getViewport().setView(jlTasks);
         categoryContent.setJlTasks(jlTasks);
 
@@ -346,6 +365,10 @@ public class ProjectView extends JFrame {
 
         //Add category
         categoriesContent.add(categoryContent);
+
+        //TODO: Change params
+        //Tasks list content
+        setTasksList(null, categoriesContent.indexOf(categoryContent));
 
     }
 

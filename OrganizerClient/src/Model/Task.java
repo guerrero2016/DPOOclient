@@ -18,8 +18,8 @@ public class Task {
     public Task(String name, String description, ArrayList<Tag> tags, ArrayList<User> members) {
         this.name = new String(name);
         this.description = new String(description);
-        this.tags = new ArrayList<>(tags);
-        this.members = new ArrayList<>(members);
+        this.tags = tags != null ? new ArrayList<>(tags) : new ArrayList<>();
+        this.members = members != null ? new ArrayList<>(members) : new ArrayList<>();
     }
 
     public String getName() {
@@ -42,20 +42,36 @@ public class Task {
         return tags.size();
     }
 
-    public ArrayList<Tag> getTags() {
-        return tags;
+    public Tag getTag(int tagPosition) {
+
+        if(tagPosition < tags.size()) {
+            return tags.get(tagPosition);
+        }
+
+        return null;
+
     }
 
-    public void setTags(ArrayList<Tag> tags) {
-        this.tags = new ArrayList<>(tags);
+    public void addTags(Tag tag) {
+        tags.add(tag);
     }
 
-    public ArrayList<User> getMembers() {
-        return members;
+    public int getTotalMembers() {
+        return members.size();
     }
 
-    public void setMembers(ArrayList<User> members) {
-        this.members = new ArrayList<>(members);
+    public User getMember(int memberPosition) {
+
+        if(memberPosition < members.size()) {
+            return members.get(memberPosition);
+        }
+
+        return null;
+
+    }
+
+    public void addMembers(User member) {
+        members.add(member);
     }
 
     @Override
