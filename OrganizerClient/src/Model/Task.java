@@ -42,6 +42,10 @@ public class Task {
         return tags.size();
     }
 
+    public ArrayList<Tag> getAllTags() {
+        return tags;
+    }
+
     public Tag getTag(int tagPosition) {
 
         if(tagPosition < tags.size()) {

@@ -142,11 +142,7 @@ public class TaskView extends JFrame {
         //Tag list
         jlTagList = new JList<>();
         jlTagList.setCellRenderer(new TagList(mediumFont));
-
-        for(int i = 0; i < task.getTotalTags(); i++) {
-            addTag(task.getTag(i));
-        }
-
+        setTagsList(task.getAllTags());
         jspTagList.getViewport().setView(jlTagList);
 
         //Tag adder
@@ -198,14 +194,13 @@ public class TaskView extends JFrame {
         jtaDescription.setText(description);
     }
 
-    public void setTagsList(ArrayList<Tag> tags) {
+    public Tag getSelectedTag() {
 
-        DefaultListModel<Tag> tagsList = new DefaultListModel<>();
-        for(int i = 0; tags != null && i < tags.size(); i++) {
-            tagsList.addElement(tags.get(i));
+        if(jlTagList.isSelectionEmpty()) {
+            return null;
         }
 
-        jlTagList.setModel(tagsList);
+        return jlTagList.getSelectedValue();
 
     }
 
@@ -217,6 +212,21 @@ public class TaskView extends JFrame {
         if(tagPosition < jlTagList.getMaxSelectionIndex()) {
             jlTagList.remove(tagPosition);
         }
+    }
+
+    public void setTagsList(ArrayList<Tag> tags) {
+
+        DefaultListModel<Tag> tagsList = new DefaultListModel<>();
+        for(int i = 0; tags != null && i < tags.size(); i++) {
+            tagsList.addElement(tags.get(i));
+        }
+
+        jlTagList.setModel(tagsList);
+
+    }
+
+    public String getNewTagName() {
+        return jtfTagName.getText();
     }
 
     public void cleanNewTagName() {

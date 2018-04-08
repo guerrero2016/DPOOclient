@@ -1,9 +1,9 @@
-package View;
+package View.project;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class CategoryPanel extends JPanel {
+public class BackgroundPanel extends JPanel {
 
     private Image background;
 

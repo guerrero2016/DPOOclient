@@ -1,8 +1,4 @@
-import Model.Task;
-import View.project.TaskView;
-
 import javax.swing.*;
-import java.io.IOException;
 
 public class Main {
 
@@ -13,10 +9,6 @@ public class Main {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                try {
-                    TaskView taskView = new TaskView(new Task("Task name", "Task description", null, null));
-                    taskView.setVisible(true);
-                } catch (IOException e) {}
             }
         });
     }

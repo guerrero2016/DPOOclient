@@ -7,8 +7,6 @@ import java.awt.*;
 
 public class TagList implements ListCellRenderer<Tag> {
 
-    private Font font;
-
     public static class TagListComponent extends JLabel {
 
         public TagListComponent(String tagName) {
@@ -16,6 +14,8 @@ public class TagList implements ListCellRenderer<Tag> {
         }
 
     }
+
+    private Font font;
 
     public TagList(Font font) {
         this.font = font;

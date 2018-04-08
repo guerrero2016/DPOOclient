@@ -43,7 +43,7 @@ public class ProjectView extends JFrame {
     private Font bigFont;
     private Font mediumFont;
 
-    private final JPanel jpCategories;
+    private final BackgroundPanel jpCategories;
     private final JScrollPane jspCategories;
     private final JLabel jlProjectName;
     private final JButton jbProjectEditor;
@@ -103,7 +103,8 @@ public class ProjectView extends JFrame {
         jspCategories = new JScrollPane();
         jpMainView.add(jspCategories, BorderLayout.CENTER);
 
-        jpCategories = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        jpCategories = new BackgroundPanel();
+        jpCategories.setLayout(new FlowLayout(FlowLayout.LEFT));
         jspCategories.getViewport().setView(jpCategories);
 
         //Category adder panel
@@ -168,6 +169,10 @@ public class ProjectView extends JFrame {
         } else {
             jlProjectName.setText(projectName);
         }
+    }
+
+    public void setBackground(Image background) {
+        jpCategories.setBackground(background);
     }
 
     public void setCategoryName(String categoryName, int categoryPosition) {

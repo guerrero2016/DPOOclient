@@ -10,8 +10,6 @@ import java.io.IOException;
 
 public class TaskList implements ListCellRenderer<Task> {
 
-    private Font font;
-
     public static class TaskListComponent extends JPanel {
 
         private final static String IMG_PATH = "img/";
@@ -61,6 +59,8 @@ public class TaskList implements ListCellRenderer<Task> {
         }
 
     }
+
+    private Font font;
 
     public TaskList(Font font) {
         this.font = font;
