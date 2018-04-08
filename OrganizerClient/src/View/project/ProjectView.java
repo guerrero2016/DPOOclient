@@ -201,7 +201,7 @@ public class ProjectView extends JFrame {
             categoriesContent.add(categoryPosition1, categoryContent2);
             categoriesContent.add(categoryPosition2, categoryContent1);
 
-            //Change panels
+            //Update panels
             JPanel jpCategory1 = categoriesContent.get(categoryPosition1).getJpCategory();
             JPanel jpCategory2 = categoriesContent.get(categoryPosition2).getJpCategory();
             jpCategories.add(jpCategory1, categoryPosition1);
@@ -231,16 +231,42 @@ public class ProjectView extends JFrame {
     public void addTask(Task task, int categoryPosition) {
         if(categoryPosition < categoriesContent.size()) {
             JList<Task> jlTasks = categoriesContent.get(categoryPosition).getJlTasks();
-            jlTasks.add(new TaskListComponent(task, mediumFont));
+            jlTasks.add(new TaskList.TaskListComponent(task, mediumFont));
         }
     }
 
     public void removeTask(int categoryPosition, int taskPosition) {
         if(categoryPosition < categoriesContent.size()) {
+
             JList<Task> jlTasks = categoriesContent.get(categoryPosition).getJlTasks();
+
             if(taskPosition < jlTasks.getMaxSelectionIndex()) {
                 jlTasks.remove(taskPosition);
             }
+
+        }
+    }
+
+    public void swapTasksPosition(int categoryPosition, int taskPosition1, int taskPosition2) {
+        if(categoryPosition < categoriesContent.size()) {
+
+            JList<Task> jlTasks = categoriesContent.get(categoryPosition).getJlTasks();
+
+            if(taskPosition1 < jlTasks.getMaxSelectionIndex() && taskPosition2 < jlTasks.getMaxSelectionIndex()) {
+
+                DefaultListModel<Task> tasksList = (DefaultListModel<Task>) jlTasks.getModel();
+
+                //Change tasks order
+                Task task1 = tasksList.getElementAt(taskPosition1);
+                Task task2 = tasksList.getElementAt(taskPosition2);
+                tasksList.add(taskPosition2, task1);
+                tasksList.add(taskPosition1, task2);
+
+                //Update list
+                jlTasks.setModel(tasksList);
+
+            }
+
         }
     }
 

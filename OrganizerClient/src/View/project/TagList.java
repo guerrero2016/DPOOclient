@@ -9,6 +9,14 @@ public class TagList implements ListCellRenderer<Tag> {
 
     private Font font;
 
+    public static class TagListComponent extends JLabel {
+
+        public TagListComponent(String tagName) {
+            setText(tagName);
+        }
+
+    }
+
     public TagList(Font font) {
         this.font = font;
     }
@@ -18,19 +26,19 @@ public class TagList implements ListCellRenderer<Tag> {
                                                   boolean cellHasFocus) {
 
         //Tag component
-        final JLabel jlTag = new JLabel(tag.getName());
-        jlTag.setFont(font);
-        jlTag.setOpaque(true);
+        TagListComponent tagComponent = new TagListComponent(tag.getName());
+        tagComponent.setFont(font);
+        tagComponent.setOpaque(true);
 
         if (isSelected) {
-            jlTag.setBackground(list.getSelectionBackground());
-            jlTag.setForeground(list.getSelectionForeground());
+            tagComponent.setBackground(list.getSelectionBackground());
+            tagComponent.setForeground(list.getSelectionForeground());
         } else {
-            jlTag.setBackground(tag.getColor());
-            jlTag.setForeground(list.getForeground());
+            tagComponent.setBackground(tag.getColor());
+            tagComponent.setForeground(list.getForeground());
         }
 
-        return jlTag;
+        return tagComponent;
 
     }
 

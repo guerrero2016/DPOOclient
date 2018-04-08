@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TaskView extends JFrame {
 
@@ -37,8 +38,8 @@ public class TaskView extends JFrame {
     private final JLabel jlTaskName;
     private final JButton jbTaskEditor;
     private final JButton jbTaskDelete;
-    private final JTextArea jtaDescription;
     private final JButton jbDescriptionEditor;
+    private final JTextArea jtaDescription;
     private final JList<Tag> jlTagList;
     private final JTextField jtfTagName;
     private final JButton jbTagAdder;
@@ -141,13 +142,12 @@ public class TaskView extends JFrame {
         //Tag list
         jlTagList = new JList<>();
         jlTagList.setCellRenderer(new TagList(mediumFont));
-        jspTagList.getViewport().setView(jlTagList);
 
-        //TODO: Delete
-        DefaultListModel<Tag> taskList = new DefaultListModel<>();
-        taskList.addElement(new Tag("Orange tag", Color.ORANGE));
-        taskList.addElement(new Tag("Cyan tag", Color.CYAN));
-        jlTagList.setModel(taskList);
+        for(int i = 0; i < task.getTotalTags(); i++) {
+            addTag(task.getTag(i));
+        }
+
+        jspTagList.getViewport().setView(jlTagList);
 
         //Tag adder
         final JPanel jpTagAdder = new JPanel(new BorderLayout());
@@ -188,6 +188,39 @@ public class TaskView extends JFrame {
         bigDeleteIcon = ImageIO.read(new File(IMG_PATH + DELETE_ICON_FILE)).
                 getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 
+    }
+
+    public void setTaskName(String taskName) {
+        jlTaskName.setText(taskName);
+    }
+
+    public void setDescription(String description) {
+        jtaDescription.setText(description);
+    }
+
+    public void setTagsList(ArrayList<Tag> tags) {
+
+        DefaultListModel<Tag> tagsList = new DefaultListModel<>();
+        for(int i = 0; tags != null && i < tags.size(); i++) {
+            tagsList.addElement(tags.get(i));
+        }
+
+        jlTagList.setModel(tagsList);
+
+    }
+
+    public void addTag(Tag tag) {
+        jlTagList.add(new TagList.TagListComponent(tag.getName()));
+    }
+
+    public void removeTag(int tagPosition) {
+        if(tagPosition < jlTagList.getMaxSelectionIndex()) {
+            jlTagList.remove(tagPosition);
+        }
+    }
+
+    public void cleanNewTagName() {
+        jtfTagName.setText(null);
     }
 
 }
