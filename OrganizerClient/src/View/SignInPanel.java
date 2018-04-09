@@ -1,6 +1,7 @@
 package View;
 
-import Controller.IdentifyController;
+import Controller.LogInController;
+import Controller.SignInController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -119,8 +120,8 @@ public class SignInPanel extends JPanel {
 
     }
 
-    public void addControllerButton (IdentifyController ic) {
-        jbLogIn.addActionListener(ic);
-        jbSignIn.addActionListener(ic);
+    public void addControllerButton (SignInController sic) {
+        jbLogIn.addActionListener(sic);
+        jbSignIn.addActionListener(sic);
     }
 }
