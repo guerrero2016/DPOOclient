@@ -37,6 +37,7 @@ public class ProjectSelectionView extends JPanel {
         this.projectSelectionController = controller;
         for (ProjectBoxView projectBoxView: projectBoxViews) {
             projectBoxView.registerMouseListener(controller);
+            projectBoxView.registerButtonListener(controller);
         }
     }
 

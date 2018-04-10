@@ -43,7 +43,7 @@ public class ProjectsMainView extends JFrame {
         addProjectButton = new JButton("+");
         southPanel.add(logOutButton, BorderLayout.WEST);
         southPanel.add(addProjectButton, BorderLayout.EAST);
-        addProjectButton.setActionCommand(this.ADD_PROJECT_ACTION_COMMAND);
+        addProjectButton.setActionCommand(ADD_PROJECT_ACTION_COMMAND);
 
         add(southPanel, BorderLayout.SOUTH);
         add(jSplitPane, BorderLayout.CENTER);
