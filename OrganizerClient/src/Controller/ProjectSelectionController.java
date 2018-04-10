@@ -2,6 +2,7 @@ package Controller;
 
 import View.ProjectBoxView;
 import View.ProjectSelectionView;
+import View.ProjectsMainView;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,17 +12,13 @@ import java.awt.event.MouseListener;
 
 public class ProjectSelectionController implements MouseListener, ActionListener {
 
-    private final ProjectSelectionView view;
+    private final ProjectsMainView view;
 
-    public ProjectSelectionController (ProjectSelectionView view) {
+    public ProjectSelectionController (ProjectsMainView view) {
         this.view = view;
         String[] names = new String []{"AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP", "AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP"};
         Color[] colors = new Color[] {Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN};
-        view.createProjectBoxes(names, colors);
-        view.addProjectBox("Aleix", Color.gray);        view.addProjectBox("Aleix", Color.gray);
-        view.addProjectBox("Aleix", Color.gray);
-        view.addProjectBox("Aleix", Color.gray);
-
+        view.createOwnerBoxProjects(names, colors);
     }
 
     @Override
@@ -57,7 +54,7 @@ public class ProjectSelectionController implements MouseListener, ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals(ProjectSelectionView.ADD_PROJECT_ACTION_COMMAND)) {
+        if (e.getActionCommand().equals(ProjectsMainView.ADD_PROJECT_ACTION_COMMAND)) {
             final ProjectCreationController  projectCreationController = new ProjectCreationController(this);
             projectCreationController.createAddProjectView();
         }
