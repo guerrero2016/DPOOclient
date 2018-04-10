@@ -13,15 +13,28 @@ public class ProjectsMainView extends JFrame {
     private final JButton addProjectButton;
     public static final String ADD_PROJECT_ACTION_COMMAND = "AddProject";
 
-    private final int S_WIDTH = 800;
+    private final int S_WIDTH = 1000;
 
     public ProjectsMainView () {
+
+        JPanel ownerPane = new JPanel(new BorderLayout());
+        JPanel friendPane = new JPanel(new BorderLayout());
+        JLabel ownerLabel = new JLabel("Els teus projectes: ");
+        JLabel friendLabel = new JLabel("Projectes compartits: ");
+        ownerLabel.setFont(ownerLabel.getFont().deriveFont(Font.BOLD, 30));
+        friendLabel.setFont(ownerLabel.getFont());
 
         ownerProjectSelectionView = new ProjectSelectionView();
         friendProjectSelectionView = new ProjectSelectionView();
 
+
+        ownerPane.add(ownerLabel, BorderLayout.NORTH);
+        ownerPane.add(ownerProjectSelectionView, BorderLayout.CENTER);
+        friendPane.add(friendLabel, BorderLayout.NORTH);
+        friendPane.add(friendProjectSelectionView, BorderLayout.CENTER);
+
         JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                ownerProjectSelectionView, friendProjectSelectionView);
+                ownerPane, friendPane);
         jSplitPane.setDividerLocation(S_WIDTH/2);
         add(jSplitPane);
 
