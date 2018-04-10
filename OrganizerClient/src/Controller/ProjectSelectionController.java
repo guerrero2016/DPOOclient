@@ -15,10 +15,13 @@ public class ProjectSelectionController implements MouseListener, ActionListener
 
     public ProjectSelectionController (ProjectSelectionView view) {
         this.view = view;
-        String[] names = new String []{"AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP"};
-        Color[] colors = new Color[] {Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN};
+        String[] names = new String []{"AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP", "AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP"};
+        Color[] colors = new Color[] {Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN};
         view.createProjectBoxes(names, colors);
-        view.setVisible(true);
+        view.addProjectBox("Aleix", Color.gray);        view.addProjectBox("Aleix", Color.gray);
+        view.addProjectBox("Aleix", Color.gray);
+        view.addProjectBox("Aleix", Color.gray);
+
     }
 
     @Override
