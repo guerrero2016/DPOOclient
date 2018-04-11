@@ -64,10 +64,17 @@ public class ProjectsMainView extends JFrame {
 
     public void createOwnerBoxProjects (String[] titles, Color[] colors) {
         ownerProjectSelectionView.createProjectBoxes(titles, colors);
+    }
+
+    public void createSharedBoxProjects (String[] titles, Color[] colors) {
         friendProjectSelectionView.createProjectBoxes(titles, colors);
     }
 
-    public void addProjectBox (String title, Color color) {
+    public void addOwnerProjectBox(String title, Color color) {
         ownerProjectSelectionView.addProjectBox(title, color);
+    }
+
+    public void addSharedProjectBox(String title, Color color) {
+        friendProjectSelectionView.addProjectBox(title, color);
     }
 }

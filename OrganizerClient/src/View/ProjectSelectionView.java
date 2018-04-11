@@ -81,6 +81,10 @@ public class ProjectSelectionView extends JPanel {
         nBoxes++;
     }
 
+    public void removeProjectAtIndex (int index) {
+
+    }
+
     private int calculateNumberRows (int nBoxes) {
         if (nBoxes % numberOfColumns == 0) {
             return nBoxes/numberOfColumns;

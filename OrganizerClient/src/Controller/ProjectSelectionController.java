@@ -1,7 +1,6 @@
 package Controller;
 
 import View.ProjectBoxView;
-import View.ProjectSelectionView;
 import View.ProjectsMainView;
 
 import java.awt.*;
@@ -19,6 +18,7 @@ public class ProjectSelectionController implements MouseListener, ActionListener
         String[] names = new String []{"AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP", "AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP"};
         Color[] colors = new Color[] {Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN};
         view.createOwnerBoxProjects(names, colors);
+        view.createSharedBoxProjects(names, colors);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ProjectSelectionController implements MouseListener, ActionListener
     }
 
     public void createProject (String title, Color color) {
-        view.addProjectBox(title, color);
+        view.addOwnerProjectBox(title, color);
     }
 
     @Override
