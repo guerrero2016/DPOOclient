@@ -3,6 +3,7 @@ package Controller;
 import View.ProjectBoxView;
 import View.ProjectsMainView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,9 +55,30 @@ public class ProjectSelectionController implements MouseListener, ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String button = ((JButton)e.getSource()).getActionCommand();
+
+        switch (button){
+            case ProjectBoxView.INFO_AC:
+                System.out.print("hey");
+                final String projectName = ((ProjectBoxView) e.getSource()).getTitle();
+                final ProjectInfoController projectInfoController = new ProjectInfoController();
+                projectInfoController.createView(projectName, "Lactosito");
+                break;
+
+            case ProjectBoxView.DELETE_AC:
+
+                break;
+
+            case ProjectsMainView.ADD_PROJECT_ACTION_COMMAND:
+                final ProjectCreationController  projectCreationController =
+                        new ProjectCreationController(this);
+                projectCreationController.createAddProjectView();
+                break;
+        }
+        /*
         if (e.getActionCommand().equals(ProjectsMainView.ADD_PROJECT_ACTION_COMMAND)) {
             final ProjectCreationController  projectCreationController = new ProjectCreationController(this);
             projectCreationController.createAddProjectView();
-        }
+        }*/
     }
 }

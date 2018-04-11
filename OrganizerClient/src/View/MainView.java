@@ -25,8 +25,8 @@ public class MainView extends JFrame {
         try {
             BufferedImage myPicture;
             myPicture = ImageIO.read(new File(IMAGE_PATH));
-            //Image resized = myPicture.getScaledInstance(500,500,Image.SCALE_SMOOTH);
-            jlPicLabel = new JLabel(new ImageIcon(myPicture));
+            Image resized = myPicture.getScaledInstance(750,750,Image.SCALE_SMOOTH);
+            jlPicLabel = new JLabel(new ImageIcon(resized));
         } catch (IOException e) {
             e.printStackTrace();
         }
