@@ -120,6 +120,28 @@ public class SignInPanel extends JPanel {
 
     }
 
+    public void setEmailBorder(Color color) {
+        jtfEmail.setBorder(BorderFactory.createLineBorder(color));
+    }
+
+    public void setPasswordBorder(Color color) {
+        jpfPassword.setBorder(BorderFactory.createLineBorder(color));
+    }
+
+    public void setPasswordConfirmBorder(Color color) {
+        jpfConfirm.setBorder(BorderFactory.createLineBorder(color));
+    }
+
+    public void setUsernameBorder(Color color) {
+        jtfUsername.setBorder(BorderFactory.createLineBorder(color));
+    }
+
+    public void showError(String message) {
+        JOptionPane.showMessageDialog(null, message,
+                "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
+
+    }
+
     public void addControllerButton (SignInController sic) {
         jbLogIn.addActionListener(sic);
         jbSignIn.addActionListener(sic);

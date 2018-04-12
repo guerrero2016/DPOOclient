@@ -84,6 +84,19 @@ public class LogInPanel extends JPanel{
 
     }
 
+    public void setPasswordBorder(Color color) {
+        jpfPassword.setBorder(BorderFactory.createLineBorder(color));
+    }
+
+    public void setUsernameBorder(Color color) {
+        jtfUsername.setBorder(BorderFactory.createLineBorder(color));
+    }
+
+    public LogInPanel getPanel() {
+        return this;
+    }
+
+
     public void addControllerButton (LogInController lic) {
         jbSignIn.addActionListener(lic);
         jbLogIn.addActionListener(lic);

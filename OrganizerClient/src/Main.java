@@ -1,30 +1,32 @@
-import Controller.LogInController;
 import Controller.MainViewController;
-import Controller.ProjectSelectionController;
-import Controller.SignInController;
 import View.MainView;
-import View.ProjectSelectionView;
-import View.ProjectsMainView;
 
 import javax.swing.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        ProjectsMainView projectsMainView = new ProjectsMainView();
+        /*ProjectsMainView projectsMainView = new ProjectsMainView();
         ProjectSelectionController projectSelectionController = new ProjectSelectionController(projectsMainView);
         projectsMainView.registerAddProjectViewController(projectSelectionController);
-        projectsMainView.registerProjectSelectionController(projectSelectionController);
+        projectsMainView.registerProjectSelectionController(projectSelectionController);*/
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                //1. Crear tots els JPanels
+                //2. Crear tots els controllers de cada JPanel
+                //3. Registres els JPanels amb els controladors
+                //4. Creem la MainView passant-li TOTS els JPanels
+                //5. Creem el controlador general passant-li tots els controllers i la MainView
+                //6. Finalment durant la creació del controlador gran se li ha de passar aquest a tots
+                //   els petits controladors.
 
-                /*MainView a = new MainView();
+                MainView a = new MainView();
                 MainViewController mainViewController = new MainViewController(a);
-                LogInController logInController = new LogInController(mainViewController);
-                SignInController signInController = new SignInController(mainViewController);
-                a.addControllerButton(logInController, signInController);*/
+                mainViewController.registerControllers(a);
+                a.setVisible(true);
+
             }
         });
     }

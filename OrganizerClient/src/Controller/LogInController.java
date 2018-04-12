@@ -23,7 +23,7 @@ public class LogInController implements ActionListener {
                 break;
 
             case LogInPanel.LOG:
-
+                //JOptionPane.showMessageDialog(null, "Este es un mensaje de Advertencia", "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
                 break;
 
         }
