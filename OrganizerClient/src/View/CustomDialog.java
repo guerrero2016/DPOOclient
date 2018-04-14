@@ -14,8 +14,12 @@ public class CustomDialog extends JDialog{
         this.getContentPane().add(view);
         this.setTitle(title);
         this.setSize(new Dimension(300, 300));
-        this.setModal(true);
-        this.setVisible(true);
         this.setMinimumSize(new Dimension(300, 300));
+        this.setModal(false);
+    }
+
+    public void setDialogVisible(boolean isVisible) {
+        this.setModal(isVisible);
+        this.setVisible(isVisible);
     }
 }

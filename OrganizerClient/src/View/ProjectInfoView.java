@@ -35,7 +35,8 @@ public class ProjectInfoView extends JPanel {
         add(namePanel, BorderLayout.NORTH);
         add(membersPanel, BorderLayout.CENTER);
 
-        new CustomDialog("Informació", this);
+        CustomDialog dialog = new CustomDialog("Informació", this);
+        dialog.setDialogVisible(true);
     }
 
     public void setProjectName (String name) {

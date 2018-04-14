@@ -4,7 +4,6 @@ import Controller.ProjectCreationController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class AddProjectView extends JPanel {
@@ -13,6 +12,7 @@ public class AddProjectView extends JPanel {
     private final Color[] COLORS = new Color[]{Color.RED, Color.BLUE, Color.CYAN, Color.YELLOW, Color.WHITE, Color.ORANGE, Color.green, Color.gray};
     private ArrayList<JPanel> colorsPanels;
     private final JButton createButton;
+    private final CustomDialog dialog;
 
     public AddProjectView () {
 
@@ -42,6 +42,12 @@ public class AddProjectView extends JPanel {
 
         northPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         colorsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+        dialog = new CustomDialog("Crear projecte", this);
+    }
+
+    public void setDialogVisible(boolean isVisible) {
+        dialog.setDialogVisible(isVisible);
     }
 
     public String getProjectName () {
