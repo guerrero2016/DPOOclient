@@ -22,13 +22,9 @@ public class ProjectSelectionView extends JPanel {
         projectBoxViews = new ArrayList<>();
         setLayout(new BorderLayout());
 
-
         gridPanel = new JPanel(new GridBagLayout());
         gridBagConstraints = new GridBagConstraints();
         scrollPane = new JScrollPane(gridPanel);
-
-
-
 
         add(scrollPane, BorderLayout.CENTER);
     }

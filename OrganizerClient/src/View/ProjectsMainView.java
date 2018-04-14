@@ -5,7 +5,10 @@ import Controller.ProjectSelectionController;
 import javax.swing.*;
 import java.awt.*;
 
-public class ProjectsMainView extends JFrame {
+public class ProjectsMainView extends JPanel {
+
+    public static final String VIEW_NAME = "ProjectsView";
+    public static final int VIEW_TAG = 3;
 
     private final ProjectSelectionView ownerProjectSelectionView;
     private final ProjectSelectionView friendProjectSelectionView;
@@ -41,6 +44,8 @@ public class ProjectsMainView extends JFrame {
         JPanel southPanel = new JPanel(new BorderLayout());
         logOutButton = new JButton("Tancar sessió");
         addProjectButton = new JButton("+");
+
+        setLayout(new BorderLayout());
         southPanel.add(logOutButton, BorderLayout.WEST);
         southPanel.add(addProjectButton, BorderLayout.EAST);
         addProjectButton.setActionCommand(ADD_PROJECT_ACTION_COMMAND);
@@ -48,9 +53,6 @@ public class ProjectsMainView extends JFrame {
         add(southPanel, BorderLayout.SOUTH);
         add(jSplitPane, BorderLayout.CENTER);
 
-        setSize(S_WIDTH,500);
-        setTitle("LSOrganizer");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 

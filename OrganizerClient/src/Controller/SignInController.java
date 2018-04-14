@@ -27,6 +27,7 @@ public class SignInController implements ActionListener {
             case SignInPanel.SIGN:
                 if(dadesOK()) {
                     //Enviar la petició d'inici de sessió al server.
+                    //controller.swapPanel(3);
                 }
                 break;
         }

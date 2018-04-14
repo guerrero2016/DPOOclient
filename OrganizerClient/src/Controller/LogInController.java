@@ -1,6 +1,7 @@
 package Controller;
 
 import View.LogInPanel;
+import View.ProjectsMainView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,7 @@ public class LogInController implements ActionListener {
                 break;
 
             case LogInPanel.LOG:
+                controller.swapPanel(ProjectsMainView.VIEW_TAG);
                 //JOptionPane.showMessageDialog(null, "Este es un mensaje de Advertencia", "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
                 break;
 

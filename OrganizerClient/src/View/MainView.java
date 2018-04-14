@@ -1,6 +1,7 @@
 package View;
 
 import Controller.LogInController;
+import Controller.ProjectSelectionController;
 import Controller.SignInController;
 
 import javax.imageio.ImageIO;
@@ -17,6 +18,7 @@ public class MainView extends JFrame {
     private JPanel jpLogSign;
     private SignInPanel signInPanel;
     private LogInPanel logInPanel;
+    private ProjectsMainView projectsView;
 
     public MainView() {
         JPanel jpIdentifyPanel = new JPanel(new BorderLayout());
@@ -35,13 +37,19 @@ public class MainView extends JFrame {
         logInPanel = new LogInPanel();
         signInPanel = new SignInPanel();
         jpLogSign = new JPanel(new CardLayout());
+
+
         jpLogSign.add(logInPanel, "logIn");
         jpLogSign.add(signInPanel, "signIn");
         jpLogSign.setMinimumSize(new Dimension(450, 500));
+        jpLogSign.setBackground(Color.BLUE);
         jpIdentifyPanel.add(jpLogSign, BorderLayout.CENTER);
+
+        projectsView = new ProjectsMainView();
 
         this.getContentPane().setLayout(new CardLayout());
         this.add(jpIdentifyPanel, "identify");
+        this.add(projectsView, ProjectsMainView.VIEW_NAME);
 
         super.setMinimumSize(new Dimension(1000,500));
         super.setSize(1200,750);
@@ -62,12 +70,20 @@ public class MainView extends JFrame {
                 super.setTitle("SignIn - Organizer");
                 ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "signIn");
                 break;
-
+            case ProjectsMainView.VIEW_TAG:
+                super.setTitle("Organizer");
+                ((CardLayout)this.getContentPane().getLayout()).show(this.getContentPane(), ProjectsMainView.VIEW_NAME);
+                break;
         }
     }
 
     public void addControllerButton (LogInController lic, SignInController sic) {
         logInPanel.addControllerButton(lic);
         signInPanel.addControllerButton(sic);
+    }
+
+    public void addProjectSelectionController (ProjectSelectionController controller) {
+        projectsView.registerProjectSelectionController(controller);
+        projectsView.registerAddProjectViewController(controller);
     }
 }

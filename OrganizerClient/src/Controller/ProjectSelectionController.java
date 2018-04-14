@@ -12,14 +12,14 @@ import java.awt.event.MouseListener;
 
 public class ProjectSelectionController implements MouseListener, ActionListener {
 
-    private final ProjectsMainView view;
+    private final MainViewController controller;
 
-    public ProjectSelectionController (ProjectsMainView view) {
-        this.view = view;
-        String[] names = new String []{"AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP", "AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP"};
+    public ProjectSelectionController (MainViewController controller) {
+        /*String[] names = new String []{"AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP", "AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP"};
         Color[] colors = new Color[] {Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN};
         view.createOwnerBoxProjects(names, colors);
-        view.createSharedBoxProjects(names, colors);
+        view.createSharedBoxProjects(names, colors);*/
+        this.controller = controller;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ProjectSelectionController implements MouseListener, ActionListener
     }
 
     public void createProject (String title, Color color) {
-        view.addOwnerProjectBox(title, color);
+        //view.addOwnerProjectBox(title, color);
     }
 
     @Override
