@@ -86,4 +86,20 @@ public class MainView extends JFrame {
         projectsView.registerProjectSelectionController(controller);
         projectsView.registerAddProjectViewController(controller);
     }
+
+    public void createOwnerBoxProjects (String[] titles, Color[] colors) {
+        projectsView.createOwnerBoxProjects(titles, colors);
+    }
+
+    public void createSharedBoxProjects (String[] titles, Color[] colors) {
+        projectsView.createSharedBoxProjects(titles, colors);
+    }
+
+    public void addOwnerProjectBox(String title, Color color) {
+        projectsView.addOwnerProjectBox(title, color);
+    }
+
+    public void addSharedProjectBox(String title, Color color) {
+        projectsView.addSharedProjectBox(title, color);
+    }
 }

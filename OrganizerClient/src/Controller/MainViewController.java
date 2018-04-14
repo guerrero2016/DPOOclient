@@ -2,6 +2,8 @@ package Controller;
 
 import View.MainView;
 
+import java.awt.*;
+
 public class MainViewController {
     private MainView view;
     private LogInController logInController;
@@ -24,12 +26,20 @@ public class MainViewController {
         view.swapPanel(whatPanel);
     }
 
-    public void addOwnerProjects () {
-
+    public void createOwnerBoxProjects (String[] titles, Color[] colors) {
+        view.createOwnerBoxProjects(titles, colors);
     }
 
-    public void addSharedProjects () {
-        
+    public void createSharedBoxProjects (String[] titles, Color[] colors) {
+        view.createSharedBoxProjects(titles, colors);
+    }
+
+    public void addOwnerProjectBox(String title, Color color) {
+        view.addOwnerProjectBox(title, color);
+    }
+
+    public void addSharedProjectBox(String title, Color color) {
+        view.addSharedProjectBox(title, color);
     }
 
 }

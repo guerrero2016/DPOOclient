@@ -15,10 +15,10 @@ public class ProjectSelectionController implements MouseListener, ActionListener
     private final MainViewController controller;
 
     public ProjectSelectionController (MainViewController controller) {
-        /*String[] names = new String []{"AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP", "AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP"};
+        String[] names = new String []{"AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP", "AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP"};
         Color[] colors = new Color[] {Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN};
-        view.createOwnerBoxProjects(names, colors);
-        view.createSharedBoxProjects(names, colors);*/
+        controller.createOwnerBoxProjects(names, colors);
+        controller.createSharedBoxProjects(names, colors);
         this.controller = controller;
     }
 
@@ -30,7 +30,7 @@ public class ProjectSelectionController implements MouseListener, ActionListener
     }
 
     public void createProject (String title, Color color) {
-        //view.addOwnerProjectBox(title, color);
+        controller.addOwnerProjectBox(title, color);
     }
 
     @Override
