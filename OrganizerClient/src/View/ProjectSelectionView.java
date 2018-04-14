@@ -1,6 +1,7 @@
 package View;
 
 import Controller.ProjectSelectionController;
+import Model.Project;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,9 +60,10 @@ public class ProjectSelectionView extends JPanel {
         gridBagConstraints.gridx = x;
         gridBagConstraints.gridy = y;
         gridBagConstraints.insets.top = 10;
-        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weightx = 1;
         ProjectBoxView projectBoxView = new ProjectBoxView(title, color);
         projectBoxView.registerMouseListener(projectSelectionController);
+        projectBoxView.registerButtonListener(projectSelectionController);
         projectBoxViews.add(projectBoxView);
         gridPanel.add(projectBoxView, gridBagConstraints);
         scrollPane.getViewport().setView(gridPanel);
@@ -78,8 +80,24 @@ public class ProjectSelectionView extends JPanel {
         nBoxes++;
     }
 
-    public void removeProjectAtIndex (int index) {
+    public void removeProject(int index) {
+        projectBoxViews.remove(index);
 
+        String [] titles = new String[projectBoxViews.size()];
+        Color [] colors = new Color [projectBoxViews.size()];
+
+        for (int i = 0; i < projectBoxViews.size(); i++) {
+            titles[i] = projectBoxViews.get(i).getTitle();
+            colors[i] = projectBoxViews.get(i).getBackground();
+        }
+
+        projectBoxViews = new ArrayList<>();
+
+        setVisible(false);
+        gridPanel = new JPanel(new GridBagLayout());
+        gridBagConstraints = new GridBagConstraints();
+        createProjectBoxes(titles, colors);
+        setVisible(true);
     }
 
     private int calculateNumberRows (int nBoxes) {

@@ -13,9 +13,9 @@ public class ProjectBoxView extends JPanel {
     public static final String INFO_AC = "INFO";
     public static final String DELETE_AC = "DELETE";
 
-    final int HEIGHT = 40;  //50
-    final int WIDTH = 170;  //180
-    final int MAX_CHARS = 17;
+    final int HEIGHT = 80;  //50
+    final int WIDTH = 180;  //180
+    final int MAX_CHARS = 10;
     private final static String INFO_ICON = "img/info_icon.png";
     private final static String DELETE_ICON = "img/delete_icon.png";
 
@@ -29,11 +29,12 @@ public class ProjectBoxView extends JPanel {
 
         this.title  = title;
 
+        JPanel jpLabel = new JPanel(new BorderLayout());
         titleLabel = new JLabel(configureLabelMaxTextWidth(title));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(HEIGHT / 2 - 5, WIDTH / 2,
                 HEIGHT / 2 + 5,WIDTH / 2));
-        this.add(titleLabel, BorderLayout.CENTER);
+        jpLabel.add(titleLabel, BorderLayout.EAST);
 
         Image infoImage = null;
         Image deleteImage = null;
@@ -62,19 +63,14 @@ public class ProjectBoxView extends JPanel {
         jpAux.add(jbInfo);
         jpAux.add(jbDelete);
 
-        this.add(jpAux, BorderLayout.PAGE_START);
-        this.setBackground(color);
-
-
-
-        /*final int marginX = (WIDTH/2) - (getTextWidth(titleLabel.getText())/2);
+        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        setMaximumSize(new Dimension(WIDTH, HEIGHT));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         setBackground(color);
-        add(Box.createRigidArea(new Dimension(marginX,1)), BorderLayout.EAST);
-        add(Box.createRigidArea(new Dimension(marginX,1)), BorderLayout.WEST);
-        add(Box.createRigidArea(new Dimension(1,HEIGHT/2)), BorderLayout.NORTH);
-        add(Box.createRigidArea(new Dimension(1,HEIGHT/2)), BorderLayout.SOUTH);
-        add(titleLabel,BorderLayout.CENTER);*/
+        jpLabel.setBackground(color);
+        this.add(jpAux, BorderLayout.NORTH);
+        this.add(jpLabel,BorderLayout.CENTER);
     }
 
     public String getTitle() {

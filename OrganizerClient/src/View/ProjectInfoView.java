@@ -7,6 +7,7 @@ public class ProjectInfoView extends JPanel {
 
     final JLabel projectNameLabel;
     final JTextArea membersTextArea;
+    final CustomDialog dialog;
 
     public ProjectInfoView () {
 
@@ -35,8 +36,11 @@ public class ProjectInfoView extends JPanel {
         add(namePanel, BorderLayout.NORTH);
         add(membersPanel, BorderLayout.CENTER);
 
-        CustomDialog dialog = new CustomDialog("Informació", this);
-        dialog.setDialogVisible(true);
+        dialog = new CustomDialog("Informació", this);
+    }
+
+    public void setDialogVisible (boolean isVisible) {
+        dialog.setDialogVisible(isVisible);
     }
 
     public void setProjectName (String name) {

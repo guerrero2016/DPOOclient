@@ -31,7 +31,7 @@ public class ProjectCreationController implements MouseListener, ActionListener 
             System.out.println("Missing parameters");
         } else {
             projectSelectionController.createProject(view.getProjectName(),color);
-            view.setDialogVisible(true);
+            view.setDialogVisible(false);
         }
     }
 

@@ -57,7 +57,7 @@ public class ProjectSelectionController implements MouseListener, ActionListener
 
         switch (button){
             case ProjectBoxView.DELETE_AC:
-
+                controller.removeProject(2);
                 break;
             case ProjectsMainView.ADD_PROJECT_ACTION_COMMAND:
                 createAddProjectWindow();

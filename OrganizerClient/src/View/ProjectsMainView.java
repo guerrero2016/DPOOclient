@@ -79,4 +79,8 @@ public class ProjectsMainView extends JPanel {
     public void addSharedProjectBox(String title, Color color) {
         friendProjectSelectionView.addProjectBox(title, color);
     }
+
+    public void removeOwnerProject (int index) {
+        ownerProjectSelectionView.removeProject(index);
+    }
 }

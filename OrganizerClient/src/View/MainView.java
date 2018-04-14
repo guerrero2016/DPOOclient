@@ -102,4 +102,8 @@ public class MainView extends JFrame {
     public void addSharedProjectBox(String title, Color color) {
         projectsView.addSharedProjectBox(title, color);
     }
+
+    public void removeProjectAtIndex (int index) {
+        projectsView.removeOwnerProject(index);
+    }
 }

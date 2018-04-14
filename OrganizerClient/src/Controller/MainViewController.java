@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Project;
 import View.MainView;
 
 import java.awt.*;
@@ -26,11 +27,11 @@ public class MainViewController {
         view.swapPanel(whatPanel);
     }
 
-    public void createOwnerBoxProjects (String[] titles, Color[] colors) {
+    public void createOwnerBoxProjects (String [] titles, Color [] colors) {
         view.createOwnerBoxProjects(titles, colors);
     }
 
-    public void createSharedBoxProjects (String[] titles, Color[] colors) {
+    public void createSharedBoxProjects (String [] titles, Color [] colors) {
         view.createSharedBoxProjects(titles, colors);
     }
 
@@ -42,4 +43,7 @@ public class MainViewController {
         view.addSharedProjectBox(title, color);
     }
 
+    public void removeProject(int index) {
+        view.removeProjectAtIndex(index);
+    }
 }
