@@ -50,7 +50,7 @@ public class ProjectBoxView extends JPanel {
         jbInfo = new JButton(new ImageIcon(infoImage));
         jbInfo.setBackground(color);
         jbInfo.setBorder(null);
-        jbInfo.setActionCommand(INFO_AC);
+        jbInfo.setActionCommand(title);
 
         jbDelete = new JButton(new ImageIcon(deleteImage));
         jbDelete.setBackground(color);

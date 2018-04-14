@@ -1,5 +1,6 @@
 package Controller;
 
+import View.AddProjectDialog;
 import View.AddProjectView;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.awt.event.MouseListener;
 public class ProjectCreationController implements MouseListener, ActionListener {
 
     private ProjectSelectionController projectSelectionController;
-    private AddProjectView view;
+    private AddProjectDialog view;
     private Color color;
 
     public ProjectCreationController(ProjectSelectionController projectSelectionController) {
@@ -20,8 +21,9 @@ public class ProjectCreationController implements MouseListener, ActionListener 
     }
 
     public void createAddProjectView () {
-        view = new AddProjectView();
+        view = new AddProjectDialog();
         view.registerMouseListener(this);
+        view.blockOtherFrames();
     }
 
     @Override
@@ -30,6 +32,7 @@ public class ProjectCreationController implements MouseListener, ActionListener 
             System.out.println("Missing parameters");
         } else {
             projectSelectionController.createProject(view.getProjectName(),color);
+            view.setVisible(false);
         }
     }
 
@@ -37,7 +40,7 @@ public class ProjectCreationController implements MouseListener, ActionListener 
     public void mouseClicked(MouseEvent e) {
         JPanel colorPanel = (JPanel) e.getSource();
         color = colorPanel.getBackground();
-
+        view.selectColor(colorPanel);
     }
 
     @Override

@@ -24,9 +24,7 @@ public class ProjectSelectionController implements MouseListener, ActionListener
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        final String projectName = ((ProjectBoxView) e.getSource()).getTitle();
-        final ProjectInfoController projectInfoController = new ProjectInfoController();
-        projectInfoController.createView(projectName, "Lactosito");
+        //AQUI S'HA D'OBRIR EL PROJECTE
     }
 
     public void createProject (String title, Color color) {
@@ -58,27 +56,26 @@ public class ProjectSelectionController implements MouseListener, ActionListener
         String button = ((JButton)e.getSource()).getActionCommand();
 
         switch (button){
-            case ProjectBoxView.INFO_AC:
-                System.out.print("hey");
-                final String projectName = ((ProjectBoxView) e.getSource()).getTitle();
-                final ProjectInfoController projectInfoController = new ProjectInfoController();
-                projectInfoController.createView(projectName, "Lactosito");
-                break;
-
             case ProjectBoxView.DELETE_AC:
 
                 break;
-
             case ProjectsMainView.ADD_PROJECT_ACTION_COMMAND:
-                final ProjectCreationController  projectCreationController =
-                        new ProjectCreationController(this);
-                projectCreationController.createAddProjectView();
+                createAddProjectWindow();
                 break;
+            default:
+                createProjectInfoWindow(e.getActionCommand());
         }
-        /*
-        if (e.getActionCommand().equals(ProjectsMainView.ADD_PROJECT_ACTION_COMMAND)) {
-            final ProjectCreationController  projectCreationController = new ProjectCreationController(this);
-            projectCreationController.createAddProjectView();
-        }*/
+    }
+
+    private void createAddProjectWindow () {
+        final ProjectCreationController  projectCreationController =
+                new ProjectCreationController(this);
+        projectCreationController.createAddProjectView();
+    }
+
+    private void createProjectInfoWindow (String title) {
+        final String projectName = title;
+        final ProjectInfoController projectInfoController = new ProjectInfoController();
+        projectInfoController.createView(projectName, "Lactosito");
     }
 }

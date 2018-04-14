@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class AddProjectView extends JFrame {
+public class AddProjectView extends JPanel {
 
     private final JTextField nameTextField;
     private final Color[] COLORS = new Color[]{Color.RED, Color.BLUE, Color.CYAN, Color.YELLOW, Color.WHITE, Color.ORANGE, Color.green, Color.gray};
@@ -35,17 +35,13 @@ public class AddProjectView extends JFrame {
         createButton = new JButton("Afegir");
         buttonPanel.add(createButton);
 
+        setLayout(new BorderLayout());
         add(buttonPanel,BorderLayout.SOUTH);
         add(northPanel, BorderLayout.NORTH);
         add(colorsPanel, BorderLayout.CENTER);
 
         northPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         colorsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-
-        setSize(300,300);
-        setResizable(false);
-        setTitle("Nou projecte");
-        setVisible(true);
     }
 
     public String getProjectName () {
@@ -73,4 +69,14 @@ public class AddProjectView extends JFrame {
         createButton.addActionListener(controller);
     }
 
+    public void selectColor (JPanel colorPanel) {
+        deselectAllColors();
+        colorPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+    }
+
+    private void deselectAllColors () {
+        for (JPanel colorPanel:colorsPanels) {
+            colorPanel.setBorder(BorderFactory.createEmptyBorder());
+        }
+    }
 }
