@@ -1,76 +1,76 @@
 package View.project;
 
+import Model.Tag;
 import Model.Task;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 public class TaskList implements ListCellRenderer<Task> {
 
-    public static class TaskListComponent extends JPanel {
+    public static class TaskListComponent extends JPanel implements Transferable {
 
-        private final static String IMG_PATH = "img/";
-        private final static String UP_ICON_FILE = "up_icon.png";
-        private final static String DOWN_ICON_FILE = "down_icon.png";
+        public final static DataFlavor LIST_ITEM_DATA_FLAVOR = new DataFlavor(Task.class, "java/Task");
 
-        public TaskListComponent(Task task, Font font) {
+        public TaskListComponent(Task task) {
 
             //Main container
-            setLayout(new FlowLayout(FlowLayout.LEFT));
-
-            try {
-
-                //Load icons
-                Image mediumUpIcon = ImageIO.read(new File(IMG_PATH + UP_ICON_FILE)).
-                        getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-                Image mediumDownIcon = ImageIO.read(new File(IMG_PATH + DOWN_ICON_FILE)).
-                        getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-
-                //Order buttons
-                final JButton jbTaskUp = new JButton(new ImageIcon(mediumUpIcon));
-                jbTaskUp.setBorder(BorderFactory.createEmptyBorder());
-                add(jbTaskUp);
-
-                final JButton jbTaskDown = new JButton(new ImageIcon(mediumDownIcon));
-                jbTaskDown.setBorder(BorderFactory.createEmptyBorder());
-                add(jbTaskDown);
-
-            } catch(IOException e) {
-                //Tasks can't be ordered
-            }
-
-            //Tags
-            int totalTags = task.getTotalTags();
-            for(int i = 0; i < totalTags; i++) {
-                final JPanel jpTag = new JPanel();
-                jpTag.setPreferredSize(new Dimension(16, 16));
-                jpTag.setBackground(task.getTag(i).getColor());
-                add(jpTag);
-            }
+            setLayout(new BorderLayout());
+            setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
             //Task name
             final JLabel jlTask = new JLabel(task.getName());
-            jlTask.setFont(font);
-            add(jlTask);
+            jlTask.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
+            add(jlTask, BorderLayout.CENTER);
+
+            //Tags panel
+            final TransparentPanel tpTags = new TransparentPanel();
+            tpTags.setLayout(new FlowLayout(FlowLayout.LEFT));
+            add(tpTags, BorderLayout.PAGE_END);
+
+            //Tags
+            for(int i = 0; i < task.getTotalTags(); i++) {
+
+                Tag tag = task.getTag(i);
+
+                final JPanel jpTag = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                jpTag.setBackground(tag.getColor());
+                tpTags.add(jpTag);
+
+                final JLabel jlTagName = new JLabel(tag.getName());
+                jlTagName.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
+                jpTag.add(jlTagName);
+
+            }
 
         }
 
-    }
+        @Override
+        public DataFlavor[] getTransferDataFlavors() {
+            return new DataFlavor[0];
+        }
 
-    private Font font;
+        @Override
+        public boolean isDataFlavorSupported(DataFlavor flavor) {
+            return false;
+        }
 
-    public TaskList(Font font) {
-        this.font = font;
+        @Override
+        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+            return null;
+        }
+
     }
 
     @Override
     public Component getListCellRendererComponent(JList<? extends Task> list, Task task, int index, boolean isSelected,
                                                   boolean cellHasFocus) {
 
-        TaskListComponent taskComponent = new TaskListComponent(task, font);
+        TaskListComponent taskComponent = new TaskListComponent(task);
         taskComponent.setOpaque(true);
 
         if (isSelected) {

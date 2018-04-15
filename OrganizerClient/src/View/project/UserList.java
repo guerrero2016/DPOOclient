@@ -5,20 +5,16 @@ import Model.User;
 import javax.swing.*;
 import java.awt.*;
 
-public class MemberList implements ListCellRenderer<User> {
+public class UserList implements ListCellRenderer<User> {
 
     public static class MemberListComponent extends JLabel {
 
         public MemberListComponent(String memberName) {
             setText(memberName);
+            setFont(new Font(Font.DIALOG, Font.BOLD, 16));
+            setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         }
 
-    }
-
-    private Font font;
-
-    public MemberList(Font font) {
-        this.font = font;
     }
 
     @Override
@@ -26,8 +22,8 @@ public class MemberList implements ListCellRenderer<User> {
                                                   boolean cellHasFocus) {
 
         //Member component
-        MemberList.MemberListComponent memberComponent = new MemberList.MemberListComponent(member.getUserName());
-        memberComponent.setFont(font);
+        UserList.MemberListComponent memberComponent = new UserList.MemberListComponent(member.getUserName());
+        memberComponent.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
         memberComponent.setOpaque(true);
 
         if (isSelected) {

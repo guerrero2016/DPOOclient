@@ -11,14 +11,10 @@ public class TagList implements ListCellRenderer<Tag> {
 
         public TagListComponent(String tagName) {
             setText(tagName);
+            setFont(new Font(Font.DIALOG, Font.BOLD, 16));
+            setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         }
 
-    }
-
-    private Font font;
-
-    public TagList(Font font) {
-        this.font = font;
     }
 
     @Override
@@ -27,7 +23,6 @@ public class TagList implements ListCellRenderer<Tag> {
 
         //Tag component
         TagListComponent tagComponent = new TagListComponent(tag.getName());
-        tagComponent.setFont(font);
         tagComponent.setOpaque(true);
 
         if (isSelected) {
