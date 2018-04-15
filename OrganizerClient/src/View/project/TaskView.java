@@ -15,6 +15,7 @@ public class TaskView extends JFrame {
     private final static String IMG_PATH = "img/";
     private final static String EDITOR_ICON_FILE = "editor_icon.png";
     private final static String DELETE_ICON_FILE = "delete_icon.png";
+    private final static String BACK_ICON_FILE = "back_icon.png";
 
     private final static int WINDOW_WIDTH = 350;
     private final static int WINDOW_HEIGHT = 500;
@@ -43,6 +44,7 @@ public class TaskView extends JFrame {
     private final JList<Tag> jlTagList;
     private final JTextField jtfTagName;
     private final JButton jbTagAdder;
+    private Image bigBackIcon;
 
     public TaskView(Task task) throws IOException {
 
@@ -63,6 +65,11 @@ public class TaskView extends JFrame {
         //Task title
         final JPanel jpTaskTitle = new JPanel(new FlowLayout(FlowLayout.LEFT));
         jpMain.add(jpTaskTitle, BorderLayout.PAGE_START);
+
+        //Task back button
+        final JButton jbBack = new JButton(new ImageIcon(bigBackIcon));
+        jbBack.setBorder(BorderFactory.createEmptyBorder());
+        jpTaskTitle.add(jbBack);
 
         //TODO: Change params
         //Task name
@@ -182,6 +189,10 @@ public class TaskView extends JFrame {
 
         //Load delete icon
         bigDeleteIcon = ImageIO.read(new File(IMG_PATH + DELETE_ICON_FILE)).
+                getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+
+        //Load back icon
+        bigBackIcon = ImageIO.read(new File(IMG_PATH + BACK_ICON_FILE)).
                 getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 
     }

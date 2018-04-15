@@ -17,9 +17,8 @@ public class ProjectView extends JFrame {
     private final static String LEFT_ICON_FILE = "left_icon.png";
     private final static String RIGHT_ICON_FILE = "right_icon.png";
 
-    private final static int WINDOW_WIDTH = 800;
-    private final static int WINDOW_HEIGHT = 500;
-    private final static String WINDOW_TITLE = "Project";
+    private final static int WINDOW_WIDTH = 1024;
+    private final static int WINDOW_HEIGHT = 600;
 
     private final static int MARGIN = 30;
     private final static int CATEGORY_WIDTH = 300;
@@ -27,8 +26,12 @@ public class ProjectView extends JFrame {
     private final static int MAX_PROJECT_LENGTH = 30;
     private final static int MAX_CATEGORY_LENGTH = 15;
 
+    private final static String WINDOW_TITLE = "Project";
+    private final static String PROJECT_INFO_TITLE = "Project Information";
     private final static String NEW_CATEGORY_TITLE = "New Category";
     private final static String NEW_TASK_TITLE = "New Task";
+    private final static String NEW_MEMBER_TITLE = "New Member";
+    private final static String MEMBERS_LIST_TITLE = "Members list";
     private final static String ADD_TITLE = "+";
 
     private Image bigEditorIcon;
@@ -42,6 +45,7 @@ public class ProjectView extends JFrame {
 
     private Font bigFont;
     private Font mediumFont;
+    private Font smallFont;
 
     private final BackgroundPanel jpCategories;
     private final JScrollPane jspCategories;
@@ -52,6 +56,11 @@ public class ProjectView extends JFrame {
     private final JButton jbCategoryAdder;
 
     private ArrayList<CategoryContent> categoriesContent;
+
+    private final JList<User> jlMemberList;
+    private final JTextField jtfNewMember;
+    private final JButton jbMemberAdder;
+    private final JPanel jpProjectView;
 
     public ProjectView(Project project) throws IOException {
 
@@ -66,12 +75,17 @@ public class ProjectView extends JFrame {
         loadFonts();
 
         //Main panel
-        final JPanel jpMainView = new JPanel(new BorderLayout());
-        getContentPane().add(jpMainView);
+        jpProjectView = new JPanel(new BorderLayout());
+        getContentPane().add(jpProjectView);
+
+        //Project view
+        final JPanel jpProjectInformation = new JPanel(new BorderLayout());
+        jpProjectInformation.setBorder(BorderFactory.createTitledBorder(PROJECT_INFO_TITLE));
+        jpProjectView.add(jpProjectInformation, BorderLayout.CENTER);
 
         //Project title
         final JPanel jpProjectTitle = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        jpMainView.add(jpProjectTitle, BorderLayout.PAGE_START);
+        jpProjectInformation.add(jpProjectTitle, BorderLayout.PAGE_START);
 
         //Project name
         jlProjectName = new JLabel();
@@ -101,7 +115,7 @@ public class ProjectView extends JFrame {
 
         //Categories panel
         jspCategories = new JScrollPane();
-        jpMainView.add(jspCategories, BorderLayout.CENTER);
+        jpProjectInformation.add(jspCategories, BorderLayout.CENTER);
 
         jpCategories = new BackgroundPanel();
         jpCategories.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -109,7 +123,7 @@ public class ProjectView extends JFrame {
 
         //Category adder panel
         final JPanel jpNewCategory = new JPanel(new BorderLayout());
-        jpMainView.add(jpNewCategory, BorderLayout.PAGE_END);
+        jpProjectInformation.add(jpNewCategory, BorderLayout.PAGE_END);
 
         //New category title
         final JLabel jlCategoryTitle = new JLabel(NEW_CATEGORY_TITLE);
@@ -129,9 +143,44 @@ public class ProjectView extends JFrame {
         categoriesContent = new ArrayList<>();
 
         //TODO: Change 'i' limit and change params
-        for(int i = 0; i < 0; i++) {
+        for(int i = 0; i < 10; i++) {
             addNewCategory(null);
         }
+
+        //Member view
+        final JPanel jpMember = new JPanel(new BorderLayout());
+        jpMember.setBorder(BorderFactory.createTitledBorder(MEMBERS_LIST_TITLE));
+        jpProjectView.add(jpMember, BorderLayout.LINE_END);
+
+        //Scrollable member list
+        final JScrollPane jspMembersList = new JScrollPane();
+        jpMember.add(jspMembersList, BorderLayout.CENTER);
+
+        //TODO: Change params
+        //Member list
+        jlMemberList = new JList<>();
+        jlMemberList.setCellRenderer(new MemberList(mediumFont));
+        setMembersList(null);
+        jspMembersList.getViewport().setView(jlMemberList);
+
+        //Member adder
+        final JPanel jpMemberAdder = new JPanel(new BorderLayout());
+        jpMember.add(jpMemberAdder, BorderLayout.PAGE_END);
+
+        //New member title
+        final JLabel jlNewMember = new JLabel(NEW_MEMBER_TITLE);
+        jlNewMember.setFont(smallFont);
+        jlNewMember.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+        jpMemberAdder.add(jlNewMember, BorderLayout.LINE_START);
+
+        //New member field
+        jtfNewMember = new JTextField();
+        jtfNewMember.setEditable(true);
+        jpMemberAdder.add(jtfNewMember, BorderLayout.CENTER);
+
+        //Member adder button
+        jbMemberAdder = new JButton(ADD_TITLE);
+        jpMemberAdder.add(jbMemberAdder, BorderLayout.LINE_END);
 
     }
 
@@ -160,6 +209,7 @@ public class ProjectView extends JFrame {
     private void loadFonts() {
         bigFont = new Font(Font.DIALOG, Font.BOLD, 20);
         mediumFont = new Font(Font.DIALOG, Font.BOLD, 16);
+        smallFont = new Font(Font.DIALOG, Font.BOLD, 12);
     }
 
     public void setProjectName(String projectName) {
@@ -401,6 +451,20 @@ public class ProjectView extends JFrame {
         //Tasks list content
         setTasksList(null, categoriesContent.indexOf(categoryContent));
 
+    }
+
+    public void setMembersList(ArrayList<User> members) {
+        if(members != null) {
+
+            DefaultListModel<User> membersList = new DefaultListModel<>();
+
+            for(int i = 0; members != null && i < members.size(); i++) {
+                membersList.addElement(members.get(i));
+            }
+
+            jlMemberList.setModel(membersList);
+
+        }
     }
 
     public void resizePanels() {

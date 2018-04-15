@@ -14,8 +14,8 @@ public class MemberView extends JFrame{
     private final static String NEW_MEMBER_TITLE = "New Member";
     private final static String ADD_TITLE = "+";
 
-    private Font bigFont;
     private Font mediumFont;
+    private Font smallFont;
 
     private final JList<User> jlMemberList;
     private final JTextField jtfNewMember;
@@ -42,18 +42,17 @@ public class MemberView extends JFrame{
 
         //Member list
         jlMemberList = new JList<>();
-        jlMemberList.setCellRenderer(new MemberList(bigFont));
+        jlMemberList.setCellRenderer(new MemberList(mediumFont));
         setMembersList(members);
         jspMembersList.getViewport().setView(jlMemberList);
 
         //Member adder
         final JPanel jpMemberAdder = new JPanel(new BorderLayout());
-        jpMemberAdder.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
         jpMain.add(jpMemberAdder, BorderLayout.PAGE_END);
 
         //New member title
         final JLabel jlNewMember = new JLabel(NEW_MEMBER_TITLE);
-        jlNewMember.setFont(mediumFont);
+        jlNewMember.setFont(smallFont);
         jlNewMember.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
         jpMemberAdder.add(jlNewMember, BorderLayout.LINE_START);
 
@@ -69,8 +68,8 @@ public class MemberView extends JFrame{
     }
 
     private void loadFonts() {
-        bigFont = new Font(Font.DIALOG, Font.BOLD, 20);
         mediumFont = new Font(Font.DIALOG, Font.BOLD, 16);
+        smallFont = new Font(Font.DIALOG, Font.BOLD, 12);
     }
 
     public User getSelectedMember() {
