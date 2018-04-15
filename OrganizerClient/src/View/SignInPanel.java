@@ -1,6 +1,7 @@
 package View;
 
-import Controller.IdentifyController;
+import Controller.LogInController;
+import Controller.SignInController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -119,8 +120,30 @@ public class SignInPanel extends JPanel {
 
     }
 
-    public void addControllerButton (IdentifyController ic) {
-        jbLogIn.addActionListener(ic);
-        jbSignIn.addActionListener(ic);
+    public void setEmailBorder(Color color) {
+        jtfEmail.setBorder(BorderFactory.createLineBorder(color));
+    }
+
+    public void setPasswordBorder(Color color) {
+        jpfPassword.setBorder(BorderFactory.createLineBorder(color));
+    }
+
+    public void setPasswordConfirmBorder(Color color) {
+        jpfConfirm.setBorder(BorderFactory.createLineBorder(color));
+    }
+
+    public void setUsernameBorder(Color color) {
+        jtfUsername.setBorder(BorderFactory.createLineBorder(color));
+    }
+
+    public void showError(String message) {
+        JOptionPane.showMessageDialog(null, message,
+                "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
+
+    }
+
+    public void addControllerButton (SignInController sic) {
+        jbLogIn.addActionListener(sic);
+        jbSignIn.addActionListener(sic);
     }
 }

@@ -22,6 +22,7 @@ public class ProjectCreationController implements MouseListener, ActionListener 
     public void createAddProjectView () {
         view = new AddProjectView();
         view.registerMouseListener(this);
+        view.setDialogVisible(true);
     }
 
     @Override
@@ -30,6 +31,7 @@ public class ProjectCreationController implements MouseListener, ActionListener 
             System.out.println("Missing parameters");
         } else {
             projectSelectionController.createProject(view.getProjectName(),color);
+            view.setDialogVisible(false);
         }
     }
 
@@ -37,7 +39,7 @@ public class ProjectCreationController implements MouseListener, ActionListener 
     public void mouseClicked(MouseEvent e) {
         JPanel colorPanel = (JPanel) e.getSource();
         color = colorPanel.getBackground();
-
+        view.selectColor(colorPanel);
     }
 
     @Override

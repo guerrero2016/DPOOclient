@@ -4,15 +4,15 @@ import Controller.ProjectCreationController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class AddProjectView extends JFrame {
+public class AddProjectView extends JPanel {
 
     private final JTextField nameTextField;
     private final Color[] COLORS = new Color[]{Color.RED, Color.BLUE, Color.CYAN, Color.YELLOW, Color.WHITE, Color.ORANGE, Color.green, Color.gray};
     private ArrayList<JPanel> colorsPanels;
     private final JButton createButton;
+    private final CustomDialog dialog;
 
     public AddProjectView () {
 
@@ -35,6 +35,7 @@ public class AddProjectView extends JFrame {
         createButton = new JButton("Afegir");
         buttonPanel.add(createButton);
 
+        setLayout(new BorderLayout());
         add(buttonPanel,BorderLayout.SOUTH);
         add(northPanel, BorderLayout.NORTH);
         add(colorsPanel, BorderLayout.CENTER);
@@ -42,10 +43,11 @@ public class AddProjectView extends JFrame {
         northPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         colorsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        setSize(300,300);
-        setResizable(false);
-        setTitle("Nou projecte");
-        setVisible(true);
+        dialog = new CustomDialog("Crear projecte", this);
+    }
+
+    public void setDialogVisible(boolean isVisible) {
+        dialog.setDialogVisible(isVisible);
     }
 
     public String getProjectName () {
@@ -73,4 +75,14 @@ public class AddProjectView extends JFrame {
         createButton.addActionListener(controller);
     }
 
+    public void selectColor (JPanel colorPanel) {
+        deselectAllColors();
+        colorPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+    }
+
+    private void deselectAllColors () {
+        for (JPanel colorPanel:colorsPanels) {
+            colorPanel.setBorder(BorderFactory.createEmptyBorder());
+        }
+    }
 }

@@ -13,5 +13,6 @@ public class ProjectInfoController {
         this.view = new ProjectInfoView();
         view.setMembers(members);
         view.setProjectName(title);
+        view.setDialogVisible(true);
     }
 }

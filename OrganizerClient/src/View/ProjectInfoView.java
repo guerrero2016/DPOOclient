@@ -3,10 +3,11 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-public class ProjectInfoView extends JFrame {
+public class ProjectInfoView extends JPanel {
 
     final JLabel projectNameLabel;
     final JTextArea membersTextArea;
+    final CustomDialog dialog;
 
     public ProjectInfoView () {
 
@@ -31,14 +32,15 @@ public class ProjectInfoView extends JFrame {
         membersPanel.add(membersLabel, BorderLayout.NORTH);
         membersPanel.add(membersTextArea, BorderLayout.CENTER);
 
-
+        setLayout(new BorderLayout());
         add(namePanel, BorderLayout.NORTH);
         add(membersPanel, BorderLayout.CENTER);
 
-        setSize(300,300);
-        setResizable(false);
-        setTitle("Informació");
-        setVisible(true);
+        dialog = new CustomDialog("Informació", this);
+    }
+
+    public void setDialogVisible (boolean isVisible) {
+        dialog.setDialogVisible(isVisible);
     }
 
     public void setProjectName (String name) {

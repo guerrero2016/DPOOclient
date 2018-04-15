@@ -1,144 +1,110 @@
 package View;
 
-import Controller.ProjectCreationController;
 import Controller.ProjectSelectionController;
+import Model.Project;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ProjectSelectionView extends JFrame {
+public class ProjectSelectionView extends JPanel {
 
     private JScrollPane scrollPane;
     private JPanel gridPanel;
-    private JPanel lastFlowPanel;
-    private int nGhostBox;
-    private int nRows;
+    private int nBoxes;
     private ArrayList<ProjectBoxView> projectBoxViews;
-    private final JButton logOutButton;
-    private final JButton addProjectButton;
     private ProjectSelectionController projectSelectionController;
+    private GridBagConstraints gridBagConstraints;
 
-    public static final String ADD_PROJECT_ACTION_COMMAND = "AddProject";
+    private final int numberOfColumns = 3;
 
     public ProjectSelectionView () {
 
         projectBoxViews = new ArrayList<>();
         setLayout(new BorderLayout());
 
-        JPanel southPanel = new JPanel(new BorderLayout());
-        logOutButton = new JButton("Tancar sessió");
-        addProjectButton = new JButton("+");
-
-        gridPanel = new JPanel(new GridLayout(0,1));
+        gridPanel = new JPanel(new GridBagLayout());
+        gridBagConstraints = new GridBagConstraints();
         scrollPane = new JScrollPane(gridPanel);
 
-        southPanel.add(logOutButton, BorderLayout.WEST);
-        southPanel.add(addProjectButton, BorderLayout.EAST);
-
-        addProjectButton.setActionCommand(this.ADD_PROJECT_ACTION_COMMAND);
-
-        add(scrollPane, BorderLayout.NORTH);
-        add(southPanel, BorderLayout.SOUTH);
-        setSize(800,500);
-        setResizable(false);
-        setTitle("LSOrganizer");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     public void registerController (ProjectSelectionController controller) {
         this.projectSelectionController = controller;
-        addProjectButton.addActionListener(controller);
         for (ProjectBoxView projectBoxView: projectBoxViews) {
             projectBoxView.registerMouseListener(controller);
+            projectBoxView.registerButtonListener(controller);
         }
     }
 
     public void createProjectBoxes (String [] titles, Color[] colors) {
-        int nBoxes = titles.length;
-
-        nRows = calculateNumberRows(nBoxes);
-        nGhostBox = calculateGhostBoxes(nBoxes);
-
-        gridPanel = new JPanel(new GridLayout(nRows,1));
-
-        for (int i = 0; i < nBoxes; i++) {
-            if (i%4 == 0) {
-                lastFlowPanel = new JPanel(new FlowLayout());
-                gridPanel.add(lastFlowPanel);
-            }
-            ProjectBoxView projectBoxView = new ProjectBoxView(titles[i],colors[i]);
-            projectBoxViews.add(projectBoxView);
-            lastFlowPanel.add(projectBoxView);
-        }
-
-        addGhostBoxes();
-
-        scrollPane.getViewport().setView(gridPanel);
-    }
-
-    private void addGhostBoxes () {
-        for (int i = 0; i < nGhostBox; i++) {
-            lastFlowPanel.add(new ProjectBoxView("", gridPanel.getBackground()));
-        }
-    }
-
-    private void removeBoxAt (int index) {
-        projectBoxViews.remove(index);
-        Color [] colors = new Color[projectBoxViews.size()];
-        String [] titles = new String[projectBoxViews.size()];
-
-        for (int i = 0; i < projectBoxViews.size(); i++) {
-            colors[i] = projectBoxViews.get(i).getBackground();
-            titles[i] = projectBoxViews.get(i).getTitle();
-        }
-        projectBoxViews.removeAll(projectBoxViews);
-        createProjectBoxes(titles, colors);
-    }
-
-    public void addProjectBox (String title, Color color) {
         setVisible(false);
-        ProjectBoxView projectBoxView = new ProjectBoxView(title, color);
-        projectBoxView.registerMouseListener(projectSelectionController);
-        if (nGhostBox == 0) {
-            nRows++;
-            nGhostBox = 3;
+        nBoxes = titles.length;
+        int x = 0;
+        int y = -1;
 
-            lastFlowPanel = new JPanel(new FlowLayout());
-            lastFlowPanel.add(projectBoxView);
-            addGhostBoxes();
-            addFlowPanelToGrid();
-        } else {
-            deleteGhostBoxes();
-            lastFlowPanel.add(projectBoxView);
-            nGhostBox--;
-            addGhostBoxes();
+        for (int j = 0; j < nBoxes; j++) {
+            if (j % numberOfColumns == 0) {
+                x = 0;
+                y++;
+            }
+            createProjectBoxView(titles[j],colors[j], x, y);
+            x++;
         }
-        projectBoxViews.add(projectBoxView);
         setVisible(true);
     }
 
-    private void addFlowPanelToGrid () {
-        ((GridLayout) gridPanel.getLayout()).setRows(nRows);
-        gridPanel.add(lastFlowPanel);
+    private void createProjectBoxView (String title, Color color, int x, int y) {
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+        gridBagConstraints.gridx = x;
+        gridBagConstraints.gridy = y;
+        gridBagConstraints.insets.top = 10;
+        gridBagConstraints.weightx = 1;
+        ProjectBoxView projectBoxView = new ProjectBoxView(title, color);
+        projectBoxView.registerMouseListener(projectSelectionController);
+        projectBoxView.registerButtonListener(projectSelectionController);
+        projectBoxViews.add(projectBoxView);
+        gridPanel.add(projectBoxView, gridBagConstraints);
         scrollPane.getViewport().setView(gridPanel);
     }
 
-    private void deleteGhostBoxes () {
-        for (int i = 3; i > (4 - nGhostBox - 1); i--) {
-            lastFlowPanel.remove(i);
+    public void addProjectBox (String title, Color color) {
+        int y = calculateNumberRows(nBoxes) - 1;
+        int x = nBoxes - numberOfColumns*(y);
+        if (nBoxes % numberOfColumns == 0) {
+            x = 0;
+            y++;
         }
+        createProjectBoxView(title, color, x, y);
+        nBoxes++;
     }
 
-    private int calculateGhostBoxes (int nBoxes) {
-        return 4 - (nBoxes - 4*(nRows-1));
+    public void removeProject(int index) {
+        projectBoxViews.remove(index);
+
+        String [] titles = new String[projectBoxViews.size()];
+        Color [] colors = new Color [projectBoxViews.size()];
+
+        for (int i = 0; i < projectBoxViews.size(); i++) {
+            titles[i] = projectBoxViews.get(i).getTitle();
+            colors[i] = projectBoxViews.get(i).getBackground();
+        }
+
+        projectBoxViews = new ArrayList<>();
+
+        setVisible(false);
+        gridPanel = new JPanel(new GridBagLayout());
+        gridBagConstraints = new GridBagConstraints();
+        createProjectBoxes(titles, colors);
+        setVisible(true);
     }
 
     private int calculateNumberRows (int nBoxes) {
-        if (nBoxes % 4 != 0) {
-            return (nBoxes / 4) + 1;
+        if (nBoxes % numberOfColumns == 0) {
+            return nBoxes/numberOfColumns;
         } else {
-            return (nBoxes / 4);
+            return nBoxes/numberOfColumns + 1;
         }
     }
 

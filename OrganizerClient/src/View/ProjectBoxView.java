@@ -1,38 +1,85 @@
 package View;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
 public class ProjectBoxView extends JPanel {
+    public static final String INFO_AC = "INFO";
+    public static final String DELETE_AC = "DELETE";
 
-    final int HEIGHT = 50;
-    final int WIDTH = 180;
-    final int MAX_CHARS = 17;
+    final int HEIGHT = 80;  //50
+    final int WIDTH = 180;  //180
+    final int MAX_CHARS = 10;
+    private final static String INFO_ICON = "img/info_icon.png";
+    private final static String DELETE_ICON = "img/delete_icon.png";
 
     final JLabel titleLabel;
     private String title;
+    private JButton jbInfo;
+    private JButton jbDelete;
 
     public ProjectBoxView (String title, Color color) {
         setLayout(new BorderLayout());
 
         this.title  = title;
 
+        JPanel jpLabel = new JPanel(new BorderLayout());
         titleLabel = new JLabel(configureLabelMaxTextWidth(title));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(HEIGHT / 2 - 5, WIDTH / 2,
+                HEIGHT / 2 + 5,WIDTH / 2));
+        jpLabel.add(titleLabel, BorderLayout.EAST);
 
-        final int marginX = (WIDTH/2) - (getTextWidth(titleLabel.getText())/2);
+        Image infoImage = null;
+        Image deleteImage = null;
+        try {
+            infoImage = ImageIO.read(new File(INFO_ICON)).
+                    getScaledInstance(10, 10, Image.SCALE_SMOOTH);
+
+            deleteImage = ImageIO.read(new File(DELETE_ICON)).
+                    getScaledInstance(10, 10, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        jbInfo = new JButton(new ImageIcon(infoImage));
+        jbInfo.setBackground(color);
+        jbInfo.setBorder(null);
+        jbInfo.setActionCommand(title);
+
+        jbDelete = new JButton(new ImageIcon(deleteImage));
+        jbDelete.setBackground(color);
+        jbDelete.setBorder(null);
+        jbDelete.setActionCommand(DELETE_AC);
+
+        JPanel jpAux = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        jpAux.setBackground(color);
+        jpAux.add(jbInfo);
+        jpAux.add(jbDelete);
+
+        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        setMaximumSize(new Dimension(WIDTH, HEIGHT));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         setBackground(color);
-        add(Box.createRigidArea(new Dimension(marginX,1)), BorderLayout.EAST);
-        add(Box.createRigidArea(new Dimension(marginX,1)), BorderLayout.WEST);
-        add(Box.createRigidArea(new Dimension(1,HEIGHT/2)), BorderLayout.NORTH);
-        add(Box.createRigidArea(new Dimension(1,HEIGHT/2)), BorderLayout.SOUTH);
-        add(titleLabel,BorderLayout.CENTER);
+        jpLabel.setBackground(color);
+        this.add(jpAux, BorderLayout.NORTH);
+        this.add(jpLabel,BorderLayout.CENTER);
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public void registerButtonListener (ActionListener controller){
+        jbDelete.addActionListener(controller);
+        jbInfo.addActionListener(controller);
     }
 
     public void registerMouseListener (MouseListener controller) {
