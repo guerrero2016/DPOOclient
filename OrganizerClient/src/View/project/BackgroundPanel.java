@@ -20,7 +20,7 @@ public class BackgroundPanel extends JPanel {
 
     }
 
-    public void setBackground(Image background) {
+    public void setBackgroundImage(Image background) {
         setOpaque(false);
         this.background = background;
         repaint();

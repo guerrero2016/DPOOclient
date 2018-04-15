@@ -70,6 +70,7 @@ public class MainView extends JFrame {
                 super.setTitle("SignIn - Organizer");
                 ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "signIn");
                 break;
+
             case ProjectsMainView.VIEW_TAG:
                 super.setTitle("Organizer");
                 ((CardLayout)this.getContentPane().getLayout()).show(this.getContentPane(), ProjectsMainView.VIEW_NAME);
