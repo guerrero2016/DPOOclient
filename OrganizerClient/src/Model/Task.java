@@ -15,6 +15,12 @@ public class Task {
         members = new ArrayList<>();
     }
 
+    public Task(String name) {
+        this.name = name.toString();
+        tags = new ArrayList<>();
+        members = new ArrayList<>();
+    }
+
     public Task(String name, String description, ArrayList<Tag> tags, ArrayList<User> members) {
         this.name = new String(name);
         this.description = new String(description);
@@ -56,15 +62,15 @@ public class Task {
 
     }
 
-    public void addTags(Tag tag) {
+    public void addTag(Tag tag) {
         tags.add(tag);
     }
 
-    public int getTotalMembers() {
+    public int getTotalUsers() {
         return members.size();
     }
 
-    public User getMember(int memberPosition) {
+    public User getUser(int memberPosition) {
 
         if(memberPosition < members.size()) {
             return members.get(memberPosition);
@@ -74,7 +80,11 @@ public class Task {
 
     }
 
-    public void addMembers(User member) {
+    public ArrayList<User> getUsers() {
+        return members;
+    }
+
+    public void addUser(User member) {
         members.add(member);
     }
 

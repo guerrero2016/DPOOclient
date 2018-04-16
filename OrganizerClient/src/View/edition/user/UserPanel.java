@@ -1,6 +1,7 @@
-package View.project;
+package View.edition.user;
 
 import Model.User;
+import View.edition.TransparentPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -79,13 +80,16 @@ public class UserPanel extends TransparentPanel {
         usersList.remove(userIndex);
     }
 
-
     public String getNewUser() {
         return jtfNewUser.getText();
     }
 
     public void cleanNewUser() {
         jtfNewUser.setText(null);
+    }
+
+    public void setUserAddButtonState(boolean buttonState) {
+        jbUserAdder.setEnabled(buttonState);
     }
 
 }

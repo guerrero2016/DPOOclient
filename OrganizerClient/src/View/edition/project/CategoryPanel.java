@@ -1,10 +1,9 @@
-package View.project;
+package View.edition.project;
 
 import Model.Category;
 import Model.Task;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class CategoryPanel extends JPanel {
@@ -105,6 +104,10 @@ public class CategoryPanel extends JPanel {
         jbTaskAdder = new JButton(ADD_TITLE);
         jpTaskAdder.add(jbTaskAdder, BorderLayout.LINE_END);
 
+    }
+
+    public void setTaskAdderButtonState(boolean buttonState) {
+        jbTaskAdder.setEnabled(buttonState);
     }
 
     public void setCategoryName(String categoryName) {

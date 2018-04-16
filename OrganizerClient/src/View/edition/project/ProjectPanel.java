@@ -1,8 +1,10 @@
-package View.project;
+package View.edition.project;
 
 import Model.Category;
 import Model.Project;
 import Model.Task;
+import View.edition.TransparentPanel;
+import View.edition.TransparentScrollPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -111,6 +113,16 @@ public class ProjectPanel extends TransparentPanel {
         jbCategoryAdder = new JButton(ADD_TITLE);
         tpNewCategory.add(jbCategoryAdder, BorderLayout.LINE_END);
 
+    }
+
+    public void setCategoryAdderButtonState(boolean buttonState) {
+        jbCategoryAdder.setEnabled(buttonState);
+    }
+
+    public void setTaskAdderButtonState(int categoryIndex, boolean buttonState) {
+        if(categoryIndex < categoryPanels.size()) {
+            categoryPanels.get(categoryIndex).setTaskAdderButtonState(buttonState);
+        }
     }
 
     public void setProjectName(String projectName) {

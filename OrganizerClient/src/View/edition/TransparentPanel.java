@@ -1,12 +1,12 @@
-package View.project;
+package View.edition;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TransparentScrollPanel extends JScrollPane {
+public class TransparentPanel extends JPanel {
 
-    public TransparentScrollPanel() {
-        super.getViewport().setOpaque(false);
+    public TransparentPanel() {
+        super.setOpaque(false);
     }
 
     public void paintComponent(Graphics g) {

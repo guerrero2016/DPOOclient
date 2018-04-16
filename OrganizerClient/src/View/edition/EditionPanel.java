@@ -1,14 +1,16 @@
-package View.project;
+package View.edition;
 
 import Model.*;
+import View.edition.project.ProjectPanel;
+import View.edition.task.TaskPanel;
+import View.edition.user.UserPanel;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class ProjectView extends JFrame {
+public class EditionPanel extends BackgroundPanel {
 
     private final static String IMG_PATH = "img/";
     private final static String EDITOR_ICON_FILE = "editor_icon.png";
@@ -18,10 +20,6 @@ public class ProjectView extends JFrame {
     private final static String RIGHT_ICON_FILE = "right_icon.png";
     private final static String BACK_ICON_FILE = "back_icon.png";
 
-    private final static int WINDOW_WIDTH = 1024;
-    private final static int WINDOW_HEIGHT = 600;
-
-    private final static String WINDOW_TITLE = "Organizer";
     private final static String PROJECT_USERS_LIST_TITLE = "Project Users List";
     private final static String TASK_USERS_LIST_TITLE = "Task Users List";
 
@@ -32,35 +30,28 @@ public class ProjectView extends JFrame {
     private Image rightIcon;
     private Image backIcon;
 
-    private final BackgroundPanel bpProjectView;
     private final ProjectPanel projectPanel;
-    private final UserPanel userPanel;
+    private final UserPanel projectUserPanel;
 
     private TaskPanel taskPanel;
     private UserPanel taskUserPanel;
 
-    public ProjectView(Project project) throws IOException {
+    public EditionPanel(Project project) throws IOException {
 
         //Prepare settings
         loadIcons();
-        setSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-        setTitle(WINDOW_TITLE);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);    //TODO: Change close operation
-        setLocationRelativeTo(null);
 
         //Main panel
-        bpProjectView = new BackgroundPanel();
-        bpProjectView.setLayout(new BorderLayout());
-        bpProjectView.setBackgroundImage(project.getBackground());
-        add(bpProjectView);
+        setLayout(new BorderLayout());
+        setBackgroundImage(project.getBackground());
 
         //Project panel
         projectPanel = new ProjectPanel(project, editorIcon, backgroundIcon, deleteIcon, leftIcon, rightIcon);
-        bpProjectView.add(projectPanel, BorderLayout.CENTER);
+        add(projectPanel, BorderLayout.CENTER);
 
         //User panel
-        userPanel = new UserPanel(project.getUsers(), PROJECT_USERS_LIST_TITLE);
-        bpProjectView.add(userPanel, BorderLayout.LINE_END);
+        projectUserPanel = new UserPanel(project.getUsers(), PROJECT_USERS_LIST_TITLE);
+        add(projectUserPanel, BorderLayout.LINE_END);
 
     }
 
@@ -80,17 +71,19 @@ public class ProjectView extends JFrame {
     }
 
     public void showProjectPanel() {
+        removeAll();
         taskPanel = null;
         taskUserPanel = null;
-        bpProjectView.add(projectPanel, BorderLayout.CENTER);
-        bpProjectView.add(userPanel, BorderLayout.LINE_END);
+        add(projectPanel, BorderLayout.CENTER);
+        add(projectUserPanel, BorderLayout.LINE_END);
     }
 
     public void showTaskPanel(Task task) {
+        removeAll();
         taskPanel = new TaskPanel(task, backIcon, editorIcon, deleteIcon);
-        bpProjectView.add(taskPanel, BorderLayout.CENTER);
-        taskUserPanel = new UserPanel(task.getUsers(), PROJECT_USERS_LIST_TITLE);
-        bpProjectView.add(taskUserPanel, BorderLayout.LINE_END);
+        add(taskPanel, BorderLayout.CENTER);
+        taskUserPanel = new UserPanel(task.getUsers(), TASK_USERS_LIST_TITLE);
+        add(taskUserPanel, BorderLayout.LINE_END);
     }
 
     public void setProjectName(String projectName) {
@@ -98,7 +91,7 @@ public class ProjectView extends JFrame {
     }
 
     public void setBackground(Image background) {
-        bpProjectView.setBackgroundImage(background);
+        setBackgroundImage(background);
     }
 
     public String getNewCategoryName() {
@@ -146,35 +139,129 @@ public class ProjectView extends JFrame {
     }
 
     public void addProjectUser(User user) {
-        userPanel.addUser(user);
+        projectUserPanel.addUser(user);
     }
 
     public void removeProjectUser(int userIndex) {
-        userPanel.removeUser(userIndex);
+        projectUserPanel.removeUser(userIndex);
     }
 
     public String getNewProjectUser() {
-        return userPanel.getNewUser();
+        return projectUserPanel.getNewUser();
     }
 
     public void cleanNewProjectUser() {
-        userPanel.cleanNewUser();
+        projectUserPanel.cleanNewUser();
     }
 
     public void addTaskUser(User user) {
-        taskUserPanel.addUser(user);
+        if(taskUserPanel != null) {
+            taskUserPanel.addUser(user);
+        }
     }
 
     public void removeTaskUser(int userIndex) {
-        taskUserPanel.removeUser(userIndex);
+        if(taskUserPanel != null) {
+            taskUserPanel.removeUser(userIndex);
+        }
     }
 
     public String getNewTaskUser() {
-        return taskUserPanel.getNewUser();
+
+        if (taskUserPanel != null) {
+            return taskUserPanel.getNewUser();
+        }
+
+        return null;
+
     }
 
     public void cleanNewTaskUser() {
-        taskUserPanel.cleanNewUser();
+        if(taskUserPanel != null) {
+            taskUserPanel.cleanNewUser();
+        }
+    }
+
+    public void setTaskName(String taskName) {
+        if(taskPanel != null) {
+            taskPanel.setTaskName(taskName);
+        }
+    }
+
+    public String getDescription() {
+
+        if(taskPanel != null) {
+            return taskPanel.getDescription();
+        }
+
+        return null;
+
+    }
+
+    public void setDescription(String description) {
+        if(taskPanel != null) {
+            taskPanel.setDescription(description);
+        }
+    }
+
+    public void addNewTag(Tag tag) {
+        if(taskPanel != null) {
+            taskPanel.addNewTag(tag);
+        }
+    }
+
+    public Tag getSelectedTag() {
+
+        if(taskPanel != null) {
+            return taskPanel.getSelectedTag();
+        }
+
+        return null;
+
+    }
+
+    public void removeTag(int tagIndex) {
+        if(taskPanel != null) {
+            taskPanel.removeTag(tagIndex);
+        }
+    }
+
+    public String getNewTagName() {
+
+        if(taskPanel != null) {
+            return taskPanel.getNewTagName();
+        }
+
+        return null;
+
+    }
+
+    public void cleanNewTagName() {
+        if(taskPanel != null) {
+            taskPanel.cleanNewTagName();
+        }
+    }
+
+    public void setTagAdderButtonState(boolean buttonState) {
+        if(taskPanel != null) {
+            taskPanel.setTagAdderButtonState(buttonState);
+        }
+    }
+
+    public void setCategoryAdderButtonState(boolean buttonState) {
+        projectPanel.setCategoryAdderButtonState(buttonState);
+    }
+
+    public void setTaskAdderButtonState(int categoryIndex, boolean buttonState) {
+        projectPanel.setTaskAdderButtonState(categoryIndex, buttonState);
+    }
+
+    public void setProjectUserAddButtonState(boolean buttonState) {
+        projectUserPanel.setUserAddButtonState(buttonState);
+    }
+
+    public void setTaskUserAddButtonState(boolean buttonState) {
+        taskUserPanel.setUserAddButtonState(buttonState);
     }
 
 }

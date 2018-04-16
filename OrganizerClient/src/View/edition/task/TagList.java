@@ -1,4 +1,4 @@
-package View.project;
+package View.edition.task;
 
 import Model.Tag;
 

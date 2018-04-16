@@ -1,4 +1,4 @@
-package View.project;
+package View.edition.user;
 
 import Model.User;
 

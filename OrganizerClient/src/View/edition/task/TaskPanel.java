@@ -1,7 +1,8 @@
-package View.project;
+package View.edition.task;
 
 import Model.Tag;
 import Model.Task;
+import View.edition.TransparentPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,8 @@ public class TaskPanel extends TransparentPanel {
     private final static String TASK_TITLE = "Task";
     private final static String DESCRIPTION_TITLE = "Description";
     private final static String TAGS_TITLE = "Tags";
+    private final static String TAG_ADDER_TITLE = "New Tag";
+    private final static String ADD_TITLE = "+";
 
     private final JButton jbTaskBack;
     private final JLabel jlTaskName;
@@ -20,7 +23,10 @@ public class TaskPanel extends TransparentPanel {
     private final JButton jbTaskDelete;
     private final JButton jbDescriptionEditor;
     private final JTextArea jtaDescription;
-    private final JList<Tag> jlTags;
+    private final JList<Tag> jlTagsList;
+    private final JTextField jtfTagName;
+    private final JButton jbTagAdder;
+    private final DefaultListModel<Tag> tagsList;
 
     public TaskPanel(Task task, Image backIcon, Image editorIcon, Image deleteIcon) {
 
@@ -76,7 +82,7 @@ public class TaskPanel extends TransparentPanel {
         gbcDescription.gridx = 0;
         gbcDescription.gridy = 0;
         gbcDescription.weightx = 1;
-        gbcDescription.weighty = 0.7;
+        gbcDescription.weighty = 0.5;
         gbcDescription.fill = GridBagConstraints.BOTH;
 
         tpContent.add(tpDescription, gbcDescription);
@@ -115,7 +121,7 @@ public class TaskPanel extends TransparentPanel {
         GridBagConstraints gbcTags = new GridBagConstraints();
         gbcTags.gridx = 0;
         gbcTags.weightx = 1;
-        gbcTags.weighty = 0.3;
+        gbcTags.weighty = 0.5;
         gbcTags.fill = GridBagConstraints.BOTH;
 
         tpContent.add(tpTags, gbcTags);
@@ -136,18 +142,37 @@ public class TaskPanel extends TransparentPanel {
         tpTags.add(jspTags, BorderLayout.CENTER);
 
         //Tags list
-        jlTags = new JList<>();
-        jlTags.setCellRenderer(new TagList());
-        jlTags.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jspTags.getViewport().setView(jlTags);
+        jlTagsList = new JList<>();
+        jlTagsList.setCellRenderer(new TagList());
+        jlTagsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jspTags.getViewport().setView(jlTagsList);
 
-        DefaultListModel<Tag> tagsList = new DefaultListModel<>();
+        tagsList = new DefaultListModel<>();
 
         for(int i = 0; i < task.getTotalTags(); i++) {
             tagsList.addElement(task.getTag(i));
         }
 
-        jlTags.setModel(tagsList);
+        jlTagsList.setModel(tagsList);
+
+        //Tag adder panel
+        final JPanel jpTagsAdder = new JPanel(new BorderLayout());
+        tpTags.add(jpTagsAdder, BorderLayout.PAGE_END);
+
+        //Tag adder title
+        final JLabel jlTagAdderTitle = new JLabel(TAG_ADDER_TITLE);
+        jlTagAdderTitle.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        jlTagAdderTitle.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+        jpTagsAdder.add(jlTagAdderTitle, BorderLayout.LINE_START);
+
+        //Tag adder field
+        jtfTagName = new JTextField();
+        jtfTagName.setEditable(true);
+        jpTagsAdder.add(jtfTagName, BorderLayout.CENTER);
+
+        //Tag adder button
+        jbTagAdder = new JButton(ADD_TITLE);
+        jpTagsAdder.add(jbTagAdder, BorderLayout.LINE_END);
 
     }
 
@@ -158,6 +183,46 @@ public class TaskPanel extends TransparentPanel {
             String shortTaskName = taskName.substring(0, MAX_TASK_LENGTH) + "...";
             jlTaskName.setText(shortTaskName);
         }
+    }
+
+    public String getDescription() {
+        return jtaDescription.getText();
+    }
+
+    public void setDescription(String description) {
+        jtaDescription.setText(description);
+    }
+
+    public void addNewTag(Tag tag) {
+        tagsList.addElement(tag);
+    }
+
+    public Tag getSelectedTag() {
+
+        if(jlTagsList.isSelectionEmpty()) {
+            return null;
+        }
+
+        return jlTagsList.getSelectedValue();
+
+    }
+
+    public void removeTag(int tagIndex) {
+        if(tagIndex < tagsList.size()) {
+            tagsList.remove(tagIndex);
+        }
+    }
+
+    public String getNewTagName() {
+        return jtfTagName.getText();
+    }
+
+    public void cleanNewTagName() {
+        jtfTagName.setText(null);
+    }
+
+    public void setTagAdderButtonState(boolean buttonState) {
+        jbTagAdder.setEnabled(buttonState);
     }
 
 }

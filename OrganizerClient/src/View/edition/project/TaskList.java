@@ -1,7 +1,8 @@
-package View.project;
+package View.edition.project;
 
 import Model.Tag;
 import Model.Task;
+import View.edition.TransparentPanel;
 
 import javax.swing.*;
 import java.awt.*;
