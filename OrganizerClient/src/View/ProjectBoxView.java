@@ -21,12 +21,14 @@ public class ProjectBoxView extends JPanel {
 
     final JLabel titleLabel;
     private String title;
-    private JButton jbInfo;
-    private JButton jbDelete;
+    private CustomProjectButton jbInfo;
+    private CustomProjectButton jbDelete;
+    private final int index;
 
-    public ProjectBoxView (String title, Color color) {
+    public ProjectBoxView (String title, Color color, int index) {
         setLayout(new BorderLayout());
 
+        this.index = index;
         this.title  = title;
 
         JPanel jpLabel = new JPanel(new BorderLayout());
@@ -48,12 +50,12 @@ public class ProjectBoxView extends JPanel {
             e.printStackTrace();
         }
 
-        jbInfo = new JButton(new ImageIcon(infoImage));
+        jbInfo = new CustomProjectButton(new ImageIcon(infoImage), title, index);
         jbInfo.setBackground(color);
         jbInfo.setBorder(null);
-        jbInfo.setActionCommand(title);
+        jbInfo.setActionCommand(INFO_AC);
 
-        jbDelete = new JButton(new ImageIcon(deleteImage));
+        jbDelete = new CustomProjectButton(new ImageIcon(deleteImage), title, index);
         jbDelete.setBackground(color);
         jbDelete.setBorder(null);
         jbDelete.setActionCommand(DELETE_AC);

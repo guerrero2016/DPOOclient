@@ -1,5 +1,6 @@
 package Controller;
 
+import View.CustomProjectButton;
 import View.ProjectBoxView;
 import View.ProjectsMainView;
 
@@ -53,17 +54,19 @@ public class ProjectSelectionController implements MouseListener, ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String button = ((JButton)e.getSource()).getActionCommand();
+        String actionCommand = ((JButton)e.getSource()).getActionCommand();
 
-        switch (button){
+        switch (actionCommand){
             case ProjectBoxView.DELETE_AC:
-                controller.removeProject(2);
+                CustomProjectButton button = (CustomProjectButton) e.getSource();
+                controller.removeProject(button.getProjectIndex());
                 break;
             case ProjectsMainView.ADD_PROJECT_ACTION_COMMAND:
                 createAddProjectWindow();
                 break;
-            default:
-                createProjectInfoWindow(e.getActionCommand());
+            case ProjectBoxView.INFO_AC:
+                CustomProjectButton button2 = (CustomProjectButton) e.getSource();
+                createProjectInfoWindow(button2.getProjectName());
         }
     }
 

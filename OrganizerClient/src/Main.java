@@ -1,4 +1,6 @@
+import Controller.MainViewController;
 import Model.*;
+import View.MainView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -27,10 +29,10 @@ public class Main {
                 //6. Finalment durant la creació del controlador gran se li ha de passar aquest a tots
                 //   els petits controladors.
 
-//                MainView a = new MainView();
-//                MainViewController mainViewController = new MainViewController(a);
-//                mainViewController.registerControllers(a);
-//                a.setVisible(true);
+                     MainView a = new MainView();
+                     MainViewController mainViewController = new MainViewController(a);
+                     mainViewController.registerControllers(a);
+                     a.setVisible(true);
 
 //                try {
 

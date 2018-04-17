@@ -62,6 +62,7 @@ public class ProjectsMainView extends JPanel {
 
     public void registerProjectSelectionController (ProjectSelectionController controller) {
         ownerProjectSelectionView.registerController(controller);
+        friendProjectSelectionView.registerController(controller);
     }
 
     public void createOwnerBoxProjects (String[] titles, Color[] colors) {
