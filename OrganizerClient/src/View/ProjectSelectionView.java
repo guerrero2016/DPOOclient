@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class ProjectSelectionView extends JPanel {
 
+    private final boolean isOwner;
     private JScrollPane scrollPane;
     private JPanel gridPanel;
     private int nBoxes;
@@ -18,7 +19,9 @@ public class ProjectSelectionView extends JPanel {
 
     private final int numberOfColumns = 3;
 
-    public ProjectSelectionView () {
+    public ProjectSelectionView (boolean isOwner) {
+
+        this.isOwner = isOwner;
 
         projectBoxViews = new ArrayList<>();
         setLayout(new BorderLayout());
@@ -61,7 +64,7 @@ public class ProjectSelectionView extends JPanel {
         gridBagConstraints.gridy = y;
         gridBagConstraints.insets.top = 10;
         gridBagConstraints.weightx = 1;
-        ProjectBoxView projectBoxView = new ProjectBoxView(title, color, projectBoxViews.size());
+        ProjectBoxView projectBoxView = new ProjectBoxView(title, color, projectBoxViews.size(), isOwner);
         projectBoxView.registerMouseListener(projectSelectionController);
         projectBoxView.registerButtonListener(projectSelectionController);
         projectBoxViews.add(projectBoxView);

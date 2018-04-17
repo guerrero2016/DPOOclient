@@ -24,12 +24,14 @@ public class ProjectBoxView extends JPanel {
     private CustomProjectButton jbInfo;
     private CustomProjectButton jbDelete;
     private final int index;
+    private final boolean isOwner;
 
-    public ProjectBoxView (String title, Color color, int index) {
+    public ProjectBoxView (String title, Color color, int index, boolean isOwner) {
         setLayout(new BorderLayout());
 
         this.index = index;
         this.title  = title;
+        this.isOwner = isOwner;
 
         JPanel jpLabel = new JPanel(new BorderLayout());
         titleLabel = new JLabel(configureLabelMaxTextWidth(title));
@@ -50,20 +52,25 @@ public class ProjectBoxView extends JPanel {
             e.printStackTrace();
         }
 
+        JPanel jpAux = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
         jbInfo = new CustomProjectButton(new ImageIcon(infoImage), title, index);
         jbInfo.setBackground(color);
         jbInfo.setBorder(null);
         jbInfo.setActionCommand(INFO_AC);
 
         jbDelete = new CustomProjectButton(new ImageIcon(deleteImage), title, index);
-        jbDelete.setBackground(color);
-        jbDelete.setBorder(null);
-        jbDelete.setActionCommand(DELETE_AC);
 
-        JPanel jpAux = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        if (isOwner) {
+            jbDelete.setBackground(color);
+            jbDelete.setBorder(null);
+            jbDelete.setActionCommand(DELETE_AC);
+            jpAux.add(jbDelete);
+        }
+
         jpAux.setBackground(color);
         jpAux.add(jbInfo);
-        jpAux.add(jbDelete);
+
 
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
