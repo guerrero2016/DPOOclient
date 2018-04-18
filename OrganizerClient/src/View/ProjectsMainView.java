@@ -27,8 +27,8 @@ public class ProjectsMainView extends JPanel {
         ownerLabel.setFont(ownerLabel.getFont().deriveFont(Font.BOLD, 30));
         friendLabel.setFont(ownerLabel.getFont());
 
-        ownerProjectSelectionView = new ProjectSelectionView();
-        friendProjectSelectionView = new ProjectSelectionView();
+        ownerProjectSelectionView = new ProjectSelectionView(true);
+        friendProjectSelectionView = new ProjectSelectionView(false);
 
 
         ownerPane.add(ownerLabel, BorderLayout.NORTH);
@@ -62,6 +62,7 @@ public class ProjectsMainView extends JPanel {
 
     public void registerProjectSelectionController (ProjectSelectionController controller) {
         ownerProjectSelectionView.registerController(controller);
+        friendProjectSelectionView.registerController(controller);
     }
 
     public void createOwnerBoxProjects (String[] titles, Color[] colors) {
