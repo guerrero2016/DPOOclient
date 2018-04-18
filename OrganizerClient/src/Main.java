@@ -1,4 +1,5 @@
 import Model.*;
+import View.edition.EditionPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -72,12 +73,21 @@ public class Main {
                         System.out.println("Missing background");
                     }
 
-//                    EditionPanel projectView = new EditionPanel(edition);
-//                    projectView.setVisible(true);
-
                     ArrayList<Tag> tags = new ArrayList<>();
 
                     Task task = new Task("New task", "No description", tags, null);
+
+                    try {
+                        JFrame jFrame = new JFrame();
+                        EditionPanel editionPanel = new EditionPanel(project);
+//                        editionPanel.showTaskPanel(new Task("Task name"));
+                        jFrame.setContentPane(editionPanel);
+                        jFrame.setSize(1024, 600);
+                        jFrame.setVisible(true);
+                        jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                    } catch(IOException e) {
+                        //Not working
+                    }
 //                    projectView.addNewTask(task, 0);
 //                    projectView.removeTask(1, 0);
 
