@@ -19,6 +19,7 @@ public class EditionPanel extends BackgroundPanel {
     private final static String LEFT_ICON_FILE = "left_icon.png";
     private final static String RIGHT_ICON_FILE = "right_icon.png";
     private final static String BACK_ICON_FILE = "back_icon.png";
+    private final static String CHECK_ICON_FILE = "check_icon.png";
 
     private final static String PROJECT_USERS_LIST_TITLE = "Project Users List";
     private final static String TASK_USERS_LIST_TITLE = "Task Users List";
@@ -29,6 +30,7 @@ public class EditionPanel extends BackgroundPanel {
     private Image leftIcon;
     private Image rightIcon;
     private Image backIcon;
+    private Image checkIcon;
 
     private final ProjectPanel projectPanel;
     private final UserPanel projectUserPanel;
@@ -68,6 +70,8 @@ public class EditionPanel extends BackgroundPanel {
         leftIcon = ImageIO.read(new File(IMG_PATH + LEFT_ICON_FILE));
         //Left icon
         rightIcon = ImageIO.read(new File(IMG_PATH + RIGHT_ICON_FILE));
+        //Check icon
+        checkIcon = ImageIO.read(new File(IMG_PATH + CHECK_ICON_FILE));
     }
 
     public void showProjectPanel() {
@@ -80,7 +84,7 @@ public class EditionPanel extends BackgroundPanel {
 
     public void showTaskPanel(Task task) {
         removeAll();
-        taskPanel = new TaskPanel(task, backIcon, editorIcon, deleteIcon);
+        taskPanel = new TaskPanel(task, backIcon, editorIcon, deleteIcon, checkIcon);
         add(taskPanel, BorderLayout.CENTER);
         taskUserPanel = new UserPanel(task.getUsers(), TASK_USERS_LIST_TITLE);
         add(taskUserPanel, BorderLayout.LINE_END);
@@ -262,6 +266,12 @@ public class EditionPanel extends BackgroundPanel {
 
     public void setTaskUserAddButtonState(boolean buttonState) {
         taskUserPanel.setUserAddButtonState(buttonState);
+    }
+
+    public void setTaskDescriptionState(boolean descriptionState) {
+        if(taskPanel != null) {
+            taskPanel.setDescriptionState(descriptionState);
+        }
     }
 
 }

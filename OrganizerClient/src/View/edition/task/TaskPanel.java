@@ -28,7 +28,14 @@ public class TaskPanel extends TransparentPanel {
     private final JButton jbTagAdder;
     private final DefaultListModel<Tag> tagsList;
 
-    public TaskPanel(Task task, Image backIcon, Image editorIcon, Image deleteIcon) {
+    private Image editorIcon;
+    private Image checkIcon;
+
+    public TaskPanel(Task task, Image backIcon, Image editorIcon, Image deleteIcon, Image checkIcon) {
+
+        //Save needed icons
+        this.editorIcon = editorIcon;
+        this.checkIcon = checkIcon;
 
         //Panel settings
         setLayout(new BorderLayout());
@@ -172,6 +179,7 @@ public class TaskPanel extends TransparentPanel {
 
         //Tag adder button
         jbTagAdder = new JButton(ADD_TITLE);
+        jbTagAdder.setEnabled(false);
         jpTagsAdder.add(jbTagAdder, BorderLayout.LINE_END);
 
     }
@@ -223,6 +231,20 @@ public class TaskPanel extends TransparentPanel {
 
     public void setTagAdderButtonState(boolean buttonState) {
         jbTagAdder.setEnabled(buttonState);
+    }
+
+    public void setDescriptionState(boolean descriptionState) {
+
+        jtaDescription.setEditable(descriptionState);
+
+        if(descriptionState) {
+            jbDescriptionEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(16, 16,
+                    Image.SCALE_SMOOTH)));
+        } else {
+            jbDescriptionEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(16, 16,
+                    Image.SCALE_SMOOTH)));
+        }
+
     }
 
 }
