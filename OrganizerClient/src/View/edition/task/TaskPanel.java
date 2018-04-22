@@ -3,6 +3,7 @@ package View.edition.task;
 import Model.Tag;
 import Model.Task;
 import View.edition.TransparentPanel;
+import View.edition.TransparentScrollPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -145,14 +146,16 @@ public class TaskPanel extends TransparentPanel {
         tpTagsTitle.add(jlTagsTitle);
 
         //Scrollable tags list
-        final JScrollPane jspTags = new JScrollPane();
-        tpTags.add(jspTags, BorderLayout.CENTER);
+        final TransparentScrollPanel tspTags = new TransparentScrollPanel();
+        tpTags.add(tspTags, BorderLayout.CENTER);
+
+        //TODO: Replace tags lst
 
         //Tags list
         jlTagsList = new JList<>();
         jlTagsList.setCellRenderer(new TagList());
         jlTagsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jspTags.getViewport().setView(jlTagsList);
+        tspTags.getViewport().setView(jlTagsList);
 
         tagsList = new DefaultListModel<>();
 
@@ -161,6 +164,14 @@ public class TaskPanel extends TransparentPanel {
         }
 
         jlTagsList.setModel(tagsList);
+
+        //TODO: End replace
+
+        //TODO: Replace list
+
+
+
+        //TODO: End of replace
 
         //Tag adder panel
         final JPanel jpTagsAdder = new JPanel(new BorderLayout());
