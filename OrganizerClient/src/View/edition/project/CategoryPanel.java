@@ -50,22 +50,22 @@ public class CategoryPanel extends JPanel {
 
         //Category editor button
         jbCategoryEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
-        jbCategoryEditor.setBorder(BorderFactory.createEmptyBorder());
+        jbCategoryEditor.setBorder(null);
         jpCategoryButtons.add(jbCategoryEditor);
 
         //Category delete button
         jbCategoryDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
-        jbCategoryDelete.setBorder(BorderFactory.createEmptyBorder());
+        jbCategoryDelete.setBorder(null);
         jpCategoryButtons.add(jbCategoryDelete);
 
         //Category reorder left button
         jbCategoryLeft = new JButton(new ImageIcon(leftIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
-        jbCategoryLeft.setBorder(BorderFactory.createEmptyBorder());
+        jbCategoryLeft.setBorder(null);
         jpCategoryButtons.add(jbCategoryLeft);
 
         //Category reorder right button
         jbCategoryRight = new JButton(new ImageIcon(rightIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
-        jbCategoryRight.setBorder(BorderFactory.createEmptyBorder());
+        jbCategoryRight.setBorder(null);
         jpCategoryButtons.add(jbCategoryRight);
 
         //Scrollable task list

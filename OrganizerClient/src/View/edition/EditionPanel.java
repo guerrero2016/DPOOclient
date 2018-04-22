@@ -210,24 +210,22 @@ public class EditionPanel extends BackgroundPanel {
 
     public void addNewTag(Tag tag) {
         if(taskPanel != null) {
-            taskPanel.addNewTag(tag);
+            taskPanel.addTag(tag);
         }
-    }
-
-    public Tag getSelectedTag() {
-
-        if(taskPanel != null) {
-            return taskPanel.getSelectedTag();
-        }
-
-        return null;
-
     }
 
     public void removeTag(int tagIndex) {
         if(taskPanel != null) {
             taskPanel.removeTag(tagIndex);
         }
+    }
+
+    public void setTagName(int tagIndex, String tagName) {
+        taskPanel.setTagName(tagIndex, tagName);
+    }
+
+    public void setTagColor(int tagIndex, Color tagColor) {
+        taskPanel.setTagColor(tagIndex, tagColor);
     }
 
     public String getNewTagName() {

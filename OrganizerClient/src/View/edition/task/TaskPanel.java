@@ -7,10 +7,12 @@ import View.edition.TransparentScrollPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class TaskPanel extends TransparentPanel {
 
     private final static int MAX_TASK_LENGTH = 20;
+    private final static int MAX_TAGS = 4;
 
     private final static String TASK_TITLE = "Task";
     private final static String DESCRIPTION_TITLE = "Description";
@@ -24,19 +26,22 @@ public class TaskPanel extends TransparentPanel {
     private final JButton jbTaskDelete;
     private final JButton jbDescriptionEditor;
     private final JTextArea jtaDescription;
-    private final JList<Tag> jlTagsList;
+    private final TransparentPanel tpTagsList;
     private final JTextField jtfTagName;
     private final JButton jbTagAdder;
-    private final DefaultListModel<Tag> tagsList;
 
     private Image editorIcon;
     private Image checkIcon;
+    private Image deleteIcon;
+
+    private ArrayList<TagPanel> tagPanels;
 
     public TaskPanel(Task task, Image backIcon, Image editorIcon, Image deleteIcon, Image checkIcon) {
 
         //Save needed icons
         this.editorIcon = editorIcon;
         this.checkIcon = checkIcon;
+        this.deleteIcon = deleteIcon;
 
         //Panel settings
         setLayout(new BorderLayout());
@@ -62,19 +67,19 @@ public class TaskPanel extends TransparentPanel {
         //Task back button
         jbTaskBack = new JButton(new ImageIcon(backIcon.getScaledInstance(20, 20,
                 Image.SCALE_SMOOTH)));
-        jbTaskBack.setBorder(BorderFactory.createEmptyBorder());
+        jbTaskBack.setBorder(null);
         tpTaskButtons.add(jbTaskBack);
 
         //Task editor button
         jbTaskEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(20, 20,
                 Image.SCALE_SMOOTH)));
-        jbTaskEditor.setBorder(BorderFactory.createEmptyBorder());
+        jbTaskEditor.setBorder(null);
         tpTaskButtons.add(jbTaskEditor);
 
         //Task delete icon
         jbTaskDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(20, 20,
                 Image.SCALE_SMOOTH)));
-        jbTaskDelete.setBorder(BorderFactory.createEmptyBorder());
+        jbTaskDelete.setBorder(null);
         tpTaskButtons.add(jbTaskDelete);
 
         //Content panel
@@ -90,7 +95,7 @@ public class TaskPanel extends TransparentPanel {
         gbcDescription.gridx = 0;
         gbcDescription.gridy = 0;
         gbcDescription.weightx = 1;
-        gbcDescription.weighty = 0.5;
+        gbcDescription.weighty = 0.3;
         gbcDescription.fill = GridBagConstraints.BOTH;
 
         tpContent.add(tpDescription, gbcDescription);
@@ -109,7 +114,7 @@ public class TaskPanel extends TransparentPanel {
         //Description editor button
         jbDescriptionEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(16, 16,
                 Image.SCALE_SMOOTH)));
-        jbDescriptionEditor.setBorder(BorderFactory.createEmptyBorder());
+        jbDescriptionEditor.setBorder(null);
         tpDescriptionTitle.add(jbDescriptionEditor);
 
         //Scrollable description text
@@ -129,7 +134,7 @@ public class TaskPanel extends TransparentPanel {
         GridBagConstraints gbcTags = new GridBagConstraints();
         gbcTags.gridx = 0;
         gbcTags.weightx = 1;
-        gbcTags.weighty = 0.5;
+        gbcTags.weighty = 0.7;
         gbcTags.fill = GridBagConstraints.BOTH;
 
         tpContent.add(tpTags, gbcTags);
@@ -149,29 +154,16 @@ public class TaskPanel extends TransparentPanel {
         final TransparentScrollPanel tspTags = new TransparentScrollPanel();
         tpTags.add(tspTags, BorderLayout.CENTER);
 
-        //TODO: Replace tags lst
-
         //Tags list
-        jlTagsList = new JList<>();
-        jlTagsList.setCellRenderer(new TagList());
-        jlTagsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tspTags.getViewport().setView(jlTagsList);
+        tpTagsList = new TransparentPanel();
+        tpTagsList.setLayout(new GridBagLayout());
+        tspTags.getViewport().setView(tpTagsList);
 
-        tagsList = new DefaultListModel<>();
+        tagPanels = new ArrayList<>();
 
         for(int i = 0; i < task.getTotalTags(); i++) {
-            tagsList.addElement(task.getTag(i));
+            addTag(task.getTag(i));
         }
-
-        jlTagsList.setModel(tagsList);
-
-        //TODO: End replace
-
-        //TODO: Replace list
-
-
-
-        //TODO: End of replace
 
         //Tag adder panel
         final JPanel jpTagsAdder = new JPanel(new BorderLayout());
@@ -212,23 +204,48 @@ public class TaskPanel extends TransparentPanel {
         jtaDescription.setText(description);
     }
 
-    public void addNewTag(Tag tag) {
-        tagsList.addElement(tag);
-    }
-
-    public Tag getSelectedTag() {
-
-        if(jlTagsList.isSelectionEmpty()) {
-            return null;
-        }
-
-        return jlTagsList.getSelectedValue();
-
+    public void addTag(Tag tag) {
+        tagPanels.add(new TagPanel(editorIcon, deleteIcon, tag));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = (tagPanels.size() - 1) % MAX_TAGS;
+        gbc.gridy = (tagPanels.size() - 1) / MAX_TAGS;
+        gbc.weightx = 1;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.NONE;
+        tpTagsList.add(tagPanels.get(tagPanels.size() - 1), gbc);
     }
 
     public void removeTag(int tagIndex) {
-        if(tagIndex < tagsList.size()) {
-            tagsList.remove(tagIndex);
+        if(tagIndex < tagPanels.size()) {
+
+            tpTagsList.setVisible(false);
+            tpTagsList.removeAll();
+            tagPanels.remove(tagIndex);
+
+            for(int i = 0; i < tagPanels.size(); i++) {
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.gridx = i % MAX_TAGS;
+                gbc.gridy = i / MAX_TAGS;
+                gbc.weightx = 1;
+                gbc.insets = new Insets(5, 5, 5, 5);
+                gbc.fill = GridBagConstraints.NONE;
+                tpTagsList.add(tagPanels.get(i), gbc);
+            }
+
+            tpTagsList.setVisible(true);
+
+        }
+    }
+
+    public void setTagName(int tagIndex, String tagName) {
+        if (tagIndex < tagPanels.size()) {
+            tagPanels.get(tagIndex).setTagName(tagName);
+        }
+    }
+
+    public void setTagColor(int tagIndex, Color tagColor) {
+        if (tagIndex < tagPanels.size()) {
+            tagPanels.get(tagIndex).setTagColor(tagColor);
         }
     }
 

@@ -76,13 +76,17 @@ public class Main {
                     }
 
                     ArrayList<Tag> tags = new ArrayList<>();
+                    for(int i = 0; i < 50; i++) {
+                        tags.add(new Tag("Tag " + (i + 1), Color.CYAN));
+                    }
 
                     Task task = new Task("New task", "No description", tags, null);
 
                     try {
                         JFrame jFrame = new JFrame();
                         EditionPanel editionPanel = new EditionPanel(project);
-//                        editionPanel.showTaskPanel(new Task("Task name"));
+                        editionPanel.showTaskPanel(task);
+                        editionPanel.removeTag(29);
                         jFrame.setContentPane(editionPanel);
                         jFrame.setSize(1024, 600);
                         jFrame.setVisible(true);

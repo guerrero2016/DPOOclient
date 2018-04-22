@@ -67,17 +67,17 @@ public class ProjectPanel extends TransparentPanel {
 
         //Project editor button
         jbProjectEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
-        jbProjectEditor.setBorder(BorderFactory.createEmptyBorder());
+        jbProjectEditor.setBorder(null);
         tpProjectButtons.add(jbProjectEditor);
 
         //Project background button
         jbBackground = new JButton(new ImageIcon(backgroundIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
-        jbBackground.setBorder(BorderFactory.createEmptyBorder());
+        jbBackground.setBorder(null);
         tpProjectButtons.add(jbBackground);
 
         //Project delete button
         jbProjectDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
-        jbProjectDelete.setBorder(BorderFactory.createEmptyBorder());
+        jbProjectDelete.setBorder(null);
         tpProjectButtons.add(jbProjectDelete);
 
         //Categories scrollable list
