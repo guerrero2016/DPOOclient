@@ -221,11 +221,15 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     public void setTagName(int tagIndex, String tagName) {
-        taskPanel.setTagName(tagIndex, tagName);
+        if(taskPanel != null) {
+            taskPanel.setTagName(tagIndex, tagName);
+        }
     }
 
     public void setTagColor(int tagIndex, Color tagColor) {
-        taskPanel.setTagColor(tagIndex, tagColor);
+        if(taskPanel != null) {
+            taskPanel.setTagColor(tagIndex, tagColor);
+        }
     }
 
     public String getNewTagName() {

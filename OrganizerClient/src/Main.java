@@ -85,7 +85,7 @@ public class Main {
                     try {
                         JFrame jFrame = new JFrame();
                         EditionPanel editionPanel = new EditionPanel(project);
-                        editionPanel.showTaskPanel(task);
+//                        editionPanel.showTaskPanel(task);
                         editionPanel.removeTag(29);
                         jFrame.setContentPane(editionPanel);
                         jFrame.setSize(1024, 600);
