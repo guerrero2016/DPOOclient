@@ -4,9 +4,18 @@ import Model.Category;
 import Model.Task;
 
 import javax.swing.*;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 public class CategoryPanel extends JPanel {
+
+    public final static String ACTION_CATEGORY_EDIT_NAME = "CategoryEditName";
+    public final static String ACTION_CATEGORY_LEFT = "CategoryLeft";
+    public final static String ACTION_CATEGORY_RIGHT = "CategoryRight";
+    public final static String ACTION_CATEGORY_DELETE = "CategoryDelete";
+    public final static String ACTION_TASK_ADD = "TaskAdd";
 
     private final static int PANEL_WIDTH = 275;
     private final static int MAX_CATEGORY_LENGTH = 15;
@@ -51,22 +60,26 @@ public class CategoryPanel extends JPanel {
         //Category editor button
         jbCategoryEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
         jbCategoryEditor.setBorder(null);
+        jbCategoryEditor.setActionCommand(ACTION_CATEGORY_EDIT_NAME);
         jpCategoryButtons.add(jbCategoryEditor);
-
-        //Category delete button
-        jbCategoryDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
-        jbCategoryDelete.setBorder(null);
-        jpCategoryButtons.add(jbCategoryDelete);
 
         //Category reorder left button
         jbCategoryLeft = new JButton(new ImageIcon(leftIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
         jbCategoryLeft.setBorder(null);
+        jbCategoryLeft.setActionCommand(ACTION_CATEGORY_LEFT);
         jpCategoryButtons.add(jbCategoryLeft);
 
         //Category reorder right button
         jbCategoryRight = new JButton(new ImageIcon(rightIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
         jbCategoryRight.setBorder(null);
+        jbCategoryRight.setActionCommand(ACTION_CATEGORY_RIGHT);
         jpCategoryButtons.add(jbCategoryRight);
+
+        //Category delete button
+        jbCategoryDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+        jbCategoryDelete.setBorder(null);
+        jbCategoryDelete.setActionCommand(ACTION_CATEGORY_DELETE);
+        jpCategoryButtons.add(jbCategoryDelete);
 
         //Scrollable task list
         final JScrollPane jspCategories = new JScrollPane();
@@ -102,6 +115,8 @@ public class CategoryPanel extends JPanel {
 
         //New task adder button
         jbTaskAdder = new JButton(ADD_TITLE);
+        jbTaskAdder.setEnabled(false);
+        jbTaskAdder.setActionCommand(ACTION_TASK_ADD);
         jpTaskAdder.add(jbTaskAdder, BorderLayout.LINE_END);
 
     }
@@ -145,6 +160,22 @@ public class CategoryPanel extends JPanel {
         if(taskIndex < tasksList.size()) {
             tasksList.remove(taskIndex);
         }
+    }
+
+    public void registerActionController(ActionListener actionListener) {
+        jbCategoryEditor.addActionListener(actionListener);
+        jbCategoryLeft.addActionListener(actionListener);
+        jbCategoryRight.addActionListener(actionListener);
+        jbCategoryDelete.addActionListener(actionListener);
+        jbTaskAdder.addActionListener(actionListener);
+    }
+
+    public void registerMouseController(MouseListener mouseListener) {
+        jlTasks.addMouseListener(mouseListener);
+    }
+
+    public void registerDocumentController(DocumentListener documentListener) {
+        jtfTaskName.getDocument().addDocumentListener(documentListener);
     }
 
 }

@@ -5,8 +5,12 @@ import View.edition.TransparentPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class TagPanel extends JPanel {
+
+    public final static String ACTION_TAG_NAME_EDIT = "TagNameEdit";
+    public final static String ACTION_TAG_DELETE = "TagDelete";
 
     private final int PANEL_WIDTH = 150;
     private final int PANEL_HEIGHT = 50;
@@ -34,12 +38,14 @@ public class TagPanel extends JPanel {
         jbTagEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(12, 12,
                 Image.SCALE_SMOOTH)));
         jbTagEditor.setBorder(null);
+        jbTagEditor.setActionCommand(ACTION_TAG_NAME_EDIT);
         tpButtonsPanel.add(jbTagEditor);
 
         //Delete icon
         jbTagDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(12, 12,
                 Image.SCALE_SMOOTH)));
         jbTagDelete.setBorder(null);
+        jbTagDelete.setActionCommand(ACTION_TAG_DELETE);
         tpButtonsPanel.add(jbTagDelete);
 
         //Tag name
@@ -63,6 +69,11 @@ public class TagPanel extends JPanel {
 
     public void setTagColor(Color tagColor) {
         setBackground(tagColor);
+    }
+
+    public void registerActionController(ActionListener actionListener) {
+        jbTagEditor.addActionListener(actionListener);
+        jbTagDelete.addActionListener(actionListener);
     }
 
 }

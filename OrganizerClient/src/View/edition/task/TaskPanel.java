@@ -6,10 +6,18 @@ import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class TaskPanel extends TransparentPanel {
+
+    public final static String ACTION_TASK_BACK = "TaskBack";
+    public final static String ACTION_TASK_EDIT_NAME = "TaskEditName";
+    public final static String ACTION_TASK_DELETE = "TaskDelete";
+    public final static String ACTION_DESCRIPTION_EDITION = "DescriptionEdition";
+    public final static String ACTION_TAG_ADD = "TagAdd";
 
     private final static int MAX_TASK_LENGTH = 20;
     private final static int MAX_TAGS = 4;
@@ -68,18 +76,21 @@ public class TaskPanel extends TransparentPanel {
         jbTaskBack = new JButton(new ImageIcon(backIcon.getScaledInstance(20, 20,
                 Image.SCALE_SMOOTH)));
         jbTaskBack.setBorder(null);
+        jbTaskBack.setActionCommand(ACTION_TASK_BACK);
         tpTaskButtons.add(jbTaskBack);
 
         //Task editor button
         jbTaskEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(20, 20,
                 Image.SCALE_SMOOTH)));
         jbTaskEditor.setBorder(null);
+        jbTaskEditor.setActionCommand(ACTION_TASK_EDIT_NAME);
         tpTaskButtons.add(jbTaskEditor);
 
         //Task delete icon
         jbTaskDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(20, 20,
                 Image.SCALE_SMOOTH)));
         jbTaskDelete.setBorder(null);
+        jbTaskDelete.setActionCommand(ACTION_TASK_DELETE);
         tpTaskButtons.add(jbTaskDelete);
 
         //Content panel
@@ -115,6 +126,7 @@ public class TaskPanel extends TransparentPanel {
         jbDescriptionEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(16, 16,
                 Image.SCALE_SMOOTH)));
         jbDescriptionEditor.setBorder(null);
+        jbDescriptionEditor.setActionCommand(ACTION_DESCRIPTION_EDITION);
         tpDescriptionTitle.add(jbDescriptionEditor);
 
         //Scrollable description text
@@ -183,6 +195,7 @@ public class TaskPanel extends TransparentPanel {
         //Tag adder button
         jbTagAdder = new JButton(ADD_TITLE);
         jbTagAdder.setEnabled(false);
+        jbTagAdder.setActionCommand(ACTION_TAG_ADD);
         jpTagsAdder.add(jbTagAdder, BorderLayout.LINE_END);
 
     }
@@ -272,6 +285,38 @@ public class TaskPanel extends TransparentPanel {
             jbDescriptionEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(16, 16,
                     Image.SCALE_SMOOTH)));
         }
+
+    }
+
+    public void registerActionController(ActionListener actionListener) {
+
+        jbTaskBack.addActionListener(actionListener);
+        jbTaskEditor.addActionListener(actionListener);
+        jbTaskDelete.addActionListener(actionListener);
+        jbDescriptionEditor.addActionListener(actionListener);
+        jbTagAdder.addActionListener(actionListener);
+
+        for(int i = 0; i < tagPanels.size(); i++) {
+            tagPanels.get(i).registerActionController(actionListener);
+        }
+
+    }
+
+    public void registerDocumentController(DocumentListener documentListener) {
+        jtfTagName.getDocument().addDocumentListener(documentListener);
+    }
+
+    public int getTotalTags() {
+        return tagPanels.size();
+    }
+
+    public TagPanel getTagPanel(int tagIndex) {
+
+        if(tagIndex < tagPanels.size()) {
+            return tagPanels.get(tagIndex);
+        }
+
+        return null;
 
     }
 

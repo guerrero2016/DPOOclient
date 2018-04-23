@@ -3,6 +3,8 @@ package View;
 import Controller.LogInController;
 import Controller.ProjectSelectionController;
 import Controller.SignInController;
+import Controller.edition.EditionController;
+import View.edition.EditionPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,10 +17,15 @@ public class MainView extends JFrame {
     private static final String IMAGE_PATH = System.getProperty("user.dir") + System.getProperty("file.separator") +
             "img" + System.getProperty("file.separator") + "identifyImage.jpg";
 
+    private final static String PROJECT_TITLE = "Organizer - Project";
+    private final static String PROJECT_CONSTRAINT = "Project";
+    public final static int PROJECT_ID = 4;
+
     private JPanel jpLogSign;
     private SignInPanel signInPanel;
     private LogInPanel logInPanel;
     private ProjectsMainView projectsView;
+    private EditionPanel editionPanel;
 
     public MainView() {
         JPanel jpIdentifyPanel = new JPanel(new BorderLayout());
@@ -51,6 +58,10 @@ public class MainView extends JFrame {
         this.add(jpIdentifyPanel, "identify");
         this.add(projectsView, ProjectsMainView.VIEW_NAME);
 
+        //Edition panel
+        editionPanel = new EditionPanel();
+        add(editionPanel, PROJECT_CONSTRAINT);
+
         super.setMinimumSize(new Dimension(1000,500));
         super.setSize(1200,750);
         super.setTitle("LogIn - Organizer");
@@ -74,6 +85,11 @@ public class MainView extends JFrame {
             case ProjectsMainView.VIEW_TAG:
                 super.setTitle("Organizer");
                 ((CardLayout)this.getContentPane().getLayout()).show(this.getContentPane(), ProjectsMainView.VIEW_NAME);
+                break;
+
+            case PROJECT_ID:
+                super.setTitle(PROJECT_TITLE);
+                ((CardLayout)this.getContentPane().getLayout()).show(this.getContentPane(), PROJECT_CONSTRAINT);
                 break;
         }
     }
@@ -107,4 +123,8 @@ public class MainView extends JFrame {
     public void removeProjectAtIndex (int index) {
         projectsView.removeOwnerProject(index);
     }
+    public EditionPanel getEditionPanel() {
+        return editionPanel;
+    }
+
 }

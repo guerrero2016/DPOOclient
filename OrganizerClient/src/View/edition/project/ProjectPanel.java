@@ -7,10 +7,18 @@ import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class ProjectPanel extends TransparentPanel {
+
+    public final static String ACTION_PROJECT_EDIT_NAME = "ProjectEditName";
+    public final static String ACTION_PROJECT_BACKGROUND = "ProjectBackground";
+    public final static String ACTION_PROJECT_DELETE = "ProjectDelete";
+    public final static String ACTION_CATEGORY_ADD = "CategoryAdd";
 
     private final static int MAX_PROJECT_LENGTH = 30;
 
@@ -68,16 +76,19 @@ public class ProjectPanel extends TransparentPanel {
         //Project editor button
         jbProjectEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
         jbProjectEditor.setBorder(null);
+        jbProjectEditor.setActionCommand(ACTION_PROJECT_EDIT_NAME);
         tpProjectButtons.add(jbProjectEditor);
 
         //Project background button
         jbBackground = new JButton(new ImageIcon(backgroundIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
         jbBackground.setBorder(null);
+        jbBackground.setActionCommand(ACTION_PROJECT_BACKGROUND);
         tpProjectButtons.add(jbBackground);
 
         //Project delete button
         jbProjectDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
         jbProjectDelete.setBorder(null);
+        jbProjectDelete.setActionCommand(ACTION_PROJECT_DELETE);
         tpProjectButtons.add(jbProjectDelete);
 
         //Categories scrollable list
@@ -111,18 +122,14 @@ public class ProjectPanel extends TransparentPanel {
 
         //New category adder button
         jbCategoryAdder = new JButton(ADD_TITLE);
+        jbCategoryAdder.setEnabled(false);
+        jbCategoryAdder.setActionCommand(ACTION_CATEGORY_ADD);
         tpNewCategory.add(jbCategoryAdder, BorderLayout.LINE_END);
 
     }
 
     public void setCategoryAdderButtonState(boolean buttonState) {
         jbCategoryAdder.setEnabled(buttonState);
-    }
-
-    public void setTaskAdderButtonState(int categoryIndex, boolean buttonState) {
-        if(categoryIndex < categoryPanels.size()) {
-            categoryPanels.get(categoryIndex).setTaskAdderButtonState(buttonState);
-        }
     }
 
     public void setProjectName(String projectName) {
@@ -221,6 +228,43 @@ public class ProjectPanel extends TransparentPanel {
         if(categoryIndex < categoryPanels.size()) {
             categoryPanels.get(categoryIndex).removeTask(taskIndex);
         }
+    }
+
+    public void registerActionController(ActionListener actionListener) {
+
+        jbProjectEditor.addActionListener(actionListener);
+        jbBackground.addActionListener(actionListener);
+        jbProjectDelete.addActionListener(actionListener);
+        jbCategoryAdder.addActionListener(actionListener);
+
+        for(CategoryPanel categoryPanel : categoryPanels) {
+            categoryPanel.registerActionController(actionListener);
+        }
+
+    }
+
+    public void registerMouseController(MouseListener mouseListener) {
+        for(CategoryPanel categoryPanel : categoryPanels) {
+            categoryPanel.registerMouseController(mouseListener);
+        }
+    }
+
+    public void registerDocumentController(DocumentListener documentListener) {
+        jtfCategoryName.getDocument().addDocumentListener(documentListener);
+    }
+
+    public int getTotalCategories() {
+        return categoryPanels.size();
+    }
+
+    public CategoryPanel getCategoryPanel(int categoryIndex) {
+
+        if(categoryIndex < categoryPanels.size()) {
+            return categoryPanels.get(categoryIndex);
+        }
+
+        return null;
+
     }
 
 }

@@ -1,6 +1,7 @@
 package Controller;
 
 import View.CustomProjectButton;
+import View.MainView;
 import View.ProjectBoxView;
 import View.ProjectsMainView;
 
@@ -25,7 +26,10 @@ public class ProjectSelectionController implements MouseListener, ActionListener
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        //AQUI S'HA D'OBRIR EL PROJECTE
+        //TODO: Manage content and mouse position
+        //TODO: Recover project from server
+        controller.loadProject(null);
+        controller.swapPanel(MainView.PROJECT_ID);
     }
 
     public void createProject (String title, Color color) {

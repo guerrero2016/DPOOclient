@@ -1,279 +1,218 @@
 package View.edition;
 
-import Model.*;
-import View.edition.project.ProjectPanel;
-import View.edition.task.TaskPanel;
-import View.edition.user.UserPanel;
-
-import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class EditionPanel extends BackgroundPanel {
 
-    private final static String IMG_PATH = "img/";
-    private final static String EDITOR_ICON_FILE = "editor_icon.png";
-    private final static String BACKGROUND_ICON_FILE = "background_icon.png";
-    private final static String DELETE_ICON_FILE = "delete_icon.png";
-    private final static String LEFT_ICON_FILE = "left_icon.png";
-    private final static String RIGHT_ICON_FILE = "right_icon.png";
-    private final static String BACK_ICON_FILE = "back_icon.png";
-    private final static String CHECK_ICON_FILE = "check_icon.png";
-
-    private final static String PROJECT_USERS_LIST_TITLE = "Project Users List";
-    private final static String TASK_USERS_LIST_TITLE = "Task Users List";
-
-    private Image editorIcon;
-    private Image backgroundIcon;
-    private Image deleteIcon;
-    private Image leftIcon;
-    private Image rightIcon;
-    private Image backIcon;
-    private Image checkIcon;
-
-    private final ProjectPanel projectPanel;
-    private final UserPanel projectUserPanel;
-
-    private TaskPanel taskPanel;
-    private UserPanel taskUserPanel;
-
-    public EditionPanel(Project project) throws IOException {
-
-        //Prepare settings
-        loadIcons();
-
-        //Main panel
+    public EditionPanel() {
         setLayout(new BorderLayout());
-        setBackgroundImage(project.getBackground());
+    }
 
-        //Project panel
-        projectPanel = new ProjectPanel(project, editorIcon, backgroundIcon, deleteIcon, leftIcon, rightIcon);
-        add(projectPanel, BorderLayout.CENTER);
+    public void setMainPanel(JPanel jPanel) {
 
-        //User panel
-        projectUserPanel = new UserPanel(project.getUsers(), PROJECT_USERS_LIST_TITLE);
-        add(projectUserPanel, BorderLayout.LINE_END);
+        if(((BorderLayout) getLayout()).getLayoutComponent(BorderLayout.CENTER) != null) {
+            remove(((BorderLayout) getLayout()).getLayoutComponent(BorderLayout.CENTER));
+        }
+
+        add(jPanel, BorderLayout.CENTER);
 
     }
 
-    private void loadIcons() throws IOException {
-        //Back icon
-        backIcon = ImageIO.read(new File(IMG_PATH + BACK_ICON_FILE));
-        //Editor icon
-        editorIcon = ImageIO.read(new File(IMG_PATH + EDITOR_ICON_FILE));
-        //Background icon
-        backgroundIcon = ImageIO.read(new File(IMG_PATH + BACKGROUND_ICON_FILE));
-        //Delete icon
-        deleteIcon = ImageIO.read(new File(IMG_PATH + DELETE_ICON_FILE));
-        //Left icon
-        leftIcon = ImageIO.read(new File(IMG_PATH + LEFT_ICON_FILE));
-        //Left icon
-        rightIcon = ImageIO.read(new File(IMG_PATH + RIGHT_ICON_FILE));
-        //Check icon
-        checkIcon = ImageIO.read(new File(IMG_PATH + CHECK_ICON_FILE));
-    }
+    public void setLateralPanel(JPanel jPanel) {
 
-    public void showProjectPanel() {
-        removeAll();
-        taskPanel = null;
-        taskUserPanel = null;
-        add(projectPanel, BorderLayout.CENTER);
-        add(projectUserPanel, BorderLayout.LINE_END);
-    }
+        if(((BorderLayout) getLayout()).getLayoutComponent(BorderLayout.LINE_END) != null) {
+            remove(((BorderLayout) getLayout()).getLayoutComponent(BorderLayout.LINE_END));
+        }
 
-    public void showTaskPanel(Task task) {
-        removeAll();
-        taskPanel = new TaskPanel(task, backIcon, editorIcon, deleteIcon, checkIcon);
-        add(taskPanel, BorderLayout.CENTER);
-        taskUserPanel = new UserPanel(task.getUsers(), TASK_USERS_LIST_TITLE);
-        add(taskUserPanel, BorderLayout.LINE_END);
-    }
+        add(jPanel, BorderLayout.LINE_END);
 
-    public void setProjectName(String projectName) {
-        projectPanel.setProjectName(projectName);
     }
 
     public void setBackground(Image background) {
         setBackgroundImage(background);
     }
 
-    public String getNewCategoryName() {
-        return projectPanel.getNewCategoryName();
-    }
+//    public void setProjectName(String projectName) {
+//        projectPanel.setProjectName(projectName);
+//    }
 
-    public void cleanNewCategoryName() {
-        projectPanel.cleanNewCategoryName();
-    }
+//    public String getNewCategoryName() {
+//        return projectPanel.getNewCategoryName();
+//    }
 
-    public void addNewCategory(Category category) {
-        projectPanel.addCategory(category);
-    }
+//    public void cleanNewCategoryName() {
+//        projectPanel.cleanNewCategoryName();
+//    }
 
-    public void removeCategory(int categoryIndex) {
-        projectPanel.removeCategory(categoryIndex);
-    }
+//    public void addNewCategory(Category category) {
+//        projectPanel.addCategory(category);
+//    }
 
-    public void setCategoryName(int categoryIndex, String categoryName) {
-        projectPanel.setCategoryName(categoryIndex, categoryName);
-    }
+//    public void removeCategory(int categoryIndex) {
+//        projectPanel.removeCategory(categoryIndex);
+//    }
 
-    public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
-        projectPanel.swapCategories(firstCategoryIndex, secondCategoryIndex);
-    }
+//    public void setCategoryName(int categoryIndex, String categoryName) {
+//        projectPanel.setCategoryName(categoryIndex, categoryName);
+//    }
 
-    public String getNewTaskName(int categoryIndex) {
-        return projectPanel.getNewTaskName(categoryIndex);
-    }
+//    public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
+//        projectPanel.swapCategories(firstCategoryIndex, secondCategoryIndex);
+//    }
 
-    public void cleanNewTaskName(int categoryIndex) {
-        projectPanel.cleanNewTaskName(categoryIndex);
-    }
+//    public String getNewTaskName(int categoryIndex) {
+//        return projectPanel.getNewTaskName(categoryIndex);
+//    }
 
-    public Task getSelectedTask(int categoryIndex) {
-        return projectPanel.getSelectedTask(categoryIndex);
-    }
+//    public void cleanNewTaskName(int categoryIndex) {
+//        projectPanel.cleanNewTaskName(categoryIndex);
+//    }
 
-    public void addNewTask(Task task, int categoryIndex) {
-        projectPanel.addNewTask(task, categoryIndex);
-    }
+//    public Task getSelectedTask(int categoryIndex) {
+//        return projectPanel.getSelectedTask(categoryIndex);
+//    }
 
-    public void removeTask(int categoryIndex, int taskIndex) {
-        projectPanel.removeTask(categoryIndex, taskIndex);
-    }
+//    public void addNewTask(Task task, int categoryIndex) {
+//        projectPanel.addNewTask(task, categoryIndex);
+//    }
 
-    public void addProjectUser(User user) {
-        projectUserPanel.addUser(user);
-    }
+//    public void removeTask(int categoryIndex, int taskIndex) {
+//        projectPanel.removeTask(categoryIndex, taskIndex);
+//    }
 
-    public void removeProjectUser(int userIndex) {
-        projectUserPanel.removeUser(userIndex);
-    }
+//    public void addProjectUser(User user) {
+//        projectUserPanel.addUser(user);
+//    }
 
-    public String getNewProjectUser() {
-        return projectUserPanel.getNewUser();
-    }
+//    public void removeProjectUser(int userIndex) {
+//        projectUserPanel.removeUser(userIndex);
+//    }
 
-    public void cleanNewProjectUser() {
-        projectUserPanel.cleanNewUser();
-    }
+//    public String getNewProjectUser() {
+//        return projectUserPanel.getNewUser();
+//    }
 
-    public void addTaskUser(User user) {
-        if(taskUserPanel != null) {
-            taskUserPanel.addUser(user);
-        }
-    }
+//    public void cleanNewProjectUser() {
+//        projectUserPanel.cleanNewUser();
+//    }
 
-    public void removeTaskUser(int userIndex) {
-        if(taskUserPanel != null) {
-            taskUserPanel.removeUser(userIndex);
-        }
-    }
+//    public void addTaskUser(User user) {
+//        if(taskUserPanel != null) {
+//            taskUserPanel.addUser(user);
+//        }
+//    }
 
-    public String getNewTaskUser() {
+//    public void removeTaskUser(int userIndex) {
+//        if(taskUserPanel != null) {
+//            taskUserPanel.removeUser(userIndex);
+//        }
+//    }
 
-        if (taskUserPanel != null) {
-            return taskUserPanel.getNewUser();
-        }
+//    public String getNewTaskUser() {
+//
+//        if (taskUserPanel != null) {
+//            return taskUserPanel.getNewUser();
+//        }
+//
+//        return null;
+//
+//    }
 
-        return null;
+//    public void cleanNewTaskUser() {
+//        if(taskUserPanel != null) {
+//            taskUserPanel.cleanNewUser();
+//        }
+//    }
 
-    }
+//    public void setTaskName(String taskName) {
+//        if(taskPanel != null) {
+//            taskPanel.setTaskName(taskName);
+//        }
+//    }
 
-    public void cleanNewTaskUser() {
-        if(taskUserPanel != null) {
-            taskUserPanel.cleanNewUser();
-        }
-    }
+//    public String getDescription() {
+//
+//        if(taskPanel != null) {
+//            return taskPanel.getDescription();
+//        }
+//
+//        return null;
+//
+//    }
 
-    public void setTaskName(String taskName) {
-        if(taskPanel != null) {
-            taskPanel.setTaskName(taskName);
-        }
-    }
+//    public void setDescription(String description) {
+//        if(taskPanel != null) {
+//            taskPanel.setDescription(description);
+//        }
+//    }
 
-    public String getDescription() {
+//    public void addNewTag(Tag tag) {
+//        if(taskPanel != null) {
+//            taskPanel.addTag(tag);
+//        }
+//    }
 
-        if(taskPanel != null) {
-            return taskPanel.getDescription();
-        }
+//    public void removeTag(int tagIndex) {
+//        if(taskPanel != null) {
+//            taskPanel.removeTag(tagIndex);
+//        }
+//    }
 
-        return null;
+//    public void setTagName(int tagIndex, String tagName) {
+//        if(taskPanel != null) {
+//            taskPanel.setTagName(tagIndex, tagName);
+//        }
+//    }
 
-    }
+//    public void setTagColor(int tagIndex, Color tagColor) {
+//        if(taskPanel != null) {
+//            taskPanel.setTagColor(tagIndex, tagColor);
+//        }
+//    }
 
-    public void setDescription(String description) {
-        if(taskPanel != null) {
-            taskPanel.setDescription(description);
-        }
-    }
+//    public String getNewTagName() {
+//
+//        if(taskPanel != null) {
+//            return taskPanel.getNewTagName();
+//        }
+//
+//        return null;
+//
+//    }
 
-    public void addNewTag(Tag tag) {
-        if(taskPanel != null) {
-            taskPanel.addTag(tag);
-        }
-    }
+//    public void cleanNewTagName() {
+//        if(taskPanel != null) {
+//            taskPanel.cleanNewTagName();
+//        }
+//    }
 
-    public void removeTag(int tagIndex) {
-        if(taskPanel != null) {
-            taskPanel.removeTag(tagIndex);
-        }
-    }
+//    public void setTagAdderButtonState(boolean buttonState) {
+//        if(taskPanel != null) {
+//            taskPanel.setTagAdderButtonState(buttonState);
+//        }
+//    }
 
-    public void setTagName(int tagIndex, String tagName) {
-        if(taskPanel != null) {
-            taskPanel.setTagName(tagIndex, tagName);
-        }
-    }
+//    public void setCategoryAdderButtonState(boolean buttonState) {
+//        projectPanel.setCategoryAdderButtonState(buttonState);
+//    }
 
-    public void setTagColor(int tagIndex, Color tagColor) {
-        if(taskPanel != null) {
-            taskPanel.setTagColor(tagIndex, tagColor);
-        }
-    }
+//    public void setTaskAdderButtonState(int categoryIndex, boolean buttonState) {
+//        projectPanel.setTaskAdderButtonState(categoryIndex, buttonState);
+//    }
 
-    public String getNewTagName() {
+//    public void setProjectUserAddButtonState(boolean buttonState) {
+//        projectUserPanel.setUserAddButtonState(buttonState);
+//    }
 
-        if(taskPanel != null) {
-            return taskPanel.getNewTagName();
-        }
+//    public void setTaskUserAddButtonState(boolean buttonState) {
+//        taskUserPanel.setUserAddButtonState(buttonState);
+//    }
 
-        return null;
-
-    }
-
-    public void cleanNewTagName() {
-        if(taskPanel != null) {
-            taskPanel.cleanNewTagName();
-        }
-    }
-
-    public void setTagAdderButtonState(boolean buttonState) {
-        if(taskPanel != null) {
-            taskPanel.setTagAdderButtonState(buttonState);
-        }
-    }
-
-    public void setCategoryAdderButtonState(boolean buttonState) {
-        projectPanel.setCategoryAdderButtonState(buttonState);
-    }
-
-    public void setTaskAdderButtonState(int categoryIndex, boolean buttonState) {
-        projectPanel.setTaskAdderButtonState(categoryIndex, buttonState);
-    }
-
-    public void setProjectUserAddButtonState(boolean buttonState) {
-        projectUserPanel.setUserAddButtonState(buttonState);
-    }
-
-    public void setTaskUserAddButtonState(boolean buttonState) {
-        taskUserPanel.setUserAddButtonState(buttonState);
-    }
-
-    public void setTaskDescriptionState(boolean descriptionState) {
-        if(taskPanel != null) {
-            taskPanel.setDescriptionState(descriptionState);
-        }
-    }
+//    public void setTaskDescriptionState(boolean descriptionState) {
+//        if(taskPanel != null) {
+//            taskPanel.setDescriptionState(descriptionState);
+//        }
+//    }
 
 }
