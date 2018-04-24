@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.DataManager;
 import View.CustomProjectButton;
 import View.MainView;
 import View.ProjectBoxView;
@@ -70,7 +71,9 @@ public class ProjectSelectionController implements MouseListener, ActionListener
                 break;
             case ProjectBoxView.INFO_AC:
                 CustomProjectButton button2 = (CustomProjectButton) e.getSource();
-                createProjectInfoWindow(button2.getProjectName());
+                DataManager.getSharedInstance().setTitle(button2.getProjectName());
+                //TODO demanar info al server
+                //createProjectInfoWindow(button2.getProjectName());
         }
     }
 
@@ -80,9 +83,9 @@ public class ProjectSelectionController implements MouseListener, ActionListener
         projectCreationController.createAddProjectView();
     }
 
-    private void createProjectInfoWindow (String title) {
+    public void createProjectInfoWindow (String title, String memebers) {
         final String projectName = title;
         final ProjectInfoController projectInfoController = new ProjectInfoController();
-        projectInfoController.createView(projectName, "Lactosito");
+        projectInfoController.createView(projectName, memebers);
     }
 }

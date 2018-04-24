@@ -58,6 +58,10 @@ public class MainViewController {
         view.removeProjectAtIndex(index);
     }
 
+    public void createProjectInfoWindow (String title, String memebers) {
+        projectSelectionController.createProjectInfoWindow(title, memebers);
+    }
+
     public void loadProject(Project project) {
 
         //TODO: Delete

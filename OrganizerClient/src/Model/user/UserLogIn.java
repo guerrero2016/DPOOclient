@@ -1,6 +1,6 @@
 package Model.user;
 
-import model.DataBaseManager;
+//import model.DataBaseManager;
 
 import java.io.Serializable;
 
@@ -9,7 +9,8 @@ public class UserLogIn implements Serializable{
         private String password;
 
     public boolean checkLogIn() {
-        return DataBaseManager.IniciarSessio(userName, password);
+        return false;
+        //return DataBaseManager.IniciarSessio(userName, password);
     }
 
     public String getUserName() {

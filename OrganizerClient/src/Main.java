@@ -11,6 +11,7 @@ public class Main {
         projectsMainView.registerAddProjectViewController(projectSelectionController);
         projectsMainView.registerProjectSelectionController(projectSelectionController);*/
 
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

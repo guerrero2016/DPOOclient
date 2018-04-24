@@ -12,7 +12,7 @@ public class Project implements Serializable{
     private ArrayList<Category> categories;
     private ArrayList<String> membersName;
     private String background;   //s'haurà de canviar PROFE
-    private boolean propietari; //per sortir del pas
+    private boolean isOwner; //per sortir del pas
 
     public Project() {}
 
@@ -25,12 +25,12 @@ public class Project implements Serializable{
         this.background = background;
     }
 
-    public Project(String id, String name, String color, String background, boolean propietari) {
+    public Project(String id, String name, String color, String background, boolean isOwner) {
         this.id = id;
         this.name = name;
         this.color = color;
         this.background = background;
-        this.propietari = propietari;
+        this.isOwner = isOwner;
     }
 
     public String getId() {
