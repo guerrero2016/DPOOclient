@@ -1,7 +1,7 @@
 package Controller;
 
 import Controller.edition.EditionController;
-import Model.*;
+import ModelAEliminar.*;
 import View.MainView;
 
 import javax.imageio.ImageIO;

@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.user.Register;
+import ModelAEliminar.user.Register;
 import View.SignInPanel;
 
 import javax.swing.*;

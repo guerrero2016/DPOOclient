@@ -1,7 +1,7 @@
 package View.edition.task;
 
-import Model.Tag;
-import Model.Task;
+import ModelAEliminar.Tag;
+import ModelAEliminar.Task;
 import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
 
