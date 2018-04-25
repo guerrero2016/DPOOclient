@@ -1,7 +1,7 @@
 package View.edition.project;
 
-import Model.Category;
-import Model.Task;
+import ModelAEliminar.Category;
+import ModelAEliminar.Task;
 import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
 import View.edition.project.category.CategoryPanel;

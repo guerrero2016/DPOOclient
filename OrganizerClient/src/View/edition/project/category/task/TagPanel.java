@@ -1,6 +1,6 @@
 package View.edition.project.category.task;
 
-import Model.Tag;
+import ModelAEliminar.Tag;
 import View.edition.TransparentPanel;
 
 import javax.swing.*;

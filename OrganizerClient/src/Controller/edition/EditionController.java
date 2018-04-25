@@ -1,19 +1,19 @@
 package Controller.edition;
 
 import Controller.MainViewController;
-import Controller.edition.project.*;
+import Controller.edition.project.NewTaskController;
+import Controller.edition.project.ProjectActionController;
 import Controller.edition.project.category.CategoryActionController;
 import Controller.edition.project.category.CategoryMouseController;
 import Controller.edition.project.category.NewCategoryController;
-import Controller.edition.project.category.task.TaskActionController;
 import Controller.edition.project.category.task.TaskDocumentController;
-import Controller.edition.user.*;
+import Controller.edition.user.UserDocumentListener;
 import Controller.edition.user.project.DeleteProjectController;
 import Controller.edition.user.project.NewProjectUserController;
 import Controller.edition.user.task.DeleteTaskController;
 import Controller.edition.user.task.NewTaskUserController;
-import Model.Project;
-import Model.Task;
+import ModelAEliminar.Project;
+import ModelAEliminar.Task;
 import View.edition.EditionPanel;
 
 public class EditionController {

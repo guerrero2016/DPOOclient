@@ -1,14 +1,7 @@
 import Controller.MainViewController;
-import Model.*;
-import View.edition.EditionPanel;
 import View.MainView;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -17,6 +10,7 @@ public class Main {
         ProjectSelectionController projectSelectionController = new ProjectSelectionController(projectsMainView);
         projectsMainView.registerAddProjectViewController(projectSelectionController);
         projectsMainView.registerProjectSelectionController(projectSelectionController);*/
+
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override

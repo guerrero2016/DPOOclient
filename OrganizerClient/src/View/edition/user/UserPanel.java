@@ -1,6 +1,6 @@
 package View.edition.user;
 
-import Model.User;
+import ModelAEliminar.User;
 import View.edition.TransparentPanel;
 
 import javax.swing.*;

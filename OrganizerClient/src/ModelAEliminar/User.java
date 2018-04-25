@@ -1,4 +1,4 @@
-package Model;
+package ModelAEliminar;
 
 public class User {
 

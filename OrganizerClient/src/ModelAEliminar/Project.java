@@ -1,4 +1,4 @@
-package Model;
+package ModelAEliminar;
 
 import java.awt.*;
 import java.util.ArrayList;

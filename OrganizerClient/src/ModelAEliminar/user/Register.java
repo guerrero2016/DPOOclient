@@ -1,4 +1,4 @@
-package Model.user;
+package ModelAEliminar.user;
 
 import javax.swing.*;
 import java.io.Serializable;

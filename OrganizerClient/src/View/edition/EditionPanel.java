@@ -1,8 +1,8 @@
 package View.edition;
 
-import Model.Category;
-import Model.Tag;
-import Model.User;
+import ModelAEliminar.Category;
+import ModelAEliminar.Tag;
+import ModelAEliminar.User;
 import View.edition.project.category.CategoryPanel;
 import View.edition.project.ProjectPanel;
 import View.edition.project.category.task.TaskPanel;
