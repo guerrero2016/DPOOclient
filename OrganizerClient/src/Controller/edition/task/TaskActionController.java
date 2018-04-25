@@ -1,8 +1,8 @@
-package Controller.edition.project.category.task;
+package Controller.edition.task;
 
 import Controller.edition.EditionController;
-import Model.Task;
-import View.edition.project.category.task.TaskPanel;
+import ModelAEliminar.Task;
+import View.edition.task.TaskPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,18 +21,24 @@ public class TaskActionController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //TODO: 5 actions click
         if(e.getActionCommand().equals(TaskPanel.ACTION_TASK_BACK)) {
-            mainController.showProjectContent();
+            closeTask();
         } else if(e.getActionCommand().equals(TaskPanel.ACTION_TASK_EDIT_NAME)) {
             taskNameManagement();
         } else if(e.getActionCommand().equals(TaskPanel.ACTION_TASK_DELETE)) {
-            mainController.deleteTask(task);
+            deleteTask();
         } else if(e.getActionCommand().equals(TaskPanel.ACTION_DESCRIPTION_EDITION)) {
             descriptionManagement();
         } else if(e.getActionCommand().equals(TaskPanel.ACTION_TAG_ADD)) {
-
+            //TODO: Add tag
         }
+    }
+
+    private void closeTask() {
+        view.setDescription(task.getDescription());
+        view.setDescriptionEditable(false);
+        view.setTaskNameEditable(false, task.getName());
+        mainController.showProjectContent();
     }
 
     private void descriptionManagement() {
@@ -53,6 +59,10 @@ public class TaskActionController implements ActionListener {
         } else {
             view.setTaskNameEditable(!view.isTaskNameEditable(), task.getName());
         }
+    }
+
+    private void deleteTask() {
+        mainController.deleteTask(task);
     }
 
 }

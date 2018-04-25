@@ -1,7 +1,7 @@
 package Controller.edition.project.category;
 
 import Controller.edition.EditionController;
-import Model.Task;
+import ModelAEliminar.Task;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;

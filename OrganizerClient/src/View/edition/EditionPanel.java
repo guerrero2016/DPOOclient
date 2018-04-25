@@ -5,7 +5,7 @@ import ModelAEliminar.Tag;
 import ModelAEliminar.User;
 import View.edition.project.category.CategoryPanel;
 import View.edition.project.ProjectPanel;
-import View.edition.project.category.task.TaskPanel;
+import View.edition.task.TaskPanel;
 import View.edition.user.UserPanel;
 
 import javax.imageio.ImageIO;
@@ -200,6 +200,7 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     public void registerTaskActionController(ActionListener actionListener) {
+        taskPanel.resetActionController();
         taskPanel.registerActionController(actionListener);
     }
 

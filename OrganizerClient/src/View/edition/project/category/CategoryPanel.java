@@ -156,10 +156,8 @@ public class CategoryPanel extends JPanel {
 
     }
 
-    public void removeTask(int taskIndex) {
-        if(taskIndex < tasksList.size()) {
-            tasksList.remove(taskIndex);
-        }
+    public void removeTask(Task task) {
+        tasksList.removeElement(task);
     }
 
     public void registerActionController(ActionListener actionListener) {

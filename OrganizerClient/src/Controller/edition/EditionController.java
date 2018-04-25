@@ -6,7 +6,8 @@ import Controller.edition.project.ProjectActionController;
 import Controller.edition.project.category.CategoryActionController;
 import Controller.edition.project.category.CategoryMouseController;
 import Controller.edition.project.category.NewCategoryController;
-import Controller.edition.project.category.task.TaskDocumentController;
+import Controller.edition.task.TaskActionController;
+import Controller.edition.task.TaskDocumentController;
 import Controller.edition.user.UserDocumentListener;
 import Controller.edition.user.project.DeleteProjectController;
 import Controller.edition.user.project.NewProjectUserController;
@@ -112,7 +113,8 @@ public class EditionController {
         editionPanel.setTaskUsersList(task.getUsers());
 
         //Link controllers
-//        editionPanel.registerTaskActionController(new TaskActionController(this, editionPanel.getTaskPanel()));
+        editionPanel.registerTaskActionController(new TaskActionController(this, editionPanel.getTaskPanel(),
+                task));
 
     }
 
@@ -121,8 +123,9 @@ public class EditionController {
     }
 
     public void deleteTask(Task task) {
-        //TODO: Communicate task update
+        //TODO: Communicate task delete
         project.getCategory(currentCategory).removeTask(task);
+        editionPanel.getProjectPanel().removeTask(currentCategory, task);
         showProjectContent();
     }
 

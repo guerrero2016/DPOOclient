@@ -1,4 +1,4 @@
-package View.edition.project.category.task;
+package View.edition.task;
 
 import ModelAEliminar.Tag;
 import View.edition.TransparentPanel;
@@ -336,6 +336,16 @@ public class TaskPanel extends TransparentPanel {
 
         return null;
 
+    }
+
+    public void resetActionController() {
+        for(ActionListener actionListener : jbTaskBack.getActionListeners()) {
+            jbTaskBack.removeActionListener(actionListener);
+            jbTaskEditor.removeActionListener(actionListener);
+            jbTaskDelete.removeActionListener(actionListener);
+            jbDescriptionEditor.removeActionListener(actionListener);
+            jbTagAdder.removeActionListener(actionListener);
+        }
     }
 
     public void registerActionController(ActionListener actionListener) {

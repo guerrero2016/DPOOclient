@@ -1,6 +1,6 @@
-package Controller.edition.project.category.task;
+package Controller.edition.task;
 
-import View.edition.project.category.task.TaskPanel;
+import View.edition.task.TaskPanel;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

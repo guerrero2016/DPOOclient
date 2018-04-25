@@ -1,7 +1,7 @@
-package Controller.edition.project.category.task;
+package Controller.edition.task;
 
 import Controller.edition.EditionController;
-import View.edition.project.category.task.TagPanel;
+import View.edition.task.TagPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

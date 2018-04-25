@@ -214,9 +214,9 @@ public class ProjectPanel extends TransparentPanel {
         }
     }
 
-    public void removeTask(int categoryIndex, int taskIndex) {
+    public void removeTask(int categoryIndex, Task task) {
         if(categoryIndex < categoryPanels.size()) {
-            categoryPanels.get(categoryIndex).removeTask(taskIndex);
+            categoryPanels.get(categoryIndex).removeTask(task);
         }
     }
 

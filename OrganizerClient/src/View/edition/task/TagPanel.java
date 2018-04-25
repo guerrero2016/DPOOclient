@@ -1,4 +1,4 @@
-package View.edition.project.category.task;
+package View.edition.task;
 
 import ModelAEliminar.Tag;
 import View.edition.TransparentPanel;
@@ -69,6 +69,13 @@ public class TagPanel extends JPanel {
 
     public void setTagColor(Color tagColor) {
         setBackground(tagColor);
+    }
+
+    public void resetActionController() {
+        for(ActionListener actionListener : jbTagEditor.getActionListeners()) {
+            jbTagEditor.addActionListener(actionListener);
+            jbTagDelete.addActionListener(actionListener);
+        }
     }
 
     public void registerActionController(ActionListener actionListener) {
