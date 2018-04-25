@@ -1,16 +1,15 @@
 package Controller.edition.project;
 
-import View.edition.project.CategoryPanel;
-import View.edition.project.ProjectPanel;
+import View.edition.project.category.CategoryPanel;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class NewTaskDocumentController implements DocumentListener {
+public class NewTaskController implements DocumentListener {
 
     private CategoryPanel view;
 
-    public NewTaskDocumentController(CategoryPanel view) {
+    public NewTaskController(CategoryPanel view) {
         this.view = view;
     }
 

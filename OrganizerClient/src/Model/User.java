@@ -2,37 +2,62 @@ package Model;
 
 public class User {
 
-    private String userName;
+    private String name;
     private String email;
-    private String password;
 
-    public User(String userName, String email, String password) {
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
+    public User(String name, String email) {
+
+        if(name != null) {
+            this.name = name.toString();
+        }
+
+        if(email != null) {
+            this.email = email.toString();
+        }
+
     }
 
-    public String getUserName() {
-        return userName;
+    public User(User user) {
+
+        if(user.name != null) {
+            name = user.name.toString();
+        }
+
+        if(user.email != null) {
+            email = user.email.toString();
+        }
+
+    }
+
+    public String getName() {
+
+        if (name != null) {
+            return name.toString();
+        }
+
+        return null;
+
+    }
+
+    public void setName(String name) {
+        if(name != null) {
+            this.name = name.toString();
+        }
     }
 
     public String getEmail() {
-        return email;
-    }
 
-    public String getPassword() {
-        return password;
-    }
+        if(email != null) {
+            return email.toString();
+        }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+        return null;
 
+    }
     public void setEmail(String email) {
-        this.email = email;
+        if(email != null) {
+            this.email = email.toString();
+        }
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

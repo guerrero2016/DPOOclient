@@ -1,7 +1,6 @@
-package View.edition.task;
+package View.edition.project.category.task;
 
 import Model.Tag;
-import Model.Task;
 import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
 
@@ -20,7 +19,7 @@ public class TaskPanel extends TransparentPanel {
     public final static String ACTION_TAG_ADD = "TagAdd";
 
     private final static int MAX_TASK_LENGTH = 20;
-    private final static int MAX_TAGS = 4;
+    private final static int MAX_TAGS = 5;
 
     private final static String TASK_TITLE = "Task";
     private final static String DESCRIPTION_TITLE = "Description";
@@ -29,7 +28,7 @@ public class TaskPanel extends TransparentPanel {
     private final static String ADD_TITLE = "+";
 
     private final JButton jbTaskBack;
-    private final JLabel jlTaskName;
+    private final JTextField jtfTaskName;
     private final JButton jbTaskEditor;
     private final JButton jbTaskDelete;
     private final JButton jbDescriptionEditor;
@@ -44,7 +43,7 @@ public class TaskPanel extends TransparentPanel {
 
     private ArrayList<TagPanel> tagPanels;
 
-    public TaskPanel(Task task, Image backIcon, Image editorIcon, Image deleteIcon, Image checkIcon) {
+    public TaskPanel(Image backIcon, Image editorIcon, Image deleteIcon, Image checkIcon) {
 
         //Save needed icons
         this.editorIcon = editorIcon;
@@ -62,10 +61,11 @@ public class TaskPanel extends TransparentPanel {
         add(tpTaskTitle, BorderLayout.PAGE_START);
 
         //Task name
-        jlTaskName = new JLabel();
-        jlTaskName.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-        setTaskName(task.getName());
-        tpTaskTitle.add(jlTaskName, BorderLayout.CENTER);
+        jtfTaskName = new JTextField();
+        jtfTaskName.setBorder(BorderFactory.createEmptyBorder());
+        jtfTaskName.setEditable(false);
+        jtfTaskName.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
+        tpTaskTitle.add(jtfTaskName, BorderLayout.CENTER);
 
         //Task buttons panel
         final TransparentPanel tpTaskButtons = new TransparentPanel();
@@ -136,7 +136,6 @@ public class TaskPanel extends TransparentPanel {
         //Description text
         jtaDescription = new JTextArea();
         jtaDescription.setEditable(false);
-        jtaDescription.setText(task.getDescription());
         jspDescription.getViewport().setView(jtaDescription);
 
         //Tags panel
@@ -170,12 +169,7 @@ public class TaskPanel extends TransparentPanel {
         tpTagsList = new TransparentPanel();
         tpTagsList.setLayout(new GridBagLayout());
         tspTags.getViewport().setView(tpTagsList);
-
         tagPanels = new ArrayList<>();
-
-        for(int i = 0; i < task.getTotalTags(); i++) {
-            addTag(task.getTag(i));
-        }
 
         //Tag adder panel
         final JPanel jpTagsAdder = new JPanel(new BorderLayout());
@@ -200,13 +194,43 @@ public class TaskPanel extends TransparentPanel {
 
     }
 
+    public String getTaskName() {
+
+        if(jtfTaskName.getText() != null) {
+            return jtfTaskName.getText();
+        }
+
+        return null;
+
+    }
+
     public void setTaskName(String taskName) {
         if(taskName.length() <= MAX_TASK_LENGTH) {
-            jlTaskName.setText(taskName);
+            jtfTaskName.setText(taskName);
         } else {
             String shortTaskName = taskName.substring(0, MAX_TASK_LENGTH) + "...";
-            jlTaskName.setText(shortTaskName);
+            jtfTaskName.setText(shortTaskName);
         }
+    }
+
+    public void setTaskNameEditable(boolean editableState, String completeTaskName) {
+
+        if(editableState) {
+            jtfTaskName.setText(completeTaskName);
+            jbTaskEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(20, 20,
+                    Image.SCALE_SMOOTH)));
+        } else {
+            setTaskName(completeTaskName);
+            jbTaskEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(20, 20,
+                    Image.SCALE_SMOOTH)));
+        }
+
+        jtfTaskName.setEditable(editableState);
+
+    }
+
+    public boolean isTaskNameEditable() {
+        return jtfTaskName.isEditable();
     }
 
     public String getDescription() {
@@ -215,6 +239,14 @@ public class TaskPanel extends TransparentPanel {
 
     public void setDescription(String description) {
         jtaDescription.setText(description);
+    }
+
+    public void setTagsList(ArrayList<Tag> tags) {
+        if(tags != null) {
+            for (int i = 0; i < tags.size(); i++) {
+                addTag(tags.get(i));
+            }
+        }
     }
 
     public void addTag(Tag tag) {
@@ -270,15 +302,13 @@ public class TaskPanel extends TransparentPanel {
         jtfTagName.setText(null);
     }
 
-    public void setTagAdderButtonState(boolean buttonState) {
-        jbTagAdder.setEnabled(buttonState);
+    public void setTagAdderButtonEnabled(boolean enableState) {
+        jbTagAdder.setEnabled(enableState);
     }
 
-    public void setDescriptionState(boolean descriptionState) {
+    public void setDescriptionEditable(boolean editableState) {
 
-        jtaDescription.setEditable(descriptionState);
-
-        if(descriptionState) {
+        if(editableState) {
             jbDescriptionEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(16, 16,
                     Image.SCALE_SMOOTH)));
         } else {
@@ -286,24 +316,12 @@ public class TaskPanel extends TransparentPanel {
                     Image.SCALE_SMOOTH)));
         }
 
-    }
-
-    public void registerActionController(ActionListener actionListener) {
-
-        jbTaskBack.addActionListener(actionListener);
-        jbTaskEditor.addActionListener(actionListener);
-        jbTaskDelete.addActionListener(actionListener);
-        jbDescriptionEditor.addActionListener(actionListener);
-        jbTagAdder.addActionListener(actionListener);
-
-        for(int i = 0; i < tagPanels.size(); i++) {
-            tagPanels.get(i).registerActionController(actionListener);
-        }
+        jtaDescription.setEditable(editableState);
 
     }
 
-    public void registerDocumentController(DocumentListener documentListener) {
-        jtfTagName.getDocument().addDocumentListener(documentListener);
+    public boolean isDescriptionEditable() {
+        return jtaDescription.isEditable();
     }
 
     public int getTotalTags() {
@@ -318,6 +336,18 @@ public class TaskPanel extends TransparentPanel {
 
         return null;
 
+    }
+
+    public void registerActionController(ActionListener actionListener) {
+        jbTaskBack.addActionListener(actionListener);
+        jbTaskEditor.addActionListener(actionListener);
+        jbTaskDelete.addActionListener(actionListener);
+        jbDescriptionEditor.addActionListener(actionListener);
+        jbTagAdder.addActionListener(actionListener);
+    }
+
+    public void registerDocumentController(DocumentListener documentListener) {
+        jtfTagName.getDocument().addDocumentListener(documentListener);
     }
 
 }

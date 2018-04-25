@@ -1,4 +1,4 @@
-package Controller.edition.user;
+package Controller.edition.user.project;
 
 import Controller.edition.EditionController;
 import View.edition.user.UserPanel;
@@ -6,12 +6,12 @@ import View.edition.user.UserPanel;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class UserMouseController implements MouseListener {
+public class DeleteProjectController implements MouseListener {
 
     private EditionController mainController;
     private UserPanel view;
 
-    public UserMouseController(EditionController mainController, UserPanel view) {
+    public DeleteProjectController(EditionController mainController, UserPanel view) {
         this.mainController = mainController;
         this.view = view;
     }

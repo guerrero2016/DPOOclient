@@ -22,7 +22,7 @@ public class UserList implements ListCellRenderer<User> {
                                                   boolean cellHasFocus) {
 
         //Member component
-        UserList.MemberListComponent memberComponent = new UserList.MemberListComponent(member.getUserName());
+        UserList.MemberListComponent memberComponent = new UserList.MemberListComponent(member.getName());
         memberComponent.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
         memberComponent.setOpaque(true);
 

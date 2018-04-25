@@ -3,7 +3,6 @@ package View;
 import Controller.LogInController;
 import Controller.ProjectSelectionController;
 import Controller.SignInController;
-import Controller.edition.EditionController;
 import View.edition.EditionPanel;
 
 import javax.imageio.ImageIO;
@@ -59,8 +58,12 @@ public class MainView extends JFrame {
         this.add(projectsView, ProjectsMainView.VIEW_NAME);
 
         //Edition panel
-        editionPanel = new EditionPanel();
-        add(editionPanel, PROJECT_CONSTRAINT);
+        try {
+            editionPanel = new EditionPanel();
+            add(editionPanel, PROJECT_CONSTRAINT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         super.setMinimumSize(new Dimension(1000,500));
         super.setSize(1200,750);

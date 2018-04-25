@@ -1,17 +1,17 @@
-package Controller.edition.project;
+package Controller.edition.user.task;
 
 import Controller.edition.EditionController;
-import View.edition.project.ProjectPanel;
+import View.edition.user.UserPanel;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class ProjectMouseController implements MouseListener{
+public class DeleteTaskController implements MouseListener {
 
     private EditionController mainController;
-    private ProjectPanel view;
+    private UserPanel view;
 
-    public ProjectMouseController(EditionController mainController, ProjectPanel view) {
+    public DeleteTaskController(EditionController mainController, UserPanel view) {
         this.mainController = mainController;
         this.view = view;
     }
@@ -19,7 +19,7 @@ public class ProjectMouseController implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         if(e.getClickCount() == 2) {
-            //TODO: Open task to edit
+            //TODO: Delete user dialog
         }
     }
 

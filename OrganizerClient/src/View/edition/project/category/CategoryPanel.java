@@ -1,4 +1,4 @@
-package View.edition.project;
+package View.edition.project.category;
 
 import Model.Category;
 import Model.Task;

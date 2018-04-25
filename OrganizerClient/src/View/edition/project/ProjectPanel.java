@@ -1,16 +1,15 @@
 package View.edition.project;
 
 import Model.Category;
-import Model.Project;
 import Model.Task;
 import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
+import View.edition.project.category.CategoryPanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class ProjectPanel extends TransparentPanel {
@@ -41,8 +40,7 @@ public class ProjectPanel extends TransparentPanel {
 
     private ArrayList<CategoryPanel> categoryPanels;
 
-    public ProjectPanel(Project project, Image editorIcon, Image backgroundIcon, Image deleteIcon, Image leftIcon,
-                        Image rightIcon) {
+    public ProjectPanel(Image editorIcon, Image backgroundIcon, Image deleteIcon, Image leftIcon, Image rightIcon) {
 
         //Project settings
         this.editorIcon = editorIcon;
@@ -65,7 +63,6 @@ public class ProjectPanel extends TransparentPanel {
         jlProjectName = new JLabel();
         jlProjectName.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
         jlProjectName.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-        setProjectName(project.getProjectName());
         tpProjectTitle.add(jlProjectName, BorderLayout.CENTER);
 
         //Project buttons panel
@@ -100,10 +97,6 @@ public class ProjectPanel extends TransparentPanel {
         tpCategories.setLayout(new GridBagLayout());
         tspCategories.getViewport().setView(tpCategories);
 
-        for(int i = 0; i < project.getTotalCategories(); i++) {
-            addCategory(project.getCategory(i));
-        }
-
         //Category adder panel
         final TransparentPanel tpNewCategory = new TransparentPanel();
         tpNewCategory.setLayout(new BorderLayout());
@@ -128,48 +121,47 @@ public class ProjectPanel extends TransparentPanel {
 
     }
 
-    public void setCategoryAdderButtonState(boolean buttonState) {
-        jbCategoryAdder.setEnabled(buttonState);
-    }
-
     public void setProjectName(String projectName) {
-        if (projectName.length() <= MAX_PROJECT_LENGTH) {
-            jlProjectName.setText(projectName);
-        } else {
-            String shortProjectName = projectName.substring(0, MAX_PROJECT_LENGTH) + "...";
-            jlProjectName.setText(shortProjectName);
+        if(projectName != null) {
+            if (projectName.length() <= MAX_PROJECT_LENGTH) {
+                jlProjectName.setText(projectName);
+            } else {
+                String shortProjectName = projectName.substring(0, MAX_PROJECT_LENGTH) + "...";
+                jlProjectName.setText(shortProjectName);
+            }
         }
     }
 
+    public int getTotalCategories() {
+        return categoryPanels.size();
+    }
+
+    public CategoryPanel getCategoryPanel(int categoryIndex) {
+
+        if(categoryIndex < categoryPanels.size()) {
+            return categoryPanels.get(categoryIndex);
+        }
+
+        return null;
+
+    }
+
     public void addCategory(Category category) {
-        categoryPanels.add(new CategoryPanel(category, editorIcon, deleteIcon, leftIcon, rightIcon));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = categoryPanels.size();
-        gbc.weighty = 1;
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.VERTICAL;
-        tpCategories.add(categoryPanels.get(categoryPanels.size() - 1), gbc);
-    }
-
-    public String getNewCategoryName() {
-        return jtfCategoryName.getText();
-    }
-
-    public void cleanNewCategoryName() {
-        jtfCategoryName.setText(null);
+        if(category != null) {
+            categoryPanels.add(new CategoryPanel(category, editorIcon, deleteIcon, leftIcon, rightIcon));
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = categoryPanels.size();
+            gbc.weighty = 1;
+            gbc.insets = new Insets(5, 5, 5, 5);
+            gbc.fill = GridBagConstraints.VERTICAL;
+            tpCategories.add(categoryPanels.get(categoryPanels.size() - 1), gbc);
+        }
     }
 
     public void removeCategory(int categoryIndex) {
         if(categoryIndex < categoryPanels.size()) {
             categoryPanels.remove(categoryIndex);
             tpCategories.remove(categoryIndex);
-        }
-    }
-
-    public void setCategoryName(int categoryIndex, String categoryName) {
-        if(categoryIndex < categoryPanels.size()) {
-            CategoryPanel categoryPanel = categoryPanels.get(categoryIndex);
-            categoryPanel.setCategoryName(categoryName);
         }
     }
 
@@ -190,6 +182,14 @@ public class ProjectPanel extends TransparentPanel {
             tpCategories.add(categoryPanels.get(secondCategoryIndex), secondConstraints);
 
         }
+    }
+
+    public String getNewCategoryName() {
+        return jtfCategoryName.getText();
+    }
+
+    public void cleanNewCategoryName() {
+        jtfCategoryName.setText(null);
     }
 
     public String getNewTaskName(int categoryIndex) {
@@ -214,57 +214,25 @@ public class ProjectPanel extends TransparentPanel {
         }
     }
 
-    public Task getSelectedTask(int categoryIndex) {
-
-        if(categoryIndex <categoryPanels.size()) {
-            return categoryPanels.get(categoryIndex).getSelectedTask();
-        }
-
-        return null;
-
-    }
-
     public void removeTask(int categoryIndex, int taskIndex) {
         if(categoryIndex < categoryPanels.size()) {
             categoryPanels.get(categoryIndex).removeTask(taskIndex);
         }
     }
 
-    public void registerActionController(ActionListener actionListener) {
+    public void setCategoryAdderButtonEnabled(boolean enableState) {
+        jbCategoryAdder.setEnabled(enableState);
+    }
 
+    public void registerActionController(ActionListener actionListener) {
         jbProjectEditor.addActionListener(actionListener);
         jbBackground.addActionListener(actionListener);
         jbProjectDelete.addActionListener(actionListener);
         jbCategoryAdder.addActionListener(actionListener);
-
-        for(CategoryPanel categoryPanel : categoryPanels) {
-            categoryPanel.registerActionController(actionListener);
-        }
-
-    }
-
-    public void registerMouseController(MouseListener mouseListener) {
-        for(CategoryPanel categoryPanel : categoryPanels) {
-            categoryPanel.registerMouseController(mouseListener);
-        }
     }
 
     public void registerDocumentController(DocumentListener documentListener) {
         jtfCategoryName.getDocument().addDocumentListener(documentListener);
-    }
-
-    public int getTotalCategories() {
-        return categoryPanels.size();
-    }
-
-    public CategoryPanel getCategoryPanel(int categoryIndex) {
-
-        if(categoryIndex < categoryPanels.size()) {
-            return categoryPanels.get(categoryIndex);
-        }
-
-        return null;
-
     }
 
 }

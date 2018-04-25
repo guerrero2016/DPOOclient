@@ -9,16 +9,38 @@ public class Tag {
     private Color color;
 
     public Tag(String name, Color color) {
-        this.name = new String(name);
+
+        if(name != null) {
+            this.name = name.toString();
+        }
+
         this.color = color;
     }
 
+    public Tag(Tag tag) {
+
+        if(tag.name != null) {
+            name = tag.name.toString();
+        }
+
+        color = tag.color;
+
+    }
+
     public String getName() {
-        return name;
+
+        if (name != null) {
+            return name;
+        }
+
+        return null;
+
     }
 
     public void setName(String name) {
-        this.name = new String(name);
+        if(name != null) {
+            this.name = name.toString();
+        }
     }
 
     public Color getColor() {

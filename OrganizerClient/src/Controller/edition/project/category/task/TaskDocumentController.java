@@ -1,29 +1,29 @@
-package Controller.edition.project;
+package Controller.edition.project.category.task;
 
-import View.edition.project.ProjectPanel;
+import View.edition.project.category.task.TaskPanel;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class NewCategoryDocumentController implements DocumentListener {
+public class TaskDocumentController implements DocumentListener {
 
-    private ProjectPanel view;
+    private TaskPanel view;
 
-    public NewCategoryDocumentController(ProjectPanel view) {
+    public TaskDocumentController(TaskPanel view) {
         this.view = view;
     }
 
     @Override
     public void insertUpdate(DocumentEvent e) {
         if(e.getDocument().getLength() > 0) {
-            view.setCategoryAdderButtonState(true);
+            view.setTagAdderButtonEnabled(true);
         }
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
         if(e.getDocument().getLength() == 0) {
-            view.setCategoryAdderButtonState(false);
+            view.setTagAdderButtonEnabled(false);
         }
     }
 

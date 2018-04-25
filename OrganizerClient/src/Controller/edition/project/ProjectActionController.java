@@ -1,7 +1,6 @@
 package Controller.edition.project;
 
 import Controller.edition.EditionController;
-import View.edition.project.CategoryPanel;
 import View.edition.project.ProjectPanel;
 
 import java.awt.event.ActionEvent;
@@ -27,16 +26,6 @@ public class ProjectActionController implements ActionListener {
         } else if(e.getActionCommand().equals(ProjectPanel.ACTION_PROJECT_DELETE)) {
 
         } else if(e.getActionCommand().equals(ProjectPanel.ACTION_CATEGORY_ADD)) {
-
-        } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_EDIT_NAME)) {
-
-        } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_LEFT)) {
-
-        } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_RIGHT)) {
-
-        } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_DELETE)) {
-
-        } else if(e.getActionCommand().equals(CategoryPanel.ACTION_TASK_ADD)) {
 
         }
     }

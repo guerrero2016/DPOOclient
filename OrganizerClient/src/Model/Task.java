@@ -8,47 +8,91 @@ public class Task {
     private String name;
     private String description;
     private ArrayList<Tag> tags;
-    private ArrayList<User> members;  //Check if only need username
+    private ArrayList<User> users;  //Check if only need username
 
     public Task() {
         tags = new ArrayList<>();
-        members = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     public Task(String name) {
-        this.name = name.toString();
+
+        if(name != null) {
+            this.name = name.toString();
+        }
+
         tags = new ArrayList<>();
-        members = new ArrayList<>();
+        users = new ArrayList<>();
+
     }
 
-    public Task(String name, String description, ArrayList<Tag> tags, ArrayList<User> members) {
-        this.name = new String(name);
-        this.description = new String(description);
+    public Task(String name, String description, ArrayList<Tag> tags, ArrayList<User> users) {
+
+        if(name != null) {
+            this.name = name.toString();
+        }
+
+        if(description != null) {
+            this.description = description.toString();
+        }
+
         this.tags = tags != null ? new ArrayList<>(tags) : new ArrayList<>();
-        this.members = members != null ? new ArrayList<>(members) : new ArrayList<>();
+        this.users = users != null ? new ArrayList<>(users) : new ArrayList<>();
+
+    }
+
+    public Task(Task task) {
+
+        if(task.name != null) {
+            name = task.name.toString();
+        }
+
+        if(task.description != null) {
+            description = task.description.toString();
+        }
+
+        tags = task.tags != null ? new ArrayList<>(task.tags) : new ArrayList<>();
+        users = task.users != null ? new ArrayList<>(task.users) : new ArrayList<>();
+
     }
 
     public String getName() {
-        return name;
+
+        if(name != null) {
+            return name.toString();
+        }
+
+        return null;
+
     }
 
     public void setName(String name) {
-        this.name = new String(name);
+        if(name != null) {
+            this.name = name.toString();
+        }
     }
 
     public String getDescription() {
-        return description;
+
+        if(description != null) {
+            return description;
+        }
+
+        return null;
+
     }
 
     public void setDescription(String description) {
-        this.description = new String(description);
+        if(description != null) {
+            this.description = description.toString();
+        }
     }
 
     public int getTotalTags() {
         return tags.size();
     }
 
-    public ArrayList<Tag> getAllTags() {
+    public ArrayList<Tag> getTags() {
         return tags;
     }
 
@@ -63,17 +107,23 @@ public class Task {
     }
 
     public void addTag(Tag tag) {
-        tags.add(tag);
+        tags.add(new Tag(tag));
+    }
+
+    public void removeTag(int tagIndex) {
+        if(tagIndex < tags.size()) {
+            tags.remove(tagIndex);
+        }
     }
 
     public int getTotalUsers() {
-        return members.size();
+        return users.size();
     }
 
     public User getUser(int memberPosition) {
 
-        if(memberPosition < members.size()) {
-            return members.get(memberPosition);
+        if(memberPosition < users.size()) {
+            return users.get(memberPosition);
         }
 
         return null;
@@ -81,11 +131,17 @@ public class Task {
     }
 
     public ArrayList<User> getUsers() {
-        return members;
+        return new ArrayList<>(users);
     }
 
-    public void addUser(User member) {
-        members.add(member);
+    public void addUser(User user) {
+        users.add(new User(user));
+    }
+
+    public void removeUser(int userIndex) {
+        if(userIndex < users.size()) {
+            users.remove(userIndex);
+        }
     }
 
     @Override
@@ -102,13 +158,13 @@ public class Task {
         Task task = (Task) o;
 
         return Objects.equals(name, task.name) && Objects.equals(description, task.description) &&
-                Objects.equals(tags, task.tags) && Objects.equals(members, task.members);
+                Objects.equals(tags, task.tags) && Objects.equals(users, task.users);
 
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, tags, members);
+        return Objects.hash(name, description, tags, users);
     }
 
 }

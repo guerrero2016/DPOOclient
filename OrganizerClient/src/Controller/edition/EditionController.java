@@ -1,118 +1,129 @@
 package Controller.edition;
 
 import Controller.MainViewController;
-import Controller.edition.project.NewCategoryDocumentController;
-import Controller.edition.project.NewTaskDocumentController;
-import Controller.edition.project.ProjectActionController;
-import Controller.edition.project.ProjectMouseController;
-import Controller.edition.task.TaskActionController;
-import Controller.edition.task.TaskDocumentController;
-import Controller.edition.user.UserActionController;
-import Controller.edition.user.UserDocumentListener;
-import Controller.edition.user.UserMouseController;
+import Controller.edition.project.*;
+import Controller.edition.project.category.CategoryActionController;
+import Controller.edition.project.category.CategoryMouseController;
+import Controller.edition.project.category.NewCategoryController;
+import Controller.edition.project.category.task.TaskActionController;
+import Controller.edition.project.category.task.TaskDocumentController;
+import Controller.edition.user.*;
+import Controller.edition.user.project.DeleteProjectController;
+import Controller.edition.user.project.NewProjectUserController;
+import Controller.edition.user.task.DeleteTaskController;
+import Controller.edition.user.task.NewTaskUserController;
 import Model.Project;
 import Model.Task;
 import View.edition.EditionPanel;
-import View.edition.project.ProjectPanel;
-import View.edition.task.TaskPanel;
-import View.edition.user.UserPanel;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class EditionController {
 
-    private final static String IMG_PATH = "img";
-    private final static String EDITOR_ICON_FILE = "editor_icon.png";
-    private final static String BACKGROUND_ICON_FILE = "background_icon.png";
-    private final static String DELETE_ICON_FILE = "delete_icon.png";
-    private final static String LEFT_ICON_FILE = "left_icon.png";
-    private final static String RIGHT_ICON_FILE = "right_icon.png";
-    private final static String BACK_ICON_FILE = "back_icon.png";
-    private final static String CHECK_ICON_FILE = "check_icon.png";
+    public final static int NO_CATEGORY = -1;
 
     private final static String PROJECT_USERS_TITLE = "Project Users";
     private final static String TASK_USERS_TITLE = "Task Users";
 
     private MainViewController mainController;
     private EditionPanel editionPanel;
+    private Project project;
+    private int currentCategory;
 
-    private Image backIcon;
-    private Image editorIcon;
-    private Image backgroundIcon;
-    private Image deleteIcon;
-    private Image leftIcon;
-    private Image rightIcon;
-    private Image checkIcon;
+    public EditionController(MainViewController mainController, EditionPanel editionPanel) {
 
-    public EditionController (MainViewController mainController, EditionPanel editionPanel) throws IOException {
+        //Link variables
         this.mainController = mainController;
         this.editionPanel = editionPanel;
-        loadIcons();
+
+        //Initial config
+        this.currentCategory = NO_CATEGORY;
+
+        //Link project controllers
+        this.editionPanel.registerProjectActionController(new ProjectActionController(this, this.
+                editionPanel.getProjectPanel()));
+        this.editionPanel.registerProjectDocumentController(new NewCategoryController(this.editionPanel.
+                getProjectPanel()));
+
+        //Config project users
+        this.editionPanel.setProjectUsersTitle(PROJECT_USERS_TITLE);
+
+        //Link project users controllers
+        this.editionPanel.registerProjectUserActionController(new NewProjectUserController(this,
+                this.editionPanel.getProjectUserPanel()));
+        this.editionPanel.registerProjectUserDocumentController(new UserDocumentListener(this.editionPanel.
+                getProjectUserPanel()));
+        this.editionPanel.registerProjectUserMouseController(new DeleteProjectController(this, this.
+                editionPanel.getProjectUserPanel()));
+
+        //Link task controllers
+        this.editionPanel.registerTaskDocumentController(new TaskDocumentController(this.editionPanel.getTaskPanel()));
+
+        //Config task users
+        this.editionPanel.setTaskUsersTitle(TASK_USERS_TITLE);
+
+        //Link task users controllers
+        this.editionPanel.registerTaskUserActionController(new NewTaskUserController(this,
+                this.editionPanel.getTaskUserPanel()));
+        this.editionPanel.registerTaskUserDocumentController(new UserDocumentListener(this.editionPanel.
+                getTaskUserPanel()));
+        this.editionPanel.registerTaskUserMouseController(new DeleteTaskController(this, this.editionPanel.
+                getTaskUserPanel()));
+
     }
 
-    public void setProjectContent(Project project) {
+    public void loadProject(Project project) {
 
-        if(project.getBackground() != null) {
-            editionPanel.setBackground(project.getBackground());
+        this.project = project;
+
+        //Config project content
+        editionPanel.setBackground(project.getBackground());
+        editionPanel.setProjectName(this.project.getName());
+
+        for(int i = 0; i < this.project.getTotalCategories(); i++) {
+            editionPanel.addCategory(this.project.getCategory(i));
+            editionPanel.registerCategoryActionController(new CategoryActionController(this,
+                    editionPanel.getCategoryPanel(i)), i);
+            editionPanel.registerCategoryDocumentController(new NewTaskController(editionPanel.getCategoryPanel(i)), i);
+            editionPanel.registerCategoryMouseController(new CategoryMouseController(this, i), i);
         }
 
-        //Project
-        ProjectPanel projectPanel = new ProjectPanel(project, editorIcon, backgroundIcon, deleteIcon, leftIcon, rightIcon);
-        projectPanel.registerActionController(new ProjectActionController(this, projectPanel));
-        projectPanel.registerMouseController(new ProjectMouseController(this, projectPanel));
-        projectPanel.registerDocumentController(new NewCategoryDocumentController(projectPanel));
+        //Config users panel
+        editionPanel.setProjectUsersList(this.project.getUsers());
 
-        for(int i = 0; i < projectPanel.getTotalCategories(); i++) {
-            projectPanel.getCategoryPanel(i).registerDocumentController(new NewTaskDocumentController(projectPanel.
-                    getCategoryPanel(i)));
-        }
-
-        editionPanel.setMainPanel(projectPanel);
-
-        //User
-        UserPanel userPanel = new UserPanel(project.getUsers(), PROJECT_USERS_TITLE);
-        userPanel.registerActionController(new UserActionController(this, userPanel));
-        userPanel.registerMouseListener(new UserMouseController(this, userPanel));
-        userPanel.registerDocumentListener(new UserDocumentListener(userPanel));
-        editionPanel.setLateralPanel(userPanel);
+        showProjectContent();
 
     }
 
-    public void setTaskContent(Task task) {
+    public void showProjectContent() {
+        editionPanel.showProjectPanel();
+    }
 
-        //TODO: Link task controllers
-        TaskPanel taskPanel = new TaskPanel(task, backIcon, editorIcon, deleteIcon, checkIcon);
-        taskPanel.registerActionController(new TaskActionController(this, taskPanel));
-        taskPanel.registerDocumentController(new TaskDocumentController(taskPanel));
-        editionPanel.setMainPanel(taskPanel);
+    public void showTaskContent() {
+        editionPanel.showTaskPanel();
+    }
 
-        //User
-        UserPanel userPanel = new UserPanel(task.getUsers(), TASK_USERS_TITLE);
-        userPanel.registerActionController(new UserActionController(this, userPanel));
-        userPanel.registerMouseListener(new UserMouseController(this, userPanel));
-        userPanel.registerDocumentListener(new UserDocumentListener(userPanel));
-        editionPanel.setLateralPanel(userPanel);
+    public void setTaskContent(Task task, int categoryIndex) {
+
+        currentCategory = categoryIndex;
+
+        //Config task content
+        editionPanel.setTaskName(task.getName());
+        editionPanel.setTaskDescription(task.getDescription());
+        editionPanel.setTagsList(task.getTags());
+        editionPanel.setTaskUsersList(task.getUsers());
+
+        //Link controllers
+//        editionPanel.registerTaskActionController(new TaskActionController(this, editionPanel.getTaskPanel()));
 
     }
 
-    private void loadIcons() throws IOException {
-        //Back icon
-        backIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + BACK_ICON_FILE));
-        //Editor icon
-        editorIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + EDITOR_ICON_FILE));
-        //Background icon
-        backgroundIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + BACKGROUND_ICON_FILE));
-        //Delete icon
-        deleteIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + DELETE_ICON_FILE));
-        //Left icon
-        leftIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + LEFT_ICON_FILE));
-        //Left icon
-        rightIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + RIGHT_ICON_FILE));
-        //Check icon
-        checkIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + CHECK_ICON_FILE));
+    public void updateTask(Task task) {
+        //TODO: Communicate task update
+    }
+
+    public void deleteTask(Task task) {
+        //TODO: Communicate task update
+        project.getCategory(currentCategory).removeTask(task);
+        showProjectContent();
     }
 
 }

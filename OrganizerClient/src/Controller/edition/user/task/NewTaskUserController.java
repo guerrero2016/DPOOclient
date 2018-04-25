@@ -1,4 +1,4 @@
-package Controller.edition.user;
+package Controller.edition.user.task;
 
 import Controller.edition.EditionController;
 import View.edition.user.UserPanel;
@@ -6,12 +6,12 @@ import View.edition.user.UserPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class UserActionController implements ActionListener {
+public class NewTaskUserController implements ActionListener {
 
     private EditionController mainController;
     private UserPanel view;
 
-    public UserActionController(EditionController mainController, UserPanel view) {
+    public NewTaskUserController(EditionController mainController, UserPanel view) {
         this.mainController = mainController;
         this.view = view;
     }

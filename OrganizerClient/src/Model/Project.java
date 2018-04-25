@@ -2,27 +2,37 @@ package Model;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Project {
 
-    private Image background;
-    private String projectName;
+    private String name;
     private ArrayList<Category> categories;
     private ArrayList<User> users;
+    private Image background;
 
     public Project() {
         categories = new ArrayList<>();
         users = new ArrayList<>();
     }
 
-    public Project(String projectName) {
-        this.projectName = projectName.toString();
+    public Project(String name) {
+
+        if(name != null) {
+            this.name = name.toString();
+        }
+
         categories = new ArrayList<>();
         users = new ArrayList<>();
+
     }
 
     public int getTotalCategories() {
         return categories.size();
+    }
+
+    public ArrayList<Category> getCategories() {
+        return categories;
     }
 
     public Category getCategory(int categoryIndex) {
@@ -45,12 +55,27 @@ public class Project {
 
     }
 
-    public String getProjectName() {
-        return projectName;
+
+    public void removeCategory(int categoryIndex) {
+        if(categoryIndex < categories.size()) {
+            categories.remove(categoryIndex);
+        }
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName.toString();
+    public String getName() {
+
+        if(name != null) {
+            return name;
+        }
+
+        return null;
+
+    }
+
+    public void setName(String name) {
+        if(name != null) {
+            this.name = name.toString();
+        }
     }
 
     public Image getBackground() {
@@ -61,8 +86,12 @@ public class Project {
         background = backgroundImage;
     }
 
-    public void addUser(User user) {
-        users.add(user);
+    public int getTotalUsers() {
+        return users.size();
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
     public User getUser(int userIndex) {
@@ -75,12 +104,37 @@ public class Project {
 
     }
 
-    public int getTotalUsers() {
-        return users.size();
+    public void addUser(User user) {
+        users.add(user);
     }
 
-    public ArrayList<User> getUsers() {
-        return users;
+    public void removeUser(int userIndex) {
+        if(userIndex < users.size()) {
+            users.remove(userIndex);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Project project = (Project) o;
+
+        return Objects.equals(name, project.name) && Objects.equals(categories, project.categories) &&
+                Objects.equals(users, project.users) && Objects.equals(background, project.background);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, categories, users, background);
     }
 
 }

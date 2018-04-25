@@ -16,14 +16,14 @@ public class UserDocumentListener implements DocumentListener {
     @Override
     public void insertUpdate(DocumentEvent e) {
         if(e.getDocument().getLength() > 0) {
-            view.setUserAddButtonState(true);
+            view.setUserAddButtonEnabled(true);
         }
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
         if(e.getDocument().getLength() == 0) {
-            view.setUserAddButtonState(false);
+            view.setUserAddButtonEnabled(false);
         }
     }
 

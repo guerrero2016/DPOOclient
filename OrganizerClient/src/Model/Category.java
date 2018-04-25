@@ -48,4 +48,8 @@ public class Category {
 
     }
 
+    public void removeTask(Task task) {
+        tasks.remove(task);
+    }
+
 }
