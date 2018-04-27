@@ -77,6 +77,10 @@ public class Project implements Serializable{
         this.membersName = membersName;
     }
 
+    public void addMemberName(String memberName) {
+        this.membersName.add(memberName);
+    }
+
     public void setBackground(String background) {
         this.background = background;
     }

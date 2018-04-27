@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Task implements Serializable{
 
+    private String id;
     private String name;
     private int order;
     private String description;
@@ -34,6 +35,10 @@ public class Task implements Serializable{
         this.tags = tags;
         this.membersName = membersName;
         this.nomCategoria = nom_categoria;
+    }
+
+    public Object getID() {
+        return id;
     }
 
     public String getName() {

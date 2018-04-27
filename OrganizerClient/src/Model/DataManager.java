@@ -56,8 +56,21 @@ public class DataManager {
         }
     }
 
+    public void deleteTask(Task task, String categoryID) {
+        ArrayList<Category> categories = selectedProject.getCategories();
+        for (int i = 0; i < categories.size(); i++) {
+            if (categoryID.equals(categories.get(i).getId())) {
+                categories.get(i).deleteTask(task);
+            }
+        }
+    }
+
     public void setMembers(String[] members) {
         selectedProject.setMembersName(new ArrayList<>(Arrays.asList(members)));
+    }
+
+    public void addMember(String memberName) {
+        this.selectedProject.addMemberName(memberName);
     }
 
     public String getMembersAsString() {
@@ -115,5 +128,4 @@ public class DataManager {
             }
         }
     }
-
 }
