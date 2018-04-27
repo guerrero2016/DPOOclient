@@ -13,9 +13,9 @@ public class Task implements Serializable{
     private ArrayList<Tag> tags;
     private ArrayList<String> membersName;
     private String nomCategoria;
-    private ArrayList<Encarregat> encarregats;
+    private ArrayList<MemberInCharge> encarregats;
 
-    public Task(String name, int order, String description, ArrayList<Tag> tags, ArrayList<Encarregat> encarregats) {
+    public Task(String name, int order, String description, ArrayList<Tag> tags, ArrayList<MemberInCharge> encarregats) {
         this.name = name;
         this.order = order;
         this.description = description;
@@ -23,7 +23,7 @@ public class Task implements Serializable{
         this.tags = tags;
     }
 
-    public ArrayList<Encarregat> getEncarregats() {
+    public ArrayList<MemberInCharge> getEncarregats() {
         return encarregats;
     }
 

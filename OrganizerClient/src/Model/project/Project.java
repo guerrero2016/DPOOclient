@@ -49,6 +49,46 @@ public class Project implements Serializable{
         return categories;
     }
 
+    public void setCategory(Category category) {
+        for (int i = 0; i < categories.size(); i++) {
+            if (category.getId().equals(categories.get(i).getId())) {
+                if (category.getName() != null) {
+                    categories.get(i).setName(category.getName());
+                }
+
+                if (category.getOrder() != -1) {
+                    Category auxCat = categories.get(i);
+                    auxCat.setOrder(category.getOrder());
+
+                    categories.remove(i);
+                    categories.add(auxCat.getOrder(), auxCat);
+                }
+                return;
+            }
+        }
+        categories.add(category.getOrder(), category);
+    }
+
+    public void deleteCategory(Category category) {
+        categories.remove(category);
+    }
+
+    public void setTask(Task task, String categoryID) {
+        for (int i = 0; i < categories.size(); i++) {
+            if (categoryID.equals(categories.get(i).getId())) {
+                categories.get(i).setTask(task);
+            }
+        }
+    }
+
+    public void deleteTask(Task task, String categoryID) {
+        for (int i = 0; i < categories.size(); i++) {
+            if (categoryID.equals(categories.get(i).getId())) {
+                categories.get(i).deleteTask(task);
+            }
+        }
+    }
+
     public ArrayList<String> getMembersName() {
         return membersName;
     }

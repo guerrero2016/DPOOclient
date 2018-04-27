@@ -47,22 +47,20 @@ public class DataManager {
         return selectedProject.getName();
     }
 
+    public void setCategory(Category category) {
+        selectedProject.setCategory(category);
+    }
+
+    public void deleteCategory(Category category) {
+        selectedProject.deleteCategory(category);
+    }
+
     public void setTask(Task task, String categoryID) {
-        ArrayList<Category> categories = selectedProject.getCategories();
-        for (int i = 0; i < categories.size(); i++) {
-            if (categoryID.equals(categories.get(i).getId())) {
-                categories.get(i).setTask(task);
-            }
-        }
+        selectedProject.setTask(task, categoryID);
     }
 
     public void deleteTask(Task task, String categoryID) {
-        ArrayList<Category> categories = selectedProject.getCategories();
-        for (int i = 0; i < categories.size(); i++) {
-            if (categoryID.equals(categories.get(i).getId())) {
-                categories.get(i).deleteTask(task);
-            }
-        }
+        selectedProject.deleteTask(task, categoryID);
     }
 
     public void setMembers(String[] members) {
