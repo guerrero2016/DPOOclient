@@ -14,6 +14,7 @@ import Controller.edition.user.project.NewProjectUserController;
 import Controller.edition.user.task.DeleteTaskController;
 import Controller.edition.user.task.NewTaskUserController;
 import ModelAEliminar.Project;
+import ModelAEliminar.Tag;
 import ModelAEliminar.Task;
 import View.edition.EditionPanel;
 
@@ -109,6 +110,7 @@ public class EditionController {
         //Config task content
         editionPanel.setTaskName(task.getName());
         editionPanel.setTaskDescription(task.getDescription());
+        editionPanel.cleanTagsList();
         editionPanel.setTagsList(task.getTags());
         editionPanel.setTaskUsersList(task.getUsers());
 
@@ -127,6 +129,10 @@ public class EditionController {
         project.getCategory(currentCategory).removeTask(task);
         editionPanel.getProjectPanel().removeTask(currentCategory, task);
         showProjectContent();
+    }
+
+    public void addTag(Task task, Tag tag) {
+        //TODO: Communicate tag add
     }
 
 }

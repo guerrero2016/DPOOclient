@@ -68,8 +68,16 @@ public class UserPanel extends TransparentPanel {
         }
     }
 
+    public void cleanUsersList() {
+        usersList = new DefaultListModel<>();
+        jlUsersList.setModel(usersList);
+        revalidate();
+        repaint();
+    }
+
     public void setUsersList(ArrayList<User> users) {
         if(users != null) {
+
             usersList = new DefaultListModel<>();
 
             for (int i = 0; i < users.size(); i++) {
@@ -77,16 +85,23 @@ public class UserPanel extends TransparentPanel {
             }
 
             jlUsersList.setModel(usersList);
+            revalidate();
+            repaint();
+
         }
     }
 
     public void addUser(User user) {
         usersList.addElement(user);
+        revalidate();
+        repaint();
     }
 
     public void removeUser(int userIndex) {
         if(userIndex < usersList.size()) {
             usersList.remove(userIndex);
+            revalidate();
+            repaint();
         }
     }
 

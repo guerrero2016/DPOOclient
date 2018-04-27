@@ -241,11 +241,22 @@ public class TaskPanel extends TransparentPanel {
         jtaDescription.setText(description);
     }
 
+    public void cleanTagsList() {
+        tagPanels = new ArrayList<>();
+        tpTagsList.removeAll();
+        revalidate();
+        repaint();
+    }
+
     public void setTagsList(ArrayList<Tag> tags) {
         if(tags != null) {
+
+            tagPanels = new ArrayList<>();
+
             for (int i = 0; i < tags.size(); i++) {
                 addTag(tags.get(i));
             }
+
         }
     }
 
@@ -258,6 +269,8 @@ public class TaskPanel extends TransparentPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.NONE;
         tpTagsList.add(tagPanels.get(tagPanels.size() - 1), gbc);
+        revalidate();
+        repaint();
     }
 
     public void removeTag(int tagIndex) {
@@ -278,6 +291,8 @@ public class TaskPanel extends TransparentPanel {
             }
 
             tpTagsList.setVisible(true);
+            revalidate();
+            repaint();
 
         }
     }

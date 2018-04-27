@@ -191,6 +191,10 @@ public class EditionPanel extends BackgroundPanel {
         taskPanel.setDescription(taskDescription);
     }
 
+    public void cleanTagsList() {
+        taskPanel.cleanTagsList();
+    }
+
     public void setTagsList(ArrayList<Tag> tags) {
         taskPanel.setTagsList(tags);
     }

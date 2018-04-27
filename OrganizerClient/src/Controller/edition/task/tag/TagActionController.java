@@ -1,4 +1,4 @@
-package Controller.edition.task;
+package Controller.edition.task.tag;
 
 import Controller.edition.EditionController;
 import View.edition.task.TagPanel;
