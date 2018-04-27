@@ -1,16 +1,20 @@
 package Network.Communicators;
 
 import Controller.MainViewController;
+import Model.DataManager;
+import Model.project.Project;
 import Network.Communicable;
 
 import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 public class AuthCommunicator implements Communicable {
 
     private String[] titles;
     private Color[] colors;
+
 
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
@@ -19,11 +23,13 @@ public class AuthCommunicator implements Communicable {
 
             switch (error) {
                 case 0:
-                    readProjects(objectIn);
-                    controller.createOwnerBoxProjects(titles, colors);
-                    readProjects(objectIn);
-                    controller.createSharedBoxProjects(titles, colors);
+                    DataManager dataManager = DataManager.getSharedInstance();
 
+                    dataManager.setProjectOwnerList(readProjects(objectIn));
+                    controller.createOwnerBoxProjects(titles, colors);
+
+                    dataManager.setProjectSharedList(readProjects(objectIn));
+                    controller.createSharedBoxProjects(titles, colors);
                     break;
 
                 case 1:
@@ -34,24 +40,25 @@ public class AuthCommunicator implements Communicable {
                     break;
             }
 
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private void readProjects(ObjectInputStream objectIn) throws IOException {
+    private ArrayList<Project> readProjects(ObjectInputStream objectIn) throws IOException, ClassNotFoundException {
+
+        ArrayList<Project> projects = new ArrayList<>();
 
         int numProj = objectIn.readInt();
-        titles = new String[numProj];
-        colors = new Color[numProj];
 
         for (int i = 0; i < numProj; i++) {
             //TODO save hash
-            final String hash = objectIn.readUTF();
-            titles[i] = objectIn.readUTF();
-            String color = objectIn.readUTF();
-            colors[i] = Color.decode(color);
+            final Project p = (Project) objectIn.readObject();
+            projects.add(p);
+            titles[i] = p.getName();
+            colors[i] = Color.decode(p.getColor());
         }
+        return projects;
     }
 
 

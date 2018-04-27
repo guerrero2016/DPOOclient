@@ -50,7 +50,19 @@ public class Category implements Serializable{
         this.tasks = tasks;
     }
 
-    public void addTask(Task task) {
-        this.tasks.add(task);
+    public void setTask(Task task) {
+        if (tasks.contains(task)) {
+            this.tasks.remove(task);
+            this.tasks.add(task.getOrder(), task);
+        }else {
+            this.tasks.add(task.getOrder(), task);
+        }
     }
+
+    public void deleteTask(Task task) {
+        if (tasks.contains(task)) {
+            this.tasks.remove(task);
+        }
+    }
+
 }
