@@ -12,7 +12,7 @@ public class Project implements Serializable{
     private ArrayList<Category> categories;
     private ArrayList<String> membersName;
     private String background;   //s'haurà de canviar PROFE
-    private boolean isOwner; //per sortir del pas
+    private boolean isOwner;
 
     public Project() {}
 
@@ -79,6 +79,14 @@ public class Project implements Serializable{
 
     public void setBackground(String background) {
         this.background = background;
+    }
+
+    public boolean isOwner() {
+        return isOwner;
+    }
+
+    public void setOwner(boolean owner) {
+        isOwner = owner;
     }
 
     @Override
