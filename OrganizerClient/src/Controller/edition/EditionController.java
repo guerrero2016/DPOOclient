@@ -6,8 +6,9 @@ import Controller.edition.project.ProjectActionController;
 import Controller.edition.project.category.CategoryActionController;
 import Controller.edition.project.category.CategoryMouseController;
 import Controller.edition.project.category.NewCategoryController;
-import Controller.edition.task.TaskActionController;
+import Controller.edition.task.TaskController;
 import Controller.edition.task.TaskDocumentController;
+import Controller.edition.task.tag.TagController;
 import Controller.edition.user.UserDocumentListener;
 import Controller.edition.user.project.DeleteProjectController;
 import Controller.edition.user.project.NewProjectUserController;
@@ -17,6 +18,7 @@ import ModelAEliminar.Project;
 import ModelAEliminar.Tag;
 import ModelAEliminar.Task;
 import View.edition.EditionPanel;
+import View.edition.task.TagPanel;
 
 public class EditionController {
 
@@ -29,6 +31,7 @@ public class EditionController {
     private EditionPanel editionPanel;
     private Project project;
     private int currentCategory;
+    private boolean isEditing;
 
     public EditionController(MainViewController mainController, EditionPanel editionPanel) {
 
@@ -75,6 +78,7 @@ public class EditionController {
     public void loadProject(Project project) {
 
         this.project = project;
+        isEditing = false;
 
         //Config project content
         editionPanel.setBackground(project.getBackground());
@@ -96,10 +100,12 @@ public class EditionController {
     }
 
     public void showProjectContent() {
+        isEditing = false;
         editionPanel.showProjectPanel();
     }
 
     public void showTaskContent() {
+        isEditing = false;
         editionPanel.showTaskPanel();
     }
 
@@ -115,9 +121,23 @@ public class EditionController {
         editionPanel.setTaskUsersList(task.getUsers());
 
         //Link controllers
-        editionPanel.registerTaskActionController(new TaskActionController(this, editionPanel.getTaskPanel(),
+        editionPanel.registerTaskActionController(new TaskController(this, editionPanel.getTaskPanel(),
                 task));
 
+        for(int i = 0; i < task.getTotalTags(); i++) {
+            TagPanel tagPanel = editionPanel.getTaskPanel().getTagPanel(i);
+            tagPanel.resetActionController();
+            tagPanel.registerActionController(new TagController(this, tagPanel, task, task.getTag(i)));
+        }
+
+    }
+
+    public boolean isEditing() {
+        return isEditing;
+    }
+
+    public void setEditingState(boolean enableState) {
+        isEditing = enableState;
     }
 
     public void updateTask(Task task) {
@@ -133,6 +153,15 @@ public class EditionController {
 
     public void addTag(Task task, Tag tag) {
         //TODO: Communicate tag add
+    }
+
+    public void removeTag(Task task, Tag tag) {
+        //TODO: Communicate tag delete
+        editionPanel.getTaskPanel().removeTag(task.getTagIndex(tag));
+    }
+
+    public void updateTag(Task task, Tag tag) {
+        //TODO: Communicate tag update
     }
 
 }

@@ -1,4 +1,4 @@
-package View.edition.project.category;
+package View.edition.project;
 
 import ModelAEliminar.Tag;
 import ModelAEliminar.Task;

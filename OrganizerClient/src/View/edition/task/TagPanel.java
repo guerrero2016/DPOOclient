@@ -17,11 +17,17 @@ public class TagPanel extends JPanel {
 
     private final static int MAX_TAG_LENGTH = 20;
 
+    private Image editorIcon;
+    private Image checkIcon;
+
     private final JLabel jlTagName;
     private final JButton jbTagEditor;
     private final JButton jbTagDelete;
 
-    public TagPanel(Image editorIcon, Image deleteIcon, Tag tag) {
+    public TagPanel(Image editorIcon, Image deleteIcon, Image checkIcon, Tag tag) {
+
+        this.editorIcon = editorIcon;
+        this.checkIcon = checkIcon;
 
         //Panel config
         setLayout(new BorderLayout());
@@ -50,7 +56,7 @@ public class TagPanel extends JPanel {
 
         //Tag name
         jlTagName = new JLabel();
-        jlTagName.setHorizontalAlignment(JLabel.CENTER);
+        jlTagName.setHorizontalAlignment(JTextField.CENTER);
         jlTagName.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         jlTagName.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
         setTagName(tag.getName());

@@ -1,6 +1,6 @@
 package Controller.edition.project;
 
-import View.edition.project.category.CategoryPanel;
+import View.edition.project.CategoryPanel;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

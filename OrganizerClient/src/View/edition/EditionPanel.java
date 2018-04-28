@@ -3,7 +3,7 @@ package View.edition;
 import ModelAEliminar.Category;
 import ModelAEliminar.Tag;
 import ModelAEliminar.User;
-import View.edition.project.category.CategoryPanel;
+import View.edition.project.CategoryPanel;
 import View.edition.project.ProjectPanel;
 import View.edition.task.TaskPanel;
 import View.edition.user.UserPanel;
@@ -218,6 +218,10 @@ public class EditionPanel extends BackgroundPanel {
 
     public void setTaskUsersList(ArrayList<User> users) {
         taskUserPanel.setUsersList(users);
+    }
+
+    public int getTotalTags() {
+        return taskPanel.getTotalTags();
     }
 
     public void registerTaskUserActionController(ActionListener actionListener) {

@@ -1,7 +1,7 @@
 package Controller.edition.task;
 
 import Controller.edition.EditionController;
-import Controller.edition.task.tag.PickColorController;
+import Controller.edition.task.tag.ColorPreviewController;
 import ModelAEliminar.Tag;
 import ModelAEliminar.Task;
 import View.edition.ColorChooserPanel;
@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TaskActionController implements ActionListener {
+public class TaskController implements ActionListener {
 
     private final static String TAG_CREATION_TITLE = "Tag Color";
 
@@ -19,7 +19,7 @@ public class TaskActionController implements ActionListener {
     private TaskPanel view;
     private Task task;
 
-    public TaskActionController(EditionController mainController, TaskPanel view, Task task) {
+    public TaskController(EditionController mainController, TaskPanel view, Task task) {
         this.mainController = mainController;
         this.view = view;
         this.task = task;
@@ -48,23 +48,16 @@ public class TaskActionController implements ActionListener {
         mainController.showProjectContent();
     }
 
-    private void descriptionManagement() {
-
-        if(view.isDescriptionEditable()) {
-            task.setDescription(view.getDescription());
-            mainController.updateTask(task);
-        }
-
-        view.setDescriptionEditable(!view.isDescriptionEditable());
-
-    }
-
     private void taskNameManagement() {
-        if(view.isTaskNameEditable()) {
-            task.setName(view.getTaskName());
-            view.setTaskNameEditable(!view.isTaskNameEditable(), task.getName());
+        if(!mainController.isEditing()) {
+            view.setTaskNameEditable(true, task.getName());
+            mainController.setEditingState(true);
         } else {
-            view.setTaskNameEditable(!view.isTaskNameEditable(), task.getName());
+            if(view.isTaskNameEditable()) {
+                task.setName(view.getTaskName());
+                view.setTaskNameEditable(false, task.getName());
+                mainController.setEditingState(false);
+            }
         }
     }
 
@@ -72,19 +65,33 @@ public class TaskActionController implements ActionListener {
         mainController.deleteTask(task);
     }
 
+    private void descriptionManagement() {
+        if(!mainController.isEditing()) {
+            view.setDescriptionEditable(true);
+            mainController.setEditingState(true);
+        } else {
+            if(view.isDescriptionEditable()) {
+                task.setDescription(view.getDescription());
+                view.setDescriptionEditable(false);
+                mainController.setEditingState(false);
+                mainController.updateTask(task);
+            }
+        }
+    }
+
     private void addTag() {
-        if(!view.getNewTagName().isEmpty()) {
+        if(!mainController.isEditing() && !view.getNewTagName().isEmpty()) {
 
             ColorChooserPanel colorChooserPanel = new ColorChooserPanel();
-            PickColorController pickColorController = new PickColorController(colorChooserPanel);
-            colorChooserPanel.registerActionController(pickColorController);
+            ColorPreviewController colorPreviewController = new ColorPreviewController(colorChooserPanel);
+            colorChooserPanel.getPalettePanel().registerActionController(colorPreviewController);
             int result = JOptionPane.showConfirmDialog(null, colorChooserPanel, TAG_CREATION_TITLE,
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
 
-                if (pickColorController.getCurrentColor() != null) {
-                    Tag tag = new Tag(view.getNewTagName(), pickColorController.getCurrentColor());
+                if (colorPreviewController.getCurrentColor() != null) {
+                    Tag tag = new Tag(view.getNewTagName(), colorPreviewController.getCurrentColor());
                     view.cleanNewTagName();
                     view.addTag(tag);
                     task.addTag(tag);

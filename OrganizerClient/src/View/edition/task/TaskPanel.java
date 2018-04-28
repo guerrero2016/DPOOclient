@@ -261,7 +261,7 @@ public class TaskPanel extends TransparentPanel {
     }
 
     public void addTag(Tag tag) {
-        tagPanels.add(new TagPanel(editorIcon, deleteIcon, tag));
+        tagPanels.add(new TagPanel(editorIcon, deleteIcon, checkIcon, tag));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = (tagPanels.size() - 1) % MAX_TAGS;
         gbc.gridy = (tagPanels.size() - 1) / MAX_TAGS;

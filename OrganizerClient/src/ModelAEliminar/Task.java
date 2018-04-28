@@ -110,10 +110,8 @@ public class Task {
         tags.add(new Tag(tag));
     }
 
-    public void removeTag(int tagIndex) {
-        if(tagIndex < tags.size()) {
-            tags.remove(tagIndex);
-        }
+    public void removeTag(Tag tag) {
+        tags.remove(tag);
     }
 
     public int getTotalUsers() {
@@ -128,6 +126,10 @@ public class Task {
 
         return null;
 
+    }
+
+    public int getTagIndex(Tag tag) {
+        return tags.indexOf(tag);
     }
 
     public ArrayList<User> getUsers() {

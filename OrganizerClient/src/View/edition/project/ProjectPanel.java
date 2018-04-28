@@ -4,7 +4,6 @@ import ModelAEliminar.Category;
 import ModelAEliminar.Task;
 import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
-import View.edition.project.category.CategoryPanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;

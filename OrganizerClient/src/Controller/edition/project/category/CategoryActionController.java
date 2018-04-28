@@ -1,7 +1,7 @@
 package Controller.edition.project.category;
 
 import Controller.edition.EditionController;
-import View.edition.project.category.CategoryPanel;
+import View.edition.project.CategoryPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
