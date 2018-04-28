@@ -11,8 +11,8 @@ import java.awt.event.MouseListener;
 
 public class TaskRemoveUserController implements MouseListener {
 
-    private final static String USER_REMOVE_MESSAGE = "User remove";
-    private final static String WARNING_MESSAGE = "Do you want to remove user";
+    private final static String USER_REMOVE_TITLE = "User Remove";
+    private final static String USER_REMOVE_MESSAGE = "Do you want to remove user";
 
     private EditionController mainController;
     private UserPanel view;
@@ -33,9 +33,9 @@ public class TaskRemoveUserController implements MouseListener {
 
             if(index == userList.getSelectedIndex()) {
 
-                int result = JOptionPane.showConfirmDialog(null,WARNING_MESSAGE + " '" +
-                                userList.getSelectedValue().getName() + "'?", USER_REMOVE_MESSAGE, JOptionPane.
-                                OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                int result = JOptionPane.showConfirmDialog(null, USER_REMOVE_MESSAGE + " '" +
+                                userList.getSelectedValue().getName() + "'?", USER_REMOVE_TITLE, JOptionPane.
+                                OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 
                 if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
                     task.removeUser(index);

@@ -13,6 +13,10 @@ import java.awt.event.ActionListener;
 
 public class TaskActionController implements ActionListener {
 
+    private final static String TASK_DELETE_MESSAGE = "Do you want to delete";
+    private final static String TASK_DELETE_TITLE = "Task Delete";
+    private final static String EDITING_ON_MESSAGE = "You should finish editing before doing something else";
+    private final static String EDITING_ON_TITLE = "Information";
     private final static String TAG_CREATION_TITLE = "Tag Color";
 
     private EditionController mainController;
@@ -59,13 +63,23 @@ public class TaskActionController implements ActionListener {
                 task.setName(view.getTaskName());
                 mainController.updatedTask(task);
                 mainController.setEditingState(false);
+            } else {
+                JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
+                        WARNING_MESSAGE);
             }
         }
     }
 
     private void deleteTask() {
-        mainController.deleteTask();
-        mainController.showProjectContent();
+
+        int result = JOptionPane.showConfirmDialog(null,TASK_DELETE_MESSAGE + " '" +
+                task.getName() + "'?", TASK_DELETE_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
+            mainController.deleteTask();
+            mainController.showProjectContent();
+        }
+
     }
 
     private void descriptionManagement() {
@@ -78,6 +92,9 @@ public class TaskActionController implements ActionListener {
                 task.setDescription(view.getDescription());
                 mainController.updatedTask(task);
                 mainController.setEditingState(false);
+            } else {
+                JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
+                        WARNING_MESSAGE);
             }
         }
     }
@@ -103,6 +120,9 @@ public class TaskActionController implements ActionListener {
 
             }
 
+        } else {
+            JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
+                    WARNING_MESSAGE);
         }
     }
 
