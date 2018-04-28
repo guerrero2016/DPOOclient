@@ -21,7 +21,7 @@ public class Main {
                 //3. Registres els JPanels amb els controladors
                 //4. Creem la MainView passant-li TOTS els JPanels
                 //5. Creem el controlador general passant-li tots els controllers i la MainView
-                //6. Finalment durant la creació del controlador gran se li ha de passar aquest a tots
+                //6. Finalment durant la creació del controlador gran se li ha de passar aquest TaskAddUserController tots
                 //   els petits controladors.
 
                      MainView a = new MainView();

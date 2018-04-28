@@ -62,6 +62,10 @@ public class Project {
         }
     }
 
+    public int getCategoryIndex(Category category) {
+        return categories.indexOf(category);
+    }
+
     public String getName() {
 
         if(name != null) {

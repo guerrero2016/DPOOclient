@@ -13,7 +13,7 @@ public class Register implements Serializable{
 
 
     public boolean checkSignIn() {
-        final String userName = "a";
+        final String userName = "TaskAddUserController";
         final String correu = "b";
         final String password = "c";
         final String confirmation = "d";

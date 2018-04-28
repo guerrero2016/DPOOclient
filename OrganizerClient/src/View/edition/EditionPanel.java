@@ -59,11 +59,11 @@ public class EditionPanel extends BackgroundPanel {
         jpCenter = new JPanel(new CardLayout());
         add(jpCenter, BorderLayout.CENTER);
 
-        //Link project panel
+        //Link add panel
         projectPanel = new ProjectPanel(editorIcon, backgroundIcon, deleteIcon, leftIcon, rightIcon);
         jpCenter.add(projectPanel, PROJECT_PANEL);
 
-        //Link task panel
+        //Link remove panel
         taskPanel = new TaskPanel(backIcon, editorIcon, deleteIcon, checkIcon);
         jpCenter.add(taskPanel, TASK_PANEL);
 
@@ -71,11 +71,11 @@ public class EditionPanel extends BackgroundPanel {
         jpRight = new JPanel(new CardLayout());
         add(jpRight, BorderLayout.LINE_END);
 
-        //Link project user panel
+        //Link add user panel
         projectUserPanel = new UserPanel();
         jpRight.add(projectUserPanel, PROJECT_USER_PANEL);
 
-        //Link task user panel
+        //Link remove user panel
         taskUserPanel = new UserPanel();
         jpRight.add(taskUserPanel, TASK_USER_PANEL);
 
@@ -159,7 +159,7 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     public void setProjectUsersList(ArrayList<User> users) {
-        projectUserPanel.setUsersList(users);
+        projectUserPanel.setUserList(users);
     }
 
     public UserPanel getProjectUserPanel() {
@@ -175,7 +175,7 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     public void registerProjectUserMouseController(MouseListener mouseListener) {
-        projectUserPanel.registerMouseListener(mouseListener);
+        projectUserPanel.registerMouseController(mouseListener);
     }
 
     public void showProjectPanel() {
@@ -217,7 +217,7 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     public void setTaskUsersList(ArrayList<User> users) {
-        taskUserPanel.setUsersList(users);
+        taskUserPanel.setUserList(users);
     }
 
     public int getTotalTags() {
@@ -233,7 +233,7 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     public void registerTaskUserMouseController(MouseListener mouseListener) {
-        taskUserPanel.registerMouseListener(mouseListener);
+        taskUserPanel.registerMouseController(mouseListener);
     }
 
     public UserPanel getTaskUserPanel() {

@@ -1,4 +1,4 @@
-package View.edition.task;
+package View.edition.task.tag;
 
 import ModelAEliminar.Tag;
 import View.edition.TransparentPanel;

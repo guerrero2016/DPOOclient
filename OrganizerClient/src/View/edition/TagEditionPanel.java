@@ -1,5 +1,7 @@
 package View.edition;
 
+import View.color.ColorChooserPanel;
+
 import javax.swing.*;
 import java.awt.*;
 

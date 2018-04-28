@@ -1,6 +1,6 @@
-package Controller.edition.task.tag;
+package Controller.color;
 
-import View.edition.PalettePanel;
+import View.color.PalettePanel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +27,7 @@ public class ColorKeeperController implements ActionListener {
         }
     }
 
-    public Color getCurrentColor() {
+    public Color getColor() {
         return currentColor;
     }
 

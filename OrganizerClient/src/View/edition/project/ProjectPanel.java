@@ -2,6 +2,7 @@ package View.edition.project;
 
 import ModelAEliminar.Category;
 import ModelAEliminar.Task;
+import View.document.DocumentEnablePanel;
 import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
 
@@ -11,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class ProjectPanel extends TransparentPanel {
+public class ProjectPanel extends TransparentPanel implements DocumentEnablePanel {
 
     public final static String ACTION_PROJECT_EDIT_NAME = "ProjectEditName";
     public final static String ACTION_PROJECT_BACKGROUND = "ProjectBackground";
@@ -191,38 +192,6 @@ public class ProjectPanel extends TransparentPanel {
         jtfCategoryName.setText(null);
     }
 
-    public String getNewTaskName(int categoryIndex) {
-
-        if(categoryIndex < categoryPanels.size()) {
-            return categoryPanels.get(categoryIndex).getNewTaskName();
-        }
-
-        return null;
-
-    }
-
-    public void cleanNewTaskName(int categoryIndex) {
-        if(categoryIndex < categoryPanels.size()) {
-            categoryPanels.get(categoryIndex).cleanNewTaskName();
-        }
-    }
-
-    public void addNewTask(Task task, int categoryIndex) {
-        if(categoryIndex < categoryPanels.size()) {
-            categoryPanels.get(categoryIndex).addNewTask(task);
-        }
-    }
-
-    public void removeTask(int categoryIndex, Task task) {
-        if(categoryIndex < categoryPanels.size()) {
-            categoryPanels.get(categoryIndex).removeTask(task);
-        }
-    }
-
-    public void setCategoryAdderButtonEnabled(boolean enableState) {
-        jbCategoryAdder.setEnabled(enableState);
-    }
-
     public void registerActionController(ActionListener actionListener) {
         jbProjectEditor.addActionListener(actionListener);
         jbBackground.addActionListener(actionListener);
@@ -232,6 +201,11 @@ public class ProjectPanel extends TransparentPanel {
 
     public void registerDocumentController(DocumentListener documentListener) {
         jtfCategoryName.getDocument().addDocumentListener(documentListener);
+    }
+
+    @Override
+    public void setDocumentEnableState(boolean enableState) {
+        jbCategoryAdder.setEnabled(enableState);
     }
 
 }

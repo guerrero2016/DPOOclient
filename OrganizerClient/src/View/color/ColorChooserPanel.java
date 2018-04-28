@@ -1,9 +1,9 @@
-package View.edition;
+package View.color;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ColorChooserPanel extends JPanel implements ColorPreviewPanel {
+public class ColorChooserPanel extends JPanel {
 
     private final static String PREVIEW_TITLE = "Color preview";
 
@@ -37,7 +37,6 @@ public class ColorChooserPanel extends JPanel implements ColorPreviewPanel {
         return palettePanel;
     }
 
-    @Override
     public void setPreviewColor(Color color) {
         if(color != null) {
             jpColor.setBackground(color);

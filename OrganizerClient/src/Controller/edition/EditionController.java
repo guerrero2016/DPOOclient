@@ -1,36 +1,39 @@
 package Controller.edition;
 
 import Controller.MainViewController;
-import Controller.edition.project.NewTaskController;
+import Controller.document.DocumentController;
 import Controller.edition.project.ProjectActionController;
 import Controller.edition.project.category.CategoryActionController;
 import Controller.edition.project.category.CategoryMouseController;
-import Controller.edition.project.category.NewCategoryController;
-import Controller.edition.task.TaskController;
-import Controller.edition.task.TaskDocumentController;
+import Controller.edition.task.TaskActionController;
 import Controller.edition.task.tag.TagController;
-import Controller.edition.user.UserDocumentListener;
-import Controller.edition.user.project.DeleteProjectController;
-import Controller.edition.user.project.NewProjectUserController;
-import Controller.edition.user.task.DeleteTaskController;
-import Controller.edition.user.task.NewTaskUserController;
-import ModelAEliminar.Project;
-import ModelAEliminar.Tag;
-import ModelAEliminar.Task;
+import Controller.edition.task.user.TaskAddUserController;
+import Controller.edition.task.user.TaskRemoveUserController;
+import ModelAEliminar.*;
 import View.edition.EditionPanel;
-import View.edition.task.TagPanel;
+import View.edition.project.CategoryPanel;
+import View.edition.project.ProjectPanel;
+import View.edition.task.TaskPanel;
+import View.edition.task.tag.TagPanel;
+import View.edition.user.UserPanel;
 
 public class EditionController {
-
-    public final static int NO_CATEGORY = -1;
 
     private final static String PROJECT_USERS_TITLE = "Project Users";
     private final static String TASK_USERS_TITLE = "Task Users";
 
     private MainViewController mainController;
+
     private EditionPanel editionPanel;
+    private ProjectPanel projectPanel;
+    private UserPanel projectUserPanel;
+    private TaskPanel taskPanel;
+    private UserPanel taskUserPanel;
+
     private Project project;
-    private int currentCategory;
+    private Category category;
+    private Task task;
+
     private boolean isEditing;
 
     public EditionController(MainViewController mainController, EditionPanel editionPanel) {
@@ -38,64 +41,51 @@ public class EditionController {
         //Link variables
         this.mainController = mainController;
         this.editionPanel = editionPanel;
+        projectPanel = editionPanel.getProjectPanel();
+        projectUserPanel = editionPanel.getProjectUserPanel();
+        taskPanel = editionPanel.getTaskPanel();
+        taskUserPanel = editionPanel.getTaskUserPanel();
 
-        //Initial config
-        this.currentCategory = NO_CATEGORY;
+        //Config project panel
+        projectPanel.registerActionController(new ProjectActionController(this, projectPanel));
+        projectPanel.registerDocumentController(new DocumentController(projectPanel));
 
-        //Link project controllers
-        this.editionPanel.registerProjectActionController(new ProjectActionController(this, this.
-                editionPanel.getProjectPanel()));
-        this.editionPanel.registerProjectDocumentController(new NewCategoryController(this.editionPanel.
-                getProjectPanel()));
+        //Config project users panel
+        projectUserPanel.setTitle(PROJECT_USERS_TITLE);
+        projectUserPanel.registerDocumentListener(new DocumentController(projectUserPanel));
 
-        //Config project users
-        this.editionPanel.setProjectUsersTitle(PROJECT_USERS_TITLE);
+        //Config task panel
+        taskPanel.registerDocumentController(new DocumentController(taskPanel));
 
-        //Link project users controllers
-        this.editionPanel.registerProjectUserActionController(new NewProjectUserController(this,
-                this.editionPanel.getProjectUserPanel()));
-        this.editionPanel.registerProjectUserDocumentController(new UserDocumentListener(this.editionPanel.
-                getProjectUserPanel()));
-        this.editionPanel.registerProjectUserMouseController(new DeleteProjectController(this, this.
-                editionPanel.getProjectUserPanel()));
-
-        //Link task controllers
-        this.editionPanel.registerTaskDocumentController(new TaskDocumentController(this.editionPanel.getTaskPanel()));
-
-        //Config task users
-        this.editionPanel.setTaskUsersTitle(TASK_USERS_TITLE);
-
-        //Link task users controllers
-        this.editionPanel.registerTaskUserActionController(new NewTaskUserController(this,
-                this.editionPanel.getTaskUserPanel()));
-        this.editionPanel.registerTaskUserDocumentController(new UserDocumentListener(this.editionPanel.
-                getTaskUserPanel()));
-        this.editionPanel.registerTaskUserMouseController(new DeleteTaskController(this, this.editionPanel.
-                getTaskUserPanel()));
+        //Config task users panel
+        taskUserPanel.setTitle(TASK_USERS_TITLE);
+        taskUserPanel.registerDocumentListener(new DocumentController(taskUserPanel));
 
     }
 
     public void loadProject(Project project) {
 
+        //Default config
         this.project = project;
-        isEditing = false;
+        category = null;
+        task = null;
 
         //Config project content
         editionPanel.setBackground(project.getBackground());
-        editionPanel.setProjectName(this.project.getName());
+        projectPanel.setProjectName(project.getName());
 
-        for(int i = 0; i < this.project.getTotalCategories(); i++) {
-            editionPanel.addCategory(this.project.getCategory(i));
-            editionPanel.registerCategoryActionController(new CategoryActionController(this,
-                    editionPanel.getCategoryPanel(i)), i);
-            editionPanel.registerCategoryDocumentController(new NewTaskController(editionPanel.getCategoryPanel(i)), i);
-            editionPanel.registerCategoryMouseController(new CategoryMouseController(this, i), i);
+        for(int i = 0; i < project.getTotalCategories(); i++) {
+            projectPanel.addCategory(project.getCategory(i));
+            CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i);
+            categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel,
+                    project.getCategory(i)));
+            categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
+            categoryPanel.registerMouseController(new CategoryMouseController(this, project.getCategory(i)));
         }
 
         //Config users panel
-        editionPanel.setProjectUsersList(this.project.getUsers());
-
-        showProjectContent();
+        projectUserPanel.setUserList(project.getUsers());
+        //TODO: Users controllers
 
     }
 
@@ -104,24 +94,20 @@ public class EditionController {
         editionPanel.showProjectPanel();
     }
 
-    public void showTaskContent() {
-        isEditing = false;
-        editionPanel.showTaskPanel();
-    }
+    public void setTaskContent(Category category, Task task) {
 
-    public void setTaskContent(Task task, int categoryIndex) {
-
-        currentCategory = categoryIndex;
+        //Default config
+        this.category = category;
+        this.task = task;
 
         //Config task content
-        editionPanel.setTaskName(task.getName());
-        editionPanel.setTaskDescription(task.getDescription());
-        editionPanel.cleanTagsList();
-        editionPanel.setTagsList(task.getTags());
-        editionPanel.setTaskUsersList(task.getUsers());
+        taskPanel.setTaskName(task.getName());
+        taskPanel.setDescription(task.getDescription());
+        taskPanel.cleanTagsList();
+        taskPanel.setTagsList(task.getTags());
 
         //Link controllers
-        editionPanel.registerTaskActionController(new TaskController(this, editionPanel.getTaskPanel(),
+        editionPanel.registerTaskActionController(new TaskActionController(this, editionPanel.getTaskPanel(),
                 task));
 
         for(int i = 0; i < task.getTotalTags(); i++) {
@@ -130,6 +116,18 @@ public class EditionController {
             tagPanel.registerActionController(new TagController(this, tagPanel, task, task.getTag(i)));
         }
 
+        //Config task users controllers
+        taskUserPanel.setUserList(task.getUsers());
+        taskUserPanel.resetActionController();
+        taskUserPanel.registerActionController(new TaskAddUserController(this, taskUserPanel, task));
+        taskUserPanel.resetMouseController();
+        taskUserPanel.registerMouseController(new TaskRemoveUserController(this, taskUserPanel, task));
+
+    }
+
+    public void showTaskContent() {
+        isEditing = false;
+        editionPanel.showTaskPanel();
     }
 
     public boolean isEditing() {
@@ -140,28 +138,31 @@ public class EditionController {
         isEditing = enableState;
     }
 
-    public void updateTask(Task task) {
-        //TODO: Communicate task update
+    public void updatedTask(Task task) {
+        mainController.updateTask(project, category, task);
     }
 
-    public void deleteTask(Task task) {
-        //TODO: Communicate task delete
-        project.getCategory(currentCategory).removeTask(task);
-        editionPanel.getProjectPanel().removeTask(currentCategory, task);
-        showProjectContent();
+    public void deleteTask() {
+        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(category));
+        categoryPanel.removeTask(task);
+        category.removeTask(task);
+        mainController.updateCategory(project, category);
     }
 
-    public void addTag(Task task, Tag tag) {
-        //TODO: Communicate tag add
+    public void removeTag(Tag tag) {
+        taskPanel.removeTag(task.getTagIndex(tag));
     }
 
-    public void removeTag(Task task, Tag tag) {
-        //TODO: Communicate tag delete
-        editionPanel.getTaskPanel().removeTag(task.getTagIndex(tag));
-    }
+    public User getProjectUser(String userName) {
 
-    public void updateTag(Task task, Tag tag) {
-        //TODO: Communicate tag update
+        for(int i = 0; i < project.getUsers().size(); i++) {
+            if(userName.equals(project.getUser(i).getName())) {
+                return project.getUser(i);
+            }
+        }
+
+        return null;
+
     }
 
 }

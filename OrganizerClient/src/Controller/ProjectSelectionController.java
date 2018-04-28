@@ -27,8 +27,8 @@ public class ProjectSelectionController implements MouseListener, ActionListener
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        //TODO: Manage content and mouse position
-        //TODO: Recover project from server
+        //TODO: Manage content and ProjectRemoveUserController position
+        //TODO: Recover add from server
         controller.loadProject(null);
         controller.swapPanel(MainView.PROJECT_ID);
     }

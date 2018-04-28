@@ -1,13 +1,12 @@
-package Controller.edition.task.tag;
+package Controller.color;
 
-import View.edition.ColorChooserPanel;
-import View.edition.ColorPreviewPanel;
+import View.color.ColorChooserPanel;
 
 import java.awt.event.ActionEvent;
 
 public class ColorPreviewController extends ColorKeeperController {
 
-    private ColorPreviewPanel view;
+    private ColorChooserPanel view;
 
     public ColorPreviewController(ColorChooserPanel view) {
         this.view = view;

@@ -7,7 +7,7 @@ public class LogIn implements Serializable{
         private String password;
 
     public boolean checkLogIn() {
-        //TODO Comprovar a la base de dades
+        //TODO Comprovar TaskAddUserController la base de dades
         return true;
     }
 }

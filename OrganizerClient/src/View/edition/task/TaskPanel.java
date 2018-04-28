@@ -1,8 +1,10 @@
 package View.edition.task;
 
 import ModelAEliminar.Tag;
+import View.document.DocumentEnablePanel;
 import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
+import View.edition.task.tag.TagPanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
@@ -10,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class TaskPanel extends TransparentPanel {
+public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     public final static String ACTION_TASK_BACK = "TaskBack";
     public final static String ACTION_TASK_EDIT_NAME = "TaskEditName";
@@ -42,6 +44,8 @@ public class TaskPanel extends TransparentPanel {
     private Image deleteIcon;
 
     private ArrayList<TagPanel> tagPanels;
+
+    private ActionListener actionListener;
 
     public TaskPanel(Image backIcon, Image editorIcon, Image deleteIcon, Image checkIcon) {
 
@@ -217,12 +221,10 @@ public class TaskPanel extends TransparentPanel {
 
         if(editableState) {
             jtfTaskName.setText(completeTaskName);
-            jbTaskEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(20, 20,
-                    Image.SCALE_SMOOTH)));
+            jbTaskEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
         } else {
             setTaskName(completeTaskName);
-            jbTaskEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(20, 20,
-                    Image.SCALE_SMOOTH)));
+            jbTaskEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
         }
 
         jtfTaskName.setEditable(editableState);
@@ -256,6 +258,9 @@ public class TaskPanel extends TransparentPanel {
             for (int i = 0; i < tags.size(); i++) {
                 addTag(tags.get(i));
             }
+
+            revalidate();
+            repaint();
 
         }
     }
@@ -297,28 +302,12 @@ public class TaskPanel extends TransparentPanel {
         }
     }
 
-    public void setTagName(int tagIndex, String tagName) {
-        if (tagIndex < tagPanels.size()) {
-            tagPanels.get(tagIndex).setTagName(tagName);
-        }
-    }
-
-    public void setTagColor(int tagIndex, Color tagColor) {
-        if (tagIndex < tagPanels.size()) {
-            tagPanels.get(tagIndex).setTagColor(tagColor);
-        }
-    }
-
     public String getNewTagName() {
         return jtfTagName.getText();
     }
 
     public void cleanNewTagName() {
         jtfTagName.setText(null);
-    }
-
-    public void setTagAdderButtonEnabled(boolean enableState) {
-        jbTagAdder.setEnabled(enableState);
     }
 
     public void setDescriptionEditable(boolean editableState) {
@@ -354,16 +343,16 @@ public class TaskPanel extends TransparentPanel {
     }
 
     public void resetActionController() {
-        for(ActionListener actionListener : jbTaskBack.getActionListeners()) {
-            jbTaskBack.removeActionListener(actionListener);
-            jbTaskEditor.removeActionListener(actionListener);
-            jbTaskDelete.removeActionListener(actionListener);
-            jbDescriptionEditor.removeActionListener(actionListener);
-            jbTagAdder.removeActionListener(actionListener);
-        }
+        jbTaskBack.removeActionListener(actionListener);
+        jbTaskEditor.removeActionListener(actionListener);
+        jbTaskDelete.removeActionListener(actionListener);
+        jbDescriptionEditor.removeActionListener(actionListener);
+        jbTagAdder.removeActionListener(actionListener);
+        actionListener = null;
     }
 
     public void registerActionController(ActionListener actionListener) {
+        this.actionListener = actionListener;
         jbTaskBack.addActionListener(actionListener);
         jbTaskEditor.addActionListener(actionListener);
         jbTaskDelete.addActionListener(actionListener);
@@ -373,6 +362,11 @@ public class TaskPanel extends TransparentPanel {
 
     public void registerDocumentController(DocumentListener documentListener) {
         jtfTagName.getDocument().addDocumentListener(documentListener);
+    }
+
+    @Override
+    public void setDocumentEnableState(boolean enableState) {
+        jbTagAdder.setEnabled(enableState);
     }
 
 }

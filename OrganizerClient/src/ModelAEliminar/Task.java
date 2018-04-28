@@ -118,10 +118,10 @@ public class Task {
         return users.size();
     }
 
-    public User getUser(int memberPosition) {
+    public User getUser(int userIndex) {
 
-        if(memberPosition < users.size()) {
-            return users.get(memberPosition);
+        if(userIndex < users.size()) {
+            return users.get(userIndex);
         }
 
         return null;

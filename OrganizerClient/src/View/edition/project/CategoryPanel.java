@@ -2,6 +2,8 @@ package View.edition.project;
 
 import ModelAEliminar.Category;
 import ModelAEliminar.Task;
+import View.document.DocumentEnablePanel;
+import org.w3c.dom.views.DocumentView;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
@@ -9,7 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 
-public class CategoryPanel extends JPanel {
+public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     public final static String ACTION_CATEGORY_EDIT_NAME = "CategoryEditName";
     public final static String ACTION_CATEGORY_LEFT = "CategoryLeft";
@@ -81,7 +83,7 @@ public class CategoryPanel extends JPanel {
         jbCategoryDelete.setActionCommand(ACTION_CATEGORY_DELETE);
         jpCategoryButtons.add(jbCategoryDelete);
 
-        //Scrollable task list
+        //Scrollable remove list
         final JScrollPane jspCategories = new JScrollPane();
         add(jspCategories, BorderLayout.CENTER);
 
@@ -103,26 +105,22 @@ public class CategoryPanel extends JPanel {
         final JPanel jpTaskAdder = new JPanel(new BorderLayout());
         add(jpTaskAdder, BorderLayout.PAGE_END);
 
-        //New task title
+        //New remove title
         final JLabel jlTaskTitle = new JLabel(NEW_TASK_TITLE);
         jlTaskTitle.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
         jpTaskAdder.add(jlTaskTitle, BorderLayout.LINE_START);
 
-        //New task name field
+        //New remove name field
         jtfTaskName = new JTextField();
         jtfTaskName.setEditable(true);
         jpTaskAdder.add(jtfTaskName);
 
-        //New task adder button
+        //New remove adder button
         jbTaskAdder = new JButton(ADD_TITLE);
         jbTaskAdder.setEnabled(false);
         jbTaskAdder.setActionCommand(ACTION_TASK_ADD);
         jpTaskAdder.add(jbTaskAdder, BorderLayout.LINE_END);
 
-    }
-
-    public void setTaskAdderButtonState(boolean buttonState) {
-        jbTaskAdder.setEnabled(buttonState);
     }
 
     public void setCategoryName(String categoryName) {
@@ -174,6 +172,11 @@ public class CategoryPanel extends JPanel {
 
     public void registerDocumentController(DocumentListener documentListener) {
         jtfTaskName.getDocument().addDocumentListener(documentListener);
+    }
+
+    @Override
+    public void setDocumentEnableState(boolean enableState) {
+        jbTaskAdder.setEnabled(enableState);
     }
 
 }

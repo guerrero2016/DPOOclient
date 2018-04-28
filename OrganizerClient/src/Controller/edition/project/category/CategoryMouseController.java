@@ -1,6 +1,7 @@
 package Controller.edition.project.category;
 
 import Controller.edition.EditionController;
+import ModelAEliminar.Category;
 import ModelAEliminar.Task;
 
 import javax.swing.*;
@@ -10,11 +11,11 @@ import java.awt.event.MouseListener;
 public class CategoryMouseController implements MouseListener{
 
     private EditionController mainController;
-    private int categoryIndex;
+    private Category category;
 
-    public CategoryMouseController(EditionController mainController, int categoryIndex) {
+    public CategoryMouseController(EditionController mainController, Category category) {
         this.mainController = mainController;
-        this.categoryIndex = categoryIndex;
+        this.category = category;
     }
 
     @Override
@@ -25,7 +26,7 @@ public class CategoryMouseController implements MouseListener{
             int index = tasksList.locationToIndex(e.getPoint());
 
             if(index == tasksList.getSelectedIndex()) {
-                mainController.setTaskContent(tasksList.getSelectedValue(), categoryIndex);
+                mainController.setTaskContent(category, tasksList.getSelectedValue());
                 mainController.showTaskContent();
             }
 

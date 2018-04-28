@@ -102,9 +102,22 @@ public class MainViewController {
 
         //TODO: End delete
 
-        //TODO: Replace project and delete taskContent
+        //TODO: Replace add and delete taskContent
         editionController.loadProject(newProject);
+        editionController.showProjectContent();
 
+    }
+
+    public void updateProject(Project project) {
+        //TODO: ALL
+    }
+
+    public void updateCategory(Project project, Category category) {
+        //TODO: ALL
+    }
+
+    public void updateTask(Project project, Category category, Task task) {
+        //TODO: ALL
     }
 
 }

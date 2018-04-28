@@ -1,29 +1,29 @@
-package Controller.edition.project;
+package Controller.document;
 
-import View.edition.project.CategoryPanel;
+import View.document.DocumentEnablePanel;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class NewTaskController implements DocumentListener {
+public class DocumentController implements DocumentListener {
 
-    private CategoryPanel view;
+    private DocumentEnablePanel view;
 
-    public NewTaskController(CategoryPanel view) {
+    public DocumentController(DocumentEnablePanel view) {
         this.view = view;
     }
 
     @Override
     public void insertUpdate(DocumentEvent e) {
         if(e.getDocument().getLength() > 0) {
-            view.setTaskAdderButtonState(true);
+            view.setDocumentEnableState(true);
         }
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
         if(e.getDocument().getLength() == 0) {
-            view.setTaskAdderButtonState(false);
+            view.setDocumentEnableState(false);
         }
     }
 
