@@ -27,10 +27,11 @@ public class ProjectSelectionController implements MouseListener, ActionListener
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        //TODO: Manage content and ProjectRemoveUserController position
-        //TODO: Recover add from server
-        controller.loadProject(null);
-        controller.swapPanel(MainView.PROJECT_ID);
+        //TODO: Recover project data from server and know if it is a project user or shared
+        if(e.getClickCount() == 2) {
+            controller.loadProject(null, false);
+            controller.swapPanel(MainView.PROJECT_ID);
+        }
     }
 
     public void createProject (String title, Color color) {

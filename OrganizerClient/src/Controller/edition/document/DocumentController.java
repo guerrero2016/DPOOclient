@@ -1,6 +1,6 @@
-package Controller.document;
+package Controller.edition.document;
 
-import View.document.DocumentEnablePanel;
+import View.edition.document.DocumentEnablePanel;
 
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

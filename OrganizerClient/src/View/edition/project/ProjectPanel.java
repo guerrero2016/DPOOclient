@@ -1,10 +1,10 @@
 package View.edition.project;
 
 import ModelAEliminar.Category;
-import ModelAEliminar.Task;
-import View.document.DocumentEnablePanel;
+import View.edition.document.DocumentEnablePanel;
 import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
+import View.edition.project.category.CategoryPanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class ProjectPanel extends TransparentPanel implements DocumentEnablePanel {
 
+    public final static String ACTION_PROJECT_BACK = "ProjectBack";
     public final static String ACTION_PROJECT_EDIT_NAME = "ProjectEditName";
     public final static String ACTION_PROJECT_BACKGROUND = "ProjectBackground";
     public final static String ACTION_PROJECT_DELETE = "ProjectDelete";
@@ -32,6 +33,8 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     private Image checkIcon;
 
     private final JLabel jlProjectName;
+    private final TransparentPanel tpProjectButtons;
+    private final JButton jbProjectBack;
     private final JButton jbProjectEditor;
     private final JButton jbBackground;
     private final JButton jbProjectDelete;
@@ -42,7 +45,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     private ArrayList<CategoryPanel> categoryPanels;
 
     public ProjectPanel(Image editorIcon, Image backgroundIcon, Image deleteIcon, Image leftIcon, Image rightIcon,
-                        Image checkIcon) {
+                        Image checkIcon, Image backIcon) {
 
         //Project settings
         this.editorIcon = editorIcon;
@@ -69,9 +72,15 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         tpProjectTitle.add(jlProjectName, BorderLayout.CENTER);
 
         //Project buttons panel
-        final TransparentPanel tpProjectButtons = new TransparentPanel();
+        tpProjectButtons = new TransparentPanel();
         tpProjectButtons.setLayout(new FlowLayout(FlowLayout.LEFT));
         tpProjectTitle.add(tpProjectButtons, BorderLayout.LINE_END);
+
+        //Project back button
+        jbProjectBack = new JButton(new ImageIcon(backIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+        jbProjectBack.setBorder(null);
+        jbProjectBack.setActionCommand(ACTION_PROJECT_BACK);
+        tpProjectButtons.add(jbProjectBack);
 
         //Project editor button
         jbProjectEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
@@ -206,7 +215,16 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         jtfCategoryName.setText(null);
     }
 
+    public void hideDeleteButton(boolean hideState) {
+        if(hideState) {
+            tpProjectButtons.remove(jbProjectDelete);
+        } else {
+            tpProjectButtons.add(jbProjectDelete);
+        }
+    }
+
     public void registerActionController(ActionListener actionListener) {
+        jbProjectBack.addActionListener(actionListener);
         jbProjectEditor.addActionListener(actionListener);
         jbBackground.addActionListener(actionListener);
         jbProjectDelete.addActionListener(actionListener);

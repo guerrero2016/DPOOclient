@@ -10,6 +10,9 @@ import java.awt.event.MouseListener;
 
 public class CategoryMouseController implements MouseListener{
 
+    private final static String EDITING_ON_MESSAGE = "You should finish editing before doing something else";
+    private final static String EDITING_ON_TITLE = "Information";
+
     private EditionController mainController;
     private Category category;
 
@@ -20,7 +23,7 @@ public class CategoryMouseController implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getClickCount() == 2) {
+        if(!mainController.isEditing() && e.getClickCount() == 2) {
 
             JList<Task> tasksList = (JList) e.getSource();
             int index = tasksList.locationToIndex(e.getPoint());
@@ -30,6 +33,9 @@ public class CategoryMouseController implements MouseListener{
                 mainController.showTaskContent();
             }
 
+        } else if(mainController.isEditing()) {
+            JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
+                    WARNING_MESSAGE);
         }
     }
 

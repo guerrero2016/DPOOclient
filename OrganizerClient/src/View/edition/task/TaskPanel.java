@@ -1,7 +1,7 @@
 package View.edition.task;
 
 import ModelAEliminar.Tag;
-import View.document.DocumentEnablePanel;
+import View.edition.document.DocumentEnablePanel;
 import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;
 import View.edition.task.tag.TagPanel;

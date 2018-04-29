@@ -1,10 +1,10 @@
 package Controller.edition.task;
 
 import Controller.edition.EditionController;
-import Controller.color.ColorPreviewController;
+import Controller.edition.color.ColorPreviewController;
 import ModelAEliminar.Tag;
 import ModelAEliminar.Task;
-import View.color.ColorChooserPanel;
+import View.edition.color.ColorChooserPanel;
 import View.edition.task.TaskPanel;
 
 import javax.swing.*;

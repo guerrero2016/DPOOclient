@@ -1,6 +1,6 @@
-package Controller.color;
+package Controller.edition.color;
 
-import View.color.PalettePanel;
+import View.edition.color.PalettePanel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,27 +8,27 @@ import java.awt.event.ActionListener;
 
 public class ColorKeeperController implements ActionListener {
 
-    protected Color currentColor;
+    protected Color color;
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals(PalettePanel.ACTION_GREEN_BUTTON)) {
-            currentColor = Color.GREEN;
+            color = Color.GREEN;
         } else if(e.getActionCommand().equals(PalettePanel.ACTION_CYAN_BUTTON)) {
-            currentColor = Color.CYAN;
+            color = Color.CYAN;
         } else if(e.getActionCommand().equals(PalettePanel.ACTION_MAGENTA_BUTTON)) {
-            currentColor = Color.MAGENTA;
+            color = Color.MAGENTA;
         } else if(e.getActionCommand().equals(PalettePanel.ACTION_RED_BUTTON)) {
-            currentColor = Color.RED;
+            color = Color.RED;
         } else if(e.getActionCommand().equals(PalettePanel.ACTION_ORANGE_BUTTON)) {
-            currentColor = Color.ORANGE;
+            color = Color.ORANGE;
         } else if(e.getActionCommand().equals(PalettePanel.ACTION_PINK_BUTTON)) {
-            currentColor = Color.PINK;
+            color = Color.PINK;
         }
     }
 
     public Color getColor() {
-        return currentColor;
+        return color;
     }
 
 }

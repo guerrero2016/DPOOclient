@@ -1,6 +1,6 @@
-package Controller.color;
+package Controller.edition.color;
 
-import View.color.ColorChooserPanel;
+import View.edition.color.ColorChooserPanel;
 
 import java.awt.event.ActionEvent;
 
@@ -15,7 +15,7 @@ public class ColorPreviewController extends ColorKeeperController {
     @Override
     public void actionPerformed(ActionEvent e) {
         super.actionPerformed(e);
-        view.setPreviewColor(currentColor);
+        view.setPreviewColor(color);
     }
 
 }

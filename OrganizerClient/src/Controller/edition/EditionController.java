@@ -1,7 +1,7 @@
 package Controller.edition;
 
 import Controller.MainViewController;
-import Controller.document.DocumentController;
+import Controller.edition.document.DocumentController;
 import Controller.edition.project.ProjectActionController;
 import Controller.edition.project.category.CategoryActionController;
 import Controller.edition.project.category.CategoryMouseController;
@@ -10,8 +10,9 @@ import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
 import ModelAEliminar.*;
+import View.ProjectsMainView;
 import View.edition.EditionPanel;
-import View.edition.project.CategoryPanel;
+import View.edition.project.category.CategoryPanel;
 import View.edition.project.ProjectPanel;
 import View.edition.task.TaskPanel;
 import View.edition.task.tag.TagPanel;
@@ -63,7 +64,7 @@ public class EditionController {
 
     }
 
-    public void loadProject(Project project) {
+    public void loadProject(Project project, boolean isAdmin) {
 
         //Default config
         this.project = project;
@@ -71,7 +72,8 @@ public class EditionController {
         task = null;
 
         //Config project content
-        editionPanel.setBackground(project.getBackground());
+        projectPanel.hideDeleteButton(!isAdmin);
+        editionPanel.setBackgroundImage(project.getBackground());
         projectPanel.setProjectName(project.getName());
 
         for(int i = 0; i < project.getTotalCategories(); i++) {
@@ -194,6 +196,10 @@ public class EditionController {
     public void updateTaskList() {
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(category));
         categoryPanel.updateTask(category.getTaskIndex(task), task);
+    }
+
+    public void showProjectSelection() {
+        mainController.swapPanel(ProjectsMainView.VIEW_TAG);
     }
 
 }

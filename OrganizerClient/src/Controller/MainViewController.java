@@ -58,7 +58,7 @@ public class MainViewController {
         projectSelectionController.createProjectInfoWindow(title, memebers);
     }
 
-    public void loadProject(Project project) {
+    public void loadProject(Project project, boolean isAdmin) {
 
         //TODO: Delete
         Project newProject = new Project("Project Name");
@@ -103,7 +103,7 @@ public class MainViewController {
         //TODO: End delete
 
         //TODO: Replace add and delete taskContent
-        editionController.loadProject(newProject);
+        editionController.loadProject(newProject, isAdmin);
         editionController.showProjectContent();
 
     }

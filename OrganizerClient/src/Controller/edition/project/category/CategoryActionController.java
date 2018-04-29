@@ -3,7 +3,7 @@ package Controller.edition.project.category;
 import Controller.edition.EditionController;
 import ModelAEliminar.Category;
 import ModelAEliminar.Task;
-import View.edition.project.CategoryPanel;
+import View.edition.project.category.CategoryPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -103,6 +103,9 @@ public class CategoryActionController implements ActionListener {
             view.cleanNewTaskName();
             view.addNewTask(task);
             mainController.updatedCategory(category);
+        } else if(mainController.isEditing()) {
+            JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
+                    WARNING_MESSAGE);
         }
     }
 

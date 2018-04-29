@@ -1,4 +1,4 @@
-package View.color;
+package View.edition.color;
 
 import javax.swing.*;
 import java.awt.*;

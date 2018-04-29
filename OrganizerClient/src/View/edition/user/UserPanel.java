@@ -1,7 +1,7 @@
 package View.edition.user;
 
 import ModelAEliminar.User;
-import View.document.DocumentEnablePanel;
+import View.edition.document.DocumentEnablePanel;
 import View.edition.TransparentPanel;
 
 import javax.swing.*;

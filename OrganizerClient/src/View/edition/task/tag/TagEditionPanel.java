@@ -1,6 +1,6 @@
-package View.edition;
+package View.edition.task.tag;
 
-import View.color.ColorChooserPanel;
+import View.edition.color.ColorChooserPanel;
 
 import javax.swing.*;
 import java.awt.*;

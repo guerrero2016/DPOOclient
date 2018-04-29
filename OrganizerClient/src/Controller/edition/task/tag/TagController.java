@@ -1,11 +1,11 @@
 package Controller.edition.task.tag;
 
-import Controller.color.ColorPreviewController;
+import Controller.edition.color.ColorPreviewController;
 import Controller.edition.EditionController;
 import ModelAEliminar.Tag;
 import ModelAEliminar.Task;
-import View.color.ColorChooserPanel;
-import View.edition.TagEditionPanel;
+import View.edition.color.ColorChooserPanel;
+import View.edition.task.tag.TagEditionPanel;
 import View.edition.task.tag.TagPanel;
 
 import javax.swing.*;
@@ -14,7 +14,11 @@ import java.awt.event.ActionListener;
 
 public class TagController implements ActionListener {
 
+    private final static String TAG_REMOVE_TITLE = "Tag Remove";
+    private final static String TAG_REMOVE_MESSAGE = "Do you want to remove";
     private final static String TAG_EDITION_TITLE = "Tag Edition";
+    private final static String EDITING_ON_MESSAGE = "You should finish editing before doing something else";
+    private final static String EDITING_ON_TITLE = "Information";
 
     private EditionController mainController;
     private TagPanel view;
@@ -31,44 +35,58 @@ public class TagController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(TagPanel.ACTION_TAG_NAME_EDIT)) {
-            if(!mainController.isEditing()) {
-                manageTagNameEdit();
-            }
+            manageTagNameEdit();
         } else if(e.getActionCommand().equals(TagPanel.ACTION_TAG_DELETE)) {
-            if(!mainController.isEditing()) {
-                mainController.removeTag(tag);
-                task.removeTag(tag);
-                mainController.updatedTask(task);
-            }
+            tagDelete();
         }
     }
 
     private void manageTagNameEdit() {
+        if(!mainController.isEditing()) {
 
-        //Create panel
-        TagEditionPanel tagEditionPanel = new TagEditionPanel(tag.getName());
-        ColorChooserPanel colorChooserPanel = tagEditionPanel.getColorChooserPanel();
-        ColorPreviewController colorPreviewController = new ColorPreviewController(colorChooserPanel);
-        colorChooserPanel.getPalettePanel().registerActionController(colorPreviewController);
+            //Create panel
+            TagEditionPanel tagEditionPanel = new TagEditionPanel(tag.getName());
+            ColorChooserPanel colorChooserPanel = tagEditionPanel.getColorChooserPanel();
+            ColorPreviewController colorPreviewController = new ColorPreviewController(colorChooserPanel);
+            colorChooserPanel.getPalettePanel().registerActionController(colorPreviewController);
 
-        //Show panel
-        int result = JOptionPane.showConfirmDialog(null, tagEditionPanel, TAG_EDITION_TITLE,
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            //Show panel
+            int result = JOptionPane.showConfirmDialog(null, tagEditionPanel, TAG_EDITION_TITLE,
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
-        if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
+            if (result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
 
-            tag.setName(tagEditionPanel.getTagName());
+                tag.setName(tagEditionPanel.getTagName());
 
-            if(colorPreviewController.getColor() != null) {
-                tag.setColor(colorPreviewController.getColor());
+                if (colorPreviewController.getColor() != null) {
+                    tag.setColor(colorPreviewController.getColor());
+                }
+
+                view.setTagName(tag.getName());
+                view.setTagColor(tag.getColor());
+                mainController.updatedTask(task);
+
             }
 
-            view.setTagName(tag.getName());
-            view.setTagColor(tag.getColor());
-            mainController.updatedTask(task);
+        } else {
+            JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
+                    WARNING_MESSAGE);
+        }
+    }
+
+    private void tagDelete() {
+        if(!mainController.isEditing()) {
+
+            int result = JOptionPane.showConfirmDialog(null, TAG_REMOVE_MESSAGE + " '" + tag.
+                    getName() + "'?", TAG_REMOVE_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
+                mainController.removeTag(tag);
+                task.removeTag(tag);
+                mainController.updatedTask(task);
+            }
 
         }
-
     }
 
 }

@@ -1,15 +1,14 @@
-package View.edition.project;
+package View.edition.project.category;
 
 import ModelAEliminar.Category;
 import ModelAEliminar.Task;
-import View.document.DocumentEnablePanel;
+import View.edition.document.DocumentEnablePanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
