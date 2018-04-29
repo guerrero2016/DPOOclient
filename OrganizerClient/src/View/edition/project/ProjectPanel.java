@@ -32,7 +32,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     private Image rightIcon;
     private Image checkIcon;
 
-    private final JLabel jlProjectName;
+    private final JTextField jtfProjectName;
     private final TransparentPanel tpProjectButtons;
     private final JButton jbProjectBack;
     private final JButton jbProjectEditor;
@@ -43,6 +43,8 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     private final JButton jbCategoryAdder;
 
     private ArrayList<CategoryPanel> categoryPanels;
+
+    private ActionListener actionListener;
 
     public ProjectPanel(Image editorIcon, Image backgroundIcon, Image deleteIcon, Image leftIcon, Image rightIcon,
                         Image checkIcon, Image backIcon) {
@@ -66,10 +68,12 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         add(tpProjectTitle, BorderLayout.PAGE_START);
 
         //Project name
-        jlProjectName = new JLabel();
-        jlProjectName.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-        jlProjectName.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-        tpProjectTitle.add(jlProjectName, BorderLayout.CENTER);
+        jtfProjectName = new JTextField();
+        jtfProjectName.setEditable(false);
+        jtfProjectName.setOpaque(false);
+        jtfProjectName.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
+        jtfProjectName.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+        tpProjectTitle.add(jtfProjectName, BorderLayout.CENTER);
 
         //Project buttons panel
         tpProjectButtons = new TransparentPanel();
@@ -136,16 +140,35 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     public void setProjectName(String projectName) {
         if(projectName != null) {
             if (projectName.length() <= MAX_PROJECT_LENGTH) {
-                jlProjectName.setText(projectName);
+                jtfProjectName.setText(projectName);
             } else {
                 String shortProjectName = projectName.substring(0, MAX_PROJECT_LENGTH) + "...";
-                jlProjectName.setText(shortProjectName);
+                jtfProjectName.setText(shortProjectName);
             }
         }
     }
 
-    public int getTotalCategories() {
-        return categoryPanels.size();
+    public String getProjectName() {
+        return jtfProjectName.getText();
+    }
+
+    public void setProjectNameEditable(boolean editableState, String completeProjectName) {
+
+        if(editableState) {
+            jtfProjectName.setText(completeProjectName);
+            jbProjectEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+        } else {
+            setProjectName(completeProjectName);
+            jbProjectEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+        }
+
+        jtfProjectName.setOpaque(editableState);
+        jtfProjectName.setEditable(editableState);
+
+    }
+
+    public boolean isProjectNameEditable() {
+        return jtfProjectName.isEditable();
     }
 
     public CategoryPanel getCategoryPanel(int categoryIndex) {
@@ -158,21 +181,41 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
 
     }
 
+    public void cleanCategories() {
+        categoryPanels = new ArrayList<>();
+        tpCategories.removeAll();
+        revalidate();
+        repaint();
+    }
+
     public void addCategory(Category category) {
         if(category != null) {
+
             categoryPanels.add(new CategoryPanel(category, editorIcon, deleteIcon, leftIcon, rightIcon, checkIcon));
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridx = categoryPanels.size();
-            gbc.weighty = 1;
-            gbc.insets = new Insets(5, 5, 5, 5);
-            gbc.fill = GridBagConstraints.VERTICAL;
+            GridBagConstraints gbc;
+
+            if(categoryPanels.size() > 1) {
+                CategoryPanel categoryPanel = categoryPanels.get(categoryPanels.size() - 2);
+                gbc = ((GridBagLayout) tpCategories.getLayout()).getConstraints(categoryPanel);
+                gbc.gridx += 1;
+            } else {
+                gbc = new GridBagConstraints();
+                gbc.gridy = 0;
+                gbc.gridx = categoryPanels.size();
+                gbc.weighty = 1;
+                gbc.insets = new Insets(5, 5, 5, 5);
+                gbc.fill = GridBagConstraints.VERTICAL;
+            }
+
             tpCategories.add(categoryPanels.get(categoryPanels.size() - 1), gbc);
+            revalidate();
+            repaint();
+
         }
     }
 
     public void removeCategory(int categoryIndex) {
         if(categoryIndex >= 0 && categoryIndex < categoryPanels.size()) {
-            System.out.println(categoryIndex);
             CategoryPanel categoryPanel = categoryPanels.get(categoryIndex);
             categoryPanels.remove(categoryPanel);
             tpCategories.remove(categoryPanel);
@@ -223,7 +266,17 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         }
     }
 
+    public void resetActionController() {
+        jbProjectBack.removeActionListener(actionListener);
+        jbProjectEditor.removeActionListener(actionListener);
+        jbBackground.removeActionListener(actionListener);
+        jbProjectDelete.removeActionListener(actionListener);
+        jbCategoryAdder.removeActionListener(actionListener);
+        actionListener = null;
+    }
+
     public void registerActionController(ActionListener actionListener) {
+        this.actionListener = actionListener;
         jbProjectBack.addActionListener(actionListener);
         jbProjectEditor.addActionListener(actionListener);
         jbBackground.addActionListener(actionListener);

@@ -17,8 +17,6 @@ public class TagController implements ActionListener {
     private final static String TAG_REMOVE_TITLE = "Tag Remove";
     private final static String TAG_REMOVE_MESSAGE = "Do you want to remove";
     private final static String TAG_EDITION_TITLE = "Tag Edition";
-    private final static String EDITING_ON_MESSAGE = "You should finish editing before doing something else";
-    private final static String EDITING_ON_TITLE = "Information";
 
     private EditionController mainController;
     private TagPanel view;
@@ -69,8 +67,8 @@ public class TagController implements ActionListener {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
-                    WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
+                    EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
         }
     }
 

@@ -11,8 +11,6 @@ import java.awt.event.ActionListener;
 
 public class CategoryActionController implements ActionListener {
 
-    private final static String EDITING_ON_MESSAGE = "You should finish editing before doing something else";
-    private final static String EDITING_ON_TITLE = "Information";
     private final static String CATEGORY_REMOVE_MESSAGE = "Do you want to delete";
     private final static String CATEGORY_REMOVE_TITLE = "Category Remove";
 
@@ -55,8 +53,8 @@ public class CategoryActionController implements ActionListener {
                 mainController.updatedCategory(category);
                 mainController.setEditingState(false);
             } else {
-                JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
-                        WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
+                        EditionController.EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -104,8 +102,8 @@ public class CategoryActionController implements ActionListener {
             view.addNewTask(task);
             mainController.updatedCategory(category);
         } else if(mainController.isEditing()) {
-            JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
-                    WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
+                    EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
         }
     }
 

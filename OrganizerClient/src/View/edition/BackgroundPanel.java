@@ -13,14 +13,15 @@ public class BackgroundPanel extends JPanel {
         if(background != null) {
             int width = getSize().width;
             int height = getSize().height;
-            g.drawImage(background, 0, 0, width, height, null);
+            g.drawImage(background.getScaledInstance(width, height, Image.SCALE_SMOOTH), 0, 0, width, height,
+                    null);
         }
 
         super.paintComponent(g);
 
     }
 
-    public void setBackground(Image background) {
+    public void setBackgroundImage(Image background) {
         setOpaque(false);
         this.background = background;
         repaint();

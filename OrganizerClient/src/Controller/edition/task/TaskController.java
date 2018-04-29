@@ -15,8 +15,6 @@ public class TaskController implements ActionListener {
 
     private final static String TASK_DELETE_MESSAGE = "Do you want to delete";
     private final static String TASK_DELETE_TITLE = "Task Delete";
-    private final static String EDITING_ON_MESSAGE = "You should finish editing before doing something else";
-    private final static String EDITING_ON_TITLE = "Information";
     private final static String TAG_CREATION_TITLE = "Tag Color";
 
     private EditionController mainController;
@@ -64,8 +62,8 @@ public class TaskController implements ActionListener {
                 mainController.updatedTask(task);
                 mainController.setEditingState(false);
             } else {
-                JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
-                        WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
+                        EditionController.EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -93,8 +91,8 @@ public class TaskController implements ActionListener {
                 mainController.updatedTask(task);
                 mainController.setEditingState(false);
             } else {
-                JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
-                        WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
+                        EditionController.EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -122,8 +120,8 @@ public class TaskController implements ActionListener {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, EDITING_ON_MESSAGE, EDITING_ON_TITLE, JOptionPane.
-                    WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
+                    EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
         }
     }
 

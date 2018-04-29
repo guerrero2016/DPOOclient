@@ -5,7 +5,6 @@ import View.edition.task.TaskPanel;
 import View.edition.user.UserPanel;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -35,8 +34,8 @@ public class EditionPanel extends BackgroundPanel {
     private Image rightIcon;
     private Image checkIcon;
 
-    private final JPanel jpCenter;
-    private final JPanel jpRight;
+    private final TransparentPanel tpCenter;
+    private final TransparentPanel tpRight;
     private final ProjectPanel projectPanel;
     private final UserPanel projectUserPanel;
     private final TaskPanel taskPanel;
@@ -49,28 +48,30 @@ public class EditionPanel extends BackgroundPanel {
         setLayout(new BorderLayout());
 
         //Center panel
-        jpCenter = new JPanel(new CardLayout());
-        add(jpCenter, BorderLayout.CENTER);
+        tpCenter = new TransparentPanel();
+        tpCenter.setLayout(new CardLayout());
+        add(tpCenter, BorderLayout.CENTER);
 
         //Link add panel
         projectPanel = new ProjectPanel(editorIcon, backgroundIcon, deleteIcon, leftIcon, rightIcon, checkIcon, backIcon);
-        jpCenter.add(projectPanel, PROJECT_PANEL);
+        tpCenter.add(projectPanel, PROJECT_PANEL);
 
         //Link remove panel
         taskPanel = new TaskPanel(backIcon, editorIcon, deleteIcon, checkIcon);
-        jpCenter.add(taskPanel, TASK_PANEL);
+        tpCenter.add(taskPanel, TASK_PANEL);
 
         //Lateral panel
-        jpRight = new JPanel(new CardLayout());
-        add(jpRight, BorderLayout.LINE_END);
+        tpRight = new TransparentPanel();
+        tpRight.setLayout(new CardLayout());
+        add(tpRight, BorderLayout.LINE_END);
 
         //Link add user panel
         projectUserPanel = new UserPanel();
-        jpRight.add(projectUserPanel, PROJECT_USER_PANEL);
+        tpRight.add(projectUserPanel, PROJECT_USER_PANEL);
 
         //Link remove user panel
         taskUserPanel = new UserPanel();
-        jpRight.add(taskUserPanel, TASK_USER_PANEL);
+        tpRight.add(taskUserPanel, TASK_USER_PANEL);
 
     }
 
@@ -92,7 +93,7 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     public void setBackgroundImage(Image background) {
-        setBackground(background);
+        super.setBackgroundImage(background);
     }
 
     public ProjectPanel getProjectPanel() {
@@ -104,8 +105,8 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     public void showProjectPanel() {
-        ((CardLayout) jpCenter.getLayout()).show(jpCenter, PROJECT_PANEL);
-        ((CardLayout) jpRight.getLayout()).show(jpRight, PROJECT_USER_PANEL);
+        ((CardLayout) tpCenter.getLayout()).show(tpCenter, PROJECT_PANEL);
+        ((CardLayout) tpRight.getLayout()).show(tpRight, PROJECT_USER_PANEL);
     }
 
     public TaskPanel getTaskPanel() {
@@ -122,8 +123,8 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     public void showTaskPanel() {
-        ((CardLayout) jpCenter.getLayout()).show(jpCenter, TASK_PANEL);
-        ((CardLayout) jpRight.getLayout()).show(jpRight, TASK_USER_PANEL);
+        ((CardLayout) tpCenter.getLayout()).show(tpCenter, TASK_PANEL);
+        ((CardLayout) tpRight.getLayout()).show(tpRight, TASK_USER_PANEL);
     }
 
 }

@@ -24,6 +24,8 @@ public class TagPanel extends JPanel {
     private final JButton jbTagEditor;
     private final JButton jbTagDelete;
 
+    private ActionListener actionListener;
+
     public TagPanel(Image editorIcon, Image deleteIcon, Image checkIcon, Tag tag) {
 
         this.editorIcon = editorIcon;
@@ -78,13 +80,13 @@ public class TagPanel extends JPanel {
     }
 
     public void resetActionController() {
-        for(ActionListener actionListener : jbTagEditor.getActionListeners()) {
-            jbTagEditor.addActionListener(actionListener);
-            jbTagDelete.addActionListener(actionListener);
-        }
+        jbTagEditor.addActionListener(actionListener);
+        jbTagDelete.addActionListener(actionListener);
+        actionListener = null;
     }
 
     public void registerActionController(ActionListener actionListener) {
+        this.actionListener = actionListener;
         jbTagEditor.addActionListener(actionListener);
         jbTagDelete.addActionListener(actionListener);
     }

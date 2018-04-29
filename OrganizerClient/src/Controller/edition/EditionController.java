@@ -18,7 +18,12 @@ import View.edition.task.TaskPanel;
 import View.edition.task.tag.TagPanel;
 import View.edition.user.UserPanel;
 
+import java.awt.*;
+
 public class EditionController {
+
+    public final static String EDITING_ON_MESSAGE = "You should finish editing before doing something else";
+    public final static String EDITING_ON_TITLE = "Information";
 
     private final static String PROJECT_USERS_TITLE = "Project Users";
     private final static String TASK_USERS_TITLE = "Task Users";
@@ -48,7 +53,6 @@ public class EditionController {
         taskUserPanel = editionPanel.getTaskUserPanel();
 
         //Config project panel
-        projectPanel.registerActionController(new ProjectActionController(this, projectPanel));
         projectPanel.registerDocumentController(new DocumentController(projectPanel));
 
         //Config project users panel
@@ -75,16 +79,23 @@ public class EditionController {
         projectPanel.hideDeleteButton(!isAdmin);
         editionPanel.setBackgroundImage(project.getBackground());
         projectPanel.setProjectName(project.getName());
+        projectPanel.cleanCategories();
 
         for(int i = 0; i < project.getTotalCategories(); i++) {
             projectPanel.addCategory(project.getCategory(i));
             CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i);
+            categoryPanel.resetActionController();
             categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel,
                     project.getCategory(i)));
-            categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
+            categoryPanel.resetMouseController();
             categoryPanel.registerMouseController(new CategoryMouseController(this, project.
                     getCategory(i)));
+            categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
         }
+
+        //Config project controllers
+        projectPanel.resetActionController();
+        projectPanel.registerActionController(new ProjectActionController(this, projectPanel, project));
 
         //Config users panel
         projectUserPanel.setUserList(project.getUsers());
@@ -139,6 +150,10 @@ public class EditionController {
 
     public void setEditingState(boolean enableState) {
         isEditing = enableState;
+    }
+
+    public void updatedProject() {
+        mainController.updateProject(project);
     }
 
     public void updatedTask(Task task) {
@@ -200,6 +215,14 @@ public class EditionController {
 
     public void showProjectSelection() {
         mainController.swapPanel(ProjectsMainView.VIEW_TAG);
+    }
+
+    public void deleteProject() {
+        mainController.deleteProject();
+    }
+
+    public void setBackgroundImage(Image image) {
+        editionPanel.setBackgroundImage(image);
     }
 
 }

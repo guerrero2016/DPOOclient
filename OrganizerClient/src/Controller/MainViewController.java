@@ -3,8 +3,10 @@ package Controller;
 import Controller.edition.EditionController;
 import ModelAEliminar.*;
 import View.MainView;
+import View.edition.BackgroundPanel;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -64,10 +66,12 @@ public class MainViewController {
         Project newProject = new Project("Project Name");
 
         try {
-            newProject.setBackground(ImageIO.read(new File("img/background4.jpg")));
+            Image image = ImageIO.read(new File("img/background4.jpg"));
+            newProject.setBackground(image);
         } catch(IOException e) {
             //Could not load img
         }
+
 
         for(int i = 0; i < 4; i++) {
 
@@ -109,15 +113,19 @@ public class MainViewController {
     }
 
     public void updateProject(Project project) {
-        //TODO: ALL
+        //TODO: Update project from database
     }
 
     public void updateCategory(Project project, Category category) {
-        //TODO: ALL
+        //TODO: Update category from database
     }
 
     public void updateTask(Project project, Category category, Task task) {
-        //TODO: ALL
+        //TODO: Update task from database
+    }
+
+    public void deleteProject() {
+        //TODO: Remove user from project
     }
 
 }

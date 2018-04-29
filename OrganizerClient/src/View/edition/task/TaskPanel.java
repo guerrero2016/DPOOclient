@@ -66,6 +66,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
         //Task name
         jtfTaskName = new JTextField();
+        jtfTaskName.setOpaque(false);
         jtfTaskName.setBorder(BorderFactory.createEmptyBorder());
         jtfTaskName.setEditable(false);
         jtfTaskName.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
@@ -227,6 +228,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
             jbTaskEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
         }
 
+        jtfTaskName.setOpaque(editableState);
         jtfTaskName.setEditable(editableState);
 
     }
@@ -326,10 +328,6 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     public boolean isDescriptionEditable() {
         return jtaDescription.isEditable();
-    }
-
-    public int getTotalTags() {
-        return tagPanels.size();
     }
 
     public TagPanel getTagPanel(int tagIndex) {

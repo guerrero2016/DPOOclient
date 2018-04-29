@@ -38,6 +38,9 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     private final DefaultListModel<Task> tasksList;
 
+    private ActionListener actionListener;
+    private MouseListener mouseListener;
+
     public CategoryPanel(Category category, Image editorIcon, Image deleteIcon, Image leftIcon, Image rightIcon,
                          Image checkIcon) {
 
@@ -189,7 +192,17 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
         }
     }
 
+    public void resetActionController() {
+        jbCategoryEditor.removeActionListener(actionListener);
+        jbCategoryLeft.removeActionListener(actionListener);
+        jbCategoryRight.removeActionListener(actionListener);
+        jbCategoryDelete.removeActionListener(actionListener);
+        jbTaskAdder.removeActionListener(actionListener);
+        actionListener = null;
+    }
+
     public void registerActionController(ActionListener actionListener) {
+        this.actionListener = actionListener;
         jbCategoryEditor.addActionListener(actionListener);
         jbCategoryLeft.addActionListener(actionListener);
         jbCategoryRight.addActionListener(actionListener);
@@ -197,7 +210,13 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
         jbTaskAdder.addActionListener(actionListener);
     }
 
+    public void resetMouseController() {
+        jlTasks.removeMouseListener(mouseListener);
+        mouseListener = null;
+    }
+
     public void registerMouseController(MouseListener mouseListener) {
+        this.mouseListener = mouseListener;
         jlTasks.addMouseListener(mouseListener);
     }
 
