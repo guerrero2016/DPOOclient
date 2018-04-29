@@ -3,13 +3,13 @@ package View.edition.project;
 import ModelAEliminar.Category;
 import ModelAEliminar.Task;
 import View.document.DocumentEnablePanel;
-import org.w3c.dom.views.DocumentView;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
@@ -25,7 +25,10 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
     private final static String NEW_TASK_TITLE = "New Task";
     private final static String ADD_TITLE = "+";
 
-    private final JLabel jlCategoryName;
+    private Image editorIcon;
+    private Image checkIcon;
+
+    private final JTextField jtfCategoryName;
     private final JButton jbCategoryEditor;
     private final JButton jbCategoryDelete;
     private final JButton jbCategoryLeft;
@@ -36,7 +39,11 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     private final DefaultListModel<Task> tasksList;
 
-    public CategoryPanel(Category category, Image editorIcon, Image deleteIcon, Image leftIcon, Image rightIcon) {
+    public CategoryPanel(Category category, Image editorIcon, Image deleteIcon, Image leftIcon, Image rightIcon,
+                         Image checkIcon) {
+
+        this.editorIcon = editorIcon;
+        this.checkIcon = checkIcon;
 
         //Panel config
         setLayout(new BorderLayout());
@@ -49,11 +56,12 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
         add(jpCategoryTitle, BorderLayout.PAGE_START);
 
         //Category name
-        jlCategoryName = new JLabel();
-        jlCategoryName.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
-        jlCategoryName.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-        setCategoryName(category.getCategoryName());
-        jpCategoryTitle.add(jlCategoryName, BorderLayout.CENTER);
+        jtfCategoryName = new JTextField();
+        jtfCategoryName.setEditable(false);
+        jtfCategoryName.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
+        jtfCategoryName.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        setCategoryName(category.getName());
+        jpCategoryTitle.add(jtfCategoryName, BorderLayout.CENTER);
 
         //Category buttons panel
         final JPanel jpCategoryButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -125,11 +133,33 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     public void setCategoryName(String categoryName) {
         if(categoryName.length() <= MAX_CATEGORY_LENGTH) {
-            jlCategoryName.setText(categoryName);
+            jtfCategoryName.setText(categoryName);
         } else {
             String shortCategoryName = categoryName.substring(0, MAX_CATEGORY_LENGTH) + "...";
-            jlCategoryName.setText(shortCategoryName);
+            jtfCategoryName.setText(shortCategoryName);
         }
+    }
+
+    public String getCategoryName() {
+        return jtfCategoryName.getText();
+    }
+
+    public void setCategoryNameEditable(boolean editableState, String completeCategoryName) {
+
+        if(editableState) {
+            jtfCategoryName.setText(completeCategoryName);
+            jbCategoryEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+        } else {
+            setCategoryName(completeCategoryName);
+            jbCategoryEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+        }
+
+        jtfCategoryName.setEditable(editableState);
+
+    }
+
+    public boolean isCategoryNameEditable() {
+        return jtfCategoryName.isEditable();
     }
 
     public String getNewTaskName() {
@@ -142,20 +172,22 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     public void addNewTask(Task task) {
         tasksList.addElement(task);
-    }
-
-    public Task getSelectedTask() {
-
-        if(jlTasks.isSelectionEmpty()) {
-            return null;
-        }
-
-        return jlTasks.getSelectedValue();
-
+        revalidate();
+        repaint();
     }
 
     public void removeTask(Task task) {
         tasksList.removeElement(task);
+        revalidate();
+        repaint();
+    }
+
+    public void updateTask(int taskIndex, Task task) {
+        if(task != null && taskIndex >= 0 && taskIndex < tasksList.size()) {
+            tasksList.setElementAt(task, taskIndex);
+            revalidate();
+            repaint();
+        }
     }
 
     public void registerActionController(ActionListener actionListener) {

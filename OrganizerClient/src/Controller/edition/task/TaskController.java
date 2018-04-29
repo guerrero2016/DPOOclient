@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TaskActionController implements ActionListener {
+public class TaskController implements ActionListener {
 
     private final static String TASK_DELETE_MESSAGE = "Do you want to delete";
     private final static String TASK_DELETE_TITLE = "Task Delete";
@@ -24,7 +24,7 @@ public class TaskActionController implements ActionListener {
     private Task task;
 
 
-    public TaskActionController(EditionController mainController, TaskPanel view, Task task) {
+    public TaskController(EditionController mainController, TaskPanel view, Task task) {
         this.mainController = mainController;
         this.view = view;
         this.task = task;
@@ -113,6 +113,7 @@ public class TaskActionController implements ActionListener {
                 if (colorPreviewController.getColor() != null) {
                     Tag tag = new Tag(view.getNewTagName(), colorPreviewController.getColor());
                     task.addTag(tag);
+                    mainController.updateTaskList();
                     view.cleanNewTagName();
                     view.addTag(tag);
                     mainController.updatedTask(task);

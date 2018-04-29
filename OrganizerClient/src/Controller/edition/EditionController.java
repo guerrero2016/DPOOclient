@@ -5,7 +5,7 @@ import Controller.document.DocumentController;
 import Controller.edition.project.ProjectActionController;
 import Controller.edition.project.category.CategoryActionController;
 import Controller.edition.project.category.CategoryMouseController;
-import Controller.edition.task.TaskActionController;
+import Controller.edition.task.TaskController;
 import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
@@ -80,7 +80,8 @@ public class EditionController {
             categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel,
                     project.getCategory(i)));
             categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
-            categoryPanel.registerMouseController(new CategoryMouseController(this, project.getCategory(i)));
+            categoryPanel.registerMouseController(new CategoryMouseController(this, project.
+                    getCategory(i)));
         }
 
         //Config users panel
@@ -107,7 +108,7 @@ public class EditionController {
         taskPanel.setTagsList(task.getTags());
 
         //Link controllers
-        editionPanel.registerTaskActionController(new TaskActionController(this, editionPanel.getTaskPanel(),
+        editionPanel.registerTaskActionController(new TaskController(this, editionPanel.getTaskPanel(),
                 task));
 
         for(int i = 0; i < task.getTotalTags(); i++) {
@@ -142,6 +143,10 @@ public class EditionController {
         mainController.updateTask(project, category, task);
     }
 
+    public void updatedCategory(Category category) {
+        mainController.updateCategory(project, category);
+    }
+
     public void deleteTask() {
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(category));
         categoryPanel.removeTask(task);
@@ -163,6 +168,32 @@ public class EditionController {
 
         return null;
 
+    }
+
+    public int getCategoryIndex(Category category) {
+        return project.getCategoryIndex(category);
+    }
+
+    public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
+        project.swapCategories(firstCategoryIndex, secondCategoryIndex);
+        projectPanel.swapCategories(firstCategoryIndex, secondCategoryIndex);
+    }
+
+    public void deleteCategory(Category category) {
+
+        int index = project.getCategoryIndex(category);
+
+        if(index >= 0 && index < project.getTotalCategories()) {
+            project.removeCategory(category);
+            projectPanel.removeCategory(index);
+            mainController.updateCategory(project, category);
+        }
+
+    }
+
+    public void updateTaskList() {
+        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(category));
+        categoryPanel.updateTask(category.getTaskIndex(task), task);
     }
 
 }

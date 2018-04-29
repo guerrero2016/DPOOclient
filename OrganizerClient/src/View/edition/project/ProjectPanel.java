@@ -29,6 +29,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     private Image deleteIcon;
     private Image leftIcon;
     private Image rightIcon;
+    private Image checkIcon;
 
     private final JLabel jlProjectName;
     private final JButton jbProjectEditor;
@@ -40,13 +41,15 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
 
     private ArrayList<CategoryPanel> categoryPanels;
 
-    public ProjectPanel(Image editorIcon, Image backgroundIcon, Image deleteIcon, Image leftIcon, Image rightIcon) {
+    public ProjectPanel(Image editorIcon, Image backgroundIcon, Image deleteIcon, Image leftIcon, Image rightIcon,
+                        Image checkIcon) {
 
         //Project settings
         this.editorIcon = editorIcon;
         this.deleteIcon = deleteIcon;
         this.leftIcon = leftIcon;
         this.rightIcon = rightIcon;
+        this.checkIcon = checkIcon;
         categoryPanels = new ArrayList<>();
 
         //Panel settings
@@ -148,7 +151,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
 
     public void addCategory(Category category) {
         if(category != null) {
-            categoryPanels.add(new CategoryPanel(category, editorIcon, deleteIcon, leftIcon, rightIcon));
+            categoryPanels.add(new CategoryPanel(category, editorIcon, deleteIcon, leftIcon, rightIcon, checkIcon));
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = categoryPanels.size();
             gbc.weighty = 1;
@@ -159,27 +162,38 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     public void removeCategory(int categoryIndex) {
-        if(categoryIndex < categoryPanels.size()) {
-            categoryPanels.remove(categoryIndex);
-            tpCategories.remove(categoryIndex);
+        if(categoryIndex >= 0 && categoryIndex < categoryPanels.size()) {
+            System.out.println(categoryIndex);
+            CategoryPanel categoryPanel = categoryPanels.get(categoryIndex);
+            categoryPanels.remove(categoryPanel);
+            tpCategories.remove(categoryPanel);
+            revalidate();
+            repaint();
         }
     }
 
     public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
-        if(firstCategoryIndex < categoryPanels.size() && secondCategoryIndex < categoryPanels.size()) {
+        if(firstCategoryIndex >= 0 && firstCategoryIndex < categoryPanels.size() && secondCategoryIndex <
+                categoryPanels.size() && secondCategoryIndex >= 0) {
 
             //Update panels order
-            CategoryPanel categoryPanel = categoryPanels.get(firstCategoryIndex);
-            categoryPanels.add(firstCategoryIndex, categoryPanels.get(secondCategoryIndex));
-            categoryPanels.add(secondCategoryIndex, categoryPanel);
+            CategoryPanel categoryPanel1 = categoryPanels.get(firstCategoryIndex);
+            CategoryPanel categoryPanel2 = categoryPanels.get(secondCategoryIndex);
+            categoryPanels.set(firstCategoryIndex, categoryPanel2);
+            categoryPanels.set(secondCategoryIndex, categoryPanel1);
 
             //Update view
             GridBagConstraints firstConstraints = ((GridBagLayout) tpCategories.getLayout()).getConstraints(
                     categoryPanels.get(secondCategoryIndex));
             GridBagConstraints secondConstraints = ((GridBagLayout) tpCategories.getLayout()).getConstraints(
                     categoryPanels.get(firstCategoryIndex));
-            tpCategories.add(categoryPanels.get(firstCategoryIndex), firstConstraints);
-            tpCategories.add(categoryPanels.get(secondCategoryIndex), secondConstraints);
+            tpCategories.remove(categoryPanel1);
+            tpCategories.remove(categoryPanel2);
+            tpCategories.add(categoryPanel2, firstConstraints);
+            tpCategories.add(categoryPanel1, secondConstraints);
+
+            revalidate();
+            repaint();
 
         }
     }

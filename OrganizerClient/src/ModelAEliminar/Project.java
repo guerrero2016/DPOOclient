@@ -56,14 +56,22 @@ public class Project {
     }
 
 
-    public void removeCategory(int categoryIndex) {
-        if(categoryIndex < categories.size()) {
-            categories.remove(categoryIndex);
-        }
+    public void removeCategory(Category category) {
+        categories.remove(category);
     }
 
     public int getCategoryIndex(Category category) {
         return categories.indexOf(category);
+    }
+
+    public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
+        if(firstCategoryIndex >= 0 && firstCategoryIndex < categories.size() && secondCategoryIndex < categories.size()
+                && secondCategoryIndex >= 0) {
+            Category category1 = categories.get(firstCategoryIndex);
+            Category category2 = categories.get(secondCategoryIndex);
+            categories.set(firstCategoryIndex, category2);
+            categories.set(secondCategoryIndex, category1);
+        }
     }
 
     public String getName() {

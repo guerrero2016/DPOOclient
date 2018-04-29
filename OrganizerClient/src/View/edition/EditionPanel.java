@@ -60,7 +60,7 @@ public class EditionPanel extends BackgroundPanel {
         add(jpCenter, BorderLayout.CENTER);
 
         //Link add panel
-        projectPanel = new ProjectPanel(editorIcon, backgroundIcon, deleteIcon, leftIcon, rightIcon);
+        projectPanel = new ProjectPanel(editorIcon, backgroundIcon, deleteIcon, leftIcon, rightIcon, checkIcon);
         jpCenter.add(projectPanel, PROJECT_PANEL);
 
         //Link remove panel

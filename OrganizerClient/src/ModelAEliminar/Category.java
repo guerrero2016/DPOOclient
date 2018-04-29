@@ -1,6 +1,7 @@
 package ModelAEliminar;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Category {
 
@@ -16,11 +17,11 @@ public class Category {
         tasks = new ArrayList<>();
     }
 
-    public String getCategoryName() {
+    public String getName() {
         return categoryName;
     }
 
-    public void setCategoryName(String categoryName) {
+    public void setName(String categoryName) {
         this.categoryName = categoryName.toString();
     }
 
@@ -52,4 +53,29 @@ public class Category {
         tasks.remove(task);
     }
 
+    public int getTaskIndex(Task task) {
+        return tasks.indexOf(task);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Category category = (Category) o;
+
+        return Objects.equals(categoryName, category.categoryName) && Objects.equals(tasks, category.tasks);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(categoryName, tasks);
+    }
 }

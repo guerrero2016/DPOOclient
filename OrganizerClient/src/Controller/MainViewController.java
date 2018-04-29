@@ -64,7 +64,7 @@ public class MainViewController {
         Project newProject = new Project("Project Name");
 
         try {
-            newProject.setBackground(ImageIO.read(new File("img" + System.getProperty("file.separator") + "background4.jpg")));
+            newProject.setBackground(ImageIO.read(new File("img/background4.jpg")));
         } catch(IOException e) {
             //Could not load img
         }
