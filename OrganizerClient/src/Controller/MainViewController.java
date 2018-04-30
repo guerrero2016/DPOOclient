@@ -128,4 +128,9 @@ public class MainViewController {
         //TODO: Remove user from project
     }
 
+    public User getUserFromDB(String userName) {
+        //TODO: Check if user exists in the database
+        return new User(userName);
+    }
+
 }

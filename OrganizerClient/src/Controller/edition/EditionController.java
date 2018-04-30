@@ -5,6 +5,8 @@ import Controller.edition.document.DocumentController;
 import Controller.edition.project.ProjectActionController;
 import Controller.edition.project.category.CategoryActionController;
 import Controller.edition.project.category.CategoryMouseController;
+import Controller.edition.project.user.ProjectAddUserController;
+import Controller.edition.project.user.ProjectRemoveUserController;
 import Controller.edition.task.TaskController;
 import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
@@ -99,7 +101,13 @@ public class EditionController {
 
         //Config users panel
         projectUserPanel.setUserList(project.getUsers());
-        //TODO: Users controllers
+        projectUserPanel.resetActionController();
+        projectUserPanel.registerActionController(new ProjectAddUserController(this, projectUserPanel,
+                project));
+        projectUserPanel.resetMouseController();
+        projectUserPanel.registerMouseController(new ProjectRemoveUserController(this, projectUserPanel,
+                project));
+        projectUserPanel.registerDocumentListener(new DocumentController(projectUserPanel));
 
     }
 
@@ -223,6 +231,10 @@ public class EditionController {
 
     public void setBackgroundImage(Image image) {
         editionPanel.setBackgroundImage(image);
+    }
+
+    public User getUserFromDB(String userName) {
+        return mainController.getUserFromDB(userName);
     }
 
 }

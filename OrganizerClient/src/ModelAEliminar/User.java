@@ -7,6 +7,12 @@ public class User {
     private String name;
     private String email;
 
+    public User(String name) {
+        if(name != null) {
+            this.name = name.toString();
+        }
+    }
+
     public User(String name, String email) {
 
         if(name != null) {
