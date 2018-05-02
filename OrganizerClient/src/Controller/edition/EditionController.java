@@ -5,6 +5,7 @@ import Controller.edition.document.DocumentController;
 import Controller.edition.project.ProjectActionController;
 import Controller.edition.project.category.CategoryActionController;
 import Controller.edition.project.category.CategoryMouseController;
+import Controller.edition.project.category.task.TaskListController;
 import Controller.edition.project.user.ProjectAddUserController;
 import Controller.edition.project.user.ProjectRemoveUserController;
 import Controller.edition.task.TaskController;
@@ -93,6 +94,9 @@ public class EditionController {
             categoryPanel.registerMouseController(new CategoryMouseController(this, project.
                     getCategory(i)));
             categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
+            categoryPanel.resetDnDController();
+            categoryPanel.registerDnDController(new TaskListController(this, project.getCategory(i),
+                    categoryPanel.getListComponent()));
         }
 
         //Config project controllers
@@ -235,6 +239,10 @@ public class EditionController {
 
     public User getUserFromDB(String userName) {
         return mainController.getUserFromDB(userName);
+    }
+
+    public void sharedProject(Project project, User user) {
+        mainController.shareProject(project, user);
     }
 
 }

@@ -5,11 +5,11 @@ import ModelAEliminar.User;
 import javax.swing.*;
 import java.awt.*;
 
-public class UserList implements ListCellRenderer<User> {
+public class UserListCellRenderer implements ListCellRenderer<User> {
 
-    public static class MemberListComponent extends JLabel {
+    public static class UserComponent extends JLabel {
 
-        public MemberListComponent(String memberName) {
+        public UserComponent(String memberName) {
             setText(memberName);
             setFont(new Font(Font.DIALOG, Font.BOLD, 16));
             setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -22,7 +22,7 @@ public class UserList implements ListCellRenderer<User> {
                                                   boolean cellHasFocus) {
 
         //Member component
-        UserList.MemberListComponent memberComponent = new UserList.MemberListComponent(member.getName());
+        UserComponent memberComponent = new UserComponent(member.getName());
         memberComponent.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
         memberComponent.setOpaque(true);
 

@@ -133,4 +133,8 @@ public class MainViewController {
         return new User(userName);
     }
 
+    public void shareProject(Project project, User user) {
+        //TODO: Share project
+    }
+
 }

@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 
 public class ProjectAddUserController implements ActionListener {
 
+    private final static String USER_ADD_MESSAGE = "Do you want to share this project with user";
+    private final static String USER_ADD_TITLE = "Add User";
     private final static String USER_MESSAGE_TITLE = "Information";
     private final static String USER_NOT_FOUND_MESSAGE = "User not found";
     private final static String USER_ALREADY_EXISTS_MESSAGE = "User already exists";
@@ -32,10 +34,17 @@ public class ProjectAddUserController implements ActionListener {
             User user = mainController.getUserFromDB(view.getNewUser());
 
             if(user != null && !isUserAdded(user)) {
-                project.addUser(user);
+
+                int result = JOptionPane.showConfirmDialog(null, USER_ADD_MESSAGE + " '" +
+                        user.getName() + "'?", USER_ADD_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.
+                        QUESTION_MESSAGE);
+
+                if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
+                    mainController.sharedProject(project, user);
+                }
+
                 view.cleanNewUser();
-                view.addUser(user);
-                mainController.updatedProject();
+
             } else if(user == null) {
                 JOptionPane.showMessageDialog(null, USER_NOT_FOUND_MESSAGE, USER_MESSAGE_TITLE,
                         JOptionPane.WARNING_MESSAGE);

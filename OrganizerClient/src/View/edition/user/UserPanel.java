@@ -39,7 +39,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
 
         //Member list
         jlUserList = new JList<>();
-        jlUserList.setCellRenderer(new UserList());
+        jlUserList.setCellRenderer(new UserListCellRenderer());
         jlUserList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jspUsersList.getViewport().setView(jlUserList);
 

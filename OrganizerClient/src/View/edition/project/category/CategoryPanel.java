@@ -3,6 +3,7 @@ package View.edition.project.category;
 import ModelAEliminar.Category;
 import ModelAEliminar.Task;
 import View.edition.document.DocumentEnablePanel;
+import View.edition.project.category.task.TaskListCellRenderer;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
@@ -40,6 +41,7 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     private ActionListener actionListener;
     private MouseListener mouseListener;
+    private TransferHandler transferHandler;
 
     public CategoryPanel(Category category, Image editorIcon, Image deleteIcon, Image leftIcon, Image rightIcon,
                          Image checkIcon) {
@@ -99,7 +101,7 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
         //Task list
         jlTasks = new JList<>();
-        jlTasks.setCellRenderer(new TaskList());
+        jlTasks.setCellRenderer(new TaskListCellRenderer());
         jlTasks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jspCategories.getViewport().setView(jlTasks);
 
@@ -192,6 +194,10 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
         }
     }
 
+    public JList<Task> getListComponent() {
+        return jlTasks;
+    }
+
     public void resetActionController() {
         jbCategoryEditor.removeActionListener(actionListener);
         jbCategoryLeft.removeActionListener(actionListener);
@@ -222,6 +228,20 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     public void registerDocumentController(DocumentListener documentListener) {
         jtfTaskName.getDocument().addDocumentListener(documentListener);
+    }
+
+    public void resetDnDController() {
+        transferHandler = null;
+        jlTasks.setTransferHandler(null);
+        jlTasks.setDropMode(DropMode.USE_SELECTION);
+        jlTasks.setDragEnabled(false);
+    }
+
+    public void registerDnDController(TransferHandler transferHandler) {
+        this.transferHandler = transferHandler;
+        jlTasks.setTransferHandler(transferHandler);
+        jlTasks.setDropMode(DropMode.INSERT);
+        jlTasks.setDragEnabled(true);
     }
 
     @Override
