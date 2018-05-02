@@ -24,7 +24,7 @@ public class NetworkManager extends Thread {
         try {
             this.isOn = false;
             this.controller = controller;
-            this.socketToServer = new Socket("127.0.0.1", 13373);
+            this.socketToServer = new Socket("127.0.0.1", 15001);
             this.objectIn = new ObjectInputStream(socketToServer.getInputStream());
             this.objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
         } catch (IOException e) {
@@ -44,6 +44,7 @@ public class NetworkManager extends Thread {
 
     @Override
     public void run() {
+
         while (isOn) {
             try {
                 int typeID = objectIn.readInt();
