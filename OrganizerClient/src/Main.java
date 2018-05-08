@@ -1,9 +1,11 @@
 import Controller.MainViewController;
-import Model.ServerObjectType;
-import Model.project.Category;
-import Model.project.Project;
+import com.sun.corba.se.spi.activation.Server;
+import model.ServerObjectType;
+import model.project.Category;
+import model.project.Project;
 import Network.NetworkManager;
 import View.MainView;
+import model.user.UserRegister;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -16,7 +18,6 @@ public class Main {
         ProjectSelectionController projectSelectionController = new ProjectSelectionController(projectsMainView);
         projectsMainView.registerAddProjectViewController(projectSelectionController);
         projectsMainView.registerProjectSelectionController(projectSelectionController);*/
-
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -38,7 +39,7 @@ public class Main {
                 NetworkManager nm = new NetworkManager(mainViewController);
                 //    public Project(String id, String name, String color, ArrayList<Category> categories, ArrayList<String> membersName, String background) {
                 try {
-                    nm.sendToServer(ServerObjectType.SET_PROJECT, new Project("123", "Lactosioto", "Bermell", new ArrayList<Category>(0), new ArrayList<String>(0),"Bacccc"));
+                    nm.sendToServer(ServerObjectType.REGISTER, new UserRegister("Lactosito", "@@@@", "jajj","jajj"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -1,7 +1,7 @@
 package Network.Communicators;
 
 import Controller.MainViewController;
-import Model.DataManager;
+import model.DataManager;
 import Network.Communicable;
 
 import java.io.IOException;

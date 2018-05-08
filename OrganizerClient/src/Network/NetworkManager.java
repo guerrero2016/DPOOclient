@@ -1,15 +1,13 @@
 package Network;
 
 import Controller.MainViewController;
-import Model.ServerObjectType;
+import model.ServerObjectType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class NetworkManager extends Thread {
 
@@ -25,8 +23,8 @@ public class NetworkManager extends Thread {
             this.isOn = false;
             this.controller = controller;
             this.socketToServer = new Socket("127.0.0.1", 15001);
-            this.objectIn = new ObjectInputStream(socketToServer.getInputStream());
             this.objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
+            this.objectIn = new ObjectInputStream(socketToServer.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,7 +57,7 @@ public class NetworkManager extends Thread {
     }
 
     public void sendToServer(ServerObjectType type, Object object) throws IOException {
-        objectOut.writeObject(type);
+        objectOut.writeInt(type.getValue());
         objectOut.writeObject(object);
     }
 }

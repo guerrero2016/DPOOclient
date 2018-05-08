@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.DataManager;
+import model.DataManager;
 import View.CustomProjectButton;
 import View.MainView;
 import View.ProjectBoxView;

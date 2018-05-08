@@ -1,11 +1,10 @@
-package Model;
+package model;
 
 
-import Model.project.Category;
-import Model.project.Project;
-import Model.project.Task;
+import model.project.Category;
+import model.project.Project;
+import model.project.Task;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 

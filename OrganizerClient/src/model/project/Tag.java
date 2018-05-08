@@ -1,18 +1,34 @@
-package Model.project;
+package model.project;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Tag implements Serializable{
 
+    private String id_category;
+    private String id_task;
+    private String id;
     private String name;
     private String color;
-    private String nomTasca;
-    private String nomCategoria;
 
-    public Tag(String name, String color) {
+    public Tag(String id_category, String id_task, String id, String name, String color) {
+        this.id_category = id_category;
+        this.id_task = id_task;
+        this.id = id;
         this.name = name;
         this.color = color;
+    }
+
+    public String getId_category() {
+        return id_category;
+    }
+
+    public String getId_task() {
+        return id_task;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -29,22 +45,6 @@ public class Tag implements Serializable{
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public String getNomTasca() {
-        return nomTasca;
-    }
-
-    public void setNomTasca(String nomTasca) {
-        this.nomTasca = nomTasca;
-    }
-
-    public String getNomCategoria() {
-        return nomCategoria;
-    }
-
-    public void setNomCategoria(String nomCategoria) {
-        this.nomCategoria = nomCategoria;
     }
 
     @Override
