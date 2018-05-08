@@ -9,14 +9,14 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class ProjectAddedCommunicator implements Communicable {
+public class ProjectAddedCommunicator extends Thread implements Communicable {
 
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
+            System.out.println("3");
             DataManager dataManager = DataManager.getSharedInstance();
             final Project p = (Project) objectIn.readObject();
-
 
             if (p.isOwner()) {
                 dataManager.addProjectToOwnerList(p);

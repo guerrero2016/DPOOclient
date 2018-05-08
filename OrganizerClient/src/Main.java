@@ -1,10 +1,14 @@
 import Controller.MainViewController;
+import Network.Communicators.ProjectAddedCommunicator;
+import Network.Communicators.ProjectDeletedCommunicator;
+import Network.Communicators.ProjectDetailCommunicator;
 import com.sun.corba.se.spi.activation.Server;
 import model.ServerObjectType;
 import model.project.Category;
 import model.project.Project;
 import Network.NetworkManager;
 import View.MainView;
+import model.user.UserLogIn;
 import model.user.UserRegister;
 
 import javax.swing.*;
@@ -37,9 +41,12 @@ public class Main {
                      a.setVisible(true);
 
                 NetworkManager nm = new NetworkManager(mainViewController);
+                nm.startCommunication();
                 //    public Project(String id, String name, String color, ArrayList<Category> categories, ArrayList<String> membersName, String background) {
+                nm.addCommunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
                 try {
-                    nm.sendToServer(ServerObjectType.REGISTER, new UserRegister("Lactosito", "@@@@", "jajj","jajj"));
+                    nm.sendToServer(ServerObjectType.DELETE_PROJECT, "fd08aab1-1793-423a-8b9b-2818a654e872");
+                    System.out.println("sent");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

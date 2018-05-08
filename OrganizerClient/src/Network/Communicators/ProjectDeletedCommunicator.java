@@ -12,6 +12,7 @@ public class ProjectDeletedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
+            //TODO mirar si s'està dins del projecte
             DataManager dataManager = DataManager.getSharedInstance();
             final Project p = (Project) objectIn.readObject();
 
