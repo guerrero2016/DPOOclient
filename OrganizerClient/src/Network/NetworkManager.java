@@ -47,14 +47,11 @@ public class NetworkManager extends Thread {
 
         while (isOn) {
             try {
-                System.out.println("1");
                 int typeID = objectIn.readInt();
                 ServerObjectType serverObjectType = ServerObjectType.valueOf(typeID);
-                System.out.println("2");
-                System.out.println(serverObjectType);
-
-                communicables.get(serverObjectType).communicate(controller, objectIn);
-
+                if (communicables.get(serverObjectType) != null) {
+                    communicables.get(serverObjectType).communicate(controller, objectIn);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -62,18 +59,10 @@ public class NetworkManager extends Thread {
     }
 
     public void sendToServer(ServerObjectType type, Object object) throws IOException {
-        objectOut.writeInt(type.getValue());
+        if (type != null) {
+            objectOut.writeInt(type.getValue());
+        }
         objectOut.writeObject(object);
-
-//        System.out.println(type);
-//        if (object.getClass().equals(String.class)) {
-//            objectOut.writeObject(object);
-//            System.out.println("string");
-//        } else {
-//            objectOut.writeObject(object);
-//            System.out.println("object");
-//        }
-        System.out.println(object.toString());
     }
 
     public void addCommunicator(Communicable communicable, ServerObjectType type) {
