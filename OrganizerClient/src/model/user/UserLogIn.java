@@ -14,7 +14,7 @@ public class UserLogIn implements Serializable{
     }
 
     public boolean checkLogIn() {
-        return false;
+        return true;
         //return DataBaseManager.IniciarSessio(userName, password);
     }
 

@@ -21,7 +21,19 @@ public class UserRegister implements Serializable{
         return userName;
     }
 
-    public int checkSignIn() throws Exception{
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getConfirm() {
+        return confirm;
+    }
+
+    public int checkSignIn(){
 
         if (userName == null){
             return 3;

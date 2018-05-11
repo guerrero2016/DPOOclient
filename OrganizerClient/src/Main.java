@@ -1,13 +1,14 @@
+import Controller.LogInController;
 import Controller.MainViewController;
-import Network.Communicators.ProjectAddedCommunicator;
-import Network.Communicators.ProjectDeletedCommunicator;
-import Network.Communicators.ProjectDetailCommunicator;
+import Controller.ProjectSelectionController;
+import Controller.SignInController;
+import Network.Communicators.*;
+import View.*;
 import com.sun.corba.se.spi.activation.Server;
 import model.ServerObjectType;
 import model.project.Category;
 import model.project.Project;
 import Network.NetworkManager;
-import View.MainView;
 import model.user.UserLogIn;
 import model.user.UserRegister;
 
@@ -35,21 +36,42 @@ public class Main {
                 //6. Finalment durant la creació del controlador gran se li ha de passar aquest TaskAddUserController tots
                 //   els petits controladors.
 
-                     MainView a = new MainView();
-                     MainViewController mainViewController = new MainViewController(a);
-                     mainViewController.registerControllers(a);
-                     a.setVisible(true);
+                SignInPanel signInPanel = new SignInPanel();
+                LogInPanel logInPanel = new LogInPanel();
+                MainView mainView = new MainView(logInPanel, signInPanel);
 
-                NetworkManager nm = new NetworkManager(mainViewController);
-                nm.startCommunication();
-                //    public Project(String id, String name, String color, ArrayList<Category> categories, ArrayList<String> membersName, String background) {
-                nm.addCommunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
-                try {
-                    nm.sendToServer(ServerObjectType.DELETE_PROJECT, "fd08aab1-1793-423a-8b9b-2818a654e872");
-                    System.out.println("sent");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                SignInController signInController = new SignInController(signInPanel);
+                LogInController logInController = new LogInController(logInPanel);
+
+                signInPanel.addControllerButton(signInController);
+                logInPanel.addControllerButton(logInController);
+
+                MainViewController mainViewController = new MainViewController(mainView, logInController,
+                        signInController);
+
+                signInController.setController(mainViewController);
+                logInController.setController(mainViewController);
+
+                NetworkManager network = new NetworkManager(mainViewController);
+
+                network.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
+                network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
+
+                mainViewController.setNetwork(network);
+
+                network.startCommunication();
+                mainView.setVisible(true);
+
+//                NetworkManager nm = new NetworkManager(mainViewController);
+//                nm.startCommunication();
+//                //    public Project(String id, String name, String color, ArrayList<Category> categories, ArrayList<String> membersName, String background) {
+//                nm.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
+//                nm.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
+//                try {
+//                    nm.sendToServer(ServerObjectType.LOGIN, new UserLogIn("Lactosin", "aS1sdasd"));
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
             }
         });

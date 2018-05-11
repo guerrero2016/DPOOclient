@@ -2,8 +2,10 @@ package Controller;
 
 import Controller.edition.EditionController;
 import ModelAEliminar.*;
+import Network.NetworkManager;
 import View.MainView;
 import View.edition.BackgroundPanel;
+import model.ServerObjectType;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,17 +16,34 @@ import java.io.IOException;
 public class MainViewController {
 
     private MainView view;
+    private NetworkManager network;
     private LogInController logInController;
     private SignInController signInController;
     private ProjectSelectionController projectSelectionController;
     private EditionController editionController;
 
-    public MainViewController(MainView view) {
+//    public MainViewController(MainView view, NetworkManager network,) {
+//        this.view = view;
+//        this.network = network;
+//        logInController = new LogInController(this);
+//        signInController = new SignInController(this);
+//        projectSelectionController = new ProjectSelectionController(this);
+//        editionController = new EditionController(this, view.getEditionPanel());
+//    }
+
+    public MainViewController(MainView view, LogInController logInController, SignInController signInController) {
         this.view = view;
-        logInController = new LogInController(this);
-        signInController = new SignInController(this);
-        projectSelectionController = new ProjectSelectionController(this);
-        editionController = new EditionController(this, view.getEditionPanel());
+        this.logInController = logInController;
+        this.signInController = signInController;
+    }
+
+    public void setNetwork(NetworkManager network) {
+        this.network = network;
+    }
+
+    public void setControllerCommunication() {
+        logInController.setController(this);
+        signInController.setController(this);
     }
 
     public void registerControllers(MainView view) {
@@ -135,6 +154,10 @@ public class MainViewController {
 
     public void shareProject(Project project, User user) {
         //TODO: Share project
+    }
+
+    public void sendToServer(ServerObjectType type, Object o) throws IOException {
+        network.sendToServer(type, o);
     }
 
 }

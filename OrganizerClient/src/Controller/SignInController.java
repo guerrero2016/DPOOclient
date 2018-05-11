@@ -1,17 +1,25 @@
 package Controller;
 
-import ModelAEliminar.user.Register;
+import View.LogInPanel;
+import model.ServerObjectType;
+import model.user.UserRegister;
 import View.SignInPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class SignInController implements ActionListener {
 
     private MainViewController controller;
+    private SignInPanel view;
 
-    public SignInController(MainViewController controller) {
+    public SignInController(SignInPanel view) {
+        this.view = view;
+    }
+
+    public void setController(MainViewController controller) {
         this.controller = controller;
     }
 
@@ -21,16 +29,23 @@ public class SignInController implements ActionListener {
 
         switch (button){
             case SignInPanel.LOG:
-                controller.swapPanel(1);
+                controller.swapPanel(LogInPanel.LOGIN);
                 break;
 
             case SignInPanel.SIGN:
-                //TODO Passar-li els paràmetres al constructor
-                Register register = new Register();
-                if((register.checkSignIn())) {
-                    //Enviar la petició d'inici de sessió al server.
-                    //controller.swapPanel(3);
+                UserRegister register = view.getRegister();
+                System.out.println("maybe");
+                System.out.println(register.checkSignIn());
+                System.out.println(register.getUserName() + register.getEmail() + register.getPassword() + register.getConfirm());
+                if((register.checkSignIn() == 0)) {
+                    try {
+                        System.out.println("se envia");
+                        controller.sendToServer(ServerObjectType.REGISTER, register);
+                    } catch (IOException e1) {
+                        System.out.println("No tira el register");
+                    }
                 }
+                System.out.println("can u repit de cuestion");
                 break;
         }
 
