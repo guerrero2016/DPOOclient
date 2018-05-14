@@ -54,6 +54,14 @@ public class DataManager {
         selectedProject.deleteCategory(category);
     }
 
+    public void deleteCategory(String categoryID) {
+        for(Category category:selectedProject.getCategories()) {
+            if (category.getId() != null && category.getId().equals(categoryID)) {
+                deleteCategory(category);
+            }
+        }
+    }
+
     public void setTask(Task task, String categoryID) {
         selectedProject.setTask(task, categoryID);
     }

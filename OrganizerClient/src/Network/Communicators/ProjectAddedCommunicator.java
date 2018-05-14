@@ -9,12 +9,14 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Comunicador que escolta si algun usuari ha afegit un projecte
+ */
 public class ProjectAddedCommunicator extends Thread implements Communicable {
 
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
-            System.out.println("3");
             DataManager dataManager = DataManager.getSharedInstance();
             final Project p = (Project) objectIn.readObject();
 

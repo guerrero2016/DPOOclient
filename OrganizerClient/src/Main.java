@@ -4,7 +4,6 @@ import Controller.ProjectSelectionController;
 import Controller.SignInController;
 import Network.Communicators.*;
 import View.*;
-import com.sun.corba.se.spi.activation.Server;
 import model.ServerObjectType;
 import model.project.Category;
 import model.project.Project;
@@ -62,16 +61,14 @@ public class Main {
                 network.startCommunication();
                 mainView.setVisible(true);
 
-//                NetworkManager nm = new NetworkManager(mainViewController);
-//                nm.startCommunication();
-//                //    public Project(String id, String name, String color, ArrayList<Category> categories, ArrayList<String> membersName, String background) {
-//                nm.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
-//                nm.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
-//                try {
-//                    nm.sendToServer(ServerObjectType.LOGIN, new UserLogIn("Lactosin", "aS1sdasd"));
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+                NetworkManager nm = new NetworkManager(mainViewController);
+                nm.startCommunication();
+                //    public Project(String id, String name, String color, ArrayList<Category> categories, ArrayList<String> membersName, String background) {
+                try {
+                    nm.sendToServer(ServerObjectType.SET_CATEGORY, new Category("Categoria", 2, new ArrayList<>(0)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
