@@ -1,4 +1,4 @@
-package Model.user;
+package model.user;
 
 import java.io.Serializable;
 
@@ -10,7 +10,30 @@ public class UserRegister extends User implements Serializable{
     private String password;
     private String confirm;
 
-    public int checkSignIn() throws Exception {
+    public UserRegister(String userName, String email, String password, String confirm) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.confirm = confirm;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getConfirm() {
+        return confirm;
+    }
+
+    public int checkSignIn(){
 
         if (userName == null){
             return 3;

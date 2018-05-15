@@ -1,12 +1,10 @@
-package Model;
+package model;
 
+import model.project.Category;
+import model.project.Project;
+import model.project.Task;
+import model.user.User;
 
-import Model.project.Category;
-import Model.project.Project;
-import Model.project.Task;
-import Model.user.User;
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -54,6 +52,14 @@ public class DataManager {
 
     public void deleteCategory(Category category) {
         selectedProject.deleteCategory(category);
+    }
+
+    public void deleteCategory(String categoryID) {
+        for(Category category:selectedProject.getCategories()) {
+            if (category.getId() != null && category.getId().equals(categoryID)) {
+                deleteCategory(category);
+            }
+        }
     }
 
     public void setTask(Task task, String categoryID) {

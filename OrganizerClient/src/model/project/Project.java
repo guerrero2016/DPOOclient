@@ -1,6 +1,6 @@
-package Model.project;
+package model.project;
 
-import Model.user.User;
+import model.user.User;
 
 import java.awt.*;
 import java.io.Serializable;

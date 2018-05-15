@@ -1,11 +1,10 @@
 package View;
 
 import Controller.ProjectSelectionController;
-import Model.project.Project;
+import model.project.Project;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ProjectSelectionView extends JPanel {

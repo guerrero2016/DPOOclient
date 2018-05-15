@@ -1,8 +1,8 @@
 package Network.Communicators;
 
 import Controller.MainViewController;
-import Model.DataManager;
-import Model.project.Project;
+import model.DataManager;
+import model.project.Project;
 import Network.Communicable;
 
 import java.io.IOException;
@@ -12,6 +12,7 @@ public class ProjectDeletedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
+            //TODO mirar si s'està dins del projecte
             DataManager dataManager = DataManager.getSharedInstance();
             final Project p = (Project) objectIn.readObject();
 

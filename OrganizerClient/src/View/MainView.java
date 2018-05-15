@@ -3,7 +3,7 @@ package View;
 import Controller.LogInController;
 import Controller.ProjectSelectionController;
 import Controller.SignInController;
-import Model.project.Project;
+import model.project.Project;
 import View.edition.EditionPanel;
 
 import javax.imageio.ImageIO;
@@ -28,7 +28,7 @@ public class MainView extends JFrame {
     private ProjectsMainView projectsView;
     private EditionPanel editionPanel;
 
-    public MainView() {
+    public MainView(LogInPanel logInPanel, SignInPanel signInPanel) {
         JPanel jpIdentifyPanel = new JPanel(new BorderLayout());
         JLabel jlPicLabel = new JLabel();
 
@@ -42,8 +42,8 @@ public class MainView extends JFrame {
         }
 
         jpIdentifyPanel.add(jlPicLabel, BorderLayout.LINE_START);
-        logInPanel = new LogInPanel();
-        signInPanel = new SignInPanel();
+        this.logInPanel = logInPanel;
+        this.signInPanel = signInPanel;
         jpLogSign = new JPanel(new CardLayout());
 
 
@@ -77,14 +77,15 @@ public class MainView extends JFrame {
 
     public void swapPanel(int whatPanel) {
         switch (whatPanel) {
-            case 1:
-                super.setTitle("LogIn - Organizer");
-                ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "logIn");
-                break;
 
-            case 2:
+            case SignInPanel.SIGNIN:
                 super.setTitle("SignIn - Organizer");
                 ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "signIn");
+                break;
+
+            case LogInPanel.LOGIN:
+                super.setTitle("LogIn - Organizer");
+                ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "logIn");
                 break;
 
             case ProjectsMainView.VIEW_TAG:

@@ -12,11 +12,11 @@ import Controller.edition.task.TaskController;
 import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
-import Model.project.Category;
-import Model.project.Project;
-import Model.project.Tag;
-import Model.project.Task;
-import Model.user.User;
+import model.project.Category;
+import model.project.Project;
+import model.project.Tag;
+import model.project.Task;
+import model.user.User;
 import View.ProjectsMainView;
 import View.edition.EditionPanel;
 import View.edition.project.category.CategoryPanel;
@@ -44,7 +44,7 @@ public class EditionController {
     private UserPanel taskUserPanel;
 
     private Project project;
-    private Model.project.Category category;
+    private model.project.Category category;
     private Task task;
 
     private boolean isEditing;

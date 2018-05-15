@@ -1,6 +1,7 @@
 package View;
 
 import Controller.LogInController;
+import model.user.UserLogIn;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.awt.*;
 public class LogInPanel extends JPanel{
     public static final String LOG = "ENTRAR";
     public static final String SIGN = "CREAR COMPTE";
+    public static final int LOGIN = 1;
 
     private JTextField jtfUsername;
     private JPasswordField jpfPassword;
@@ -82,6 +84,11 @@ public class LogInPanel extends JPanel{
 
         this.add(jpSign, BorderLayout.PAGE_END);
 
+    }
+
+    public UserLogIn getLogin() {
+        UserLogIn logIn = new UserLogIn(jtfUsername.getText(), String.valueOf(jpfPassword.getPassword()));
+        return logIn;
     }
 
     public void setPasswordBorder(Color color) {

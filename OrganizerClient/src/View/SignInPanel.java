@@ -1,7 +1,7 @@
 package View;
 
-import Controller.LogInController;
 import Controller.SignInController;
+import model.user.UserRegister;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +9,7 @@ import java.awt.*;
 public class SignInPanel extends JPanel {
     public static final String SIGN = "REGISTRAR-SE";
     public static final String LOG = "INICIA SESSIÓ";
+    public static final int SIGNIN = 0;
 
     private JTextField jtfEmail;
     private JTextField jtfUsername;
@@ -118,6 +119,12 @@ public class SignInPanel extends JPanel {
 
         this.add(jpLog, BorderLayout.PAGE_END);
 
+    }
+
+    public UserRegister getRegister() {
+        UserRegister register = new UserRegister(jtfUsername.getText(), jtfEmail.getText(),
+                String.valueOf(jpfPassword.getPassword()), String.valueOf(jpfConfirm.getPassword()));
+        return register;
     }
 
     public void setEmailBorder(Color color) {

@@ -1,4 +1,4 @@
-package Model.project;
+package model.project;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Category implements Serializable {
     private String id;
     private String name;
     private int order;
-    private ArrayList<Task> tasks;
+    private ArrayList<model.project.Task> tasks;
 
     public Category(String name) {
         id = UUID.randomUUID().toString();

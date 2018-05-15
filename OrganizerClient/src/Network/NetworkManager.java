@@ -1,15 +1,13 @@
 package Network;
 
 import Controller.MainViewController;
-import Model.ServerObjectType;
+import model.ServerObjectType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class NetworkManager extends Thread {
 
@@ -25,8 +23,9 @@ public class NetworkManager extends Thread {
             this.isOn = false;
             this.controller = controller;
             this.socketToServer = new Socket("127.0.0.1", 15001);
-            this.objectIn = new ObjectInputStream(socketToServer.getInputStream());
             this.objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
+            this.objectIn = new ObjectInputStream(socketToServer.getInputStream());
+            this.communicables = new HashMap<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,9 +48,9 @@ public class NetworkManager extends Thread {
             try {
                 int typeID = objectIn.readInt();
                 ServerObjectType serverObjectType = ServerObjectType.valueOf(typeID);
-
-                communicables.get(serverObjectType).communicate(controller, objectIn);
-
+                if (communicables.get(serverObjectType) != null) {
+                    communicables.get(serverObjectType).communicate(controller, objectIn);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -59,8 +58,14 @@ public class NetworkManager extends Thread {
     }
 
     public void sendToServer(ServerObjectType type, Object object) throws IOException {
-        objectOut.writeObject(type);
+        if (type != null) {
+            objectOut.writeInt(type.getValue());
+        }
         objectOut.writeObject(object);
+    }
+
+    public void addCommunicator(Communicable communicable, ServerObjectType type) {
+        communicables.put(type, communicable);
     }
 
 }

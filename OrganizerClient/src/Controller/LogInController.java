@@ -1,16 +1,24 @@
 package Controller;
 
 import View.LogInPanel;
-import View.ProjectsMainView;
+import View.SignInPanel;
+import model.ServerObjectType;
+import model.user.UserLogIn;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LogInController implements ActionListener {
     private MainViewController controller;
+    private LogInPanel view;
 
-    public LogInController(MainViewController controller) {
+    public LogInController(LogInPanel view) {
+        this.view = view;
+    }
+
+    public void setController(MainViewController controller) {
         this.controller = controller;
     }
 
@@ -20,12 +28,18 @@ public class LogInController implements ActionListener {
 
         switch (button){
             case LogInPanel.SIGN:
-                controller.swapPanel(2);
+                controller.swapPanel(SignInPanel.SIGNIN);
                 break;
 
             case LogInPanel.LOG:
-                controller.swapPanel(ProjectsMainView.VIEW_TAG);
-                //JOptionPane.showMessageDialog(null, "Este es un mensaje de Advertencia", "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
+                UserLogIn logIn = view.getLogin();
+                if((logIn.checkLogIn())) {
+                    try {
+                        controller.sendToServer(ServerObjectType.LOGIN, logIn);
+                    } catch (IOException e1) {
+                        System.out.println("No tira el login");
+                    }
+                }
                 break;
 
         }

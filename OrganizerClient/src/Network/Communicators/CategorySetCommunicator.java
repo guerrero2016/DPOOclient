@@ -1,13 +1,16 @@
 package Network.Communicators;
 
 import Controller.MainViewController;
-import Model.DataManager;
-import Model.project.Category;
+import model.DataManager;
+import model.project.Category;
 import Network.Communicable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Comunicador que escolta si algun usuari ha afegit o modificat una categoria
+ */
 public class CategorySetCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {

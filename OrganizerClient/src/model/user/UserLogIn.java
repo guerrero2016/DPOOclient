@@ -1,6 +1,4 @@
-package Model.user;
-
-//import model.DataBaseManager;
+package model.user;
 
 import java.io.Serializable;
 
@@ -8,8 +6,13 @@ public class UserLogIn extends User implements Serializable{
 
     private String password;
 
+    public UserLogIn(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+
     public boolean checkLogIn() {
-        return false;
+        return true;
         //return DataBaseManager.IniciarSessio(userName, password);
     }
 

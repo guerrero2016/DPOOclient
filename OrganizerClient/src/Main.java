@@ -1,15 +1,13 @@
+import Controller.LogInController;
 import Controller.MainViewController;
-import Model.ServerObjectType;
-import Model.project.Category;
-import Model.project.Project;
-import Model.user.User;
+import Controller.SignInController;
+import Network.Communicators.*;
+import View.*;
+import model.ServerObjectType;
+import model.project.Category;
 import Network.NetworkManager;
-import View.MainView;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -20,7 +18,6 @@ public class Main {
         ProjectSelectionController projectSelectionController = new ProjectSelectionController(projectsMainView);
         projectsMainView.registerAddProjectViewController(projectSelectionController);
         projectsMainView.registerProjectSelectionController(projectSelectionController);*/
-
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -34,18 +31,38 @@ public class Main {
                 //6. Finalment durant la creació del controlador gran se li ha de passar aquest TaskAddUserController tots
                 //   els petits controladors.
 
-                     MainView a = new MainView();
-                     MainViewController mainViewController = new MainViewController(a);
-                     mainViewController.registerControllers(a);
-                     a.setVisible(true);
+                SignInPanel signInPanel = new SignInPanel();
+                LogInPanel logInPanel = new LogInPanel();
+                MainView mainView = new MainView(logInPanel, signInPanel);
+
+                SignInController signInController = new SignInController(signInPanel);
+                LogInController logInController = new LogInController(logInPanel);
+
+                signInPanel.addControllerButton(signInController);
+                logInPanel.addControllerButton(logInController);
+
+                MainViewController mainViewController = new MainViewController(mainView, logInController,
+                        signInController);
+
+                signInController.setController(mainViewController);
+                logInController.setController(mainViewController);
+
+                NetworkManager network = new NetworkManager(mainViewController);
+
+                network.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
+                network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
+
+                mainViewController.setNetwork(network);
+
+                network.startCommunication();
+                mainView.setVisible(true);
 
                 NetworkManager nm = new NetworkManager(mainViewController);
+                nm.startCommunication();
                 //    public Project(String id, String name, String color, ArrayList<Category> categories, ArrayList<String> membersName, String background) {
                 try {
-                    Image image = ImageIO.read(new File("img/background4.jpg"));
-                    nm.sendToServer(ServerObjectType.SET_PROJECT, new Project("123", "Lactosioto", Color.RED,
-                            new ArrayList<>(0), new ArrayList<>(0), image, true));
-                } catch(IOException e) {
+                    nm.sendToServer(ServerObjectType.SET_CATEGORY, new Category("Categoria", 2, new ArrayList<>()));
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
