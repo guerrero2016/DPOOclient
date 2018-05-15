@@ -1,8 +1,8 @@
 package Controller.edition.task.user;
 
 import Controller.edition.EditionController;
-import ModelAEliminar.Task;
-import ModelAEliminar.User;
+import Model.project.Task;
+import Model.user.User;
 import View.edition.user.UserPanel;
 
 import javax.swing.*;
@@ -34,7 +34,7 @@ public class TaskRemoveUserController implements MouseListener {
             if(index == userList.getSelectedIndex()) {
 
                 int result = JOptionPane.showConfirmDialog(null, USER_REMOVE_MESSAGE + " '" +
-                                userList.getSelectedValue().getName() + "'?", USER_REMOVE_TITLE, JOptionPane.
+                                userList.getSelectedValue().getUserName() + "'?", USER_REMOVE_TITLE, JOptionPane.
                                 OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 
                 if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {

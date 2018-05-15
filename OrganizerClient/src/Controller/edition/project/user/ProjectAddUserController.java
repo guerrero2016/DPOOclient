@@ -1,8 +1,8 @@
 package Controller.edition.project.user;
 
 import Controller.edition.EditionController;
-import ModelAEliminar.Project;
-import ModelAEliminar.User;
+import Model.project.Project;
+import Model.user.User;
 import View.edition.user.UserPanel;
 
 import javax.swing.*;
@@ -36,7 +36,7 @@ public class ProjectAddUserController implements ActionListener {
             if(user != null && !isUserAdded(user)) {
 
                 int result = JOptionPane.showConfirmDialog(null, USER_ADD_MESSAGE + " '" +
-                        user.getName() + "'?", USER_ADD_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.
+                        user.getUserName() + "'?", USER_ADD_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.
                         QUESTION_MESSAGE);
 
                 if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {

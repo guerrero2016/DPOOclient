@@ -2,19 +2,15 @@ package Model.user;
 
 import java.io.Serializable;
 
-public class UserRegister implements Serializable{
-    private final int MIN_LENGTH = 8;
+public class UserRegister extends User implements Serializable{
 
-    private String userName;
+    private final static int MIN_LENGTH = 8;
+
     private String email;
     private String password;
     private String confirm;
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public int checkSignIn() throws Exception{
+    public int checkSignIn() throws Exception {
 
         if (userName == null){
             return 3;
@@ -76,4 +72,5 @@ public class UserRegister implements Serializable{
         return 0;
         //return DataBaseManager.RegistrarUsuari(userName, email, password);
     }
+    
 }

@@ -1,16 +1,15 @@
 package Model.project;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Tag implements Serializable{
+public class Tag implements Serializable {
 
     private String name;
-    private String color;
-    private String nomTasca;
-    private String nomCategoria;
+    private Color color;
 
-    public Tag(String name, String color) {
+    public Tag(String name, Color color) {
         this.name = name;
         this.color = color;
     }
@@ -20,46 +19,33 @@ public class Tag implements Serializable{
     }
 
     public void setName(String name) {
-        this.name = name;
+        if(name != null) {
+            this.name = name;
+        }
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getNomTasca() {
-        return nomTasca;
-    }
-
-    public void setNomTasca(String nomTasca) {
-        this.nomTasca = nomTasca;
-    }
-
-    public String getNomCategoria() {
-        return nomCategoria;
-    }
-
-    public void setNomCategoria(String nomCategoria) {
-        this.nomCategoria = nomCategoria;
+    public void setColor(Color color) {
+        if(color != null) {
+            this.color = color;
+        }
     }
 
     @Override
     public boolean equals(Object o) {
 
-        if (this == o) {
+        if(this == o) {
             return true;
         }
 
-        if (o == null || getClass() != o.getClass()) {
+        if(o == null || getClass() != o.getClass()) {
             return false;
         }
 
         Tag tag = (Tag) o;
-
         return Objects.equals(name, tag.name) && Objects.equals(color, tag.color);
 
     }

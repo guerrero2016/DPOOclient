@@ -3,6 +3,7 @@ package View;
 import Controller.LogInController;
 import Controller.ProjectSelectionController;
 import Controller.SignInController;
+import Model.project.Project;
 import View.edition.EditionPanel;
 
 import javax.imageio.ImageIO;
@@ -11,6 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainView extends JFrame {
     private static final String IMAGE_PATH = System.getProperty("user.dir") + System.getProperty("file.separator") +
@@ -107,20 +109,20 @@ public class MainView extends JFrame {
         projectsView.registerAddProjectViewController(controller);
     }
 
-    public void createOwnerBoxProjects (String[] titles, Color[] colors) {
-        projectsView.createOwnerBoxProjects(titles, colors);
+    public void createOwnerBoxProjects(ArrayList<Project> projects) {
+        projectsView.createOwnerBoxProjects(projects);
     }
 
-    public void createSharedBoxProjects (String[] titles, Color[] colors) {
-        projectsView.createSharedBoxProjects(titles, colors);
+    public void createSharedBoxProjects(ArrayList<Project> projects) {
+        projectsView.createSharedBoxProjects(projects);
     }
 
-    public void addOwnerProjectBox(String title, Color color) {
-        projectsView.addOwnerProjectBox(title, color);
+    public void addOwnerProjectBox(Project project) {
+        projectsView.addOwnerProjectBox(project);
     }
 
-    public void addSharedProjectBox(String title, Color color) {
-        projectsView.addSharedProjectBox(title, color);
+    public void addSharedProjectBox(Project project) {
+        projectsView.addSharedProjectBox(project);
     }
 
     public void removeProjectAtIndex (int index) {

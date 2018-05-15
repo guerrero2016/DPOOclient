@@ -1,9 +1,11 @@
 package View;
 
 import Controller.ProjectSelectionController;
+import Model.project.Project;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ProjectsMainView extends JPanel {
 
@@ -65,23 +67,24 @@ public class ProjectsMainView extends JPanel {
         friendProjectSelectionView.registerController(controller);
     }
 
-    public void createOwnerBoxProjects (String[] titles, Color[] colors) {
-        ownerProjectSelectionView.createProjectBoxes(titles, colors);
+    public void createOwnerBoxProjects(ArrayList<Project> projects) {
+        ownerProjectSelectionView.createProjectBoxes(projects);
     }
 
-    public void createSharedBoxProjects (String[] titles, Color[] colors) {
-        friendProjectSelectionView.createProjectBoxes(titles, colors);
+    public void createSharedBoxProjects(ArrayList<Project> projects) {
+        friendProjectSelectionView.createProjectBoxes(projects);
     }
 
-    public void addOwnerProjectBox(String title, Color color) {
-        ownerProjectSelectionView.addProjectBox(title, color);
+    public void addOwnerProjectBox(Project project) {
+        ownerProjectSelectionView.addProjectBox(project);
     }
 
-    public void addSharedProjectBox(String title, Color color) {
-        friendProjectSelectionView.addProjectBox(title, color);
+    public void addSharedProjectBox(Project project) {
+        friendProjectSelectionView.addProjectBox(project);
     }
 
-    public void removeOwnerProject (int index) {
+    public void removeOwnerProject(int index) {
         ownerProjectSelectionView.removeProject(index);
     }
+
 }

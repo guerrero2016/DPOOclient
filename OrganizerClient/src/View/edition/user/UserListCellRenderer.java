@@ -1,6 +1,6 @@
 package View.edition.user;
 
-import ModelAEliminar.User;
+import Model.user.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,11 +18,11 @@ public class UserListCellRenderer implements ListCellRenderer<User> {
     }
 
     @Override
-    public Component getListCellRendererComponent(JList list, User member, int index, boolean isSelected,
+    public Component getListCellRendererComponent(JList list, User user, int index, boolean isSelected,
                                                   boolean cellHasFocus) {
 
         //Member component
-        UserComponent memberComponent = new UserComponent(member.getName());
+        UserComponent memberComponent = new UserComponent(user.getUserName());
         memberComponent.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
         memberComponent.setOpaque(true);
 

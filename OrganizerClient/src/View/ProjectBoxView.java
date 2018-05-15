@@ -1,8 +1,9 @@
 package View;
 
+import Model.project.Project;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProjectBoxView extends JPanel {
+
     public static final String INFO_AC = "INFO";
     public static final String DELETE_AC = "DELETE";
 
@@ -23,15 +25,15 @@ public class ProjectBoxView extends JPanel {
     private String title;
     private CustomProjectButton jbInfo;
     private CustomProjectButton jbDelete;
-    private final int index;
     private final boolean isOwner;
+    private Project project;
 
-    public ProjectBoxView (String title, Color color, int index, boolean isOwner) {
+    public ProjectBoxView (Project project, int index, boolean isOwner) {
         setLayout(new BorderLayout());
 
-        this.index = index;
-        this.title  = title;
+        this.title  = project.getName();
         this.isOwner = isOwner;
+        this.project = project;
 
         JPanel jpLabel = new JPanel(new BorderLayout());
         titleLabel = new JLabel(configureLabelMaxTextWidth(title));
@@ -55,20 +57,20 @@ public class ProjectBoxView extends JPanel {
         JPanel jpAux = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         jbInfo = new CustomProjectButton(new ImageIcon(infoImage), title, index);
-        jbInfo.setBackground(color);
+        jbInfo.setBackground(project.getColor());
         jbInfo.setBorder(null);
         jbInfo.setActionCommand(INFO_AC);
 
         jbDelete = new CustomProjectButton(new ImageIcon(deleteImage), title, index);
 
         if (isOwner) {
-            jbDelete.setBackground(color);
+            jbDelete.setBackground(project.getColor());
             jbDelete.setBorder(null);
             jbDelete.setActionCommand(DELETE_AC);
             jpAux.add(jbDelete);
         }
 
-        jpAux.setBackground(color);
+        jpAux.setBackground(project.getColor());
         jpAux.add(jbInfo);
 
 
@@ -76,10 +78,18 @@ public class ProjectBoxView extends JPanel {
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        setBackground(color);
-        jpLabel.setBackground(color);
+        setBackground(project.getColor());
+        jpLabel.setBackground(project.getColor());
         this.add(jpAux, BorderLayout.NORTH);
         this.add(jpLabel,BorderLayout.CENTER);
+    }
+
+    public boolean isOwner() {
+        return isOwner;
+    }
+
+    public Project getProject() {
+        return project;
     }
 
     public String getTitle() {

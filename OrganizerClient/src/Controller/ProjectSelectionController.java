@@ -1,62 +1,54 @@
 package Controller;
 
 import Model.DataManager;
+import Model.project.Project;
 import View.CustomProjectButton;
 import View.MainView;
 import View.ProjectBoxView;
 import View.ProjectsMainView;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ProjectSelectionController implements MouseListener, ActionListener {
 
     private final MainViewController controller;
+    //TODO: Project box panels (admin and shared)
 
     public ProjectSelectionController (MainViewController controller) {
-        String[] names = new String []{"AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP", "AAA", "BBB", "CCC","AAA", "BBB", "CCC", "TTT", "OOO", "PPP"};
-        Color[] colors = new Color[] {Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN, Color.gray, Color.BLUE, Color.CYAN};
-        controller.createOwnerBoxProjects(names, colors);
-        controller.createSharedBoxProjects(names, colors);
         this.controller = controller;
+        ArrayList<Project> projects = new ArrayList<>(Arrays.asList(controller.getProjects()));
+        controller.createOwnerBoxProjects(projects);
+        controller.createSharedBoxProjects(projects);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         //TODO: Recover project data from server and know if it is a project user or shared
         if(e.getClickCount() == 2) {
-            controller.loadProject(null, false);
+            ProjectBoxView projectBoxView = (ProjectBoxView) e.getSource();
+            controller.loadProject(projectBoxView.getProject(), projectBoxView.isOwner());
             controller.swapPanel(MainView.PROJECT_ID);
         }
     }
 
-    public void createProject (String title, Color color) {
-        controller.addOwnerProjectBox(title, color);
+    public void createProject (Project project) {
+        controller.addOwnerProjectBox(project);
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
+    public void mousePressed(MouseEvent e) {}
     @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
+    public void mouseReleased(MouseEvent e) {}
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
+    public void mouseEntered(MouseEvent e) {}
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent e) {}
 
     @Override
     public void actionPerformed(ActionEvent e) {

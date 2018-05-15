@@ -2,10 +2,14 @@ import Controller.MainViewController;
 import Model.ServerObjectType;
 import Model.project.Category;
 import Model.project.Project;
+import Model.user.User;
 import Network.NetworkManager;
 import View.MainView;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -38,8 +42,10 @@ public class Main {
                 NetworkManager nm = new NetworkManager(mainViewController);
                 //    public Project(String id, String name, String color, ArrayList<Category> categories, ArrayList<String> membersName, String background) {
                 try {
-                    nm.sendToServer(ServerObjectType.SET_PROJECT, new Project("123", "Lactosioto", "Bermell", new ArrayList<Category>(0), new ArrayList<String>(0),"Bacccc"));
-                } catch (IOException e) {
+                    Image image = ImageIO.read(new File("img/background4.jpg"));
+                    nm.sendToServer(ServerObjectType.SET_PROJECT, new Project("123", "Lactosioto", Color.RED,
+                            new ArrayList<>(0), new ArrayList<>(0), image, true));
+                } catch(IOException e) {
                     e.printStackTrace();
                 }
 

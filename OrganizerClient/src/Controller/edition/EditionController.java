@@ -12,7 +12,11 @@ import Controller.edition.task.TaskController;
 import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
-import ModelAEliminar.*;
+import Model.project.Category;
+import Model.project.Project;
+import Model.project.Tag;
+import Model.project.Task;
+import Model.user.User;
 import View.ProjectsMainView;
 import View.edition.EditionPanel;
 import View.edition.project.category.CategoryPanel;
@@ -40,7 +44,7 @@ public class EditionController {
     private UserPanel taskUserPanel;
 
     private Project project;
-    private Category category;
+    private Model.project.Category category;
     private Task task;
 
     private boolean isEditing;
@@ -84,7 +88,7 @@ public class EditionController {
         projectPanel.setProjectName(project.getName());
         projectPanel.cleanCategories();
 
-        for(int i = 0; i < project.getTotalCategories(); i++) {
+        for(int i = 0; i < project.getCategoriesSize(); i++) {
             projectPanel.addCategory(project.getCategory(i));
             CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i);
             categoryPanel.resetActionController();
@@ -136,7 +140,7 @@ public class EditionController {
         editionPanel.registerTaskActionController(new TaskController(this, editionPanel.getTaskPanel(),
                 task));
 
-        for(int i = 0; i < task.getTotalTags(); i++) {
+        for(int i = 0; i < task.getTagsSize(); i++) {
             TagPanel tagPanel = editionPanel.getTaskPanel().getTagPanel(i);
             tagPanel.resetActionController();
             tagPanel.registerActionController(new TagController(this, tagPanel, task, task.getTag(i)));
@@ -179,7 +183,7 @@ public class EditionController {
     public void deleteTask() {
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(category));
         categoryPanel.removeTask(task);
-        category.removeTask(task);
+        category.deleteTask(task);
         mainController.updateCategory(project, category);
     }
 
@@ -190,7 +194,7 @@ public class EditionController {
     public User getProjectUser(String userName) {
 
         for(int i = 0; i < project.getUsers().size(); i++) {
-            if(userName.equals(project.getUser(i).getName())) {
+            if(userName.equals(project.getUser(i).getUserName())) {
                 return project.getUser(i);
             }
         }
@@ -212,8 +216,8 @@ public class EditionController {
 
         int index = project.getCategoryIndex(category);
 
-        if(index >= 0 && index < project.getTotalCategories()) {
-            project.removeCategory(category);
+        if(index >= 0 && index < project.getCategoriesSize()) {
+            project.deleteCategory(category);
             projectPanel.removeCategory(index);
             mainController.updateCategory(project, category);
         }

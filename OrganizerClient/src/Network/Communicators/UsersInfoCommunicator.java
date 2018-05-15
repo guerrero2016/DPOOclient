@@ -2,6 +2,7 @@ package Network.Communicators;
 
 import Controller.MainViewController;
 import Model.DataManager;
+import Model.user.User;
 import Network.Communicable;
 
 import java.io.IOException;
@@ -12,8 +13,8 @@ public class UsersInfoCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
-            String[] members = (String[]) objectIn.readObject();
-            DataManager.getSharedInstance().setMembers(members);
+            User[] users = (User[]) objectIn.readObject();
+            DataManager.getSharedInstance().setUsers(users);
 
             String title = DataManager.getSharedInstance().getTitle();
             String memberString = DataManager.getSharedInstance().getMembersAsString();

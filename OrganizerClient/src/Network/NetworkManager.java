@@ -62,4 +62,5 @@ public class NetworkManager extends Thread {
         objectOut.writeObject(type);
         objectOut.writeObject(object);
     }
+
 }

@@ -4,8 +4,8 @@ import Controller.edition.EditionController;
 import Controller.edition.document.DocumentController;
 import Controller.edition.project.category.CategoryActionController;
 import Controller.edition.project.category.CategoryMouseController;
-import ModelAEliminar.Category;
-import ModelAEliminar.Project;
+import Model.project.Category;
+import Model.project.Project;
 import View.edition.project.ProjectPanel;
 import View.edition.project.category.CategoryPanel;
 
@@ -111,7 +111,7 @@ public class ProjectActionController implements ActionListener {
 
         if(result != JOptionPane.CLOSED_OPTION && result != JOptionPane.CANCEL_OPTION) {
 
-            for (int i = 0; i < project.getTotalCategories(); i++) {
+            for (int i = 0; i < project.getCategoriesSize(); i++) {
                 CategoryPanel categoryPanel = view.getCategoryPanel(i);
                 categoryPanel.setCategoryNameEditable(false, project.getCategory(i).getName());
                 categoryPanel.cleanNewTaskName();
@@ -129,10 +129,10 @@ public class ProjectActionController implements ActionListener {
     private void addCategory() {
         if(!mainController.isEditing() && !view.getNewCategoryName().isEmpty()) {
             Category category = new Category(view.getNewCategoryName());
-            project.addCategory(category);
+            project.setCategory(category);
             view.cleanNewCategoryName();
             view.addCategory(category);
-            CategoryPanel categoryPanel = view.getCategoryPanel(project.getTotalCategories() - 1);
+            CategoryPanel categoryPanel = view.getCategoryPanel(project.getCategoriesSize() - 1);
             categoryPanel.registerActionController(new CategoryActionController(mainController, categoryPanel, category));
             categoryPanel.registerMouseController(new CategoryMouseController(mainController, category));
             categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
@@ -145,7 +145,7 @@ public class ProjectActionController implements ActionListener {
 
     private void projectBackManagement() {
 
-        for(int i = 0; i < project.getTotalCategories(); i++) {
+        for(int i = 0; i < project.getCategoriesSize(); i++) {
             CategoryPanel categoryPanel = view.getCategoryPanel(i);
             categoryPanel.setCategoryNameEditable(false, project.getCategory(i).getName());
             categoryPanel.cleanNewTaskName();

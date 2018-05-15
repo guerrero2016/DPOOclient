@@ -1,6 +1,6 @@
 package Controller;
 
-import ModelAEliminar.user.Register;
+import Model.user.UserRegister;
 import View.SignInPanel;
 
 import javax.swing.*;
@@ -26,8 +26,14 @@ public class SignInController implements ActionListener {
 
             case SignInPanel.SIGN:
                 //TODO Passar-li els paràmetres al constructor
-                Register register = new Register();
-                if((register.checkSignIn())) {
+                UserRegister register = new UserRegister();
+                int signIn = 0;
+                try {
+                    signIn = register.checkSignIn();
+                } catch(Exception ex) {
+                    //Could not signIn
+                }
+                if(signIn == 0) {
                     //Enviar la petició d'inici de sessió al server.
                     //controller.swapPanel(3);
                 }

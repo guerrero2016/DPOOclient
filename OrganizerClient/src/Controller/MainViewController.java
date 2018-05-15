@@ -1,15 +1,18 @@
 package Controller;
 
 import Controller.edition.EditionController;
-import ModelAEliminar.*;
+import Model.project.Category;
+import Model.project.Project;
+import Model.project.Tag;
+import Model.project.Task;
+import Model.user.User;
 import View.MainView;
-import View.edition.BackgroundPanel;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainViewController {
 
@@ -32,24 +35,26 @@ public class MainViewController {
         view.addProjectSelectionController(projectSelectionController);
     }
 
-    public void swapPanel (int whatPanel) {
+    public void swapPanel(int whatPanel) {
         view.swapPanel(whatPanel);
     }
 
-    public void createOwnerBoxProjects (String [] titles, Color [] colors) {
-        view.createOwnerBoxProjects(titles, colors);
+    public void createOwnerBoxProjects(ArrayList<Project> projects) {
+        if(projects != null) {
+            view.createOwnerBoxProjects(projects);
+        }
     }
 
-    public void createSharedBoxProjects (String [] titles, Color [] colors) {
-        view.createSharedBoxProjects(titles, colors);
+    public void createSharedBoxProjects(ArrayList<Project> projects) {
+        view.createSharedBoxProjects(projects);
     }
 
-    public void addOwnerProjectBox(String title, Color color) {
-        view.addOwnerProjectBox(title, color);
+    public void addOwnerProjectBox(Project project) {
+        view.addOwnerProjectBox(project);
     }
 
-    public void addSharedProjectBox(String title, Color color) {
-        view.addSharedProjectBox(title, color);
+    public void addSharedProjectBox(Project project) {
+        view.addSharedProjectBox(project);
     }
 
     public void removeProject(int index) {
@@ -60,10 +65,23 @@ public class MainViewController {
         projectSelectionController.createProjectInfoWindow(title, memebers);
     }
 
+    public Project[] getProjects() {
+
+        Project[] projects = new Project[10];
+
+        for(int i = 0; i < 10; i++) {
+            Project project = new Project(String.valueOf(i), "Name " + i, Color.CYAN, i % 2 == 0);
+        }
+
+        return projects;
+
+    }
+
     public void loadProject(Project project, boolean isAdmin) {
 
         //TODO: Delete
-        Project newProject = new Project("Project Name");
+        Project newProject = new Project();
+        newProject.setName("Project Name");
 
         try {
             Image image = ImageIO.read(new File("img/background4.jpg"));
@@ -75,7 +93,7 @@ public class MainViewController {
 
         for(int i = 0; i < 4; i++) {
 
-            Category category = new Category("Category " + (i + 1));
+            Model.project.Category category = new Model.project.Category("Category " + (i + 1));
 
             for(int j = 0; j < 20; j++) {
 
@@ -89,19 +107,19 @@ public class MainViewController {
                 }
 
                 for(int k = 0; k < 10; k++) {
-                    task.addUser(new User("User " + (k + 1), "Email " + (k + 1)));
+                    task.addUser(new User("User " + (k + 1)));
                 }
 
                 category.addTask(task);
 
             }
 
-            newProject.addCategory(category);
+            newProject.setCategory(category);
 
         }
 
         for(int i = 0; i < 10; i++) {
-            newProject.addUser(new User("User " + (i + 1), "Email " + (i + 1)));
+            newProject.addUser(new User("User " + (i + 1)));
         }
 
         //TODO: End delete

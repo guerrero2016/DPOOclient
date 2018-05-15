@@ -1,7 +1,7 @@
 package View.edition.project.category.task;
 
-import ModelAEliminar.Tag;
-import ModelAEliminar.Task;
+import Model.project.Tag;
+import Model.project.Task;
 import View.edition.TransparentPanel;
 
 import javax.swing.*;
@@ -47,7 +47,7 @@ public class TaskListComponent extends JPanel implements Transferable {
         add(tpTags, BorderLayout.PAGE_END);
 
         //Tags
-        for(int i = 0; i < task.getTotalTags(); i++) {
+        for(int i = 0; i < task.getTagsSize(); i++) {
 
             Tag tag = task.getTag(i);
 

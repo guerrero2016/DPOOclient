@@ -12,9 +12,7 @@ import java.util.ArrayList;
 
 public class AuthCommunicator implements Communicable {
 
-    private String[] titles;
-    private Color[] colors;
-
+    private ArrayList<Project> projects;
 
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
@@ -26,10 +24,10 @@ public class AuthCommunicator implements Communicable {
                     DataManager dataManager = DataManager.getSharedInstance();
 
                     dataManager.setProjectOwnerList(readProjects(objectIn));
-                    controller.createOwnerBoxProjects(titles, colors);
+                    controller.createOwnerBoxProjects(projects);
 
                     dataManager.setProjectSharedList(readProjects(objectIn));
-                    controller.createSharedBoxProjects(titles, colors);
+                    controller.createSharedBoxProjects(projects);
                     break;
 
                 case 1:
@@ -49,15 +47,15 @@ public class AuthCommunicator implements Communicable {
 
         ArrayList<Project> projects = new ArrayList<>();
 
-        int numProj = objectIn.readInt();
+        int totalProjects = objectIn.readInt();
 
-        for (int i = 0; i < numProj; i++) {
+        for (int i = 0; i < totalProjects; i++) {
             //TODO save hash
             final Project p = (Project) objectIn.readObject();
             projects.add(p);
-            titles[i] = p.getName();
-            colors[i] = Color.decode(p.getColor());
+            this.projects.add(p);
         }
+
         return projects;
     }
 

@@ -1,8 +1,7 @@
 package Controller.edition.project.category;
 
 import Controller.edition.EditionController;
-import ModelAEliminar.Category;
-import ModelAEliminar.Task;
+import Model.project.Task;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -11,9 +10,9 @@ import java.awt.event.MouseListener;
 public class CategoryMouseController implements MouseListener{
 
     private EditionController mainController;
-    private Category category;
+    private Model.project.Category category;
 
-    public CategoryMouseController(EditionController mainController, Category category) {
+    public CategoryMouseController(EditionController mainController, Model.project.Category category) {
         this.mainController = mainController;
         this.category = category;
     }

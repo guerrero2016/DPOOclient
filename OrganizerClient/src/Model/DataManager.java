@@ -4,6 +4,7 @@ package Model;
 import Model.project.Category;
 import Model.project.Project;
 import Model.project.Task;
+import Model.user.User;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -56,33 +57,45 @@ public class DataManager {
     }
 
     public void setTask(Task task, String categoryID) {
-        selectedProject.setTask(task, categoryID);
+        Category category = selectedProject.getCategoryWithId(categoryID);
+        category.setTask(task);
     }
 
     public void deleteTask(Task task, String categoryID) {
-        selectedProject.deleteTask(task, categoryID);
+        Category category = selectedProject.getCategoryWithId(categoryID);
+        category.deleteTask(task);
     }
 
-    public void setMembers(String[] members) {
-        selectedProject.setMembersName(new ArrayList<>(Arrays.asList(members)));
+    public void setUsers(User[] users) {
+        selectedProject.setUsers(new ArrayList<>(Arrays.asList(users)));
     }
 
-    public void addMember(String memberName) {
-        this.selectedProject.addMemberName(memberName);
+    public void addUser(User user) {
+        this.selectedProject.addUser(user);
     }
 
     public String getMembersAsString() {
+
         StringBuilder sb = new StringBuilder();
 
-        for (String s : selectedProject.getMembersName()){
-            sb.append(s).append(System.lineSeparator());
+        for (User user : selectedProject.getUsers()){
+            sb.append(user.getUserName()).append(System.lineSeparator());
         }
 
         return sb.toString();
+
     }
 
     public ArrayList<String> getMembersAsArray() {
-        return selectedProject.getMembersName();
+
+        ArrayList<String> userNames = new ArrayList<>();
+
+        for(int i = 0; i < selectedProject.getUsersSize(); i++) {
+            userNames.add(selectedProject.getUser(i).getUserName());
+        }
+
+        return userNames;
+
     }
 
     public void setProjectOwnerList(ArrayList<Project> projectOwnerList) {

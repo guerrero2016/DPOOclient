@@ -1,7 +1,7 @@
 package View.edition.project.category;
 
-import ModelAEliminar.Category;
-import ModelAEliminar.Task;
+import Model.project.Category;
+import Model.project.Task;
 import View.edition.document.DocumentEnablePanel;
 import View.edition.project.category.task.TaskListCellRenderer;
 
@@ -107,7 +107,7 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
         tasksList = new DefaultListModel<>();
 
-        for(int i = 0; i < category.getTotalTasks(); i++) {
+        for(int i = 0; i < category.getTasksSize(); i++) {
             tasksList.addElement(category.getTask(i));
         }
 

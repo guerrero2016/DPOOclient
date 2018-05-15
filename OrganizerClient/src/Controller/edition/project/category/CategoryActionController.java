@@ -1,8 +1,7 @@
 package Controller.edition.project.category;
 
 import Controller.edition.EditionController;
-import ModelAEliminar.Category;
-import ModelAEliminar.Task;
+import Model.project.Task;
 import View.edition.project.category.CategoryPanel;
 
 import javax.swing.*;
@@ -19,9 +18,9 @@ public class CategoryActionController implements ActionListener {
 
     private EditionController mainController;
     private CategoryPanel view;
-    private Category category;
+    private Model.project.Category category;
 
-    public CategoryActionController(EditionController mainController, CategoryPanel view, Category category) {
+    public CategoryActionController(EditionController mainController, CategoryPanel view, Model.project.Category category) {
         this.mainController = mainController;
         this.view = view;
         this.category = category;

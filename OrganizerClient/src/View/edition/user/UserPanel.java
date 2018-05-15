@@ -1,6 +1,6 @@
 package View.edition.user;
 
-import ModelAEliminar.User;
+import Model.user.User;
 import View.edition.document.DocumentEnablePanel;
 import View.edition.TransparentPanel;
 

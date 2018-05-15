@@ -30,7 +30,7 @@ public class ProjectCreationController implements MouseListener, ActionListener 
         if (view.getProjectName() == null || view.getProjectName().isEmpty()) {
             System.out.println("Missing parameters");
         } else {
-            projectSelectionController.createProject(view.getProjectName(),color);
+//            projectSelectionController.createProject(view.getProject());
             view.setDialogVisible(false);
         }
     }

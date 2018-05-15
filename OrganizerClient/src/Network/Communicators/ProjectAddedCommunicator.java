@@ -20,10 +20,10 @@ public class ProjectAddedCommunicator implements Communicable {
 
             if (p.isOwner()) {
                 dataManager.addProjectToOwnerList(p);
-                controller.addOwnerProjectBox(p.getName(), Color.decode(p.getColor()));
+                controller.addOwnerProjectBox(p);
             }else {
                 dataManager.addProjectToSharedList(p);
-                controller.addSharedProjectBox(p.getName(), Color.decode(p.getColor()));
+                controller.addSharedProjectBox(p);
             }
 
         } catch (IOException | ClassNotFoundException e) {
