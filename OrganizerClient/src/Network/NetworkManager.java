@@ -22,10 +22,10 @@ public class NetworkManager extends Thread {
         try {
             this.isOn = false;
             this.controller = controller;
+            this.communicables = new HashMap<>();
             this.socketToServer = new Socket("127.0.0.1", 15001);
             this.objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
             this.objectIn = new ObjectInputStream(socketToServer.getInputStream());
-            this.communicables = new HashMap<>();
         } catch (IOException e) {
             e.printStackTrace();
         }

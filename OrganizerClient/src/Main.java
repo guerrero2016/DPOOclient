@@ -6,6 +6,7 @@ import View.*;
 import model.ServerObjectType;
 import model.project.Category;
 import Network.NetworkManager;
+import model.user.UserRegister;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -57,11 +58,8 @@ public class Main {
                 network.startCommunication();
                 mainView.setVisible(true);
 
-                NetworkManager nm = new NetworkManager(mainViewController);
-                nm.startCommunication();
-                //    public Project(String id, String name, String color, ArrayList<Category> categories, ArrayList<String> membersName, String background) {
                 try {
-                    nm.sendToServer(ServerObjectType.SET_CATEGORY, new Category("Categoria", 2, new ArrayList<>()));
+                    network.sendToServer(ServerObjectType.REGISTER, new UserRegister("1","2","3","4"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
