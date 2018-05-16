@@ -6,7 +6,11 @@ import model.user.UserLogIn;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
+/**
+ * Classe que genera el panell per a iniciar sessió
+ */
 public class LogInPanel extends JPanel{
     public static final String LOG = "ENTRAR";
     public static final String SIGN = "CREAR COMPTE";
@@ -17,6 +21,9 @@ public class LogInPanel extends JPanel{
     private JButton jbLogIn;
     private JButton jbSignIn;
 
+    /**
+     * Crea el panell amb els diferents botons i zones de text.
+     */
     public LogInPanel() {
 
         this.setLayout(new BorderLayout());
@@ -87,6 +94,10 @@ public class LogInPanel extends JPanel{
 
     }
 
+    /**
+     * Funció que recupera allò escrit en les diferents zones de text.
+     * @return Un objecte de tipus <code>UserLogin</code> amb els atributs iniciats amb allò que l'usuari ha escrit.
+     */
     public UserLogIn getLogin() {
         String userName = jtfUsername.getText();
         String password = User.getMD5(String.valueOf(jpfPassword.getPassword()));
@@ -101,14 +112,13 @@ public class LogInPanel extends JPanel{
         jtfUsername.setBorder(BorderFactory.createLineBorder(color));
     }
 
-    public LogInPanel getPanel() {
-        return this;
-    }
-
-
-    public void addControllerButton (LogInController lic) {
-        jbSignIn.addActionListener(lic);
-        jbLogIn.addActionListener(lic);
+    /**
+     * Procediment que registra els botons amb un <code>ActionListener</code>.
+     * @param al <code>ActionListener</code> el qual serà notificat quan es premi un botó.
+     */
+    public void addControllerButton (ActionListener al) {
+        jbSignIn.addActionListener(al);
+        jbLogIn.addActionListener(al);
     }
 
 }

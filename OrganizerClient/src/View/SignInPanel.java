@@ -6,7 +6,11 @@ import model.user.UserRegister;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
+/**
+ * Classe que genera el panell per a registrar-se.
+ */
 public class SignInPanel extends JPanel {
     public static final String SIGN = "REGISTRAR-SE";
     public static final String LOG = "INICIA SESSIÓ";
@@ -19,6 +23,9 @@ public class SignInPanel extends JPanel {
     private JButton jbSignIn;
     private JButton jbLogIn;
 
+    /**
+     * Crea el panell amb els diferents botons i zones de text.
+     */
     public SignInPanel() {
 
         this.setLayout(new BorderLayout());
@@ -122,6 +129,11 @@ public class SignInPanel extends JPanel {
 
     }
 
+    /**
+     * Funció que recupera allò escrit en les diferents zones de text.
+     * @return Un objecte de tipus <code>UserRegister</code> amb els atributs iniciats amb el que l'usuari ha escrit.
+     *         Si els camps de la contraseny no tenen majúscula, es posen a <code>null</code>
+     */
     public UserRegister getRegister() {
         String username = jtfUsername.getText();
         String email = jtfEmail.getText();
@@ -158,8 +170,12 @@ public class SignInPanel extends JPanel {
 
     }
 
-    public void addControllerButton (SignInController sic) {
-        jbLogIn.addActionListener(sic);
-        jbSignIn.addActionListener(sic);
+    /**
+     * Procediment que registra els botons amb un <code>ActionListener</code>.
+     * @param al <code>ActionListener</code> el qual serà notificat quan es premi un botó.
+     */
+    public void addControllerButton (ActionListener al) {
+        jbLogIn.addActionListener(al);
+        jbSignIn.addActionListener(al);
     }
 }

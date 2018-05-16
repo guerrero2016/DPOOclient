@@ -10,15 +10,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Classe Listener que controla la vista de registre.
+ * Implementa ActionListener.
+ */
 public class SignInController implements ActionListener {
 
     private MainViewController controller;
     private SignInPanel view;
 
+    /**
+     * Crea el controlador i li assigna una vista
+     * @param view Vista que controlarà.
+     */
     public SignInController(SignInPanel view) {
         this.view = view;
     }
 
+    /**
+     * Vincula el controlador general amb aquest.
+     * @param controller Controlador general que comunica els diferents controladors i la vista general.
+     */
     public void setController(MainViewController controller) {
         this.controller = controller;
     }
@@ -39,7 +51,7 @@ public class SignInController implements ActionListener {
                     try {
                         controller.sendToServer(ServerObjectType.REGISTER, register);
                     } catch (IOException e1) {
-                        controller.showDialog("Erro de connexió amb el servidor");
+                        controller.showDialog("Error de connexió amb el servidor");
                     }
                 } else {
                     controller.showDialog("Error, dades incorectes");
