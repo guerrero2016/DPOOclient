@@ -156,4 +156,7 @@ public class MainViewController {
         network.sendToServer(type, o);
     }
 
+    public void showDialog(String errorMSG) {
+        view.showErrorDialog(errorMSG);
+    }
 }

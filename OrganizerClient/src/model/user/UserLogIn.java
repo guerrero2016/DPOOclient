@@ -1,7 +1,5 @@
 package model.user;
 
-        import java.io.Serializable;
-
 public class UserLogIn extends User {
 
     private String password;
@@ -12,8 +10,7 @@ public class UserLogIn extends User {
     }
 
     public boolean checkLogIn() {
-        return true;
-        //return DataBaseManager.IniciarSessio(userName, password);
+        return userName != null && password != null;
     }
 
     public String getPassword() {

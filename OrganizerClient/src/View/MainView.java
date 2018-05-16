@@ -109,4 +109,9 @@ public class MainView extends JFrame {
         return editionPanel;
     }
 
+    public void showErrorDialog(String errorMSG) {
+        JOptionPane.showMessageDialog(this, errorMSG,
+                "Error", JOptionPane.ERROR_MESSAGE);
+
+    }
 }

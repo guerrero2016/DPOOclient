@@ -34,11 +34,13 @@ public class AuthCommunicator implements Communicable {
                     controller.getProjectsMainViewController().createSharedProjects(projects);
                     break;
                 case 1:
-                    //MOSTRAR ERRORS OPTIONPANEEEL
+                    controller.showDialog("Error, aquest nom d'usuari ja està registrat.");
                     break;
                 case 2:
+                    controller.showDialog("Error, aquest correu d'usuari ja està registrat.");
                     break;
                 case 3:
+                    controller.showDialog("Error, dades incorrectes");
                     break;
             }
 

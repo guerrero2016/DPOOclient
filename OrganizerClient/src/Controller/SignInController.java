@@ -34,18 +34,16 @@ public class SignInController implements ActionListener {
 
             case SignInPanel.SIGN:
                 UserRegister register = view.getRegister();
-                System.out.println("maybe");
-                System.out.println(register.checkSignIn());
-                System.out.println(register.getUserName() + register.getEmail() + register.getPassword() + register.getConfirm());
+
                 if((register.checkSignIn() == 0)) {
                     try {
-                        System.out.println("se envia");
                         controller.sendToServer(ServerObjectType.REGISTER, register);
                     } catch (IOException e1) {
-                        System.out.println("No tira el register");
+                        controller.showDialog("Erro de connexió amb el servidor");
                     }
+                } else {
+                    controller.showDialog("Error, dades incorectes");
                 }
-                System.out.println("can u repit de cuestion");
                 break;
         }
 
