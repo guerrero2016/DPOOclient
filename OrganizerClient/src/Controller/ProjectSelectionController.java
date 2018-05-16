@@ -5,6 +5,7 @@ import model.DataManager;
 import model.project.Project;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -12,7 +13,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ProjectSelectionController implements MouseListener, ActionListener {
+public class ProjectSelectionController implements ActionListener {
 
     //TODO: Project box panels (admin and shared)
     final ProjectSelectionView view;
@@ -24,36 +25,26 @@ public class ProjectSelectionController implements MouseListener, ActionListener
        //controller.createSharedBoxProjects(projects);
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        //TODO: Recover project data from server and know if it is a project user or shared
-        if(e.getClickCount() == 2) {
-            ProjectBoxView projectBoxView = (ProjectBoxView) e.getSource();
-            //controller.loadProject(projectBoxView.getProject(), projectBoxView.isOwner());
-            //controller.swapPanel(MainView.PROJECT_ID);
-        }
-    }
 
     public void createProject (Project project) {
-        view.addProjectBox(project);
+        view.addProjectBox(project.getName(), project.getColor(), new ProjectBoxController(project));
     }
 
     public void createProjects (ArrayList<Project> projects) {
-        view.createProjectBoxes(projects);
+        String [] titles = new String[projects.size()];
+        Color[] colors = new Color[projects.size()];
+        ProjectBoxController [] controllers = new ProjectBoxController[projects.size()];
+        for (int i = 0; i<projects.size(); i++) {
+            titles[i] = projects.get(i).getName();
+            colors[i] = projects.get(i).getColor();
+            controllers[i] = new ProjectBoxController(projects.get(i));
+        }
+        view.createProjectBoxes(titles, colors, controllers);
     }
 
     public void deleteProject (int index) {
         view.removeProject(index);
     }
-
-    @Override
-    public void mousePressed(MouseEvent e) {}
-    @Override
-    public void mouseReleased(MouseEvent e) {}
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-    @Override
-    public void mouseExited(MouseEvent e) {}
 
     @Override
     public void actionPerformed(ActionEvent e) {

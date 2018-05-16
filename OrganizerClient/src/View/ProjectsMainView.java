@@ -65,24 +65,4 @@ public class ProjectsMainView extends JPanel {
         addProjectButton.addActionListener(controller);
     }
 
-    public void createOwnerBoxProjects(ArrayList<Project> projects) {
-        ownerProjectSelectionView.createProjectBoxes(projects);
-    }
-
-    public void createSharedBoxProjects(ArrayList<Project> projects) {
-        friendProjectSelectionView.createProjectBoxes(projects);
-    }
-
-    public void addOwnerProjectBox(Project project) {
-        ownerProjectSelectionView.addProjectBox(project);
-    }
-
-    public void addSharedProjectBox(Project project) {
-        friendProjectSelectionView.addProjectBox(project);
-    }
-
-    public void removeOwnerProject(int index) {
-        ownerProjectSelectionView.removeProject(index);
-    }
-
 }

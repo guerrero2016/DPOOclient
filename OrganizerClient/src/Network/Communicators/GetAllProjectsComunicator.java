@@ -24,9 +24,9 @@ public class GetAllProjectsComunicator implements Communicable {
         DataManager dataManager = DataManager.getSharedInstance();
         try {
             dataManager.setProjectOwnerList(readProjects(objectIn));
-            controller.createOwnerBoxProjects(projects);
+            controller.getProjectsMainViewController().createOwnerProjects(projects);
             dataManager.setProjectSharedList(readProjects(objectIn));
-            controller.createSharedBoxProjects(projects);
+            controller.getProjectsMainViewController().createSharedProjects(projects);
 
             controller.swapPanel(ProjectsMainView.VIEW_TAG);
         } catch (IOException | ClassNotFoundException e) {

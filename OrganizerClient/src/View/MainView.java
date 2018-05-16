@@ -104,32 +104,7 @@ public class MainView extends JFrame {
         logInPanel.addControllerButton(lic);
         signInPanel.addControllerButton(sic);
     }
-
-    public void addProjectSelectionController (ProjectSelectionController controller) {
-        //projectsView.registerProjectSelectionController(controller);
-        //projectsView.registerAddProjectViewController(controller);
-    }
-
-    public void createOwnerBoxProjects(ArrayList<Project> projects) {
-        projectsView.createOwnerBoxProjects(projects);
-    }
-
-    public void createSharedBoxProjects(ArrayList<Project> projects) {
-        projectsView.createSharedBoxProjects(projects);
-    }
-
-    public void addOwnerProjectBox(Project project) {
-        projectsView.addOwnerProjectBox(project);
-    }
-
-    public void addSharedProjectBox(Project project) {
-        projectsView.addSharedProjectBox(project);
-    }
-
-    public void removeProjectAtIndex (int index) {
-        projectsView.removeOwnerProject(index);
-    }
-
+    
     public EditionPanel getEditionPanel() {
         return editionPanel;
     }

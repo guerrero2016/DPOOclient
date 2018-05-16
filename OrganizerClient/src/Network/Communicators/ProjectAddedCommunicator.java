@@ -21,10 +21,10 @@ public class ProjectAddedCommunicator extends Thread implements Communicable {
 
             if (p.isOwner()) {
                 dataManager.addProjectToOwnerList(p);
-                controller.addOwnerProjectBox(p);
+                controller.getProjectsMainViewController().addOwnerProject(p);
             }else {
                 dataManager.addProjectToSharedList(p);
-                controller.addSharedProjectBox(p);
+                controller.getProjectsMainViewController().addSharedProject(p);
             }
 
         } catch (IOException | ClassNotFoundException e) {

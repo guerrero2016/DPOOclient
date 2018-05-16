@@ -28,10 +28,10 @@ public class AuthCommunicator implements Communicable {
                     DataManager dataManager = DataManager.getSharedInstance();
 
                     dataManager.setProjectOwnerList(readProjects(objectIn));
-                    controller.createOwnerBoxProjects(projects);
+                    controller.getProjectsMainViewController().createOwnerProjects(projects);
 
                     dataManager.setProjectSharedList(readProjects(objectIn));
-                    controller.createSharedBoxProjects(projects);
+                    controller.getProjectsMainViewController().createSharedProjects(projects);
                     break;
                 case 1:
                     controller.showDialog("Error, aquest nom d'usuari ja està registrat.");
