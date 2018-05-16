@@ -121,4 +121,10 @@ public class LogInPanel extends JPanel{
         jbLogIn.addActionListener(al);
     }
 
+    //Funció que deixa els campts de contrasenya i usuari en blanc
+    public void clearScreen(){
+        jtfUsername.setText(null);
+        jpfPassword.setText(null);
+    }
+
 }
