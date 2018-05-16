@@ -65,7 +65,9 @@ public class Main {
 
                 signInController.setController(mainViewController);
                 logInController.setController(mainViewController);
-                
+
+                mainViewController.swapPanel(ProjectsMainView.VIEW_TAG);
+
                 //NETWORK
 
                 NetworkManager network = new NetworkManager(mainViewController);

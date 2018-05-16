@@ -1,7 +1,8 @@
+
 package View;
 
+import Controller.ProjectBoxController;
 import Controller.ProjectSelectionController;
-import model.project.Project;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,17 +15,18 @@ public class ProjectSelectionView extends JPanel {
     private JPanel gridPanel;
     private int nBoxes;
     private ArrayList<ProjectBoxView> projectBoxViews;
+    private ArrayList<ProjectBoxController> projectBoxControllers;
     private ProjectSelectionController projectSelectionController;
     private GridBagConstraints gridBagConstraints;
 
     private final int numberOfColumns = 3;
-    private ArrayList<Project> projects;
 
     public ProjectSelectionView (boolean isOwner) {
 
         this.isOwner = isOwner;
 
         projectBoxViews = new ArrayList<>();
+        projectBoxControllers = new ArrayList<>();
         setLayout(new BorderLayout());
 
         gridPanel = new JPanel(new GridBagLayout());
@@ -32,22 +34,18 @@ public class ProjectSelectionView extends JPanel {
         scrollPane = new JScrollPane(gridPanel);
 
         add(scrollPane, BorderLayout.CENTER);
-
     }
 
     public void registerController (ProjectSelectionController controller) {
         this.projectSelectionController = controller;
         for (ProjectBoxView projectBoxView: projectBoxViews) {
-            projectBoxView.registerMouseListener(controller);
             projectBoxView.registerButtonListener(controller);
         }
     }
 
-    public void createProjectBoxes(ArrayList<Project> projects) {
-
+    public void createProjectBoxes (String [] titles, Color[] colors, ProjectBoxController[] controllers) {
         setVisible(false);
-        this.projects = projects;
-        nBoxes = projects.size();
+        nBoxes = titles.length;
         int x = 0;
         int y = -1;
 
@@ -56,49 +54,55 @@ public class ProjectSelectionView extends JPanel {
                 x = 0;
                 y++;
             }
-            createProjectBoxView(projects.get(j), x, y, j);
+            createProjectBoxView(titles[j],colors[j], controllers[j], x, y);
             x++;
         }
         setVisible(true);
     }
 
-    private void createProjectBoxView (Project project, int x, int y, int index) {
-        if(project != null) {
-            gridBagConstraints.fill = GridBagConstraints.NONE;
-            gridBagConstraints.gridx = x;
-            gridBagConstraints.gridy = y;
-            gridBagConstraints.insets.top = 10;
-            gridBagConstraints.weightx = 1;
-            ProjectBoxView projectBoxView = new ProjectBoxView(project, index, isOwner);
-            projectBoxView.registerMouseListener(projectSelectionController);
-            projectBoxView.registerButtonListener(projectSelectionController);
-            projectBoxViews.add(projectBoxView);
-            gridPanel.add(projectBoxView, gridBagConstraints);
-            scrollPane.getViewport().setView(gridPanel);
-        }
+    private void createProjectBoxView (String title, Color color, ProjectBoxController controller, int x, int y) {
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+        gridBagConstraints.gridx = x;
+        gridBagConstraints.gridy = y;
+        gridBagConstraints.insets.top = 10;
+        gridBagConstraints.weightx = 1;
+        ProjectBoxView projectBoxView = new ProjectBoxView(title, color, projectBoxViews.size(), isOwner, controller);
+        projectBoxView.registerButtonListener(projectSelectionController);
+        projectBoxViews.add(projectBoxView);
+        gridPanel.add(projectBoxView, gridBagConstraints);
+        scrollPane.getViewport().setView(gridPanel);
     }
 
-    public void addProjectBox(Project project) {
-        projects.add(project);
+    public void addProjectBox (String title, Color color, ProjectBoxController controller) {
         int y = calculateNumberRows(nBoxes) - 1;
         int x = nBoxes - numberOfColumns*(y);
         if (nBoxes % numberOfColumns == 0) {
             x = 0;
             y++;
         }
-        createProjectBoxView(project, x, y, projects.size() - 1);
+        createProjectBoxView(title, color, controller,x, y);
         nBoxes++;
     }
 
     public void removeProject(int index) {
         projectBoxViews.remove(index);
-        projects.remove(index);
+
+        String [] titles = new String[projectBoxViews.size()];
+        Color [] colors = new Color [projectBoxViews.size()];
+        ProjectBoxController [] controllers = new ProjectBoxController[projectBoxViews.size()];
+
+        for (int i = 0; i < projectBoxViews.size(); i++) {
+            titles[i] = projectBoxViews.get(i).getTitle();
+            colors[i] = projectBoxViews.get(i).getBackground();
+        }
+
         projectBoxViews = new ArrayList<>();
+
         setVisible(false);
         gridPanel = new JPanel(new GridBagLayout());
         gridBagConstraints = new GridBagConstraints();
         scrollPane.getViewport().setView(gridPanel);
-        createProjectBoxes(projects);
+        createProjectBoxes(titles, colors,controllers);
         setVisible(true);
     }
 

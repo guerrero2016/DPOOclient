@@ -61,28 +61,6 @@ public class MainViewController {
         view.swapPanel(whatPanel);
     }
 
-    public void createOwnerBoxProjects(ArrayList<Project> projects) {
-        if(projects != null) {
-            view.createOwnerBoxProjects(projects);
-        }
-    }
-
-    public void createSharedBoxProjects(ArrayList<Project> projects) {
-        view.createSharedBoxProjects(projects);
-    }
-
-    public void addOwnerProjectBox(Project project) {
-        view.addOwnerProjectBox(project);
-    }
-
-    public void addSharedProjectBox(Project project) {
-        view.addSharedProjectBox(project);
-    }
-
-    public void removeProject(int index) {
-        view.removeProjectAtIndex(index);
-    }
-
     public void createProjectInfoWindow (String title, String memebers) {
     }
 
