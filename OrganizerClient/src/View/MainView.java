@@ -129,8 +129,14 @@ public class MainView extends JFrame {
     public void removeProjectAtIndex (int index) {
         projectsView.removeOwnerProject(index);
     }
+
     public EditionPanel getEditionPanel() {
         return editionPanel;
     }
 
+    public void showErrorDialog(String errorMSG) {
+        JOptionPane.showMessageDialog(this, errorMSG,
+                "Error", JOptionPane.ERROR_MESSAGE);
+
+    }
 }
