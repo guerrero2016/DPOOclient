@@ -1,5 +1,6 @@
 package Controller;
 
+import Network.NetworkManager;
 import View.ProjectBoxView;
 import model.project.Project;
 
@@ -10,9 +11,11 @@ public class ProjectBoxController implements MouseListener{
 
     ProjectBoxView view;
     final Project project;
+    final NetworkManager networkManager;
 
-    public ProjectBoxController(Project project) {
+    public ProjectBoxController(Project project, NetworkManager networkManager) {
         this.project = project;
+        this.networkManager = networkManager;
     }
 
     public void setView(ProjectBoxView view) {

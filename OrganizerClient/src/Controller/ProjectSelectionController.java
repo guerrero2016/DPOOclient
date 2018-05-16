@@ -1,7 +1,11 @@
 package Controller;
 
+import Network.Communicators.ProjectDetailCommunicator;
+import Network.Communicators.UserInfoCommunicator;
+import Network.NetworkManager;
 import View.*;
 import model.DataManager;
+import model.ServerObjectType;
 import model.project.Project;
 
 import javax.swing.*;
@@ -10,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,6 +22,7 @@ public class ProjectSelectionController implements ActionListener {
 
     //TODO: Project box panels (admin and shared)
     final ProjectSelectionView view;
+    NetworkManager networkManager;
 
     public ProjectSelectionController (ProjectSelectionView view) {
         this.view = view;
@@ -25,9 +31,16 @@ public class ProjectSelectionController implements ActionListener {
        //controller.createSharedBoxProjects(projects);
     }
 
+    public NetworkManager getNetworkManager() {
+        return networkManager;
+    }
+
+    public void setNetworkManager(NetworkManager networkManager) {
+        this.networkManager = networkManager;
+    }
 
     public void createProject (Project project) {
-        view.addProjectBox(project.getName(), project.getColor(), new ProjectBoxController(project));
+        view.addProjectBox(project.getName(), project.getColor(), new ProjectBoxController(project, networkManager));
     }
 
     public void createProjects (ArrayList<Project> projects) {
@@ -37,7 +50,7 @@ public class ProjectSelectionController implements ActionListener {
         for (int i = 0; i<projects.size(); i++) {
             titles[i] = projects.get(i).getName();
             colors[i] = projects.get(i).getColor();
-            controllers[i] = new ProjectBoxController(projects.get(i));
+            controllers[i] = new ProjectBoxController(projects.get(i), networkManager);
         }
         view.createProjectBoxes(titles, colors, controllers);
     }
@@ -61,8 +74,12 @@ public class ProjectSelectionController implements ActionListener {
             case ProjectBoxView.INFO_AC:
                 CustomProjectButton button2 = (CustomProjectButton) e.getSource();
                 DataManager.getSharedInstance().setTitle(button2.getProjectName());
-                //TODO demanar info al server
-                //createProjectInfoWindow(button2.getProjectName());
+                networkManager.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
+                try {
+                    networkManager.sendToServer(ServerObjectType.GET_PROJECT, new UserInfoCommunicator());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
         }
     }
 

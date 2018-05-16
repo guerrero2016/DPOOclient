@@ -1,15 +1,14 @@
+
 package Network.Communicators;
 
 import Controller.MainViewController;
 import Network.Communicable;
 import model.DataManager;
 import model.user.User;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class UsersInfoCommunicator implements Communicable {
-
+public class UserInfoCommunicator implements  Communicable{
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
@@ -19,10 +18,11 @@ public class UsersInfoCommunicator implements Communicable {
             String title = DataManager.getSharedInstance().getTitle();
             String memberString = DataManager.getSharedInstance().getMembersAsString();
 
-            controller.createProjectInfoWindow(title, memberString);
+            controller.getProjectsMainViewController().getOwnerSelectionController().createProjectInfoWindow(title, memberString);
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
+
 }

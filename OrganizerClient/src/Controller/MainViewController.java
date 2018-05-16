@@ -45,6 +45,7 @@ public class MainViewController {
     }
 
     public void setNetwork(NetworkManager network) {
+        projectsMainViewController.setNetworkManager(network);
         this.network = network;
     }
 
@@ -59,9 +60,6 @@ public class MainViewController {
 
     public void swapPanel(int whatPanel) {
         view.swapPanel(whatPanel);
-    }
-
-    public void createProjectInfoWindow (String title, String memebers) {
     }
 
     public Project[] getProjects() {

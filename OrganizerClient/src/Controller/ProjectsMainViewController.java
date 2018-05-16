@@ -1,5 +1,6 @@
 package Controller;
 
+import Network.NetworkManager;
 import View.ProjectsMainView;
 import model.project.Project;
 
@@ -13,6 +14,7 @@ public class ProjectsMainViewController implements ActionListener {
     final ProjectSelectionController ownerSelectionController;
     final ProjectSelectionController sharedSelectionController;
     final ProjectCreationController projectCreationController;
+    NetworkManager networkManager;
 
     public ProjectsMainViewController(ProjectsMainView view, ProjectSelectionController ownerSelectionController, ProjectSelectionController sharedSelectionController) {
         this.view = view;
@@ -37,6 +39,17 @@ public class ProjectsMainViewController implements ActionListener {
 
     public void createSharedProjects (ArrayList<Project> projects) {
         sharedSelectionController.createProjects(projects);
+    }
+
+    public NetworkManager getNetworkManager() {
+        return networkManager;
+    }
+
+    public void setNetworkManager(NetworkManager networkManager) {
+        this.networkManager = networkManager;
+        ownerSelectionController.setNetworkManager(networkManager);
+        sharedSelectionController.setNetworkManager(networkManager);
+        projectCreationController.setNetworkManager(networkManager);
     }
 
     public void addOwnerProject (Project project) {
