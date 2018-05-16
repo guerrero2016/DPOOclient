@@ -1,6 +1,7 @@
 package View;
 
 import Controller.SignInController;
+import model.user.User;
 import model.user.UserRegister;
 
 import javax.swing.*;
@@ -122,8 +123,11 @@ public class SignInPanel extends JPanel {
     }
 
     public UserRegister getRegister() {
-        UserRegister register = new UserRegister(jtfUsername.getText(), jtfEmail.getText(),
-                String.valueOf(jpfPassword.getPassword()), String.valueOf(jpfConfirm.getPassword()));
+        String username = jtfUsername.getText();
+        String email = jtfEmail.getText();
+        String password = User.getMD5(String.valueOf(jpfPassword.getPassword()));
+        String confirm = User.getMD5(String.valueOf(jpfConfirm.getPassword()));
+        UserRegister register = new UserRegister(username, email, password, confirm);
         return register;
     }
 

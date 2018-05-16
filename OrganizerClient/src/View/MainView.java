@@ -104,7 +104,7 @@ public class MainView extends JFrame {
         logInPanel.addControllerButton(lic);
         signInPanel.addControllerButton(sic);
     }
-    
+
     public EditionPanel getEditionPanel() {
         return editionPanel;
     }

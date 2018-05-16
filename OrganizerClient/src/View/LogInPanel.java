@@ -1,6 +1,7 @@
 package View;
 
 import Controller.LogInController;
+import model.user.User;
 import model.user.UserLogIn;
 
 import javax.swing.*;
@@ -87,7 +88,9 @@ public class LogInPanel extends JPanel{
     }
 
     public UserLogIn getLogin() {
-        UserLogIn logIn = new UserLogIn(jtfUsername.getText(), String.valueOf(jpfPassword.getPassword()));
+        String userName = jtfUsername.getText();
+        String password = User.getMD5(String.valueOf(jpfPassword.getPassword()));
+        UserLogIn logIn = new UserLogIn(userName, password);
         return logIn;
     }
 

@@ -37,7 +37,6 @@ public class SignInController implements ActionListener {
 
                 if((register.checkSignIn() == 0)) {
                     try {
-                        System.out.println("se envia");
                         controller.sendToServer(ServerObjectType.REGISTER, register);
                     } catch (IOException e1) {
                         controller.showDialog("Erro de connexió amb el servidor");
