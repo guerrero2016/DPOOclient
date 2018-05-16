@@ -1,5 +1,6 @@
 package Controller;
 
+import Network.NetworkManager;
 import View.AddProjectView;
 import model.project.Project;
 
@@ -15,6 +16,7 @@ public class ProjectCreationController implements MouseListener, ActionListener 
     private ProjectSelectionController projectSelectionController;
     private AddProjectView view;
     private Color color;
+    NetworkManager networkManager;
 
     public ProjectCreationController(ProjectSelectionController projectSelectionController) {
         this.projectSelectionController = projectSelectionController;
@@ -24,6 +26,14 @@ public class ProjectCreationController implements MouseListener, ActionListener 
         view = new AddProjectView();
         view.registerMouseListener(this);
         view.setDialogVisible(true);
+    }
+
+    public NetworkManager getNetworkManager() {
+        return networkManager;
+    }
+
+    public void setNetworkManager(NetworkManager networkManager) {
+        this.networkManager = networkManager;
     }
 
     @Override

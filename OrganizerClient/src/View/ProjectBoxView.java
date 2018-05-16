@@ -4,10 +4,8 @@ import Controller.ProjectBoxController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -18,12 +16,10 @@ public class ProjectBoxView extends JPanel {
     final int HEIGHT = 80;  //50
     final int WIDTH = 180;  //180
     final int MAX_CHARS = 10;
-    private final static String INFO_ICON = "img/info_icon.png";
     private final static String DELETE_ICON = "img/delete_icon.png";
 
     final JLabel titleLabel;
     private String title;
-    private CustomProjectButton jbInfo;
     private CustomProjectButton jbDelete;
     private final int index;
     private final boolean isOwner;
@@ -45,9 +41,6 @@ public class ProjectBoxView extends JPanel {
         Image infoImage = null;
         Image deleteImage = null;
         try {
-            infoImage = ImageIO.read(new File(INFO_ICON)).
-                    getScaledInstance(10, 10, Image.SCALE_SMOOTH);
-
             deleteImage = ImageIO.read(new File(DELETE_ICON)).
                     getScaledInstance(10, 10, Image.SCALE_SMOOTH);
         } catch (IOException e) {
@@ -55,11 +48,6 @@ public class ProjectBoxView extends JPanel {
         }
 
         JPanel jpAux = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-
-        jbInfo = new CustomProjectButton(new ImageIcon(infoImage), title, index);
-        jbInfo.setBackground(color);
-        jbInfo.setBorder(null);
-        jbInfo.setActionCommand(INFO_AC);
 
         jbDelete = new CustomProjectButton(new ImageIcon(deleteImage), title, index);
 
@@ -71,8 +59,6 @@ public class ProjectBoxView extends JPanel {
         }
 
         jpAux.setBackground(color);
-        jpAux.add(jbInfo);
-
 
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
@@ -93,7 +79,6 @@ public class ProjectBoxView extends JPanel {
 
     public void registerButtonListener (ActionListener controller){
         jbDelete.addActionListener(controller);
-        jbInfo.addActionListener(controller);
     }
 
     private String configureLabelMaxTextWidth (String text) {
