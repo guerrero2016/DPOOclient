@@ -3,7 +3,7 @@ package View;
 import Controller.LogInController;
 import Controller.ProjectSelectionController;
 import Controller.SignInController;
-import model.project.Project;
+import Model.project.Project;
 import View.edition.EditionPanel;
 
 import javax.imageio.ImageIO;

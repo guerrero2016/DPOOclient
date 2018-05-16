@@ -1,7 +1,7 @@
 package View;
 
 import Controller.LogInController;
-import model.user.UserLogIn;
+import Model.user.UserLogIn;
 
 import javax.swing.*;
 import java.awt.*;

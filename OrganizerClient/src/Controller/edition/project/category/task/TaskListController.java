@@ -1,7 +1,7 @@
 package Controller.edition.project.category.task;
 
 import Controller.edition.EditionController;
-import model.project.Task;
+import Model.project.Task;
 import View.edition.project.category.task.TaskListComponent;
 
 import javax.swing.*;
@@ -14,13 +14,13 @@ import java.util.Objects;
 public class TaskListController extends TransferHandler {
 
     private EditionController mainController;
-    private model.project.Category category;
+    private Model.project.Category category;
     private JList<Task> jlTasks;
 
     private int index;
     private boolean beforeIndex = false;
 
-    public TaskListController(EditionController mainController, model.project.Category category, JList<Task> jlTasks) {
+    public TaskListController(EditionController mainController, Model.project.Category category, JList<Task> jlTasks) {
         this.mainController = mainController;
         this.category = category;
         this.jlTasks = jlTasks;

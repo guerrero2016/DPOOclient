@@ -1,7 +1,7 @@
 package View;
 
 
-import model.project.Project;
+import Model.project.Project;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

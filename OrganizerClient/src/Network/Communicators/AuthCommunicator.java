@@ -1,11 +1,10 @@
 package Network.Communicators;
 
 import Controller.MainViewController;
-import model.DataManager;
-import model.project.Project;
+import Model.DataManager;
+import Model.project.Project;
 import Network.Communicable;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;

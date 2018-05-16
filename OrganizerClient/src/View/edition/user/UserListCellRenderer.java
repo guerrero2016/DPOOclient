@@ -1,6 +1,6 @@
 package View.edition.user;
 
-import model.user.User;
+import Model.user.User;
 
 import javax.swing.*;
 import java.awt.*;

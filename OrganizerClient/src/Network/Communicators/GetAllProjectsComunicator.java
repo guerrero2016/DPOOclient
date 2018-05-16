@@ -3,8 +3,8 @@ package Network.Communicators;
 import Controller.MainViewController;
 import Network.Communicable;
 import View.ProjectsMainView;
-import model.DataManager;
-import model.project.Project;
+import Model.DataManager;
+import Model.project.Project;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

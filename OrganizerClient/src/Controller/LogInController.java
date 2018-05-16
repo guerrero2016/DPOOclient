@@ -2,8 +2,8 @@ package Controller;
 
 import View.LogInPanel;
 import View.SignInPanel;
-import model.ServerObjectType;
-import model.user.UserLogIn;
+import Model.ServerObjectType;
+import Model.user.UserLogIn;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

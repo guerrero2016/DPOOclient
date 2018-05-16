@@ -1,7 +1,7 @@
 package View;
 
 import Controller.SignInController;
-import model.user.UserRegister;
+import Model.user.UserRegister;
 
 import javax.swing.*;
 import java.awt.*;

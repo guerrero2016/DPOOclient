@@ -1,8 +1,8 @@
 package Controller.edition.task.user;
 
 import Controller.edition.EditionController;
-import model.project.Task;
-import model.user.User;
+import Model.project.Task;
+import Model.user.User;
 import View.edition.user.UserPanel;
 
 import javax.swing.*;

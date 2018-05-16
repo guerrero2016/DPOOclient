@@ -2,19 +2,19 @@ import Controller.LogInController;
 import Controller.MainViewController;
 import Controller.SignInController;
 import Network.Communicators.*;
+import Utils.Configuration;
 import View.*;
-import model.ServerObjectType;
-import model.project.Category;
+import Model.ServerObjectType;
 import Network.NetworkManager;
-import model.user.UserRegister;
+import Model.user.UserRegister;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
+        Configuration.loadConfiguration();
         /*ProjectsMainView projectsMainView = new ProjectsMainView();
         ProjectSelectionController projectSelectionController = new ProjectSelectionController(projectsMainView);
         projectsMainView.registerAddProjectViewController(projectSelectionController);

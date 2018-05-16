@@ -2,8 +2,8 @@ package Controller.edition.task;
 
 import Controller.edition.EditionController;
 import Controller.edition.color.ColorPreviewController;
-import model.project.Tag;
-import model.project.Task;
+import Model.project.Tag;
+import Model.project.Task;
 import View.edition.color.ColorChooserPanel;
 import View.edition.task.TaskPanel;
 

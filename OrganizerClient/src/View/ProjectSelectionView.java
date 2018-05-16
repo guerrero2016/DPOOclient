@@ -1,7 +1,7 @@
 package View;
 
 import Controller.ProjectSelectionController;
-import model.project.Project;
+import Model.project.Project;
 
 import javax.swing.*;
 import java.awt.*;

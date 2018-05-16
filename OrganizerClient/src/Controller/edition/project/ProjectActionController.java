@@ -4,8 +4,8 @@ import Controller.edition.EditionController;
 import Controller.edition.document.DocumentController;
 import Controller.edition.project.category.CategoryActionController;
 import Controller.edition.project.category.CategoryMouseController;
-import model.project.Category;
-import model.project.Project;
+import Model.project.Category;
+import Model.project.Project;
 import View.edition.project.ProjectPanel;
 import View.edition.project.category.CategoryPanel;
 

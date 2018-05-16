@@ -1,7 +1,7 @@
 package View.edition.project.category.task;
 
-import model.project.Tag;
-import model.project.Task;
+import Model.project.Tag;
+import Model.project.Task;
 import View.edition.TransparentPanel;
 
 import javax.swing.*;

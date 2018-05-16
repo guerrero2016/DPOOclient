@@ -1,7 +1,8 @@
 package Network;
 
 import Controller.MainViewController;
-import model.ServerObjectType;
+import Model.ServerObjectType;
+import Utils.Configuration;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,7 +24,7 @@ public class NetworkManager extends Thread {
             this.isOn = false;
             this.controller = controller;
             this.communicables = new HashMap<>();
-            this.socketToServer = new Socket("127.0.0.1", 15001);
+            this.socketToServer = new Socket(Configuration.getIPAddress(), Configuration.getCommunicationPort());
             this.objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
             this.objectIn = new ObjectInputStream(socketToServer.getInputStream());
         } catch (IOException e) {
