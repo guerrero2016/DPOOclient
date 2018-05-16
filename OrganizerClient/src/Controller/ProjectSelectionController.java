@@ -76,7 +76,7 @@ public class ProjectSelectionController implements ActionListener {
                 DataManager.getSharedInstance().setTitle(button2.getProjectName());
                 networkManager.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
                 try {
-                    networkManager.sendToServer(ServerObjectType.GET_PROJECT, new UserInfoCommunicator());
+                    networkManager.sendToServer(ServerObjectType.PROJECT_INFO, new UserInfoCommunicator());
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
