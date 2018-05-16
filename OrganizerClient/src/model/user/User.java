@@ -1,8 +1,9 @@
 package model.user;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
 
     protected String userName;
 

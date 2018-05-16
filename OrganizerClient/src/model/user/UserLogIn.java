@@ -1,8 +1,8 @@
 package model.user;
 
-import java.io.Serializable;
+        import java.io.Serializable;
 
-public class UserLogIn extends User implements Serializable{
+public class UserLogIn extends User {
 
     private String password;
 
@@ -19,5 +19,4 @@ public class UserLogIn extends User implements Serializable{
     public String getPassword() {
         return password;
     }
-
 }
