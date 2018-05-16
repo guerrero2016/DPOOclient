@@ -1,15 +1,16 @@
-import Controller.LogInController;
-import Controller.MainViewController;
-import Controller.SignInController;
+import Controller.*;
 import Network.Communicators.*;
 import Utils.Configuration;
 import View.*;
 import model.ServerObjectType;
 import Network.NetworkManager;
+import model.project.Project;
 import model.user.UserRegister;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -32,21 +33,40 @@ public class Main {
                 //6. Finalment durant la creació del controlador gran se li ha de passar aquest TaskAddUserController tots
                 //   els petits controladors.
 
+                //AUTH View
                 SignInPanel signInPanel = new SignInPanel();
                 LogInPanel logInPanel = new LogInPanel();
-                MainView mainView = new MainView(logInPanel, signInPanel);
 
+                //PROJECT SELECTION View
+                ProjectSelectionView ownerSelectionView = new ProjectSelectionView(true);
+                ProjectSelectionView sharedSelectionView = new ProjectSelectionView(false);
+                ProjectsMainView projectsMainView = new ProjectsMainView(ownerSelectionView, sharedSelectionView);
+
+                MainView mainView = new MainView(logInPanel, signInPanel, projectsMainView);
+
+                //AUTH CONTROLLERS
                 SignInController signInController = new SignInController(signInPanel);
                 LogInController logInController = new LogInController(logInPanel);
 
                 signInPanel.addControllerButton(signInController);
                 logInPanel.addControllerButton(logInController);
 
+                //PROJECT SELECTION CONTROLLERS
+                ProjectSelectionController ownerSelectionController = new ProjectSelectionController(ownerSelectionView);
+                ProjectSelectionController sharedSelectionController = new ProjectSelectionController(sharedSelectionView);
+                ProjectsMainViewController projectsMainViewController = new ProjectsMainViewController(projectsMainView, ownerSelectionController, sharedSelectionController);
+
+                ownerSelectionView.registerController(ownerSelectionController);
+                sharedSelectionView.registerController(sharedSelectionController);
+                projectsMainView.registerController(projectsMainViewController);
+
                 MainViewController mainViewController = new MainViewController(mainView, logInController,
-                        signInController);
+                        signInController, projectsMainViewController);
 
                 signInController.setController(mainViewController);
                 logInController.setController(mainViewController);
+                
+                //NETWORK
 
                 NetworkManager network = new NetworkManager(mainViewController);
 

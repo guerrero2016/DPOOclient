@@ -1,6 +1,7 @@
 package Controller;
 
 import View.AddProjectView;
+import model.project.Project;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +31,8 @@ public class ProjectCreationController implements MouseListener, ActionListener 
         if (view.getProjectName() == null || view.getProjectName().isEmpty()) {
             System.out.println("Missing parameters");
         } else {
-//            projectSelectionController.createProject(view.getProject());
+            Project newProject = new Project("", view.getProjectName(), view.getProjectColor(), true);
+            projectSelectionController.createProject(newProject);
             view.setDialogVisible(false);
         }
     }

@@ -22,9 +22,8 @@ public class MainViewController {
     private NetworkManager network;
     private LogInController logInController;
     private SignInController signInController;
-    private ProjectSelectionController projectSelectionController;
     private EditionController editionController;
-
+    final private ProjectsMainViewController projectsMainViewController;
 //    public MainViewController(MainView view, NetworkManager network,) {
 //        this.view = view;
 //        this.network = network;
@@ -34,10 +33,15 @@ public class MainViewController {
 //        editionController = new EditionController(this, view.getEditionPanel());
 //    }
 
-    public MainViewController(MainView view, LogInController logInController, SignInController signInController) {
+    public MainViewController(MainView view, LogInController logInController, SignInController signInController, ProjectsMainViewController projectsMainViewController) {
         this.view = view;
         this.logInController = logInController;
         this.signInController = signInController;
+        this.projectsMainViewController = projectsMainViewController;
+    }
+
+    public ProjectsMainViewController getProjectsMainViewController() {
+        return projectsMainViewController;
     }
 
     public void setNetwork(NetworkManager network) {
@@ -51,7 +55,6 @@ public class MainViewController {
 
     public void registerControllers(MainView view) {
         view.addControllerButton(logInController, signInController);
-        view.addProjectSelectionController(projectSelectionController);
     }
 
     public void swapPanel(int whatPanel) {
@@ -81,7 +84,6 @@ public class MainViewController {
     }
 
     public void createProjectInfoWindow (String title, String memebers) {
-        projectSelectionController.createProjectInfoWindow(title, memebers);
     }
 
     public Project[] getProjects() {

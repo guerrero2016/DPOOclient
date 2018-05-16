@@ -28,7 +28,7 @@ public class MainView extends JFrame {
     private ProjectsMainView projectsView;
     private EditionPanel editionPanel;
 
-    public MainView(LogInPanel logInPanel, SignInPanel signInPanel) {
+    public MainView(LogInPanel logInPanel, SignInPanel signInPanel, ProjectsMainView projectsMainView) {
         JPanel jpIdentifyPanel = new JPanel(new BorderLayout());
         JLabel jlPicLabel = new JLabel();
 
@@ -44,6 +44,8 @@ public class MainView extends JFrame {
         jpIdentifyPanel.add(jlPicLabel, BorderLayout.LINE_START);
         this.logInPanel = logInPanel;
         this.signInPanel = signInPanel;
+        this.projectsView = projectsMainView;
+
         jpLogSign = new JPanel(new CardLayout());
 
 
@@ -52,8 +54,6 @@ public class MainView extends JFrame {
         jpLogSign.setMinimumSize(new Dimension(450, 500));
         jpLogSign.setBackground(Color.BLUE);
         jpIdentifyPanel.add(jpLogSign, BorderLayout.CENTER);
-
-        projectsView = new ProjectsMainView();
 
         this.getContentPane().setLayout(new CardLayout());
         this.add(jpIdentifyPanel, "identify");
@@ -106,8 +106,8 @@ public class MainView extends JFrame {
     }
 
     public void addProjectSelectionController (ProjectSelectionController controller) {
-        projectsView.registerProjectSelectionController(controller);
-        projectsView.registerAddProjectViewController(controller);
+        //projectsView.registerProjectSelectionController(controller);
+        //projectsView.registerAddProjectViewController(controller);
     }
 
     public void createOwnerBoxProjects(ArrayList<Project> projects) {

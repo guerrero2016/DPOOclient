@@ -13,6 +13,7 @@ public class AddProjectView extends JPanel {
     private ArrayList<JPanel> colorsPanels;
     private final JButton createButton;
     private final CustomDialog dialog;
+    private Color selectedColor;
 
     public AddProjectView () {
 
@@ -53,6 +54,7 @@ public class AddProjectView extends JPanel {
     public String getProjectName () {
         return nameTextField.getText();
     }
+    public Color getProjectColor () {return selectedColor;}
 
     public JPanel createColorsPalette () {
         final JPanel palettePanel = new JPanel(new GridLayout(2,4));
@@ -78,6 +80,7 @@ public class AddProjectView extends JPanel {
     public void selectColor (JPanel colorPanel) {
         deselectAllColors();
         colorPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        selectedColor = colorPanel.getBackground();
     }
 
     private void deselectAllColors () {

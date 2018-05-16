@@ -1,11 +1,8 @@
 package Controller;
 
+import View.*;
 import model.DataManager;
 import model.project.Project;
-import View.CustomProjectButton;
-import View.MainView;
-import View.ProjectBoxView;
-import View.ProjectsMainView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,14 +14,14 @@ import java.util.Arrays;
 
 public class ProjectSelectionController implements MouseListener, ActionListener {
 
-    private final MainViewController controller;
     //TODO: Project box panels (admin and shared)
+    final ProjectSelectionView view;
 
-    public ProjectSelectionController (MainViewController controller) {
-        this.controller = controller;
-        ArrayList<Project> projects = new ArrayList<>(Arrays.asList(controller.getProjects()));
-        controller.createOwnerBoxProjects(projects);
-        controller.createSharedBoxProjects(projects);
+    public ProjectSelectionController (ProjectSelectionView view) {
+        this.view = view;
+        //ArrayList<Project> projects = new ArrayList<>(Arrays.asList(controller.getProjects()));
+       // controller.createOwnerBoxProjects(projects);
+       //controller.createSharedBoxProjects(projects);
     }
 
     @Override
@@ -32,13 +29,21 @@ public class ProjectSelectionController implements MouseListener, ActionListener
         //TODO: Recover project data from server and know if it is a project user or shared
         if(e.getClickCount() == 2) {
             ProjectBoxView projectBoxView = (ProjectBoxView) e.getSource();
-            controller.loadProject(projectBoxView.getProject(), projectBoxView.isOwner());
-            controller.swapPanel(MainView.PROJECT_ID);
+            //controller.loadProject(projectBoxView.getProject(), projectBoxView.isOwner());
+            //controller.swapPanel(MainView.PROJECT_ID);
         }
     }
 
     public void createProject (Project project) {
-        controller.addOwnerProjectBox(project);
+        view.addProjectBox(project);
+    }
+
+    public void createProjects (ArrayList<Project> projects) {
+        view.createProjectBoxes(projects);
+    }
+
+    public void deleteProject (int index) {
+        view.removeProject(index);
     }
 
     @Override
@@ -57,7 +62,7 @@ public class ProjectSelectionController implements MouseListener, ActionListener
         switch (actionCommand){
             case ProjectBoxView.DELETE_AC:
                 CustomProjectButton button = (CustomProjectButton) e.getSource();
-                controller.removeProject(button.getProjectIndex());
+                deleteProject(button.getProjectIndex());
                 break;
             case ProjectsMainView.ADD_PROJECT_ACTION_COMMAND:
                 createAddProjectWindow();

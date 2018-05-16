@@ -97,6 +97,7 @@ public class ProjectSelectionView extends JPanel {
         setVisible(false);
         gridPanel = new JPanel(new GridBagLayout());
         gridBagConstraints = new GridBagConstraints();
+        scrollPane.getViewport().setView(gridPanel);
         createProjectBoxes(projects);
         setVisible(true);
     }

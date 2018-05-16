@@ -1,6 +1,7 @@
 package View;
 
 import Controller.ProjectSelectionController;
+import Controller.ProjectsMainViewController;
 import model.project.Project;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class ProjectsMainView extends JPanel {
 
     private final int S_WIDTH = 1000;
 
-    public ProjectsMainView () {
+    public ProjectsMainView (ProjectSelectionView ownerSelection, ProjectSelectionView sharedSelection) {
 
         JPanel ownerPane = new JPanel(new BorderLayout());
         JPanel friendPane = new JPanel(new BorderLayout());
@@ -29,8 +30,8 @@ public class ProjectsMainView extends JPanel {
         ownerLabel.setFont(ownerLabel.getFont().deriveFont(Font.BOLD, 30));
         friendLabel.setFont(ownerLabel.getFont());
 
-        ownerProjectSelectionView = new ProjectSelectionView(true);
-        friendProjectSelectionView = new ProjectSelectionView(false);
+        ownerProjectSelectionView = ownerSelection;
+        friendProjectSelectionView = sharedSelection;
 
 
         ownerPane.add(ownerLabel, BorderLayout.NORTH);
@@ -58,13 +59,10 @@ public class ProjectsMainView extends JPanel {
         setVisible(true);
     }
 
-    public void registerAddProjectViewController (ProjectSelectionController controller) {
+    public void registerController (ProjectsMainViewController controller) {
+        ownerProjectSelectionView.registerController(controller.getOwnerSelectionController());
+        friendProjectSelectionView.registerController(controller.getSharedSelectionController());
         addProjectButton.addActionListener(controller);
-    }
-
-    public void registerProjectSelectionController (ProjectSelectionController controller) {
-        ownerProjectSelectionView.registerController(controller);
-        friendProjectSelectionView.registerController(controller);
     }
 
     public void createOwnerBoxProjects(ArrayList<Project> projects) {
