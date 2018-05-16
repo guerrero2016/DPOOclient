@@ -2,7 +2,7 @@ package Network.Communicators;
 
 import Controller.MainViewController;
 import Network.Communicable;
-import Model.project.Task;
+import model.project.Task;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

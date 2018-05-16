@@ -1,8 +1,8 @@
 package Controller;
 
-import Model.user.UserRegister;
+import model.user.UserRegister;
 import View.LogInPanel;
-import Model.ServerObjectType;
+import model.ServerObjectType;
 import View.SignInPanel;
 
 import javax.swing.*;

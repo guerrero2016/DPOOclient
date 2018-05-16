@@ -1,9 +1,9 @@
-package Model;
+package model;
 
-import Model.project.Category;
-import Model.project.Project;
-import Model.project.Task;
-import Model.user.User;
+import model.project.Category;
+import model.project.Project;
+import model.project.Task;
+import model.user.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;

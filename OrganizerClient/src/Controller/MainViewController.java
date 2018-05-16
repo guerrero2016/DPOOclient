@@ -1,14 +1,14 @@
 package Controller;
 
 import Controller.edition.EditionController;
-import Model.project.Category;
-import Model.project.Project;
-import Model.project.Tag;
-import Model.project.Task;
-import Model.user.User;
+import model.project.Category;
+import model.project.Project;
+import model.project.Tag;
+import model.project.Task;
+import model.user.User;
 import View.MainView;
 import Network.NetworkManager;
-import Model.ServerObjectType;
+import model.ServerObjectType;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -112,7 +112,7 @@ public class MainViewController {
 
         for(int i = 0; i < 4; i++) {
 
-            Model.project.Category category = new Model.project.Category("Category " + (i + 1));
+            model.project.Category category = new model.project.Category("Category " + (i + 1));
 
             for(int j = 0; j < 20; j++) {
 

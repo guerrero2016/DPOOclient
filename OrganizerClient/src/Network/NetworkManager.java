@@ -1,7 +1,7 @@
 package Network;
 
 import Controller.MainViewController;
-import Model.ServerObjectType;
+import model.ServerObjectType;
 import Utils.Configuration;
 
 import java.io.IOException;
@@ -48,7 +48,9 @@ public class NetworkManager extends Thread {
         while (isOn) {
             try {
                 int typeID = objectIn.readInt();
+
                 ServerObjectType serverObjectType = ServerObjectType.valueOf(typeID);
+                System.out.println(serverObjectType);
                 if (communicables.get(serverObjectType) != null) {
                     communicables.get(serverObjectType).communicate(controller, objectIn);
                 }

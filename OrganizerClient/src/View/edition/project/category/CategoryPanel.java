@@ -1,7 +1,7 @@
 package View.edition.project.category;
 
-import Model.project.Category;
-import Model.project.Task;
+import model.project.Category;
+import model.project.Task;
 import View.edition.document.DocumentEnablePanel;
 import View.edition.project.category.task.TaskListCellRenderer;
 

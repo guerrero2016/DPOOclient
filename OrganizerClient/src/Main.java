@@ -4,9 +4,9 @@ import Controller.SignInController;
 import Network.Communicators.*;
 import Utils.Configuration;
 import View.*;
-import Model.ServerObjectType;
+import model.ServerObjectType;
 import Network.NetworkManager;
-import Model.user.UserRegister;
+import model.user.UserRegister;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -57,12 +57,6 @@ public class Main {
 
                 network.startCommunication();
                 mainView.setVisible(true);
-
-                try {
-                    network.sendToServer(ServerObjectType.REGISTER, new UserRegister("1","2","3","4"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
             }
         });

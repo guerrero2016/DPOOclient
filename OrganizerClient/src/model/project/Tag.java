@@ -1,4 +1,4 @@
-package Model.project;
+package model.project;
 
 import java.awt.*;
 import java.io.Serializable;

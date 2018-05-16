@@ -1,8 +1,8 @@
 package Network.Communicators;
 
 import Controller.MainViewController;
-import Model.DataManager;
-import Model.project.Project;
+import model.DataManager;
+import model.project.Project;
 import Network.Communicable;
 
 import java.io.IOException;
@@ -20,6 +20,8 @@ public class AuthCommunicator implements Communicable {
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
             int error = (Integer) objectIn.readObject();
+
+            System.out.println(error);
 
             switch (error) {
                 case 0:

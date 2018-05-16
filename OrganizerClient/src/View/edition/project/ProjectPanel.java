@@ -1,6 +1,6 @@
 package View.edition.project;
 
-import Model.project.Category;
+import model.project.Category;
 import View.edition.document.DocumentEnablePanel;
 import View.edition.TransparentPanel;
 import View.edition.TransparentScrollPanel;

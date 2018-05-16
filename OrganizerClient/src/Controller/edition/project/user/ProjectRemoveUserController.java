@@ -1,8 +1,8 @@
 package Controller.edition.project.user;
 
 import Controller.edition.EditionController;
-import Model.project.Project;
-import Model.user.User;
+import model.project.Project;
+import model.user.User;
 import View.edition.user.UserPanel;
 
 import javax.swing.*;
