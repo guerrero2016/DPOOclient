@@ -125,10 +125,15 @@ public class SignInPanel extends JPanel {
     public UserRegister getRegister() {
         String username = jtfUsername.getText();
         String email = jtfEmail.getText();
-        String password = User.getMD5(String.valueOf(jpfPassword.getPassword()));
-        String confirm = User.getMD5(String.valueOf(jpfConfirm.getPassword()));
-        UserRegister register = new UserRegister(username, email, password, confirm);
-        return register;
+        String password = String.valueOf(jpfPassword.getPassword());
+        String confirm = String.valueOf(jpfConfirm.getPassword());
+        String pwEncrypt = null;
+        String confirmEncrypt = null;
+        if (User.containsUpperCase(password) || User.containsUpperCase(confirm)) {
+            pwEncrypt = User.getMD5(password);
+            confirmEncrypt = User.getMD5(confirm);
+        }
+        return new UserRegister(username, email, pwEncrypt, confirmEncrypt);
     }
 
     public void setEmailBorder(Color color) {

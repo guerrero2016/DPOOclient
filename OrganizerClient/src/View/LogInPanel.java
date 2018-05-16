@@ -90,8 +90,7 @@ public class LogInPanel extends JPanel{
     public UserLogIn getLogin() {
         String userName = jtfUsername.getText();
         String password = User.getMD5(String.valueOf(jpfPassword.getPassword()));
-        UserLogIn logIn = new UserLogIn(userName, password);
-        return logIn;
+        return new UserLogIn(userName, password);
     }
 
     public void setPasswordBorder(Color color) {

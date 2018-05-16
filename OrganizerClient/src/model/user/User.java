@@ -35,6 +35,13 @@ public class User implements Serializable {
         return null;
     }
 
+    public static boolean containsUpperCase(String entry) {
+        for (char c : entry.toCharArray()) {
+            if (Character.isUpperCase(c)) return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
 
