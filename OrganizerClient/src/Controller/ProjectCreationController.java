@@ -16,7 +16,6 @@ public class ProjectCreationController implements MouseListener, ActionListener 
     private ProjectSelectionController projectSelectionController;
     private AddProjectView view;
     private Color color;
-    NetworkManager networkManager;
 
     public ProjectCreationController(ProjectSelectionController projectSelectionController) {
         this.projectSelectionController = projectSelectionController;
@@ -28,20 +27,12 @@ public class ProjectCreationController implements MouseListener, ActionListener 
         view.setDialogVisible(true);
     }
 
-    public NetworkManager getNetworkManager() {
-        return networkManager;
-    }
-
-    public void setNetworkManager(NetworkManager networkManager) {
-        this.networkManager = networkManager;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (view.getProjectName() == null || view.getProjectName().isEmpty()) {
             System.out.println("Missing parameters");
         } else {
-            Project newProject = new Project("", view.getProjectName(), view.getProjectColor(), true);
+            Project newProject = new Project(null, view.getProjectName(), view.getProjectColor(), true);
             projectSelectionController.createProject(newProject);
             view.setDialogVisible(false);
         }

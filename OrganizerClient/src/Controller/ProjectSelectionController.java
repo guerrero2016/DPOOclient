@@ -2,18 +2,20 @@ package Controller;
 
 import Network.NetworkManager;
 import View.*;
+import model.ServerObjectType;
 import model.project.Project;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ProjectSelectionController implements ActionListener {
 
     //TODO: Project box panels (admin and shared)
-    final ProjectSelectionView view;
-    NetworkManager networkManager;
+    private final ProjectSelectionView view;
+    private MainViewController controller;
 
     public ProjectSelectionController (ProjectSelectionView view) {
         this.view = view;
@@ -22,16 +24,20 @@ public class ProjectSelectionController implements ActionListener {
        //controller.createSharedBoxProjects(projects);
     }
 
-    public NetworkManager getNetworkManager() {
-        return networkManager;
+    public void setController(MainViewController controller) {
+        this.controller = controller;
     }
 
-    public void setNetworkManager(NetworkManager networkManager) {
-        this.networkManager = networkManager;
+    public void createProject(Project project) {
+        try {
+            controller.sendToServer(ServerObjectType.SET_PROJECT, project);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void createProject (Project project) {
-        view.addProjectBox(project.getName(), project.getColor(), new ProjectBoxController(project, networkManager));
+    public void addProject (Project project) {
+        view.addProjectBox(project.getName(), project.getColor(), new ProjectBoxController(project, controller));
     }
 
     public void createProjects (ArrayList<Project> projects) {
@@ -41,7 +47,7 @@ public class ProjectSelectionController implements ActionListener {
         for (int i = 0; i<projects.size(); i++) {
             titles[i] = projects.get(i).getName();
             colors[i] = projects.get(i).getColor();
-            controllers[i] = new ProjectBoxController(projects.get(i), networkManager);
+            controllers[i] = new ProjectBoxController(projects.get(i), controller);
         }
         view.createProjectBoxes(titles, colors, controllers);
     }

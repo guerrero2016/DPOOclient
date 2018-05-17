@@ -58,9 +58,13 @@ public class Main {
                 logInPanel.addControllerButton(logInController);
 
                 //PROJECT SELECTION CONTROLLERS
-                ProjectSelectionController ownerSelectionController = new ProjectSelectionController(ownerSelectionView);
-                ProjectSelectionController sharedSelectionController = new ProjectSelectionController(sharedSelectionView);
-                ProjectsMainViewController projectsMainViewController = new ProjectsMainViewController(projectsMainView, ownerSelectionController, sharedSelectionController);
+                ProjectSelectionController ownerSelectionController =
+                        new ProjectSelectionController(ownerSelectionView);
+                ProjectSelectionController sharedSelectionController =
+                        new ProjectSelectionController(sharedSelectionView);
+                ProjectsMainViewController projectsMainViewController =
+                        new ProjectsMainViewController(projectsMainView, ownerSelectionController,
+                                sharedSelectionController);
 
                 ownerSelectionView.registerController(ownerSelectionController);
                 sharedSelectionView.registerController(sharedSelectionController);
@@ -75,6 +79,8 @@ public class Main {
                 signInController.setController(mainViewController);
                 logInController.setController(mainViewController);
                 editionController.registerMainController(mainViewController);
+                projectsMainViewController.setController(mainViewController);
+
 
                 //NETWORK
 
@@ -82,6 +88,7 @@ public class Main {
 
                 network.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
                 network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
+                network.addCommunicator(new ProjectAddedCommunicator(), ServerObjectType.SET_PROJECT);
 
                 mainViewController.setNetwork(network);
 

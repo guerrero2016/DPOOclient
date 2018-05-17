@@ -12,6 +12,12 @@ public class Tag implements Serializable {
     private String name;
     private Color color;
 
+    public Tag(String id, String name, String color) {
+        this.id = id;
+        this.name = name;
+        this.color = Color.decode(color);
+    }
+
     public Tag(String name, Color color) {
         this.name = name;
         this.color = color;
@@ -47,6 +53,14 @@ public class Tag implements Serializable {
         if(color != null) {
             this.color = color;
         }
+    }
+
+    public String getHexColor () {
+        if (color == null) return null;
+        int rgb = color.getRGB()&0xffffff;
+        String zeros = "000000";
+        String data = Integer.toHexString(rgb);
+        return (zeros.substring(data.length()) + data).toUpperCase();
     }
 
     @Override

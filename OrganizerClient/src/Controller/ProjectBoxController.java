@@ -9,13 +9,13 @@ import java.awt.event.MouseListener;
 
 public class ProjectBoxController implements MouseListener{
 
-    ProjectBoxView view;
-    final Project project;
-    final NetworkManager networkManager;
+    private ProjectBoxView view;
+    private final Project project;
+    private MainViewController controller;
 
-    public ProjectBoxController(Project project, NetworkManager networkManager) {
+    public ProjectBoxController(Project project, MainViewController controller) {
         this.project = project;
-        this.networkManager = networkManager;
+        this.controller = controller;
     }
 
     public void setView(ProjectBoxView view) {

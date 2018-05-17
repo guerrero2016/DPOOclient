@@ -47,7 +47,7 @@ public class MainViewController {
     }
 
     public void setNetwork(NetworkManager network) {
-        projectsMainViewController.setNetworkManager(network);
+        //projectsMainViewController.setNetworkManager(network);
         this.network = network;
     }
 
@@ -83,8 +83,8 @@ public class MainViewController {
         newProject.setName("Project Name");
 
         try {
+            //TODO s'ha de llegir la imatge desde el path Background
             Image image = ImageIO.read(new File("img/background4.jpg"));
-            newProject.setBackground(image);
         } catch(IOException e) {
             //Could not load img
         }

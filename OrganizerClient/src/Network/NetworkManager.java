@@ -3,6 +3,7 @@ package Network;
 import Controller.MainViewController;
 import model.ServerObjectType;
 import Utils.Configuration;
+import model.project.Project;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -65,6 +66,9 @@ public class NetworkManager extends Thread {
             objectOut.writeInt(type.getValue());
         }
         objectOut.writeObject(object);
+        if (type.equals(ServerObjectType.SET_PROJECT)) {
+            System.out.println(((Project) object).getName());
+        }
     }
 
     public void addCommunicator(Communicable communicable, ServerObjectType type) {

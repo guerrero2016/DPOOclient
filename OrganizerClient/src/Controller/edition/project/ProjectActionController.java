@@ -82,6 +82,7 @@ public class ProjectActionController implements ActionListener {
                     Image image = ImageIO.read(file);
 
                     if(image != null) {
+                        //TODO comprovar que el getPath tira nice
                         project.setBackground(image);
                         mainController.setBackgroundImage(image);
                         mainController.updatedProject();

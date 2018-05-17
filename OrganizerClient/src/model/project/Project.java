@@ -30,6 +30,15 @@ public class Project implements Serializable{
         users = new ArrayList<>();
     }
 
+    public Project(String id, String name, String color, boolean isOwner) {
+        this.id = id;
+        this.name = name;
+        this.color = Color.decode(color);
+        this.isOwner = isOwner;
+        categories = new ArrayList<>();
+        users = new ArrayList<>();
+    }
+
     public Project(String id, String name, Color color, ArrayList<Category> categories, ArrayList<User> users,
                    Image background, boolean isOwner) {
         this.id = id;
@@ -63,6 +72,18 @@ public class Project implements Serializable{
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public void setColorFromCode(String color) {
+        this.color = Color.decode(color);
+    }
+
+    public String getHexColor () {
+        if (color == null) return null;
+        int rgb = color.getRGB()&0xffffff;
+        String zeros = "000000";
+        String data = Integer.toHexString(rgb);
+        return (zeros.substring(data.length()) + data).toUpperCase();
     }
 
     public int getCategoriesSize() {
@@ -198,6 +219,13 @@ public class Project implements Serializable{
 
     public void setOwner(boolean isOwner) {
         this.isOwner = isOwner;
+    }
+
+    public void setMembersName (ArrayList<String> names) {
+        ArrayList<User> users = new ArrayList<>();
+        for (String name:names) {
+            users.add(new User(name));
+        }
     }
 
     @Override

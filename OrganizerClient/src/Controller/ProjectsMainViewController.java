@@ -10,13 +10,14 @@ import java.util.ArrayList;
 
 public class ProjectsMainViewController implements ActionListener {
 
-    final ProjectsMainView view;
-    final ProjectSelectionController ownerSelectionController;
-    final ProjectSelectionController sharedSelectionController;
-    final ProjectCreationController projectCreationController;
-    NetworkManager networkManager;
+    private final ProjectsMainView view;
+    private final ProjectSelectionController ownerSelectionController;
+    private final ProjectSelectionController sharedSelectionController;
+    private final ProjectCreationController projectCreationController;
+    private MainViewController controller;
 
-    public ProjectsMainViewController(ProjectsMainView view, ProjectSelectionController ownerSelectionController, ProjectSelectionController sharedSelectionController) {
+    public ProjectsMainViewController(ProjectsMainView view, ProjectSelectionController ownerSelectionController,
+                                      ProjectSelectionController sharedSelectionController) {
         this.view = view;
         this.ownerSelectionController = ownerSelectionController;
         this.sharedSelectionController = sharedSelectionController;
@@ -41,23 +42,18 @@ public class ProjectsMainViewController implements ActionListener {
         sharedSelectionController.createProjects(projects);
     }
 
-    public NetworkManager getNetworkManager() {
-        return networkManager;
-    }
-
-    public void setNetworkManager(NetworkManager networkManager) {
-        this.networkManager = networkManager;
-        ownerSelectionController.setNetworkManager(networkManager);
-        sharedSelectionController.setNetworkManager(networkManager);
-        projectCreationController.setNetworkManager(networkManager);
+    public void setController(MainViewController controller) {
+        this.controller = controller;
+        ownerSelectionController.setController(controller);
+        sharedSelectionController.setController(controller);
     }
 
     public void addOwnerProject (Project project) {
-        ownerSelectionController.createProject(project);
+        ownerSelectionController.addProject(project);
     }
 
     public void addSharedProject (Project project) {
-        sharedSelectionController.createProject(project);
+        sharedSelectionController.addProject(project);
     }
 
     public void deleteOwnerProject (int index) {
