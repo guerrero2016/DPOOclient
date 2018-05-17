@@ -16,6 +16,8 @@ public class ProjectAddUserController implements ActionListener {
     private final static String USER_MESSAGE_TITLE = "Information";
     private final static String USER_NOT_FOUND_MESSAGE = "User not found";
     private final static String USER_ALREADY_EXISTS_MESSAGE = "User already exists";
+    private final static String PROJECT_SHARED_TITLE = "Project invitation";
+    private final static String PROJECT_SHARED_MESSAGE = "Project share code";
 
     private EditionController mainController;
     private UserPanel view;
@@ -40,7 +42,8 @@ public class ProjectAddUserController implements ActionListener {
                         QUESTION_MESSAGE);
 
                 if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
-                    mainController.sharedProject(project, user);
+                    JOptionPane.showMessageDialog(null, PROJECT_SHARED_MESSAGE + ": " +
+                                    project.getId(), PROJECT_SHARED_TITLE, JOptionPane.PLAIN_MESSAGE);
                 }
 
                 view.cleanNewUser();

@@ -28,7 +28,9 @@ public class MainView extends JFrame {
     private ProjectsMainView projectsView;
     private EditionPanel editionPanel;
 
-    public MainView(LogInPanel logInPanel, SignInPanel signInPanel, ProjectsMainView projectsMainView) {
+    public MainView(LogInPanel logInPanel, SignInPanel signInPanel, ProjectsMainView projectsMainView,
+                    EditionPanel editionPanel) {
+
         JPanel jpIdentifyPanel = new JPanel(new BorderLayout());
         JLabel jlPicLabel = new JLabel();
 
@@ -60,12 +62,8 @@ public class MainView extends JFrame {
         this.add(projectsView, ProjectsMainView.VIEW_NAME);
 
         //Edition panel
-        try {
-            editionPanel = new EditionPanel();
-            add(editionPanel, PROJECT_CONSTRAINT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.editionPanel = editionPanel;
+        add(editionPanel, PROJECT_CONSTRAINT);
 
         super.setMinimumSize(new Dimension(1000,500));
         super.setSize(1200,750);
@@ -105,13 +103,10 @@ public class MainView extends JFrame {
         signInPanel.addControllerButton(sic);
     }
 
-    public EditionPanel getEditionPanel() {
-        return editionPanel;
-    }
-
     public void showErrorDialog(String errorMSG) {
         JOptionPane.showMessageDialog(this, errorMSG,
                 "Error", JOptionPane.ERROR_MESSAGE);
 
     }
+
 }

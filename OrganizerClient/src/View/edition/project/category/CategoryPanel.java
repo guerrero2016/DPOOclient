@@ -24,6 +24,11 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     private final static String NEW_TASK_TITLE = "New Task";
     private final static String ADD_TITLE = "+";
+    private final static String EDITOR_BUTTON = "Edit";
+    private final static String LEFT_BUTTON = "L";
+    private final static String RIGHT_BUTTON = "R";
+    private final static String DELETE_BUTTON = "Delete";
+    private final static String CHECK_BUTTON = "Save changes";
 
     private Image editorIcon;
     private Image checkIcon;
@@ -41,7 +46,6 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     private ActionListener actionListener;
     private MouseListener mouseListener;
-    private TransferHandler transferHandler;
 
     public CategoryPanel(Category category, Image editorIcon, Image deleteIcon, Image leftIcon, Image rightIcon,
                          Image checkIcon) {
@@ -72,26 +76,50 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
         jpCategoryTitle.add(jpCategoryButtons, BorderLayout.LINE_END);
 
         //Category editor button
-        jbCategoryEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
-        jbCategoryEditor.setBorder(null);
+        if(editorIcon != null) {
+            jbCategoryEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+            jbCategoryEditor.setBorder(null);
+        } else {
+            jbCategoryEditor = new JButton(EDITOR_BUTTON);
+            jbCategoryEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 8));
+        }
+
         jbCategoryEditor.setActionCommand(ACTION_CATEGORY_EDIT_NAME);
         jpCategoryButtons.add(jbCategoryEditor);
 
         //Category reorder left button
-        jbCategoryLeft = new JButton(new ImageIcon(leftIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
-        jbCategoryLeft.setBorder(null);
+        if(leftIcon != null) {
+            jbCategoryLeft = new JButton(new ImageIcon(leftIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+            jbCategoryLeft.setBorder(null);
+        } else {
+            jbCategoryLeft = new JButton(LEFT_BUTTON);
+            jbCategoryLeft.setFont(new Font(Font.DIALOG, Font.BOLD, 8));
+        }
+
         jbCategoryLeft.setActionCommand(ACTION_CATEGORY_LEFT);
         jpCategoryButtons.add(jbCategoryLeft);
 
         //Category reorder right button
-        jbCategoryRight = new JButton(new ImageIcon(rightIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
-        jbCategoryRight.setBorder(null);
+        if(rightIcon != null) {
+            jbCategoryRight = new JButton(new ImageIcon(rightIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+            jbCategoryRight.setBorder(null);
+        } else {
+            jbCategoryRight = new JButton(RIGHT_BUTTON);
+            jbCategoryRight.setFont(new Font(Font.DIALOG, Font.BOLD, 8));
+        }
+
         jbCategoryRight.setActionCommand(ACTION_CATEGORY_RIGHT);
         jpCategoryButtons.add(jbCategoryRight);
 
         //Category delete button
-        jbCategoryDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
-        jbCategoryDelete.setBorder(null);
+        if(deleteIcon != null) {
+            jbCategoryDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+            jbCategoryDelete.setBorder(null);
+        } else {
+            jbCategoryDelete = new JButton(DELETE_BUTTON);
+            jbCategoryDelete.setFont(new Font(Font.DIALOG, Font.BOLD, 8));
+        }
+
         jbCategoryDelete.setActionCommand(ACTION_CATEGORY_DELETE);
         jpCategoryButtons.add(jbCategoryDelete);
 
@@ -151,11 +179,35 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
     public void setCategoryNameEditable(boolean editableState, String completeCategoryName) {
 
         if(editableState) {
+
             jtfCategoryName.setText(completeCategoryName);
-            jbCategoryEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+
+            if(checkIcon != null) {
+                jbCategoryEditor.setText(null);
+                jbCategoryEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+                jbCategoryEditor.setBorder(null);
+            } else {
+                jbCategoryEditor.setIcon(null);
+                jbCategoryEditor.setText(CHECK_BUTTON);
+                jbCategoryEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 8));
+                jbCategoryEditor.setBorder(new JButton().getBorder());
+            }
+
         } else {
+
             setCategoryName(completeCategoryName);
-            jbCategoryEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+
+            if(editorIcon != null) {
+                jbCategoryEditor.setText(null);
+                jbCategoryEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
+                jbCategoryEditor.setBorder(null);
+            } else {
+                jbCategoryEditor.setIcon(null);
+                jbCategoryEditor.setText(EDITOR_BUTTON);
+                jbCategoryEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 8));
+                jbCategoryEditor.setBorder(new JButton().getBorder());
+            }
+
         }
 
         jtfCategoryName.setEditable(editableState);
@@ -231,14 +283,12 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
     }
 
     public void resetDnDController() {
-        transferHandler = null;
         jlTasks.setTransferHandler(null);
         jlTasks.setDropMode(DropMode.USE_SELECTION);
         jlTasks.setDragEnabled(false);
     }
 
     public void registerDnDController(TransferHandler transferHandler) {
-        this.transferHandler = transferHandler;
         jlTasks.setTransferHandler(transferHandler);
         jlTasks.setDropMode(DropMode.INSERT);
         jlTasks.setDragEnabled(true);

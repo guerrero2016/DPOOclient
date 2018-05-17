@@ -1,7 +1,9 @@
 import Controller.*;
+import Controller.edition.EditionController;
 import Network.Communicators.*;
 import Utils.Configuration;
 import View.*;
+import View.edition.EditionPanel;
 import model.ServerObjectType;
 import Network.NetworkManager;
 import model.project.Project;
@@ -42,7 +44,11 @@ public class Main {
                 ProjectSelectionView sharedSelectionView = new ProjectSelectionView(false);
                 ProjectsMainView projectsMainView = new ProjectsMainView(ownerSelectionView, sharedSelectionView);
 
-                MainView mainView = new MainView(logInPanel, signInPanel, projectsMainView);
+                //EDITION View
+                EditionPanel editionPanel = new EditionPanel();
+
+                //MAIN View
+                MainView mainView = new MainView(logInPanel, signInPanel, projectsMainView, editionPanel);
 
                 //AUTH CONTROLLERS
                 SignInController signInController = new SignInController(signInPanel);
@@ -60,12 +66,16 @@ public class Main {
                 sharedSelectionView.registerController(sharedSelectionController);
                 projectsMainView.registerController(projectsMainViewController);
 
+                //EDITION CONTROLLER
+                EditionController editionController = new EditionController(editionPanel);
+
                 MainViewController mainViewController = new MainViewController(mainView, logInController,
-                        signInController, projectsMainViewController);
+                        signInController, projectsMainViewController, editionController);
 
                 signInController.setController(mainViewController);
                 logInController.setController(mainViewController);
-                
+                editionController.registerMainController(mainViewController);
+
                 //NETWORK
 
                 NetworkManager network = new NetworkManager(mainViewController);

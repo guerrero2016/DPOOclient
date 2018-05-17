@@ -25,6 +25,11 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     private final static String PROJECT_TITLE = "Project";
     private final static String NEW_CATEGORY_TITLE = "New Category";
     private final static String ADD_TITLE = "+";
+    private final static String BACK_BUTTON = "Back";
+    private final static String EDIT_BUTTON = "Edit";
+    private final static String BACKGROUND_BUTTON = "Choose background";
+    private final static String DELETE_BUTTON = "Delete";
+    private final static String CHECK_BUTTON = "Save changes";
 
     private Image editorIcon;
     private Image deleteIcon;
@@ -81,26 +86,50 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         tpProjectTitle.add(tpProjectButtons, BorderLayout.LINE_END);
 
         //Project back button
-        jbProjectBack = new JButton(new ImageIcon(backIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
-        jbProjectBack.setBorder(null);
+        if(backIcon != null) {
+            jbProjectBack = new JButton(new ImageIcon(backIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+            jbProjectBack.setBorder(null);
+        } else {
+            jbProjectBack = new JButton(BACK_BUTTON);
+            jbProjectBack.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+        }
+
         jbProjectBack.setActionCommand(ACTION_PROJECT_BACK);
         tpProjectButtons.add(jbProjectBack);
 
         //Project editor button
-        jbProjectEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
-        jbProjectEditor.setBorder(null);
+        if(editorIcon != null) {
+            jbProjectEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+            jbProjectEditor.setBorder(null);
+        } else {
+            jbProjectEditor = new JButton(EDIT_BUTTON);
+            jbProjectEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+        }
+
         jbProjectEditor.setActionCommand(ACTION_PROJECT_EDIT_NAME);
         tpProjectButtons.add(jbProjectEditor);
 
         //Project background button
-        jbBackground = new JButton(new ImageIcon(backgroundIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
-        jbBackground.setBorder(null);
+        if(backgroundIcon != null) {
+            jbBackground = new JButton(new ImageIcon(backgroundIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+            jbBackground.setBorder(null);
+        } else {
+            jbBackground = new JButton(BACKGROUND_BUTTON);
+            jbBackground.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+        }
+
         jbBackground.setActionCommand(ACTION_PROJECT_BACKGROUND);
         tpProjectButtons.add(jbBackground);
 
         //Project delete button
-        jbProjectDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
-        jbProjectDelete.setBorder(null);
+        if(deleteIcon != null) {
+            jbProjectDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+            jbProjectDelete.setBorder(null);
+        } else {
+            jbProjectDelete = new JButton(DELETE_BUTTON);
+            jbProjectDelete.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+        }
+
         jbProjectDelete.setActionCommand(ACTION_PROJECT_DELETE);
         tpProjectButtons.add(jbProjectDelete);
 
@@ -155,11 +184,35 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     public void setProjectNameEditable(boolean editableState, String completeProjectName) {
 
         if(editableState) {
+
             jtfProjectName.setText(completeProjectName);
-            jbProjectEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+
+            if(checkIcon != null) {
+                jbProjectEditor.setText(null);
+                jbProjectEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+                jbProjectEditor.setBorder(null);
+            } else {
+                jbProjectEditor.setIcon(null);
+                jbProjectEditor.setText(CHECK_BUTTON);
+                jbProjectEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+                jbProjectEditor.setBorder(new JButton().getBorder());
+            }
+
         } else {
+
             setProjectName(completeProjectName);
-            jbProjectEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+
+            if(editorIcon != null) {
+                jbProjectEditor.setText(null);
+                jbProjectEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+                jbProjectEditor.setBorder(null);
+            } else {
+                jbProjectEditor.setIcon(null);
+                jbProjectEditor.setText(EDIT_BUTTON);
+                jbProjectEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+                jbProjectEditor.setBorder(new JButton().getBorder());
+            }
+
         }
 
         jtfProjectName.setOpaque(editableState);

@@ -17,7 +17,6 @@ import model.project.Project;
 import model.project.Tag;
 import model.project.Task;
 import model.user.User;
-import View.ProjectsMainView;
 import View.edition.EditionPanel;
 import View.edition.project.category.CategoryPanel;
 import View.edition.project.ProjectPanel;
@@ -35,8 +34,6 @@ public class EditionController {
     private final static String PROJECT_USERS_TITLE = "Project Users";
     private final static String TASK_USERS_TITLE = "Task Users";
 
-    private MainViewController mainController;
-
     private EditionPanel editionPanel;
     private ProjectPanel projectPanel;
     private UserPanel projectUserPanel;
@@ -44,15 +41,16 @@ public class EditionController {
     private UserPanel taskUserPanel;
 
     private Project project;
-    private model.project.Category category;
+    private Category category;
     private Task task;
 
     private boolean isEditing;
 
-    public EditionController(MainViewController mainController, EditionPanel editionPanel) {
+    private MainViewController mainController;
+
+    public EditionController(EditionPanel editionPanel) {
 
         //Link variables
-        this.mainController = mainController;
         this.editionPanel = editionPanel;
         projectPanel = editionPanel.getProjectPanel();
         projectUserPanel = editionPanel.getProjectUserPanel();
@@ -137,7 +135,8 @@ public class EditionController {
         taskPanel.setTagsList(task.getTags());
 
         //Link controllers
-        editionPanel.registerTaskActionController(new TaskController(this, editionPanel.getTaskPanel(),
+        taskPanel.resetActionController();
+        taskPanel.registerActionController(new TaskController(this, editionPanel.getTaskPanel(),
                 task));
 
         for(int i = 0; i < task.getTagsSize(); i++) {
@@ -169,26 +168,43 @@ public class EditionController {
     }
 
     public void updatedProject() {
-        mainController.updateProject(project);
+        if(mainController != null) {
+            //TODO: Update project in database
+        }
     }
 
     public void updatedTask(Task task) {
-        mainController.updateTask(project, category, task);
+        if(mainController != null) {
+            //TODO: Update task in database
+        }
     }
 
     public void updatedCategory(Category category) {
-        mainController.updateCategory(project, category);
+        if(mainController != null) {
+            //TODO: Update category in database
+        }
     }
 
     public void deleteTask() {
+
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(category));
         categoryPanel.removeTask(task);
         category.deleteTask(task);
-        mainController.updateCategory(project, category);
+
+        if(mainController != null) {
+            //TODO: Delete task in database
+        }
+
     }
 
-    public void removeTag(Tag tag) {
+    public void deleteTag(Tag tag) {
+
         taskPanel.removeTag(task.getTagIndex(tag));
+
+        if(mainController != null) {
+            //TODO: Delete tag in database
+        }
+
     }
 
     public User getProjectUser(String userName) {
@@ -217,9 +233,14 @@ public class EditionController {
         int index = project.getCategoryIndex(category);
 
         if(index >= 0 && index < project.getCategoriesSize()) {
+
             project.deleteCategory(category);
             projectPanel.removeCategory(index);
-            mainController.updateCategory(project, category);
+
+            if(mainController != null) {
+                //TODO: Delete category in database
+            }
+
         }
 
     }
@@ -230,11 +251,20 @@ public class EditionController {
     }
 
     public void showProjectSelection() {
-        mainController.swapPanel(ProjectsMainView.VIEW_TAG);
+        if (mainController != null) {
+            //TODO: Show project
+            //mainController.swapPanel(ProjectsMainView.VIEW_TAG);
+        } else {
+            System.exit(0);
+        }
     }
 
     public void deleteProject() {
-        mainController.deleteProject();
+        if(mainController != null) {
+            //TODO: Delete project in database
+        } else {
+            System.exit(0);
+        }
     }
 
     public void setBackgroundImage(Image image) {
@@ -242,11 +272,15 @@ public class EditionController {
     }
 
     public User getUserFromDB(String userName) {
-        return mainController.getUserFromDB(userName);
+        if(mainController != null) {
+            return mainController.getUserFromDB(userName);
+        } else {
+            return new User(userName);
+        }
     }
 
-    public void sharedProject(Project project, User user) {
-        mainController.shareProject(project, user);
+    public void registerMainController(MainViewController mainController) {
+        this.mainController = mainController;
     }
 
 }

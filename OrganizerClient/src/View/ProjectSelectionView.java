@@ -36,7 +36,7 @@ public class ProjectSelectionView extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    public void registerController (ProjectSelectionController controller) {
+    public void registerController(ProjectSelectionController controller) {
         this.projectSelectionController = controller;
         for (ProjectBoxView projectBoxView: projectBoxViews) {
             projectBoxView.registerButtonListener(controller);

@@ -79,7 +79,7 @@ public class TagController implements ActionListener {
                     getName() + "'?", TAG_REMOVE_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
-                mainController.removeTag(tag);
+                mainController.deleteTag(tag);
                 task.removeTag(tag);
                 mainController.updatedTask(task);
             }
