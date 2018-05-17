@@ -89,6 +89,7 @@ public class Main {
                 network.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
                 network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
                 network.addCommunicator(new ProjectAddedCommunicator(), ServerObjectType.SET_PROJECT);
+                network.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
 
                 mainViewController.setNetwork(network);
 

@@ -2,10 +2,12 @@ package Controller;
 
 import Network.NetworkManager;
 import View.ProjectBoxView;
+import model.ServerObjectType;
 import model.project.Project;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class ProjectBoxController implements MouseListener{
 
@@ -25,7 +27,11 @@ public class ProjectBoxController implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         if(e.getClickCount() == 2) {
-
+            try {
+                controller.sendToServer(ServerObjectType.GET_PROJECT, project.getId());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package Network.Communicators;
 
 import Controller.MainViewController;
+import View.MainView;
 import model.DataManager;
 import model.project.Project;
 import Network.Communicable;
@@ -15,7 +16,7 @@ public class ProjectDetailCommunicator implements Communicable {
         try {
             Project p = (Project) objectIn.readObject();
             DataManager.getSharedInstance().setSelectedProject(p);
-            //TODO avisar al controooolller
+            controller.swapPanel(MainView.PROJECT_ID);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

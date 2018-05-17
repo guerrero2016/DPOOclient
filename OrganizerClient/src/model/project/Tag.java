@@ -60,7 +60,7 @@ public class Tag implements Serializable {
         int rgb = color.getRGB()&0xffffff;
         String zeros = "000000";
         String data = Integer.toHexString(rgb);
-        return (zeros.substring(data.length()) + data).toUpperCase();
+        return "#" + (zeros.substring(data.length()) + data).toUpperCase();
     }
 
     @Override
