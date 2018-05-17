@@ -28,6 +28,10 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     private final static String TAGS_TITLE = "Tags";
     private final static String TAG_ADDER_TITLE = "New Tag";
     private final static String ADD_TITLE = "+";
+    private final static String BACK_BUTTON = "Back";
+    private final static String EDIT_BUTTON = "Edit";
+    private final static String DELETE_BUTTON = "Delete";
+    private final static String CHECK_BUTTON = "Save changes";
 
     private final JButton jbTaskBack;
     private final JTextField jtfTaskName;
@@ -78,23 +82,41 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         tpTaskTitle.add(tpTaskButtons, BorderLayout.LINE_END);
 
         //Task back button
-        jbTaskBack = new JButton(new ImageIcon(backIcon.getScaledInstance(20, 20,
-                Image.SCALE_SMOOTH)));
-        jbTaskBack.setBorder(null);
+        if(backIcon != null) {
+            jbTaskBack = new JButton(new ImageIcon(backIcon.getScaledInstance(20, 20,
+                    Image.SCALE_SMOOTH)));
+            jbTaskBack.setBorder(null);
+        } else {
+            jbTaskBack = new JButton(BACK_BUTTON);
+            jbTaskBack.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+        }
+
         jbTaskBack.setActionCommand(ACTION_TASK_BACK);
         tpTaskButtons.add(jbTaskBack);
 
         //Task editor button
-        jbTaskEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(20, 20,
-                Image.SCALE_SMOOTH)));
-        jbTaskEditor.setBorder(null);
+        if(editorIcon != null) {
+            jbTaskEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(20, 20,
+                    Image.SCALE_SMOOTH)));
+            jbTaskEditor.setBorder(null);
+        } else {
+            jbTaskEditor = new JButton(EDIT_BUTTON);
+            jbTaskEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+        }
+
         jbTaskEditor.setActionCommand(ACTION_TASK_EDIT_NAME);
         tpTaskButtons.add(jbTaskEditor);
 
         //Task delete icon
-        jbTaskDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(20, 20,
-                Image.SCALE_SMOOTH)));
-        jbTaskDelete.setBorder(null);
+        if(deleteIcon != null) {
+            jbTaskDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(20, 20,
+                    Image.SCALE_SMOOTH)));
+            jbTaskDelete.setBorder(null);
+        } else {
+            jbTaskDelete = new JButton(DELETE_BUTTON);
+            jbTaskDelete.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+        }
+
         jbTaskDelete.setActionCommand(ACTION_TASK_DELETE);
         tpTaskButtons.add(jbTaskDelete);
 
@@ -128,9 +150,15 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         tpDescriptionTitle.add(jlDescription);
 
         //Description editor button
-        jbDescriptionEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(16, 16,
-                Image.SCALE_SMOOTH)));
-        jbDescriptionEditor.setBorder(null);
+        if(editorIcon != null) {
+            jbDescriptionEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(16, 16,
+                    Image.SCALE_SMOOTH)));
+            jbDescriptionEditor.setBorder(null);
+        } else {
+            jbDescriptionEditor = new JButton(EDIT_BUTTON);
+            jbDescriptionEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 8));
+        }
+
         jbDescriptionEditor.setActionCommand(ACTION_DESCRIPTION_EDITION);
         tpDescriptionTitle.add(jbDescriptionEditor);
 
@@ -221,11 +249,35 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     public void setTaskNameEditable(boolean editableState, String completeTaskName) {
 
         if(editableState) {
+
             jtfTaskName.setText(completeTaskName);
-            jbTaskEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+
+            if(checkIcon != null) {
+                jbTaskEditor.setText(null);
+                jbTaskEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+                jbTaskEditor.setBorder(null);
+            } else {
+                jbTaskEditor.setIcon(null);
+                jbTaskEditor.setText(CHECK_BUTTON);
+                jbTaskEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+                jbTaskEditor.setBorder(new JButton().getBorder());
+            }
+
         } else {
+
             setTaskName(completeTaskName);
-            jbTaskEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+
+            if(editorIcon != null) {
+                jbTaskEditor.setText(null);
+                jbTaskEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+                jbTaskEditor.setBorder(null);
+            } else {
+                jbTaskEditor.setIcon(null);
+                jbTaskEditor.setText(EDIT_BUTTON);
+                jbTaskEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+                jbTaskEditor.setBorder(new JButton().getBorder());
+            }
+
         }
 
         jtfTaskName.setOpaque(editableState);
@@ -268,7 +320,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     public void addTag(Tag tag) {
-        tagPanels.add(new TagPanel(editorIcon, deleteIcon, checkIcon, tag));
+        tagPanels.add(new TagPanel(editorIcon, deleteIcon, tag));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = (tagPanels.size() - 1) % MAX_TAGS;
         gbc.gridy = (tagPanels.size() - 1) / MAX_TAGS;
@@ -315,11 +367,29 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     public void setDescriptionEditable(boolean editableState) {
 
         if(editableState) {
-            jbDescriptionEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(16, 16,
-                    Image.SCALE_SMOOTH)));
+            if(checkIcon != null) {
+                jbDescriptionEditor.setText(null);
+                jbDescriptionEditor.setIcon(new ImageIcon(checkIcon.getScaledInstance(16, 16,
+                        Image.SCALE_SMOOTH)));
+                jbDescriptionEditor.setBorder(null);
+            } else {
+                jbTaskEditor.setIcon(null);
+                jbTaskEditor.setText(CHECK_BUTTON);
+                jbTaskEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 8));
+                jbTaskEditor.setBorder(new JButton().getBorder());
+            }
         } else {
-            jbDescriptionEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(16, 16,
-                    Image.SCALE_SMOOTH)));
+            if(editorIcon != null) {
+                jbDescriptionEditor.setText(null);
+                jbDescriptionEditor.setIcon(new ImageIcon(editorIcon.getScaledInstance(16, 16,
+                        Image.SCALE_SMOOTH)));
+                jbDescriptionEditor.setBorder(null);
+            } else {
+                jbTaskEditor.setIcon(null);
+                jbTaskEditor.setText(EDIT_BUTTON);
+                jbTaskEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 8));
+                jbTaskEditor.setBorder(new JButton().getBorder());
+            }
         }
 
         jtaDescription.setEditable(editableState);

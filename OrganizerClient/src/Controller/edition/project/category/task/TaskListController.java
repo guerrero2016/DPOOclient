@@ -1,6 +1,7 @@
 package Controller.edition.project.category.task;
 
 import Controller.edition.EditionController;
+import model.project.Category;
 import model.project.Task;
 import View.edition.project.category.task.TaskListComponent;
 
@@ -14,7 +15,7 @@ import java.util.Objects;
 public class TaskListController extends TransferHandler {
 
     private EditionController mainController;
-    private model.project.Category category;
+    private Category category;
     private JList<Task> jlTasks;
 
     private int index;
@@ -79,11 +80,20 @@ public class TaskListController extends TransferHandler {
     public boolean importData(TransferSupport support) {
 
         try {
-            Task task = (Task) support.getTransferable().getTransferData(TaskListComponent.localObjectFlavor);
+
+            Task transferredTask = (Task) support.getTransferable().getTransferData(TaskListComponent.localObjectFlavor);
             JList.DropLocation dl = (JList.DropLocation) support.getDropLocation();
-            ((DefaultListModel<Task>) jlTasks.getModel()).add(dl.getIndex(), task);
+            ((DefaultListModel<Task>) jlTasks.getModel()).add(dl.getIndex(), transferredTask);
             beforeIndex = dl.getIndex() < index ? true : false;
+            DefaultListModel<Task> tasks = (DefaultListModel<Task>) jlTasks.getModel();
+
+            for(int i = 0; i < tasks.getSize(); i++) {
+                Task task = tasks.getElementAt(i);
+                task.setOrder(i);
+            }
+
             return true;
+
         } catch (UnsupportedFlavorException | IOException e) {
             e.printStackTrace();
         }

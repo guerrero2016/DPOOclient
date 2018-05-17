@@ -41,7 +41,7 @@ public class EditionPanel extends BackgroundPanel {
     private final TaskPanel taskPanel;
     private final UserPanel taskUserPanel;
 
-    public EditionPanel() throws IOException {
+    public EditionPanel() {
 
         //Main config
         loadIcons();
@@ -75,21 +75,57 @@ public class EditionPanel extends BackgroundPanel {
 
     }
 
-    private void loadIcons() throws IOException {
+    private void loadIcons() {
+
         //Back icon
-        backIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + BACK_ICON_FILE));
+        try {
+            backIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + BACK_ICON_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //Editor icon
-        editorIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + EDITOR_ICON_FILE));
+        try {
+            editorIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + EDITOR_ICON_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //Background icon
-        backgroundIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + BACKGROUND_ICON_FILE));
+        try {
+            backgroundIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + BACKGROUND_ICON_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //Delete icon
-        deleteIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + DELETE_ICON_FILE));
+        try {
+            deleteIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + DELETE_ICON_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //Left icon
-        leftIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + LEFT_ICON_FILE));
+        try {
+            leftIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + LEFT_ICON_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //Left icon
-        rightIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + RIGHT_ICON_FILE));
+        try {
+            rightIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + RIGHT_ICON_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //Check icon
-        checkIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + CHECK_ICON_FILE));
+        try {
+            checkIcon = ImageIO.read(new File(IMG_PATH + System.getProperty("file.separator") + CHECK_ICON_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setBackgroundImage(Image background) {

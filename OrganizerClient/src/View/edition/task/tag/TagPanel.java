@@ -17,8 +17,8 @@ public class TagPanel extends JPanel {
 
     private final static int MAX_TAG_LENGTH = 20;
 
-    private Image editorIcon;
-    private Image checkIcon;
+    private final static String EDIT_BUTTON = "Edit";
+    private final static String DELETE_BUTTON = "Delete";
 
     private final JLabel jlTagName;
     private final JButton jbTagEditor;
@@ -26,10 +26,7 @@ public class TagPanel extends JPanel {
 
     private ActionListener actionListener;
 
-    public TagPanel(Image editorIcon, Image deleteIcon, Image checkIcon, Tag tag) {
-
-        this.editorIcon = editorIcon;
-        this.checkIcon = checkIcon;
+    public TagPanel(Image editorIcon, Image deleteIcon, Tag tag) {
 
         //Panel config
         setLayout(new BorderLayout());
@@ -43,16 +40,28 @@ public class TagPanel extends JPanel {
         add(tpButtonsPanel, BorderLayout.PAGE_START);
 
         //Editor button
-        jbTagEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(12, 12,
-                Image.SCALE_SMOOTH)));
-        jbTagEditor.setBorder(null);
+        if(editorIcon != null) {
+            jbTagEditor = new JButton(new ImageIcon(editorIcon.getScaledInstance(12, 12,
+                    Image.SCALE_SMOOTH)));
+            jbTagEditor.setBorder(null);
+        } else {
+            jbTagEditor = new JButton(EDIT_BUTTON);
+            jbTagEditor.setFont(new Font(Font.DIALOG, Font.BOLD, 4));
+        }
+
         jbTagEditor.setActionCommand(ACTION_TAG_NAME_EDIT);
         tpButtonsPanel.add(jbTagEditor);
 
         //Delete icon
-        jbTagDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(12, 12,
-                Image.SCALE_SMOOTH)));
-        jbTagDelete.setBorder(null);
+        if(deleteIcon != null) {
+            jbTagDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(12, 12,
+                    Image.SCALE_SMOOTH)));
+            jbTagDelete.setBorder(null);
+        } else {
+            jbTagDelete = new JButton(DELETE_BUTTON);
+            jbTagDelete.setFont(new Font(Font.DIALOG, Font.BOLD, 4));
+        }
+
         jbTagDelete.setActionCommand(ACTION_TAG_DELETE);
         tpButtonsPanel.add(jbTagDelete);
 

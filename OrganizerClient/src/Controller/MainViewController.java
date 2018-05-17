@@ -33,11 +33,13 @@ public class MainViewController {
 //        editionController = new EditionController(this, view.getEditionPanel());
 //    }
 
-    public MainViewController(MainView view, LogInController logInController, SignInController signInController, ProjectsMainViewController projectsMainViewController) {
+    public MainViewController(MainView view, LogInController logInController, SignInController signInController,
+                              ProjectsMainViewController projectsMainViewController, EditionController editionController) {
         this.view = view;
         this.logInController = logInController;
         this.signInController = signInController;
         this.projectsMainViewController = projectsMainViewController;
+        this.editionController = editionController;
     }
 
     public ProjectsMainViewController getProjectsMainViewController() {
@@ -159,4 +161,5 @@ public class MainViewController {
     public void showDialog(String errorMSG) {
         view.showErrorDialog(errorMSG);
     }
+
 }
