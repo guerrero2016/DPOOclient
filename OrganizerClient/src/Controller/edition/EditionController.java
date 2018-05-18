@@ -296,7 +296,11 @@ public class EditionController {
     public void showProjectSelection() {
         if (mainController != null) {
             //TODO: Save changes
-            mainController.swapPanel(ProjectsMainView.VIEW_TAG);
+            try {
+                mainController.sendToServer(ServerObjectType.EXIT_PROJECT, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             System.exit(0);
         }
