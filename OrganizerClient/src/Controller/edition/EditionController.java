@@ -222,7 +222,9 @@ public class EditionController {
     public void updateCategory(Category category) {
         if(mainController != null) {
             try {
-                category.setOrder(project.getCategoriesSize());
+                if (category.getOrder() == -1) {
+                    category.setOrder(project.getCategoriesSize());
+                }
                 mainController.addComunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
                 mainController.sendToServer(ServerObjectType.SET_CATEGORY, category);
             } catch (IOException e) {
