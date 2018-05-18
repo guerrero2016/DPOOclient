@@ -12,7 +12,9 @@ import Controller.edition.task.TaskController;
 import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
+import Network.Communicators.CategorySetCommunicator;
 import View.ProjectsMainView;
+import model.ServerObjectType;
 import model.project.Category;
 import model.project.Project;
 import model.project.Tag;
@@ -25,7 +27,9 @@ import View.edition.task.TaskPanel;
 import View.edition.task.tag.TagPanel;
 import View.edition.user.UserPanel;
 
+import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class EditionController {
 
@@ -74,6 +78,29 @@ public class EditionController {
 
     }
 
+    public MainViewController getMainController() {
+        return mainController;
+    }
+
+    public void setMainController(MainViewController mainController) {
+        this.mainController = mainController;
+    }
+
+    public void addCategory(Category category) {
+        if(!this.isEditing() && !projectPanel.getNewCategoryName().isEmpty()) {
+            projectPanel.cleanNewCategoryName();
+            projectPanel.addCategoryToView(category);
+            project.setCategory(category);
+            CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoriesSize() - 1);
+            categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel, category));
+            categoryPanel.registerMouseController(new CategoryMouseController(this, category));
+            categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
+        } else if(this.isEditing()) {
+            JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
+                    EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
     public void loadProject(Project project) {
 
         //Default config
@@ -88,7 +115,7 @@ public class EditionController {
         projectPanel.cleanCategories();
 
         for(int i = 0; i < project.getCategoriesSize(); i++) {
-            projectPanel.addCategory(project.getCategory(i));
+            projectPanel.addCategoryToView(project.getCategory(i));
             CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i);
             categoryPanel.resetActionController();
             categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel,
@@ -168,21 +195,31 @@ public class EditionController {
         isEditing = enableState;
     }
 
-    public void updatedProject() {
+    public void updateProject() {
         if(mainController != null) {
             //TODO: Update project in database
         }
     }
 
-    public void updatedTask(Task task) {
+    public void updateTask(Task task) {
         if(mainController != null) {
-            //TODO: Update task in database
+            try {
+                mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
+                mainController.sendToServer(null, task);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void updatedCategory(Category category) {
+    public void updateCategory(Category category) {
         if(mainController != null) {
-            //TODO: Update category in database
+            try {
+                mainController.addComunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
+                mainController.sendToServer(ServerObjectType.SET_CATEGORY, category);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

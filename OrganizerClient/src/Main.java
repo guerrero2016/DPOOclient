@@ -76,6 +76,7 @@ public class Main {
                 MainViewController mainViewController = new MainViewController(mainView, logInController,
                         signInController, projectsMainViewController, editionController);
 
+                editionController.setMainController(mainViewController);
                 signInController.setController(mainViewController);
                 logInController.setController(mainViewController);
                 editionController.registerMainController(mainViewController);

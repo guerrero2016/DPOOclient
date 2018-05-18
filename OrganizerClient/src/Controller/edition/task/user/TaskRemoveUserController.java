@@ -40,7 +40,7 @@ public class TaskRemoveUserController implements MouseListener {
                 if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
                     task.removeUser(index);
                     view.removeUser(index);
-                    mainController.updatedTask(task);
+                    mainController.updateTask(task);
                 }
 
             }

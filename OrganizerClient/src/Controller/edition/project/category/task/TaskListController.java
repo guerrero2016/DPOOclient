@@ -98,7 +98,7 @@ public class TaskListController extends TransferHandler {
             e.printStackTrace();
         }
 
-        mainController.updatedCategory(category);
+        mainController.updateCategory(category);
 
         return false;
 

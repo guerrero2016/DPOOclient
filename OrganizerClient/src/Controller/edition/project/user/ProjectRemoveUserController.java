@@ -40,7 +40,7 @@ public class ProjectRemoveUserController implements MouseListener {
                 if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
                     project.deleteUser(index);
                     view.removeUser(index);
-                    mainController.updatedProject();
+                    mainController.updateProject();
                 }
 
             }

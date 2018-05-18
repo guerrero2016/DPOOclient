@@ -66,9 +66,6 @@ public class NetworkManager extends Thread {
             objectOut.writeInt(type.getValue());
         }
         objectOut.writeObject(object);
-        if (type.equals(ServerObjectType.SET_PROJECT)) {
-            System.out.println(((Project) object).getName());
-        }
     }
 
     public void addCommunicator(Communicable communicable, ServerObjectType type) {

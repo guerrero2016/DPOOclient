@@ -14,12 +14,15 @@ public class DataManager {
     private ArrayList<Project> projectOwnerList;
     private ArrayList<Project> projectSharedList;
 
-
     private Project selectedProject;
 
     private DataManager() {
         selectedProject = new Project();
         projectOwnerList = new ArrayList<>();
+    }
+
+    public Project getSelectedProject() {
+        return selectedProject;
     }
 
     public static DataManager getSharedInstance() {

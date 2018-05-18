@@ -18,7 +18,6 @@ public class ProjectAddedCommunicator extends Thread implements Communicable {
         try {
             DataManager dataManager = DataManager.getSharedInstance();
             final Project p = (Project) objectIn.readObject();
-
             if (p.isOwner()) {
                 dataManager.addProjectToOwnerList(p);
                 controller.getProjectsMainViewController().addOwnerProject(p);

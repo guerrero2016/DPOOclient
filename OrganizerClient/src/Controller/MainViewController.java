@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.edition.EditionController;
+import Network.Communicable;
 import model.project.Category;
 import model.project.Project;
 import model.project.Tag;
@@ -49,6 +50,10 @@ public class MainViewController {
     public void setNetwork(NetworkManager network) {
         //projectsMainViewController.setNetworkManager(network);
         this.network = network;
+    }
+
+    public EditionController getEditionController() {
+        return editionController;
     }
 
     public void setControllerCommunication() {
@@ -110,6 +115,9 @@ public class MainViewController {
         network.sendToServer(type, o);
     }
 
+    public void addComunicator (Communicable communicator, ServerObjectType type){
+        network.addCommunicator(communicator, type);
+    }
     public void showDialog(String errorMSG) {
         view.showErrorDialog(errorMSG);
     }
