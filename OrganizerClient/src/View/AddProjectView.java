@@ -9,9 +9,11 @@ import java.util.ArrayList;
 public class AddProjectView extends JPanel {
 
     private final JTextField nameTextField;
+    private final JTextField idTextField;
     private final Color[] COLORS = new Color[]{Color.RED, Color.BLUE, Color.CYAN, Color.YELLOW, Color.WHITE, Color.ORANGE, Color.green, Color.gray};
     private ArrayList<JPanel> colorsPanels;
     private final JButton createButton;
+    private final JButton joinButton;
     private final CustomDialog dialog;
     private Color selectedColor;
 
@@ -36,15 +38,37 @@ public class AddProjectView extends JPanel {
         createButton = new JButton("Afegir");
         buttonPanel.add(createButton);
 
-        setLayout(new BorderLayout());
-        add(buttonPanel,BorderLayout.SOUTH);
-        add(northPanel, BorderLayout.NORTH);
-        add(colorsPanel, BorderLayout.CENTER);
+        JPanel leftPanel = new JPanel(new BorderLayout());
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Crear nou projecte"));
+        leftPanel.add(buttonPanel,BorderLayout.SOUTH);
+        leftPanel.add(northPanel, BorderLayout.NORTH);
+        leftPanel.add(colorsPanel, BorderLayout.CENTER);
+
+        JPanel joinProjectPanel = new JPanel(new BorderLayout());
+        JLabel idLabel = new JLabel("ID projecte");
+        idTextField = new JTextField();
+
+        JPanel joinButtonPanel = new JPanel(new FlowLayout());
+        joinButton = new JButton("Unir-se");
+        joinButtonPanel.add(joinButton);
+
+        joinProjectPanel.add(idLabel, BorderLayout.NORTH);
+        joinProjectPanel.add(idTextField, BorderLayout.CENTER);
+
+        JPanel rightPanel = new JPanel(new BorderLayout());
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Unir-se a un projecte"));
+        rightPanel.add(joinProjectPanel, BorderLayout.NORTH);
+        rightPanel.add(joinButtonPanel, BorderLayout.SOUTH);
+
+        this.setLayout(new GridLayout(1,2));
+        this.add(leftPanel);
+        this.add(rightPanel);
 
         northPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         colorsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        joinProjectPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        dialog = new CustomDialog("Crear projecte", this);
+        dialog = new CustomDialog("Afegir projecte", this);
     }
 
     public void setDialogVisible(boolean isVisible) {
@@ -55,6 +79,10 @@ public class AddProjectView extends JPanel {
         return nameTextField.getText();
     }
     public Color getProjectColor () {return selectedColor;}
+
+    public String getProjectID () {
+        return idTextField.getText();
+    }
 
     public JPanel createColorsPalette () {
         final JPanel palettePanel = new JPanel(new GridLayout(2,4));
@@ -75,6 +103,7 @@ public class AddProjectView extends JPanel {
             colorPanel.addMouseListener(controller);
         }
         createButton.addActionListener(controller);
+        joinButton.addActionListener(controller);
     }
 
     public void selectColor (JPanel colorPanel) {

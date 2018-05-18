@@ -2,6 +2,7 @@ package Controller;
 
 import Network.NetworkManager;
 import View.AddProjectView;
+import model.ServerObjectType;
 import model.project.Project;
 
 import javax.swing.*;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class ProjectCreationController implements MouseListener, ActionListener {
 
@@ -29,11 +31,17 @@ public class ProjectCreationController implements MouseListener, ActionListener 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (view.getProjectName() == null || view.getProjectName().isEmpty()) {
-            System.out.println("Missing parameters");
+        String button = ((JButton)e.getSource()).getText();
+        if (button.equals("Afegir")) {
+            if (view.getProjectName() == null || view.getProjectName().isEmpty()) {
+                System.out.println("Missing parameters");
+            } else {
+                Project newProject = new Project(null, view.getProjectName(), view.getProjectColor(), true);
+                projectSelectionController.requestProject(newProject);
+                view.setDialogVisible(false);
+            }
         } else {
-            Project newProject = new Project(null, view.getProjectName(), view.getProjectColor(), true);
-            projectSelectionController.createProject(newProject);
+            projectSelectionController.requestProject(view.getProjectID());
             view.setDialogVisible(false);
         }
     }

@@ -47,7 +47,6 @@ public class GetAllProjectsComunicator implements Communicable {
         int numProj = (Integer) objectIn.readObject();
         for (int i = 0; i < numProj; i++) {
             final Project p = (Project) objectIn.readObject();
-            System.out.println(p.getName());
             projects.add(p);
         }
         return projects;
