@@ -178,4 +178,14 @@ public class SignInPanel extends JPanel {
         jbLogIn.addActionListener(al);
         jbSignIn.addActionListener(al);
     }
+
+    /**
+     * Procediment per netejar els camps
+     */
+    public void clearScreen(){
+        jtfEmail.setText(null);
+        jtfUsername.setText(null);
+        jpfPassword.setText(null);
+        jpfConfirm.setText(null);
+    }
 }
