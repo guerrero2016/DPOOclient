@@ -111,6 +111,11 @@ public class MainViewController {
         //TODO: Share project
     }
 
+    public void resetSelectionView(){
+        projectsMainViewController.resetOwnerProjects();
+        projectsMainViewController.resetSharedProjects();
+    }
+
     public void sendToServer(ServerObjectType type, Object o) throws IOException {
         network.sendToServer(type, o);
     }
