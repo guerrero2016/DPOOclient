@@ -19,7 +19,10 @@ public class Project implements Serializable{
     private Image background;
     private boolean isOwner;
 
-    public Project() {}
+    public Project() {
+        categories = new ArrayList<>();
+        users = new ArrayList<>();
+    }
 
     public Project(String id, String name, Color color, boolean isOwner) {
         this.id = id;
@@ -150,7 +153,8 @@ public class Project implements Serializable{
                 }
             }
 
-            categories.add(category.getOrder(), category);
+            category.setOrder(categories.size());
+            categories.add(category);
 
         }
     }

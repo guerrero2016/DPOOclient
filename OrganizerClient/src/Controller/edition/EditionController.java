@@ -12,6 +12,7 @@ import Controller.edition.task.TaskController;
 import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
+import View.ProjectsMainView;
 import model.project.Category;
 import model.project.Project;
 import model.project.Tag;
@@ -73,7 +74,7 @@ public class EditionController {
 
     }
 
-    public void loadProject(Project project, boolean isAdmin) {
+    public void loadProject(Project project) {
 
         //Default config
         this.project = project;
@@ -81,7 +82,7 @@ public class EditionController {
         task = null;
 
         //Config project content
-        projectPanel.hideDeleteButton(!isAdmin);
+        projectPanel.hideDeleteButton(!project.isOwner());
         editionPanel.setBackgroundImage(project.getBackground());
         projectPanel.setProjectName(project.getName());
         projectPanel.cleanCategories();
@@ -252,8 +253,8 @@ public class EditionController {
 
     public void showProjectSelection() {
         if (mainController != null) {
-            //TODO: Show project
-            //mainController.swapPanel(ProjectsMainView.VIEW_TAG);
+            //TODO: Save changes
+            mainController.swapPanel(ProjectsMainView.VIEW_TAG);
         } else {
             System.exit(0);
         }

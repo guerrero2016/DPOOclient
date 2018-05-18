@@ -76,57 +76,9 @@ public class MainViewController {
 
     }
 
-    public void loadProject(Project project, boolean isAdmin) {
-
-        //TODO: Delete
-        Project newProject = new Project();
-        newProject.setName("Project Name");
-
-        try {
-            //TODO s'ha de llegir la imatge desde el path Background
-            Image image = ImageIO.read(new File("img/background4.jpg"));
-        } catch(IOException e) {
-            //Could not load img
-        }
-
-
-        for(int i = 0; i < 4; i++) {
-
-            model.project.Category category = new model.project.Category("Category " + (i + 1));
-
-            for(int j = 0; j < 20; j++) {
-
-                Task task = new Task();
-                task.setName("Task " + (j + 1));
-                task.setDescription("Description " + (j + 1));
-
-                for(int k = 0; k < 30; k++) {
-                    task.addTag(new Tag((k + 1) + " Tag very long to handle", Color.CYAN));
-                    task.addTag(new Tag("Tag " + (k + 1), Color.GREEN));
-                }
-
-                for(int k = 0; k < 10; k++) {
-                    task.addUser(new User("User " + (k + 1)));
-                }
-
-                category.addTask(task);
-
-            }
-
-            newProject.setCategory(category);
-
-        }
-
-        for(int i = 0; i < 10; i++) {
-            newProject.addUser(new User("User " + (i + 1)));
-        }
-
-        //TODO: End delete
-
-        //TODO: Replace add and delete taskContent
-        editionController.loadProject(newProject, isAdmin);
+    public void loadProject(Project project) {
+        editionController.loadProject(project);
         editionController.showProjectContent();
-
     }
 
     public void updateProject(Project project) {

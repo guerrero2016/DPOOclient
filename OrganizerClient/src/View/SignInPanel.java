@@ -139,8 +139,8 @@ public class SignInPanel extends JPanel {
         String email = jtfEmail.getText();
         String password = String.valueOf(jpfPassword.getPassword());
         String confirm = String.valueOf(jpfConfirm.getPassword());
-        String pwEncrypt = null;
-        String confirmEncrypt = null;
+        String pwEncrypt = "";
+        String confirmEncrypt = "";
         if (User.containsUpperCase(password) || User.containsUpperCase(confirm)) {
             pwEncrypt = User.getMD5(password);
             confirmEncrypt = User.getMD5(confirm);

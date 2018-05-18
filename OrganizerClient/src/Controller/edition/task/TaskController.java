@@ -2,6 +2,8 @@ package Controller.edition.task;
 
 import Controller.edition.EditionController;
 import Controller.edition.color.ColorPreviewController;
+import Controller.edition.task.tag.TagController;
+import View.edition.task.tag.TagPanel;
 import model.project.Tag;
 import model.project.Task;
 import View.edition.color.ColorChooserPanel;
@@ -114,6 +116,8 @@ public class TaskController implements ActionListener {
                     mainController.updateTaskList();
                     view.cleanNewTagName();
                     view.addTag(tag);
+                    TagPanel tagPanel = view.getTagPanel(task.getTagIndex(tag));
+                    tagPanel.registerActionController(new TagController(mainController, tagPanel, task, tag));
                     mainController.updatedTask(task);
                 }
 
