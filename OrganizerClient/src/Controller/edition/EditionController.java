@@ -12,6 +12,7 @@ import Controller.edition.task.TaskController;
 import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
+import Network.Communicators.CategoryDeleteCommunicator;
 import Network.Communicators.CategorySetCommunicator;
 import View.ProjectsMainView;
 import model.ServerObjectType;
@@ -256,15 +257,12 @@ public class EditionController {
     }
 
     public User getProjectUser(String userName) {
-
         for(int i = 0; i < project.getUsers().size(); i++) {
             if(userName.equals(project.getUser(i).getUserName())) {
                 return project.getUser(i);
             }
         }
-
         return null;
-
     }
 
     public int getCategoryIndex(Category category) {
@@ -276,21 +274,26 @@ public class EditionController {
         projectPanel.swapCategories(firstCategoryIndex, secondCategoryIndex);
     }
 
-    public void deleteCategory(Category category) {
-
+    public void deleteCategory(String id_category) {
+        Category category = null;
+        for(Category c: project.getCategories()){
+            if(c.getId().equals(id_category)) {
+                category = c;
+            }
+        }
         int index = project.getCategoryIndex(category);
-
         if(index >= 0 && index < project.getCategoriesSize()) {
-
             project.deleteCategory(category);
             projectPanel.removeCategory(index);
-
             if(mainController != null) {
-                //TODO: Delete category in database
+                try {
+                    mainController.addComunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
+                    mainController.sendToServer(ServerObjectType.DELETE_CATEGORY, category.getId());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-
         }
-
     }
 
     public void updateTaskList() {

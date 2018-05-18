@@ -16,7 +16,7 @@ public class CategoryDeleteCommunicator implements Communicable {
         try {
             String categoryID = objectIn.readObject().toString();
             DataManager.getSharedInstance().deleteCategory(categoryID);
-            //TODO avisar al controller
+            controller.getEditionController().deleteCategory(categoryID);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

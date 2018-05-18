@@ -78,21 +78,15 @@ public class CategoryActionController implements ActionListener {
     }
 
     private void categoryDelete() {
-
         int result = JOptionPane.showConfirmDialog(null, CATEGORY_REMOVE_MESSAGE + " '" +
                category.getName() + "'?", CATEGORY_REMOVE_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.
                 WARNING_MESSAGE);
-
         if(result != JOptionPane.CLOSED_OPTION && result != JOptionPane.CANCEL_OPTION) {
-
             if (mainController.isEditing() && view.isCategoryNameEditable()) {
                 mainController.setEditingState(false);
             }
-
-            mainController.deleteCategory(category);
-
+            mainController.deleteCategory(category.getId());
         }
-
     }
 
     private void addTask() {
