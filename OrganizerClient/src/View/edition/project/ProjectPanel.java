@@ -246,9 +246,8 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     public void addCategoryToView(Category category) {
         if(category != null) {
             GridBagConstraints gbc;
-
             if(categoryPanels.size() > 1) {
-                CategoryPanel categoryPanel = categoryPanels.get(categoryPanels.size() - 2);
+                CategoryPanel categoryPanel = categoryPanels.get(categoryPanels.size() - 1);
                 gbc = ((GridBagLayout) tpCategories.getLayout()).getConstraints(categoryPanel);
                 gbc.gridx += 1;
             } else {
@@ -259,7 +258,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
                 gbc.insets = new Insets(5, 5, 5, 5);
                 gbc.fill = GridBagConstraints.VERTICAL;
             }
-
+            categoryPanels.add(new CategoryPanel(category, editorIcon, deleteIcon, leftIcon, rightIcon, checkIcon));
             tpCategories.add(categoryPanels.get(categoryPanels.size() - 1), gbc);
             revalidate();
             repaint();

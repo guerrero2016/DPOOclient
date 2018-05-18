@@ -19,8 +19,10 @@ public class CategorySetCommunicator implements Communicable {
             Category category = (Category) objectIn.readObject();
             boolean exists = false;
             int i;
+            System.out.println(category.getId());
             for(i = 0; i < DataManager.getSharedInstance().getSelectedProject().getCategories().size(); i++) {
-                if(DataManager.getSharedInstance().getSelectedProject().getCategories().get(i).getId().equals(category.getId())) {
+                String idAux = DataManager.getSharedInstance().getSelectedProject().getCategories().get(i).getId();
+                if(idAux.equals(category.getId())) {
                     exists = true;
                     break;
                 }
@@ -28,9 +30,7 @@ public class CategorySetCommunicator implements Communicable {
             if(exists) {
                 DataManager.getSharedInstance().getSelectedProject().getCategories().set(i, category);
             } else {
-                System.out.println("XDDDDD");
                 controller.getEditionController().addCategory(category);
-                DataManager.getSharedInstance().getSelectedProject().getCategories().add(category);
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

@@ -91,6 +91,7 @@ public class EditionController {
             projectPanel.cleanNewCategoryName();
             projectPanel.addCategoryToView(category);
             project.setCategory(category);
+            System.out.println(project.getCategoriesSize());
             CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoriesSize() - 1);
             categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel, category));
             categoryPanel.registerMouseController(new CategoryMouseController(this, category));
@@ -118,6 +119,7 @@ public class EditionController {
             projectPanel.addCategoryToView(project.getCategory(i));
             CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i);
             categoryPanel.resetActionController();
+            System.out.println(project.getCategory(i).getId());
             categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel,
                     project.getCategory(i)));
             categoryPanel.resetMouseController();
@@ -220,6 +222,7 @@ public class EditionController {
     public void updateCategory(Category category) {
         if(mainController != null) {
             try {
+                category.setOrder(project.getCategoriesSize());
                 mainController.addComunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
                 mainController.sendToServer(ServerObjectType.SET_CATEGORY, category);
             } catch (IOException e) {
