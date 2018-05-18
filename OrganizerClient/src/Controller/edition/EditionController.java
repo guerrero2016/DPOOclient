@@ -13,6 +13,8 @@ import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
 import Network.Communicators.CategorySetCommunicator;
+import Network.Communicators.TaskCategoryCommunicator;
+import Network.Communicators.TaskSetCommunicator;
 import View.ProjectsMainView;
 import model.ServerObjectType;
 import model.project.Category;
@@ -211,6 +213,7 @@ public class EditionController {
     public void updateTask(Task task) {
         if(mainController != null) {
             try {
+                mainController.addComunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
                 mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
                 mainController.sendToServer(null, task);
             } catch (IOException e) {
@@ -230,6 +233,20 @@ public class EditionController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void createTask (Task task, Category category) {
+        if (task.getOrder() == -1) {
+            task.setOrder(category.getTasksSize()-1);
+        }
+
+        mainController.addComunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
+        try {
+            mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
+            mainController.sendToServer(null, task);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
