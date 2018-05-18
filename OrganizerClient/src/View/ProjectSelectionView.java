@@ -67,7 +67,7 @@ public class ProjectSelectionView extends JPanel {
         gridBagConstraints.insets.top = 10;
         gridBagConstraints.weightx = 1;
         ProjectBoxView projectBoxView = new ProjectBoxView(title, color, projectBoxViews.size(), isOwner, controller);
-        projectBoxView.registerButtonListener(projectSelectionController);
+        projectBoxView.registerButtonListener(controller);
         projectBoxViews.add(projectBoxView);
         gridPanel.add(projectBoxView, gridBagConstraints);
         scrollPane.getViewport().setView(gridPanel);
