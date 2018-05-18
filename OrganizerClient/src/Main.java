@@ -90,6 +90,7 @@ public class Main {
                 network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
                 network.addCommunicator(new ProjectAddedCommunicator(), ServerObjectType.SET_PROJECT);
                 network.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
+                network.addCommunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
 
                 mainViewController.setNetwork(network);
 

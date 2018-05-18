@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -79,7 +80,7 @@ public class ProjectActionController implements ActionListener {
 
                 try {
 
-                    Image image = ImageIO.read(file);
+                    BufferedImage image = ImageIO.read(file);
 
                     if(image != null) {
                         //TODO comprovar que el getPath tira nice

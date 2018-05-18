@@ -11,15 +11,22 @@ import java.util.Arrays;
 public class DataManager {
     private static DataManager sharedInstance = new DataManager();
 
+    private String userName;
     private ArrayList<Project> projectOwnerList;
     private ArrayList<Project> projectSharedList;
-
-
     private Project selectedProject;
 
     private DataManager() {
         selectedProject = new Project();
         projectOwnerList = new ArrayList<>();
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public static DataManager getSharedInstance() {
@@ -103,6 +110,23 @@ public class DataManager {
         return userNames;
 
     }
+
+    public int getOwnerProjectIndex(Project p) {
+        for (int i = 0; i < projectOwnerList.size(); i++) {
+            if (projectOwnerList.get(i).getId().equals(p.getId())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getSharedProjectIndex(Project p) {
+        for (int i = 0; i < projectSharedList.size(); i++) {
+            if (projectSharedList.get(i).getId().equals(p.getId())) {
+                return i;
+            }
+        }
+        return -1;    }
 
     public void setProjectOwnerList(ArrayList<Project> projectOwnerList) {
         this.projectOwnerList = projectOwnerList;
