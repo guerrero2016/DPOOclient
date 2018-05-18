@@ -17,6 +17,7 @@ public class ProjectDeletedCommunicator implements Communicable {
             final Project p = (Project) objectIn.readObject();
 
             System.out.println(p.getOwnerName() + dataManager.getUserName());
+            System.out.println(dataManager.getUserName());
             if (dataManager.getUserName().equals(p.getOwnerName())) {
                 p.setOwner(true);
             }
@@ -28,7 +29,7 @@ public class ProjectDeletedCommunicator implements Communicable {
                 dataManager.deleteOwnerProjectByID(p.getId());
                 controller.getProjectsMainViewController().getOwnerSelectionController().deleteProject(i);
             }else {
-                int i = dataManager.getSharedProjectIndex(p) - 1;
+                int i = dataManager.getSharedProjectIndex(p);
                 dataManager.deleteSharedProjectByID(p.getId());
                 controller.getProjectsMainViewController().getSharedSelectionController().deleteProject(i);
             }
