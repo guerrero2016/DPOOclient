@@ -5,11 +5,13 @@ import View.ProjectBoxView;
 import model.ServerObjectType;
 import model.project.Project;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
-public class ProjectBoxController implements MouseListener{
+public class ProjectBoxController implements MouseListener, ActionListener {
 
     private ProjectBoxView view;
     private final Project project;
@@ -44,4 +46,12 @@ public class ProjectBoxController implements MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {}
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        try {
+            controller.sendToServer(ServerObjectType.DELETE_PROJECT, project.getId());
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 }
