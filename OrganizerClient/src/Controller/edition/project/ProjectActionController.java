@@ -144,11 +144,9 @@ public class ProjectActionController implements ActionListener {
             categoryPanel.setCategoryNameEditable(false, project.getCategory(i).getName());
             categoryPanel.cleanNewTaskName();
         }
-
         view.setProjectNameEditable(false, project.getName());
         view.cleanNewCategoryName();
         mainController.showProjectSelection();
-
     }
 
 }

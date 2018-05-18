@@ -1,6 +1,7 @@
 package Controller.edition.project.category;
 
 import Controller.edition.EditionController;
+import model.DataManager;
 import model.project.Task;
 import View.edition.project.category.CategoryPanel;
 
@@ -29,6 +30,7 @@ public class CategoryActionController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_EDIT_NAME)) {
+            category = DataManager.getSharedInstance().getSelectedProject().getCategory(category.getOrder());
             categoryNameManagement();
         } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_LEFT)) {
             categoryReorder(TO_LEFT);

@@ -79,7 +79,7 @@ public class ProjectsMainViewController implements ActionListener {
                 projectCreationController.createAddProjectView();
                 break;
             case ProjectsMainView.LOG_OUT_ACTION_COMMAND:
-                ownerSelectionController.resetProjectViews();
+
                 break;
             default:
         }

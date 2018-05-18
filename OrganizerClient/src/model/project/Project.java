@@ -146,26 +146,20 @@ public class Project implements Serializable{
         if(category != null) {
             for (int i = 0; i < categories.size(); i++) {
                 if (category.getId().equals(categories.get(i).getId())) {
-
                     if (category.getName() != null) {
                         categories.get(i).setName(category.getName());
                     }
-
                     if (category.getOrder() != -1) {
                         Category aux = categories.get(i);
                         aux.setOrder(category.getOrder());
                         categories.remove(i);
                         categories.add(aux.getOrder(), aux);
                     }
-
                     return;
-
                 }
             }
-
             category.setOrder(categories.size());
             categories.add(category);
-
         }
     }
 
