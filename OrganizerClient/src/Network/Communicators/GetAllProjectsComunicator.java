@@ -23,6 +23,7 @@ public class GetAllProjectsComunicator implements Communicable {
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         DataManager dataManager = DataManager.getSharedInstance();
         try {
+            dataManager.setUserName(objectIn.readObject().toString());
             dataManager.setProjectOwnerList(readProjects(objectIn));
             controller.getProjectsMainViewController().createOwnerProjects(projects);
             dataManager.setProjectSharedList(readProjects(objectIn));

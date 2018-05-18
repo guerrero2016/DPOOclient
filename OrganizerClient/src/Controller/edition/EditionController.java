@@ -197,7 +197,12 @@ public class EditionController {
 
     public void updateProject() {
         if(mainController != null) {
-            //TODO: Update project in database
+            try {
+                System.out.println("Se envia" + project.getName());
+                mainController.sendToServer(ServerObjectType.SET_PROJECT, project);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

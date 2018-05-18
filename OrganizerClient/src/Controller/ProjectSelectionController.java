@@ -30,7 +30,7 @@ public class ProjectSelectionController implements ActionListener {
 
     public void createProject(Project project) {
         try {
-            controller.sendToServer(ServerObjectType.SET_PROJECT, project);
+            controller.sendToServer(ServerObjectType.ADD_PROJECT, project);
         } catch (IOException e) {
             e.printStackTrace();
         }
