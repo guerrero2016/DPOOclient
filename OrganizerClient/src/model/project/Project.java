@@ -7,10 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -235,9 +232,16 @@ public class Project implements Serializable{
     }
 
     public void setBackground(BufferedImage background) {
-        WritableRaster raster = background .getRaster();
-        DataBufferByte data   = (DataBufferByte) raster.getDataBuffer();
-        this.background = data.getData();    }
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(background, "png", baos);
+            baos.flush();
+            this.background = baos.toByteArray();
+            baos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public boolean isOwner() {
         return isOwner;
