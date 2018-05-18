@@ -8,6 +8,7 @@ import model.ServerObjectType;
 import Network.NetworkManager;
 
 import javax.swing.*;
+import java.util.HashMap;
 
 public class Main {
 
@@ -66,9 +67,17 @@ public class Main {
                 projectsMainView.registerController(projectsMainViewController);
 
                 //EDITION CONTROLLER
+
+                NetworkManager network = new NetworkManager();
+
+                network.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
+                network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
+                network.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
+
+
                 EditionController editionController = new EditionController(editionPanel);
 
-                MainViewController mainViewController = new MainViewController(mainView, logInController,
+                MainViewController mainViewController = new MainViewController(network, mainView, logInController,
                         signInController, projectsMainViewController, editionController);
 
                 editionController.setMainController(mainViewController);
@@ -78,20 +87,10 @@ public class Main {
                 projectsMainViewController.setController(mainViewController);
 
                 //NETWORK
-
-                NetworkManager network = new NetworkManager(mainViewController);
-
-                network.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
-                network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
-                network.addCommunicator(new ProjectEditedCommunicator(), ServerObjectType.SET_PROJECT);
-                network.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
-                network.addCommunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
-
-                mainViewController.setNetwork(network);
+                network.setController(mainViewController);
 
                 network.startCommunication();
                 mainView.setVisible(true);
-
             }
         });
     }

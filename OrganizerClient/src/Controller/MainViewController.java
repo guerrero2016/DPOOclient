@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class MainViewController {
 
+    final private NetworkManager network;
     private MainView view;
-    private NetworkManager network;
     private LogInController logInController;
     private SignInController signInController;
     private EditionController editionController;
@@ -34,22 +34,18 @@ public class MainViewController {
 //        editionController = new EditionController(this, view.getEditionPanel());
 //    }
 
-    public MainViewController(MainView view, LogInController logInController, SignInController signInController,
+    public MainViewController(NetworkManager network, MainView view, LogInController logInController, SignInController signInController,
                               ProjectsMainViewController projectsMainViewController, EditionController editionController) {
         this.view = view;
         this.logInController = logInController;
         this.signInController = signInController;
         this.projectsMainViewController = projectsMainViewController;
         this.editionController = editionController;
+        this.network = network;
     }
 
     public ProjectsMainViewController getProjectsMainViewController() {
         return projectsMainViewController;
-    }
-
-    public void setNetwork(NetworkManager network) {
-        //projectsMainViewController.setNetworkManager(network);
-        this.network = network;
     }
 
     public EditionController getEditionController() {
@@ -118,6 +114,10 @@ public class MainViewController {
 
     public void sendToServer(ServerObjectType type, Object o) throws IOException {
         network.sendToServer(type, o);
+    }
+
+    public void removeCommunicator (ServerObjectType serverObjectType) {
+        network.removeCommunicator(serverObjectType);
     }
 
     public void addComunicator (Communicable communicator, ServerObjectType type){

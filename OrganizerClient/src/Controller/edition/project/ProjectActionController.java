@@ -47,6 +47,7 @@ public class ProjectActionController implements ActionListener {
         } else if(e.getActionCommand().equals(ProjectPanel.ACTION_CATEGORY_ADD)) {
             addCategory();
         } else if(e.getActionCommand().equals(ProjectPanel.ACTION_PROJECT_BACK)) {
+            mainController.removeCommunicators();
             projectBackManagement();
         }
     }

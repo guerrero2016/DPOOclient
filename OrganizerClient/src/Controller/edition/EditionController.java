@@ -12,9 +12,7 @@ import Controller.edition.task.TaskController;
 import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
-import Network.Communicators.CategorySetCommunicator;
-import Network.Communicators.TaskCategoryCommunicator;
-import Network.Communicators.TaskSetCommunicator;
+import Network.Communicators.*;
 import View.ProjectsMainView;
 import model.ServerObjectType;
 import model.project.Category;
@@ -77,7 +75,21 @@ public class EditionController {
         //Config task users panel
         taskUserPanel.setTitle(TASK_USERS_TITLE);
         taskUserPanel.registerDocumentListener(new DocumentController(taskUserPanel));
+    }
 
+    private void addCommunicators () {
+        mainController.addComunicator(new ProjectEditedCommunicator(), ServerObjectType.SET_PROJECT);
+        mainController.addComunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
+        mainController.addComunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
+        mainController.addComunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
+        mainController.addComunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
+    }
+
+    public void removeCommunicators () {
+        mainController.removeCommunicator(ServerObjectType.SET_PROJECT);
+        mainController.removeCommunicator(ServerObjectType.DELETE_PROJECT);
+        mainController.removeCommunicator(ServerObjectType.SET_CATEGORY);
+        mainController.removeCommunicator(ServerObjectType.DELETE_CATEGORY);
     }
 
     public MainViewController getMainController() {
@@ -86,6 +98,7 @@ public class EditionController {
 
     public void setMainController(MainViewController mainController) {
         this.mainController = mainController;
+        addCommunicators();
     }
 
     public void addCategory(Category category) {
@@ -213,7 +226,8 @@ public class EditionController {
     public void updateTask(Task task) {
         if(mainController != null) {
             try {
-                mainController.addComunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
+                System.out.println("TSN"+task.getName());
+                task.setName("22222");
                 mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
                 mainController.sendToServer(null, task);
             } catch (IOException e) {
@@ -228,7 +242,6 @@ public class EditionController {
                 if (category.getOrder() == -1) {
                     category.setOrder(project.getCategoriesSize());
                 }
-                mainController.addComunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
                 mainController.sendToServer(ServerObjectType.SET_CATEGORY, category);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -240,8 +253,7 @@ public class EditionController {
         if (task.getOrder() == -1) {
             task.setOrder(category.getTasksSize()-1);
         }
-
-        mainController.addComunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
+        System.out.println("pescao");
         try {
             mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
             mainController.sendToServer(null, task);
