@@ -15,6 +15,7 @@ public class DataManager {
     private ArrayList<Project> projectOwnerList;
     private ArrayList<Project> projectSharedList;
     private Project selectedProject;
+    private int whatPanel;
 
     private DataManager() {
         selectedProject = new Project();
@@ -37,6 +38,10 @@ public class DataManager {
         this.selectedProject = selectedProject;
     }
 
+    public Project getSelectedProject() {
+        return selectedProject;
+    }
+
     public void setProjectID(String id) {
         selectedProject.setId(id);
     }
@@ -51,6 +56,14 @@ public class DataManager {
 
     public String getTitle() {
         return selectedProject.getName();
+    }
+
+    public int getWhatPanel() {
+        return whatPanel;
+    }
+
+    public void setWhatPanel(int whatPanel) {
+        this.whatPanel = whatPanel;
     }
 
     public void setCategory(Category category) {

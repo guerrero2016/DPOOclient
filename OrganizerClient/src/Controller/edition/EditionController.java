@@ -13,6 +13,7 @@ import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
 import View.ProjectsMainView;
+import model.ServerObjectType;
 import model.project.Category;
 import model.project.Project;
 import model.project.Tag;
@@ -26,6 +27,7 @@ import View.edition.task.tag.TagPanel;
 import View.edition.user.UserPanel;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class EditionController {
 
@@ -170,7 +172,12 @@ public class EditionController {
 
     public void updatedProject() {
         if(mainController != null) {
-            //TODO: Update project in database
+            try {
+                System.out.println("Se envia" + project.getName());
+                mainController.sendToServer(ServerObjectType.SET_PROJECT, project);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
