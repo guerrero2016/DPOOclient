@@ -144,7 +144,6 @@ public class Project implements Serializable{
 
     public void setCategory(Category category) {
         if(category != null) {
-
             for (int i = 0; i < categories.size(); i++) {
                 if (category.getId().equals(categories.get(i).getId())) {
 

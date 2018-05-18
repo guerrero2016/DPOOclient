@@ -43,19 +43,14 @@ public class GetAllProjectsComunicator implements Communicable {
      * @throws ClassNotFoundException
      */
     private ArrayList<Project> readProjects(ObjectInputStream objectIn) throws IOException, ClassNotFoundException {
-
         projects = new ArrayList<>();
         int numProj = (Integer) objectIn.readObject();
-
-
         for (int i = 0; i < numProj; i++) {
             final Project p = (Project) objectIn.readObject();
             System.out.println(p.getName());
             projects.add(p);
         }
-
         return projects;
-
     }
 
 }

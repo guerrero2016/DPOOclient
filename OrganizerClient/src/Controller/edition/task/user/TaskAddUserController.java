@@ -35,7 +35,7 @@ public class TaskAddUserController implements ActionListener {
                 task.addUser(user);
                 view.cleanNewUser();
                 view.addUser(user);
-                mainController.updatedTask(task);
+                mainController.updateTask(task);
             } else if(user == null) {
                 JOptionPane.showMessageDialog(null, USER_NOT_FOUND_MESSAGE, USER_MESSAGE_TITLE,
                         JOptionPane.WARNING_MESSAGE);

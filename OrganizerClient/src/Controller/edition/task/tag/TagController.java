@@ -62,7 +62,7 @@ public class TagController implements ActionListener {
 
                 view.setTagName(tag.getName());
                 view.setTagColor(tag.getColor());
-                mainController.updatedTask(task);
+                mainController.updateTask(task);
 
             }
 
@@ -81,7 +81,7 @@ public class TagController implements ActionListener {
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
                 mainController.deleteTag(tag);
                 task.removeTag(tag);
-                mainController.updatedTask(task);
+                mainController.updateTask(task);
             }
 
         }

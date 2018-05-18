@@ -37,8 +37,9 @@ public class MainView extends JFrame {
         try {
             BufferedImage myPicture;
             myPicture = ImageIO.read(new File(IMAGE_PATH));
-            Image resized = myPicture.getScaledInstance(750,750,Image.SCALE_SMOOTH);
+            Image resized = myPicture.getScaledInstance(750,450,Image.SCALE_SMOOTH);
             jlPicLabel = new JLabel(new ImageIcon(resized));
+            jpIdentifyPanel.setBackground(Color.WHITE);
         } catch (IOException e) {
             e.printStackTrace();
         }

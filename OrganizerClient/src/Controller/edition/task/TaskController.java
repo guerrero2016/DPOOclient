@@ -61,7 +61,7 @@ public class TaskController implements ActionListener {
             if(view.isTaskNameEditable()) {
                 view.setTaskNameEditable(false, view.getTaskName());
                 task.setName(view.getTaskName());
-                mainController.updatedTask(task);
+                mainController.updateTask(task);
                 mainController.setEditingState(false);
             } else {
                 JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
@@ -90,7 +90,7 @@ public class TaskController implements ActionListener {
             if(view.isDescriptionEditable()) {
                 view.setDescriptionEditable(false);
                 task.setDescription(view.getDescription());
-                mainController.updatedTask(task);
+                mainController.updateTask(task);
                 mainController.setEditingState(false);
             } else {
                 JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
@@ -118,7 +118,7 @@ public class TaskController implements ActionListener {
                     view.addTag(tag);
                     TagPanel tagPanel = view.getTagPanel(task.getTagIndex(tag));
                     tagPanel.registerActionController(new TagController(mainController, tagPanel, task, tag));
-                    mainController.updatedTask(task);
+                    mainController.updateTask(task);
                 }
 
             }
