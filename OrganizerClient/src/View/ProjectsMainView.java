@@ -18,6 +18,7 @@ public class ProjectsMainView extends JPanel {
     private final JButton logOutButton;
     private final JButton addProjectButton;
     public static final String ADD_PROJECT_ACTION_COMMAND = "AddProject";
+    public static final String LOG_OUT_ACTION_COMMAND = "LOGOUT";
 
     private final int S_WIDTH = 1000;
 
@@ -47,6 +48,7 @@ public class ProjectsMainView extends JPanel {
         JPanel southPanel = new JPanel(new BorderLayout());
         logOutButton = new JButton("Tancar sessió");
         addProjectButton = new JButton("+");
+        logOutButton.setActionCommand(LOG_OUT_ACTION_COMMAND);
 
         setLayout(new BorderLayout());
         southPanel.add(logOutButton, BorderLayout.WEST);
@@ -63,6 +65,7 @@ public class ProjectsMainView extends JPanel {
         ownerProjectSelectionView.registerController(controller.getOwnerSelectionController());
         friendProjectSelectionView.registerController(controller.getSharedSelectionController());
         addProjectButton.addActionListener(controller);
+        logOutButton.addActionListener(controller);
     }
 
 }

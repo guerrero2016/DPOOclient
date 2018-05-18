@@ -77,6 +77,7 @@ public class Main {
                 editionController.registerMainController(mainViewController);
                 projectsMainViewController.setController(mainViewController);
 
+                mainViewController.swapPanel(3);
 
                 //NETWORK
 

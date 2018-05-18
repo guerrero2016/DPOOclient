@@ -56,6 +56,10 @@ public class ProjectSelectionController implements ActionListener {
         view.removeProject(index);
     }
 
+    public void resetProjectViews () {
+        view.resetAll();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = ((JButton)e.getSource()).getActionCommand();
