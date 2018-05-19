@@ -78,6 +78,7 @@ public class EditionController {
 
         //Default config
         this.project = project;
+        project.setOwner(true);
         category = null;
         task = null;
 
@@ -116,6 +117,10 @@ public class EditionController {
                 project));
         projectUserPanel.registerDocumentListener(new DocumentController(projectUserPanel));
 
+        //Configure user permissions
+        projectUserPanel.setEditionState(project.isOwner());
+        taskUserPanel.setEditionState(project.isOwner());
+
     }
 
     public void showProjectContent() {
@@ -151,7 +156,10 @@ public class EditionController {
         taskUserPanel.resetActionController();
         taskUserPanel.registerActionController(new TaskAddUserController(this, taskUserPanel, task));
         taskUserPanel.resetMouseController();
-        taskUserPanel.registerMouseController(new TaskRemoveUserController(this, taskUserPanel, task));
+
+        if(project.isOwner()) {
+            taskUserPanel.registerMouseController(new TaskRemoveUserController(this, taskUserPanel, task));
+        }
 
     }
 
@@ -177,6 +185,7 @@ public class EditionController {
     public void updatedTask(Task task) {
         if(mainController != null) {
             //TODO: Update task in database
+
         }
     }
 
@@ -218,6 +227,10 @@ public class EditionController {
 
         return null;
 
+    }
+
+    public void addProjectUser(User user) {
+        taskUserPanel.addUser(user);
     }
 
     public int getCategoryIndex(Category category) {
@@ -282,6 +295,15 @@ public class EditionController {
 
     public void registerMainController(MainViewController mainController) {
         this.mainController = mainController;
+    }
+
+    public void addNewMemberInCharge(String taskId, User user) {
+        mainController.addNewMemberInCharge(taskId, user);
+    }
+
+    public void addMemberInCharge(User user) {
+        task.addUser(user);
+        taskUserPanel.addUser(user);
     }
 
 }

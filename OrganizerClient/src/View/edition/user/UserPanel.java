@@ -19,6 +19,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     private final static String ADD_TITLE = "+";
 
     private final JList<User> jlUserList;
+    private final TransparentPanel tpAddUser;
     private final JTextField jtfNewUser;
     private final JButton jbAddUser;
 
@@ -44,7 +45,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
         jspUsersList.getViewport().setView(jlUserList);
 
         //Member adder
-        final TransparentPanel tpAddUser = new TransparentPanel();
+        tpAddUser = new TransparentPanel();
         tpAddUser.setLayout(new BorderLayout());
         add(tpAddUser, BorderLayout.PAGE_END);
 
@@ -63,6 +64,16 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
         jbAddUser = new JButton(ADD_TITLE);
         jbAddUser.setEnabled(false);
         tpAddUser.add(jbAddUser, BorderLayout.LINE_END);
+
+    }
+
+    public void setEditionState(boolean enableState) {
+
+        remove(tpAddUser);
+
+        if(enableState) {
+            add(tpAddUser, BorderLayout.PAGE_END);
+        }
 
     }
 

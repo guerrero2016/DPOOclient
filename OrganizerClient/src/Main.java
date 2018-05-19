@@ -6,13 +6,8 @@ import View.*;
 import View.edition.EditionPanel;
 import model.ServerObjectType;
 import Network.NetworkManager;
-import model.project.Project;
-import model.user.UserRegister;
 
 import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -90,6 +85,7 @@ public class Main {
                 network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
                 network.addCommunicator(new ProjectAddedCommunicator(), ServerObjectType.SET_PROJECT);
                 network.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
+                network.addCommunicator(new MemberAddedCommunicator(), ServerObjectType.SET_MEMBER);
 
                 mainViewController.setNetwork(network);
 

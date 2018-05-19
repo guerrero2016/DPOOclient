@@ -106,6 +106,19 @@ public class MainViewController {
         //TODO: Share project
     }
 
+    public void addNewMemberInCharge(String taskId, User user) {
+        try {
+            sendToServer(ServerObjectType.SET_MEMBER, taskId);
+            sendToServer(ServerObjectType.SET_MEMBER, user);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addMemberInCharge(User user) {
+        editionController.addMemberInCharge(user);
+    }
+
     public void sendToServer(ServerObjectType type, Object o) throws IOException {
         network.sendToServer(type, o);
     }
