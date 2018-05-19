@@ -226,14 +226,17 @@ public class EditionController {
     public void updateTask(Task task) {
         if(mainController != null) {
             try {
-                System.out.println("TSN"+task.getName());
-                task.setName("22222");
                 mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
                 mainController.sendToServer(null, task);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void updateTaskView(Task task) {
+        taskPanel.setTaskName(task.getName());
+        taskPanel.setDescription(task.getDescription());
     }
 
     public void updateCategory(Category category) {

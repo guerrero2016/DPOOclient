@@ -20,6 +20,7 @@ public class TaskSetCommunicator implements Communicable {
             String categoryID = objectIn.readObject().toString();
             System.out.println(categoryID + task.getName() + task.getID());
             dataManager.setTask(task, categoryID);
+            controller.updateTask(dataManager.getProjectID(), categoryID, task);
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
