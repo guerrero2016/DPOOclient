@@ -31,6 +31,17 @@ public class UserRegister extends User {
         return confirm;
     }
 
+    public void encryptPassword() {
+
+        if (checkSignIn() == 0 && (User.containsUpperCase(password) || User.containsUpperCase(confirm))) {
+            password = User.getMD5(password);
+            confirm = User.getMD5(confirm);
+        } else {
+            password = "";
+            confirm = "";
+        }
+    }
+
     public int checkSignIn(){
 
         if (userName == null){

@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.edition.EditionController;
 import Network.Communicable;
+import View.LogInPanel;
 import model.project.Category;
 import model.project.Project;
 import model.project.Task;
@@ -10,10 +11,15 @@ import View.MainView;
 import Network.NetworkManager;
 import model.ServerObjectType;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
-public class MainViewController {
+public class MainViewController extends WindowAdapter implements ActionListener{
 
     final private NetworkManager network;
     private MainView view;
@@ -46,15 +52,6 @@ public class MainViewController {
 
     public EditionController getEditionController() {
         return editionController;
-    }
-
-    public void setControllerCommunication() {
-        logInController.setController(this);
-        signInController.setController(this);
-    }
-
-    public void registerControllers(MainView view) {
-        view.addControllerButton(logInController, signInController);
     }
 
     public void swapPanel(int whatPanel) {
@@ -136,4 +133,26 @@ public class MainViewController {
         view.showErrorDialog(errorMSG);
     }
 
+    @Override
+    public void windowClosing(WindowEvent e) {
+        if(JOptionPane.showConfirmDialog(view, "Estàs segur?") == JOptionPane.OK_OPTION){
+            view.dispose();
+            try {
+                sendToServer(ServerObjectType.LOGOUT, null);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        try {
+            System.out.println("se pulsa");
+            sendToServer(ServerObjectType.LOGOUT, null);
+            swapPanel(LogInPanel.LOGIN);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 }
