@@ -117,7 +117,7 @@ public class TaskController implements ActionListener {
                     view.cleanNewTagName();
                     view.addTag(tag);
                     TagPanel tagPanel = view.getTagPanel(task.getTagIndex(tag));
-                    tagPanel.registerActionController(new TagController(mainController, tagPanel, task, tag));
+                    tagPanel.registerActionController(new TagController(mainController, tagPanel, tag));
                     mainController.updateTask(task);
                 }
 

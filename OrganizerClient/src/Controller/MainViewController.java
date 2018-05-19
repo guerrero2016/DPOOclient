@@ -4,6 +4,7 @@ import Controller.edition.EditionController;
 import Network.Communicable;
 import model.project.Category;
 import model.project.Project;
+import model.project.Tag;
 import model.project.Task;
 import model.user.User;
 import View.MainView;
@@ -103,17 +104,62 @@ public class MainViewController {
         //TODO: Share project
     }
 
-    public void addNewMemberInCharge(String taskId, User user) {
+    public void addMemberInDB(String categoryId, String taskId, User user) {
         try {
-            sendToServer(ServerObjectType.SET_MEMBER, taskId);
-            sendToServer(ServerObjectType.SET_MEMBER, user);
+            sendToServer(ServerObjectType.SET_MEMBER, categoryId);
+            sendToServer(null, taskId);
+            sendToServer(null, user);
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void addMemberInCharge(User user) {
-        editionController.addMemberInCharge(user);
+    public void addMemberInProject(String categoryId, String taskId, User user) {
+        editionController.addMemberInProject(categoryId, taskId, user);
+    }
+
+    public void removeMemberInDB(String categoryId, String taskId, User user) {
+        try {
+            sendToServer(ServerObjectType.DELETE_MEMBER, categoryId);
+            sendToServer(null, taskId);
+            sendToServer(null, user);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeMemberInProject(String categoryId, String taskId, User user) {
+        editionController.removeMemberInProject(categoryId, taskId, user);
+    }
+
+    public void removeTagInDB(String categoryId, String taskId, Tag tag) {
+        try {
+            sendToServer(ServerObjectType.DELETE_TAG, categoryId);
+            sendToServer(null, taskId);
+            sendToServer(null, tag);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeTagInProject(String categoryId, String taskId, Tag tag) {
+        editionController.removeTagInProject(categoryId, taskId, tag);
+    }
+
+    public void editTagInDB(String categoryId, String taskId, Tag tag, String tagName, Color color) {
+        try {
+            sendToServer(ServerObjectType.EDIT_TAG, categoryId);
+            sendToServer(null, taskId);
+            sendToServer(null, tag);
+            sendToServer(null, tagName);
+            sendToServer(null, color);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editTagInProject(String categoryId, String taskId, Tag tag) {
+        editionController.editTagInProject(categoryId, taskId, tag);
     }
 
     public void resetSelectionView(){

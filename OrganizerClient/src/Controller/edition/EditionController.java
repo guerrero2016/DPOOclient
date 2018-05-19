@@ -29,6 +29,7 @@ import View.edition.user.UserPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EditionController {
 
@@ -168,6 +169,8 @@ public class EditionController {
 
     public void showProjectContent() {
         isEditing = false;
+        category = null;
+        task = null;
         editionPanel.showProjectPanel();
     }
 
@@ -191,17 +194,17 @@ public class EditionController {
         for(int i = 0; i < task.getTagsSize(); i++) {
             TagPanel tagPanel = editionPanel.getTaskPanel().getTagPanel(i);
             tagPanel.resetActionController();
-            tagPanel.registerActionController(new TagController(this, tagPanel, task, task.getTag(i)));
+            tagPanel.registerActionController(new TagController(this, tagPanel, task.getTag(i)));
         }
 
         //Config task users controllers
         taskUserPanel.setUserList(task.getUsers());
         taskUserPanel.resetActionController();
-        taskUserPanel.registerActionController(new TaskAddUserController(this, taskUserPanel, task));
         taskUserPanel.resetMouseController();
 
         if(project.isOwner()) {
-            taskUserPanel.registerMouseController(new TaskRemoveUserController(this, taskUserPanel, task));
+            taskUserPanel.registerActionController(new TaskAddUserController(this, taskUserPanel, task));
+            taskUserPanel.registerMouseController(new TaskRemoveUserController(this));
         }
 
     }
@@ -281,16 +284,6 @@ public class EditionController {
 
     }
 
-    public void deleteTag(Tag tag) {
-
-        taskPanel.removeTag(task.getTagIndex(tag));
-
-        if(mainController != null) {
-            //TODO: Delete tag in database
-        }
-
-    }
-
     public User getProjectUser(String userName) {
 
         for(int i = 0; i < project.getUsers().size(); i++) {
@@ -342,6 +335,9 @@ public class EditionController {
         if (mainController != null) {
             //TODO: Save changes
             try {
+                project = null;
+                category = null;
+                task = null;
                 mainController.sendToServer(ServerObjectType.EXIT_PROJECT, null);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -375,13 +371,118 @@ public class EditionController {
         this.mainController = mainController;
     }
 
-    public void addNewMemberInCharge(String taskId, User user) {
-        mainController.addNewMemberInCharge(taskId, user);
+    public void addMemberInDB(User user) {
+        if(mainController != null) {
+            mainController.addMemberInDB(category.getId(), task.getID(), user);
+        } else {
+            task.addUser(user);
+            taskUserPanel.addUser(user);
+        }
     }
 
-    public void addMemberInCharge(User user) {
-        task.addUser(user);
-        taskUserPanel.addUser(user);
+    public void addMemberInProject(String categoryId, String taskId, User user) {
+
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        Task targetTask = targetCategory.getTaskWithId(taskId);
+        targetTask.addUser(user);
+
+        if(task != null && task.getID().equals(taskId)) {
+            taskUserPanel.addUser(user);
+        }
+
+    }
+
+    public void removeMemberInDB(User user) {
+        if(mainController != null) {
+            mainController.removeMemberInDB(category.getId(), task.getID(), user);
+        } else {
+            taskUserPanel.removeUser(task.getUserIndex(user));
+            task.removeUser(user);
+        }
+    }
+
+    public void removeMemberInProject(String categoryId, String taskId, User user) {
+
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        Task targetTask = targetCategory.getTaskWithId(taskId);
+
+        if(task != null && task.getID().equals(taskId)) {
+
+            TaskRemoveUserController controller = (TaskRemoveUserController) taskUserPanel.getMouseListeners()[0];
+
+            if(controller.isRemovingUser(user)) {
+                controller.closeDialog();
+            }
+
+            taskUserPanel.removeUser(task.getUserIndex(user));
+
+        }
+
+        targetTask.removeUser(user);
+
+    }
+
+    public void removeTagInDB(Tag tag) {
+        if(mainController != null) {
+            mainController.removeTagInDB(category.getId(), task.getID(), tag);
+        } else {
+            taskPanel.removeTag(task.getTagIndex(tag));
+            task.removeTag(tag);
+        }
+    }
+
+    public void removeTagInProject(String categoryId, String taskId, Tag tag) {
+
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        Task targetTask = targetCategory.getTaskWithId(taskId);
+
+        if(task != null && task.getID().equals(taskId)) {
+
+            TagController controller = (TagController) taskPanel.getTagPanel(task.getTagIndex(tag)).getActionListener();
+
+            if(controller.isRemovingTag(tag)) {
+                controller.closeDialog();
+            }
+
+            taskPanel.removeTag(task.getTagIndex(tag));
+
+        }
+
+        targetTask.removeTag(tag);
+        projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).
+                updateTask(targetCategory.getTaskIndex(targetTask), targetTask);
+
+    }
+
+    public void editTagInDB(Tag tag, String tagName, Color tagColor) {
+        mainController.editTagInDB(category.getId(), task.getID(), tag, tagName, tagColor);
+    }
+
+    public void editTagInProject(String categoryId, String taskId, Tag tag) {
+
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        Task targetTask = targetCategory.getTaskWithId(taskId);
+        Tag targetTag = targetTask.getTagWithId(tag.getId());
+
+        if(task != null && task.getID().equals(taskId)) {
+
+            TagPanel tagPanel = taskPanel.getTagPanel(targetTask.getTagIndex(tag));
+            tagPanel.setTagName(tag.getName());
+            tagPanel.setTagColor(tag.getColor());
+            TagController controller = (TagController) taskPanel.getTagPanel(task.getTagIndex(tag)).getActionListener();
+
+            if(!controller.isEditingTag(tag)) {
+                tagPanel.revalidate();
+                tagPanel.repaint();
+            }
+
+        }
+
+        targetTag.setName(tag.getName());
+        targetTag.setColor(tag.getColor());
+        projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).
+                updateTask(targetCategory.getTaskIndex(targetTask), targetTask);
+
     }
 
 }
