@@ -18,7 +18,7 @@ public class TaskSetCommunicator implements Communicable {
             DataManager dataManager = DataManager.getSharedInstance();
             Task task = (Task) objectIn.readObject();
             String categoryID = objectIn.readObject().toString();
-
+            System.out.println(categoryID + task.getName() + task.getID());
             dataManager.setTask(task, categoryID);
 
         } catch (IOException | ClassNotFoundException e) {

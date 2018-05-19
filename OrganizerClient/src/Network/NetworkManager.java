@@ -20,7 +20,7 @@ public class NetworkManager extends Thread {
     private ObjectOutputStream objectOut;
     private HashMap<ServerObjectType, Communicable> communicables;
 
-    public NetworkManager(MainViewController controller) {
+    public NetworkManager() {
         try {
             this.isOn = false;
             this.controller = controller;
@@ -31,6 +31,10 @@ public class NetworkManager extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setController(MainViewController controller) {
+        this.controller = controller;
     }
 
     public void startCommunication() {
@@ -71,4 +75,7 @@ public class NetworkManager extends Thread {
         communicables.put(type, communicable);
     }
 
+    public void removeCommunicator (ServerObjectType type) {
+        communicables.remove(type);
+    }
 }

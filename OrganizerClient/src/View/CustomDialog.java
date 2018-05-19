@@ -13,7 +13,7 @@ public class CustomDialog extends JDialog{
 
         this.getContentPane().add(view);
         this.setTitle(title);
-        this.setSize(new Dimension(300, 300));
+        this.setSize(new Dimension(600, 300));
         this.setMinimumSize(new Dimension(300, 300));
         this.setModal(false);
     }

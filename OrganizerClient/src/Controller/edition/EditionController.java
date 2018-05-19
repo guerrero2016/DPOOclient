@@ -12,10 +12,7 @@ import Controller.edition.task.TaskController;
 import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
-import Network.Communicators.CategoryDeleteCommunicator;
-import Network.Communicators.CategorySetCommunicator;
-import Network.Communicators.CategorySwapCommunicator;
-import View.ProjectsMainView;
+import Network.Communicators.*;
 import model.DataManager;
 import model.ServerObjectType;
 import model.project.Category;
@@ -79,7 +76,21 @@ public class EditionController {
         //Config task users panel
         taskUserPanel.setTitle(TASK_USERS_TITLE);
         taskUserPanel.registerDocumentListener(new DocumentController(taskUserPanel));
+    }
 
+    private void addCommunicators () {
+        mainController.addComunicator(new ProjectEditedCommunicator(), ServerObjectType.SET_PROJECT);
+        mainController.addComunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
+        mainController.addComunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
+        mainController.addComunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
+        mainController.addComunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
+    }
+
+    public void removeCommunicators () {
+        mainController.removeCommunicator(ServerObjectType.SET_PROJECT);
+        mainController.removeCommunicator(ServerObjectType.DELETE_PROJECT);
+        mainController.removeCommunicator(ServerObjectType.SET_CATEGORY);
+        mainController.removeCommunicator(ServerObjectType.DELETE_CATEGORY);
     }
 
     public MainViewController getMainController() {
@@ -88,6 +99,7 @@ public class EditionController {
 
     public void setMainController(MainViewController mainController) {
         this.mainController = mainController;
+        addCommunicators();
     }
 
     public void addCategory(Category category) {
@@ -110,6 +122,7 @@ public class EditionController {
 
         //Default config
         this.project = project;
+        project.setOwner(true);
         category = null;
         task = null;
 
@@ -149,6 +162,10 @@ public class EditionController {
                 project));
         projectUserPanel.registerDocumentListener(new DocumentController(projectUserPanel));
 
+        //Configure user permissions
+        projectUserPanel.setEditionState(project.isOwner());
+        taskUserPanel.setEditionState(project.isOwner());
+
     }
 
     public void showProjectContent() {
@@ -184,7 +201,10 @@ public class EditionController {
         taskUserPanel.resetActionController();
         taskUserPanel.registerActionController(new TaskAddUserController(this, taskUserPanel, task));
         taskUserPanel.resetMouseController();
-        taskUserPanel.registerMouseController(new TaskRemoveUserController(this, taskUserPanel, task));
+
+        if(project.isOwner()) {
+            taskUserPanel.registerMouseController(new TaskRemoveUserController(this, taskUserPanel, task));
+        }
 
     }
 
@@ -215,6 +235,8 @@ public class EditionController {
     public void updateTask(Task task) {
         if(mainController != null) {
             try {
+                System.out.println("TSN"+task.getName());
+                task.setName("22222");
                 mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
                 mainController.sendToServer(null, task);
             } catch (IOException e) {
@@ -229,11 +251,23 @@ public class EditionController {
                 if (category.getOrder() == -1) {
                     category.setOrder(project.getCategoriesSize());
                 }
-                mainController.addComunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
                 mainController.sendToServer(ServerObjectType.SET_CATEGORY, category);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void createTask (Task task, Category category) {
+        if (task.getOrder() == -1) {
+            task.setOrder(category.getTasksSize()-1);
+        }
+        System.out.println("pescao");
+        try {
+            mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
+            mainController.sendToServer(null, task);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -264,6 +298,10 @@ public class EditionController {
             }
         }
         return null;
+    }
+
+    public void addProjectUser(User user) {
+        taskUserPanel.addUser(user);
     }
 
     public int getCategoryIndex(Category category) {
@@ -352,6 +390,15 @@ public class EditionController {
 
     public void registerMainController(MainViewController mainController) {
         this.mainController = mainController;
+    }
+
+    public void addNewMemberInCharge(String taskId, User user) {
+        mainController.addNewMemberInCharge(taskId, user);
+    }
+
+    public void addMemberInCharge(User user) {
+        task.addUser(user);
+        taskUserPanel.addUser(user);
     }
 
 }

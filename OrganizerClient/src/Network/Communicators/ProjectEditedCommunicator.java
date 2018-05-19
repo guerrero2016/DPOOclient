@@ -14,7 +14,7 @@ import java.io.ObjectInputStream;
 /**
  * Comunicador que escolta si algun usuari ha afegit un projecte
  */
-public class ProjectEditedCommunicator extends Thread implements Communicable {
+public class ProjectEditedCommunicator implements Communicable {
 
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
@@ -23,7 +23,7 @@ public class ProjectEditedCommunicator extends Thread implements Communicable {
             final Project p = (Project) objectIn.readObject();
 
             if (dataManager.getWhatPanel() == MainView.PROJECT_ID) {
-
+                controller.updateProject(p);
             } else if(dataManager.getWhatPanel() == ProjectsMainView.VIEW_TAG) {
                 if (p.isOwner()) {
                     if (dataManager.getOwnerProjectIndex(p) == -1) {

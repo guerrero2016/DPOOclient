@@ -95,7 +95,7 @@ public class CategoryActionController implements ActionListener {
             category.addTask(task);
             view.cleanNewTaskName();
             view.addNewTask(task);
-            mainController.updateCategory(category);
+            mainController.createTask(task, category);
         } else if(mainController.isEditing()) {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
                     EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
