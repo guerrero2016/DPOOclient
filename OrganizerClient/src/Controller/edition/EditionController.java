@@ -13,6 +13,7 @@ import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
 import Network.Communicators.*;
+import model.DataManager;
 import model.ServerObjectType;
 import model.project.Category;
 import model.project.Project;
@@ -236,14 +237,17 @@ public class EditionController {
     public void updateTask(Task task) {
         if(mainController != null) {
             try {
-                System.out.println("TSN"+task.getName());
-                task.setName("22222");
                 mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
                 mainController.sendToServer(null, task);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void updateTaskView(Task task) {
+        taskPanel.setTaskName(task.getName());
+        taskPanel.setDescription(task.getDescription());
     }
 
     public void updateCategory(Category category) {
@@ -285,15 +289,12 @@ public class EditionController {
     }
 
     public User getProjectUser(String userName) {
-
         for(int i = 0; i < project.getUsers().size(); i++) {
             if(userName.equals(project.getUser(i).getUserName())) {
                 return project.getUser(i);
             }
         }
-
         return null;
-
     }
 
     public void addProjectUser(User user) {
@@ -305,25 +306,45 @@ public class EditionController {
     }
 
     public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
+        mainController.addComunicator(new CategorySwapCommunicator(), ServerObjectType.SWAP_CATEGORY);
+        try {
+            Category c1 = DataManager.getSharedInstance().getSelectedProject().getCategories().get(firstCategoryIndex);
+            Category c2 = DataManager.getSharedInstance().getSelectedProject().getCategories().get(secondCategoryIndex);
+            Category c1_aux = new Category(c1.getId(), c1.getName(), c1.getOrder(), c1.getTasks());
+            Category c2_aux = new Category(c2.getId(), c2.getName(), c2.getOrder(), c2.getTasks());
+            mainController.sendToServer(ServerObjectType.SWAP_CATEGORY,c1_aux);
+            mainController.sendToServer(null,c2_aux);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void swapCategoriesInView(int firstCategoryIndex, int secondCategoryIndex) {
         project.swapCategories(firstCategoryIndex, secondCategoryIndex);
         projectPanel.swapCategories(firstCategoryIndex, secondCategoryIndex);
     }
 
-    public void deleteCategory(Category category) {
-
+    public void deleteCategory(String id_category) {
+        Category category = null;
+        for(Category c: project.getCategories()){
+            if(c.getId().equals(id_category)) {
+                category = c;
+            }
+        }
         int index = project.getCategoryIndex(category);
-
         if(index >= 0 && index < project.getCategoriesSize()) {
-
             project.deleteCategory(category);
             projectPanel.removeCategory(index);
-
             if(mainController != null) {
-                //TODO: Delete category in database
+                try {
+                    mainController.addComunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
+                    mainController.sendToServer(ServerObjectType.DELETE_CATEGORY, category);
+                    mainController.sendToServer(null, project.getId());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-
         }
-
     }
 
     public void updateTaskList() {

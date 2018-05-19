@@ -53,7 +53,6 @@ public class NetworkManager extends Thread {
         while (isOn) {
             try {
                 int typeID = objectIn.readInt();
-
                 ServerObjectType serverObjectType = ServerObjectType.valueOf(typeID);
                 System.out.println(serverObjectType);
                 if (communicables.get(serverObjectType) != null) {

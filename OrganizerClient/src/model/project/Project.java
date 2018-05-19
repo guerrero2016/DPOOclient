@@ -174,6 +174,9 @@ public class Project implements Serializable{
                 && secondCategoryIndex >= 0) {
             Category category1 = categories.get(firstCategoryIndex);
             Category category2 = categories.get(secondCategoryIndex);
+            int aux = category1.getOrder();
+            category1.setOrder(category2.getOrder());
+            category2.setOrder(aux);
             categories.set(firstCategoryIndex, category2);
             categories.set(secondCategoryIndex, category1);
         }

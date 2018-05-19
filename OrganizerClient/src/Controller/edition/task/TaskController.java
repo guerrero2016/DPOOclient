@@ -61,7 +61,11 @@ public class TaskController implements ActionListener {
             if(view.isTaskNameEditable()) {
                 view.setTaskNameEditable(false, view.getTaskName());
                 task.setName(view.getTaskName());
-                mainController.updateTask(task);
+                //Copiem la tasca en una variable auxiliar perquè sinò no es passa correctament.
+                Task aux =  new Task(task.getName(), task.getDescription(), task.getTags(), task.getUsers(),
+                        task.getOrder());
+                aux.setId(task.getID());
+                mainController.updateTask(aux);
                 mainController.setEditingState(false);
             } else {
                 JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
@@ -127,6 +131,11 @@ public class TaskController implements ActionListener {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
                     EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
         }
+    }
+
+    public void updateTask(Task task){
+        view.setDescription(task.getDescription());
+        view.setTaskName(task.getName());
     }
 
 }

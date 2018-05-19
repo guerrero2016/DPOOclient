@@ -26,21 +26,25 @@ public class ProjectEditedCommunicator implements Communicable {
                 controller.updateProject(p);
             } else if(dataManager.getWhatPanel() == ProjectsMainView.VIEW_TAG) {
                 if (p.isOwner()) {
-                    if (dataManager.getOwnerProjectIndex(p) == -1) {
+                    int i = dataManager.getOwnerProjectIndex(p);
+                    if (i == -1) {
                         dataManager.addProjectToOwnerList(p);
                         controller.getProjectsMainViewController().addOwnerProject(p);
                     } else {
                         dataManager.deleteOwnerProjectByID(p.getId());
+                        controller.getProjectsMainViewController().getOwnerSelectionController().deleteProject(i);
                         dataManager.addProjectToOwnerList(p);
                         controller.getProjectsMainViewController().addOwnerProject(p);
                     }
 
                 }else {
-                    if (dataManager.getSharedProjectIndex(p) == -1) {
+                    int i = dataManager.getSharedProjectIndex(p);
+                    if (i == -1) {
                         dataManager.addProjectToSharedList(p);
                         controller.getProjectsMainViewController().addSharedProject(p);
                     } else {
                         dataManager.deleteSharedProjectByID(p.getId());
+                        controller.getProjectsMainViewController().getSharedSelectionController().deleteProject(i);
                         dataManager.addProjectToSharedList(p);
                         controller.getProjectsMainViewController().addSharedProject(p);
                     }

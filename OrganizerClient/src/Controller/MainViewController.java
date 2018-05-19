@@ -87,8 +87,8 @@ public class MainViewController {
         //TODO: Update category from database
     }
 
-    public void updateTask(Project project, Category category, Task task) {
-        //TODO: Update task from database
+    public void updateTask(String projectID, String categoryID, Task task) {
+        editionController.updateTaskView(task);
     }
 
     public void deleteProject() {

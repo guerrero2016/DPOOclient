@@ -21,7 +21,8 @@ public class Category implements Serializable {
         tasks = new ArrayList<>();
     }
 
-    public Category(String name, int order, ArrayList<Task> tasks) {
+    public Category(String id, String name, int order, ArrayList<Task> tasks) {
+        this.id = id;
         this.name = name;
         this.order = order;
         this.tasks = tasks;
