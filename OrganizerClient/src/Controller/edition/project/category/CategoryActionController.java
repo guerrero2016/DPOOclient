@@ -33,8 +33,10 @@ public class CategoryActionController implements ActionListener {
             category = DataManager.getSharedInstance().getSelectedProject().getCategory(category.getOrder());
             categoryNameManagement();
         } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_LEFT)) {
+            category = DataManager.getSharedInstance().getSelectedProject().getCategory(category.getOrder());
             categoryReorder(TO_LEFT);
         } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_RIGHT)) {
+            category = DataManager.getSharedInstance().getSelectedProject().getCategory(category.getOrder());
             categoryReorder(TO_RIGHT);
         } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_DELETE)) {
             categoryDelete();
@@ -62,18 +64,15 @@ public class CategoryActionController implements ActionListener {
 
     private void categoryReorder(int orderBy) {
         if(!mainController.isEditing()) {
-
             int index = mainController.getCategoryIndex(category);
-
             switch(orderBy) {
                 case TO_RIGHT:
                     mainController.swapCategories(index, index + 1);
                     break;
                 case TO_LEFT:
-                    mainController.swapCategories(index, index - 1);
+                    mainController.swapCategories(index - 1, index);
                     break;
             }
-
         }
     }
 
@@ -85,6 +84,7 @@ public class CategoryActionController implements ActionListener {
             if (mainController.isEditing() && view.isCategoryNameEditable()) {
                 mainController.setEditingState(false);
             }
+            DataManager.getSharedInstance().updateCategoriesOrder(category.getOrder());
             mainController.deleteCategory(category.getId());
         }
     }

@@ -14,7 +14,9 @@ import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
 import Network.Communicators.CategoryDeleteCommunicator;
 import Network.Communicators.CategorySetCommunicator;
+import Network.Communicators.CategorySwapCommunicator;
 import View.ProjectsMainView;
+import model.DataManager;
 import model.ServerObjectType;
 import model.project.Category;
 import model.project.Project;
@@ -31,6 +33,7 @@ import View.edition.user.UserPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EditionController {
 
@@ -247,9 +250,7 @@ public class EditionController {
     }
 
     public void deleteTag(Tag tag) {
-
         taskPanel.removeTag(task.getTagIndex(tag));
-
         if(mainController != null) {
             //TODO: Delete tag in database
         }
@@ -270,6 +271,20 @@ public class EditionController {
     }
 
     public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
+        mainController.addComunicator(new CategorySwapCommunicator(), ServerObjectType.SWAP_CATEGORY);
+        try {
+            Category c1 = DataManager.getSharedInstance().getSelectedProject().getCategories().get(firstCategoryIndex);
+            Category c2 = DataManager.getSharedInstance().getSelectedProject().getCategories().get(secondCategoryIndex);
+            Category c1_aux = new Category(c1.getId(), c1.getName(), c1.getOrder(), c1.getTasks());
+            Category c2_aux = new Category(c2.getId(), c2.getName(), c2.getOrder(), c2.getTasks());
+            mainController.sendToServer(ServerObjectType.SWAP_CATEGORY,c1_aux);
+            mainController.sendToServer(null,c2_aux);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void swapCategoriesInView(int firstCategoryIndex, int secondCategoryIndex) {
         project.swapCategories(firstCategoryIndex, secondCategoryIndex);
         projectPanel.swapCategories(firstCategoryIndex, secondCategoryIndex);
     }
@@ -288,7 +303,8 @@ public class EditionController {
             if(mainController != null) {
                 try {
                     mainController.addComunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
-                    mainController.sendToServer(ServerObjectType.DELETE_CATEGORY, category.getId());
+                    mainController.sendToServer(ServerObjectType.DELETE_CATEGORY, category);
+                    mainController.sendToServer(null, project.getId());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
