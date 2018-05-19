@@ -1,5 +1,6 @@
 package View.edition.project;
 
+import model.DataManager;
 import model.project.Category;
 import View.edition.document.DocumentEnablePanel;
 import View.edition.TransparentPanel;
@@ -224,14 +225,15 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         return jtfProjectName.isEditable();
     }
 
-    public CategoryPanel getCategoryPanel(int categoryIndex) {
+    public int getCategoriesPanelSize() {
+        return categoryPanels.size();
+    }
 
+    public CategoryPanel getCategoryPanel(int categoryIndex) {
         if(categoryIndex < categoryPanels.size()) {
             return categoryPanels.get(categoryIndex);
         }
-
         return null;
-
     }
 
     public void cleanCategories() {
@@ -241,14 +243,11 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         repaint();
     }
 
-    public void addCategory(Category category) {
+    public void addCategoryToView(Category category) {
         if(category != null) {
-
-            categoryPanels.add(new CategoryPanel(category, editorIcon, deleteIcon, leftIcon, rightIcon, checkIcon));
             GridBagConstraints gbc;
-
             if(categoryPanels.size() > 1) {
-                CategoryPanel categoryPanel = categoryPanels.get(categoryPanels.size() - 2);
+                CategoryPanel categoryPanel = categoryPanels.get(categoryPanels.size() - 1);
                 gbc = ((GridBagLayout) tpCategories.getLayout()).getConstraints(categoryPanel);
                 gbc.gridx += 1;
             } else {
@@ -259,11 +258,10 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
                 gbc.insets = new Insets(5, 5, 5, 5);
                 gbc.fill = GridBagConstraints.VERTICAL;
             }
-
+            categoryPanels.add(new CategoryPanel(category, editorIcon, deleteIcon, leftIcon, rightIcon, checkIcon));
             tpCategories.add(categoryPanels.get(categoryPanels.size() - 1), gbc);
             revalidate();
             repaint();
-
         }
     }
 

@@ -43,6 +43,14 @@ public class ProjectSelectionView extends JPanel {
         }
     }
 
+    public void resetAll () {
+        projectBoxViews = new ArrayList<>();
+        projectBoxControllers = new ArrayList<>();
+        gridPanel = new JPanel(new GridBagLayout());
+        gridBagConstraints = new GridBagConstraints();
+        scrollPane.getViewport().setView(gridPanel);
+    }
+
     public void createProjectBoxes (String [] titles, Color[] colors, ProjectBoxController[] controllers) {
         setVisible(false);
         nBoxes = titles.length;

@@ -1,6 +1,7 @@
 package Network.Communicators;
 
 import Controller.MainViewController;
+import View.edition.project.category.CategoryPanel;
 import model.DataManager;
 import model.project.Category;
 import Network.Communicable;
@@ -16,8 +17,21 @@ public class CategorySetCommunicator implements Communicable {
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
             Category category = (Category) objectIn.readObject();
-            DataManager.getSharedInstance().setCategory(category);
-            //TODO avisar al controller
+            boolean exists = false;
+            int i;
+            System.out.println(category.getId());
+            for(i = 0; i < DataManager.getSharedInstance().getSelectedProject().getCategories().size(); i++) {
+                String idAux = DataManager.getSharedInstance().getSelectedProject().getCategories().get(i).getId();
+                if(idAux.equals(category.getId())) {
+                    exists = true;
+                    break;
+                }
+            }
+            if(exists) {
+                DataManager.getSharedInstance().getSelectedProject().getCategories().set(i, category);
+            } else {
+                controller.getEditionController().addCategory(category);
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

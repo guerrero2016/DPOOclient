@@ -1,6 +1,7 @@
 package Controller.edition.project.category;
 
 import Controller.edition.EditionController;
+import model.DataManager;
 import model.project.Task;
 import View.edition.project.category.CategoryPanel;
 
@@ -29,6 +30,7 @@ public class CategoryActionController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_EDIT_NAME)) {
+            category = DataManager.getSharedInstance().getSelectedProject().getCategory(category.getOrder());
             categoryNameManagement();
         } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_LEFT)) {
             categoryReorder(TO_LEFT);
@@ -49,7 +51,7 @@ public class CategoryActionController implements ActionListener {
             if(view.isCategoryNameEditable()) {
                 view.setCategoryNameEditable(false, view.getCategoryName());
                 category.setName(view.getCategoryName());
-                mainController.updatedCategory(category);
+                mainController.updateCategory(category);
                 mainController.setEditingState(false);
             } else {
                 JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
@@ -99,7 +101,7 @@ public class CategoryActionController implements ActionListener {
             category.addTask(task);
             view.cleanNewTaskName();
             view.addNewTask(task);
-            mainController.updatedCategory(category);
+            mainController.createTask(task, category);
         } else if(mainController.isEditing()) {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
                     EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);

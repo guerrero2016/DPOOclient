@@ -12,7 +12,8 @@ import Controller.edition.task.TaskController;
 import Controller.edition.task.tag.TagController;
 import Controller.edition.task.user.TaskAddUserController;
 import Controller.edition.task.user.TaskRemoveUserController;
-import View.ProjectsMainView;
+import Network.Communicators.*;
+import model.ServerObjectType;
 import model.project.Category;
 import model.project.Project;
 import model.project.Tag;
@@ -25,7 +26,9 @@ import View.edition.task.TaskPanel;
 import View.edition.task.tag.TagPanel;
 import View.edition.user.UserPanel;
 
+import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class EditionController {
 
@@ -71,7 +74,46 @@ public class EditionController {
         //Config task users panel
         taskUserPanel.setTitle(TASK_USERS_TITLE);
         taskUserPanel.registerDocumentListener(new DocumentController(taskUserPanel));
+    }
 
+    private void addCommunicators () {
+        mainController.addComunicator(new ProjectEditedCommunicator(), ServerObjectType.SET_PROJECT);
+        mainController.addComunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
+        mainController.addComunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
+        mainController.addComunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
+        mainController.addComunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
+    }
+
+    public void removeCommunicators () {
+        mainController.removeCommunicator(ServerObjectType.SET_PROJECT);
+        mainController.removeCommunicator(ServerObjectType.DELETE_PROJECT);
+        mainController.removeCommunicator(ServerObjectType.SET_CATEGORY);
+        mainController.removeCommunicator(ServerObjectType.DELETE_CATEGORY);
+    }
+
+    public MainViewController getMainController() {
+        return mainController;
+    }
+
+    public void setMainController(MainViewController mainController) {
+        this.mainController = mainController;
+        addCommunicators();
+    }
+
+    public void addCategory(Category category) {
+        if(!this.isEditing() && !projectPanel.getNewCategoryName().isEmpty()) {
+            projectPanel.cleanNewCategoryName();
+            projectPanel.addCategoryToView(category);
+            project.setCategory(category);
+            System.out.println(project.getCategoriesSize());
+            CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoriesSize() - 1);
+            categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel, category));
+            categoryPanel.registerMouseController(new CategoryMouseController(this, category));
+            categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
+        } else if(this.isEditing()) {
+            JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
+                    EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     public void loadProject(Project project) {
@@ -89,9 +131,10 @@ public class EditionController {
         projectPanel.cleanCategories();
 
         for(int i = 0; i < project.getCategoriesSize(); i++) {
-            projectPanel.addCategory(project.getCategory(i));
+            projectPanel.addCategoryToView(project.getCategory(i));
             CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i);
             categoryPanel.resetActionController();
+            System.out.println(project.getCategory(i).getId());
             categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel,
                     project.getCategory(i)));
             categoryPanel.resetMouseController();
@@ -176,22 +219,53 @@ public class EditionController {
         isEditing = enableState;
     }
 
-    public void updatedProject() {
+    public void updateProject() {
         if(mainController != null) {
-            //TODO: Update project in database
+            try {
+                System.out.println("Se envia" + project.getName());
+                mainController.sendToServer(ServerObjectType.SET_PROJECT, project);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void updatedTask(Task task) {
+    public void updateTask(Task task) {
         if(mainController != null) {
-            //TODO: Update task in database
-
+            try {
+                System.out.println("TSN"+task.getName());
+                task.setName("22222");
+                mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
+                mainController.sendToServer(null, task);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void updatedCategory(Category category) {
+    public void updateCategory(Category category) {
         if(mainController != null) {
-            //TODO: Update category in database
+            try {
+                if (category.getOrder() == -1) {
+                    category.setOrder(project.getCategoriesSize());
+                }
+                mainController.sendToServer(ServerObjectType.SET_CATEGORY, category);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void createTask (Task task, Category category) {
+        if (task.getOrder() == -1) {
+            task.setOrder(category.getTasksSize()-1);
+        }
+        System.out.println("pescao");
+        try {
+            mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
+            mainController.sendToServer(null, task);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -267,7 +341,11 @@ public class EditionController {
     public void showProjectSelection() {
         if (mainController != null) {
             //TODO: Save changes
-            mainController.swapPanel(ProjectsMainView.VIEW_TAG);
+            try {
+                mainController.sendToServer(ServerObjectType.EXIT_PROJECT, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             System.exit(0);
         }

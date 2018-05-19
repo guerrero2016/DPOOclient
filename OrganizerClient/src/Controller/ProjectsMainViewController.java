@@ -26,6 +26,14 @@ public class ProjectsMainViewController implements ActionListener {
         projectCreationController = new ProjectCreationController(ownerSelectionController);
     }
 
+    public void resetOwnerProjects () {
+        ownerSelectionController.resetProjectViews();
+    }
+
+    public void resetSharedProjects () {
+        sharedSelectionController.resetProjectViews();
+    }
+
     public ProjectSelectionController getOwnerSelectionController() {
         return ownerSelectionController;
     }
@@ -66,7 +74,15 @@ public class ProjectsMainViewController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        projectCreationController.createAddProjectView();
+        switch (e.getActionCommand()) {
+            case ProjectsMainView.ADD_PROJECT_ACTION_COMMAND:
+                projectCreationController.createAddProjectView();
+                break;
+            case ProjectsMainView.LOG_OUT_ACTION_COMMAND:
+
+                break;
+            default:
+        }
     }
 }
 

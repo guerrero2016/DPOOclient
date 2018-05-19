@@ -23,6 +23,7 @@ public class GetAllProjectsComunicator implements Communicable {
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         DataManager dataManager = DataManager.getSharedInstance();
         try {
+            dataManager.setUserName(objectIn.readObject().toString());
             dataManager.setProjectOwnerList(readProjects(objectIn));
             controller.getProjectsMainViewController().createOwnerProjects(projects);
             dataManager.setProjectSharedList(readProjects(objectIn));
@@ -42,18 +43,13 @@ public class GetAllProjectsComunicator implements Communicable {
      * @throws ClassNotFoundException
      */
     private ArrayList<Project> readProjects(ObjectInputStream objectIn) throws IOException, ClassNotFoundException {
-
         projects = new ArrayList<>();
         int numProj = (Integer) objectIn.readObject();
-
-
         for (int i = 0; i < numProj; i++) {
             final Project p = (Project) objectIn.readObject();
             projects.add(p);
         }
-
         return projects;
-
     }
 
 }

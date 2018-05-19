@@ -28,9 +28,17 @@ public class ProjectSelectionController implements ActionListener {
         this.controller = controller;
     }
 
-    public void createProject(Project project) {
+    public void requestProject(Project project) {
         try {
-            controller.sendToServer(ServerObjectType.SET_PROJECT, project);
+            controller.sendToServer(ServerObjectType.ADD_PROJECT, project);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void requestProject(String projectID) {
+        try {
+            controller.sendToServer(ServerObjectType.JOIN_PROJECT, projectID);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,6 +62,10 @@ public class ProjectSelectionController implements ActionListener {
 
     public void deleteProject (int index) {
         view.removeProject(index);
+    }
+
+    public void resetProjectViews () {
+        view.resetAll();
     }
 
     @Override

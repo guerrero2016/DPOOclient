@@ -2,8 +2,12 @@ package model.project;
 
 import model.user.User;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.Serializable;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -16,8 +20,9 @@ public class Project implements Serializable{
     private Color color;
     private ArrayList<Category> categories;
     private ArrayList<User> users;
-    private Image background;
+    private byte[] background;
     private boolean isOwner;
+    private String ownerName;
 
     public Project() {
         categories = new ArrayList<>();
@@ -42,15 +47,21 @@ public class Project implements Serializable{
         users = new ArrayList<>();
     }
 
-    public Project(String id, String name, Color color, ArrayList<Category> categories, ArrayList<User> users,
-                   Image background, boolean isOwner) {
+    public Project(String id, String name, Color color, ArrayList<Category> categories, ArrayList<User> users, boolean isOwner) {
         this.id = id;
         this.name = name;
         this.color = color;
         this.categories = categories;
         this.users = users;
-        this.background = background;
         this.isOwner = isOwner;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
     public String getId() {
@@ -133,29 +144,22 @@ public class Project implements Serializable{
 
     public void setCategory(Category category) {
         if(category != null) {
-
             for (int i = 0; i < categories.size(); i++) {
                 if (category.getId().equals(categories.get(i).getId())) {
-
                     if (category.getName() != null) {
                         categories.get(i).setName(category.getName());
                     }
-
                     if (category.getOrder() != -1) {
                         Category aux = categories.get(i);
                         aux.setOrder(category.getOrder());
                         categories.remove(i);
                         categories.add(aux.getOrder(), aux);
                     }
-
                     return;
-
                 }
             }
-
             category.setOrder(categories.size());
             categories.add(category);
-
         }
     }
 
@@ -209,12 +213,27 @@ public class Project implements Serializable{
         }
     }
 
-    public Image getBackground() {
-        return background;
+    public BufferedImage getBackground() {
+        try {
+            if (background != null) {
+                return ImageIO.read(new ByteArrayInputStream(this.background));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public void setBackground(Image background) {
-        this.background = background;
+    public void setBackground(BufferedImage background) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(background, "png", baos);
+            baos.flush();
+            this.background = baos.toByteArray();
+            baos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isOwner() {

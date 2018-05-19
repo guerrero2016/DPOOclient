@@ -66,32 +66,30 @@ public class Main {
                 projectsMainView.registerController(projectsMainViewController);
 
                 //EDITION CONTROLLER
+
+                NetworkManager network = new NetworkManager();
+
+                network.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
+                network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
+                network.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
+
+
                 EditionController editionController = new EditionController(editionPanel);
 
-                MainViewController mainViewController = new MainViewController(mainView, logInController,
+                MainViewController mainViewController = new MainViewController(network, mainView, logInController,
                         signInController, projectsMainViewController, editionController);
 
+                editionController.setMainController(mainViewController);
                 signInController.setController(mainViewController);
                 logInController.setController(mainViewController);
                 editionController.registerMainController(mainViewController);
                 projectsMainViewController.setController(mainViewController);
 
-
                 //NETWORK
-
-                NetworkManager network = new NetworkManager(mainViewController);
-
-                network.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
-                network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
-                network.addCommunicator(new ProjectAddedCommunicator(), ServerObjectType.SET_PROJECT);
-                network.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
-                network.addCommunicator(new MemberAddedCommunicator(), ServerObjectType.SET_MEMBER);
-
-                mainViewController.setNetwork(network);
+                network.setController(mainViewController);
 
                 network.startCommunication();
                 mainView.setVisible(true);
-
             }
         });
     }

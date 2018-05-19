@@ -16,8 +16,9 @@ public class ProjectDetailCommunicator implements Communicable {
         try {
             Project p = (Project) objectIn.readObject();
             DataManager.getSharedInstance().setSelectedProject(p);
+            controller.resetSelectionView();
             controller.swapPanel(MainView.PROJECT_ID);
-            controller.loadProject(p);
+            controller.loadProject(DataManager.getSharedInstance().getSelectedProject());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

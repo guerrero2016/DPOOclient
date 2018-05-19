@@ -3,6 +3,7 @@ package View;
 import Controller.LogInController;
 import Controller.ProjectSelectionController;
 import Controller.SignInController;
+import model.DataManager;
 import model.project.Project;
 import View.edition.EditionPanel;
 
@@ -33,12 +34,12 @@ public class MainView extends JFrame {
 
         JPanel jpIdentifyPanel = new JPanel(new BorderLayout());
         JLabel jlPicLabel = new JLabel();
-
         try {
             BufferedImage myPicture;
             myPicture = ImageIO.read(new File(IMAGE_PATH));
-            Image resized = myPicture.getScaledInstance(750,750,Image.SCALE_SMOOTH);
+            Image resized = myPicture.getScaledInstance(750,450,Image.SCALE_SMOOTH);
             jlPicLabel = new JLabel(new ImageIcon(resized));
+            jpIdentifyPanel.setBackground(Color.WHITE);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,6 +66,8 @@ public class MainView extends JFrame {
         this.editionPanel = editionPanel;
         add(editionPanel, PROJECT_CONSTRAINT);
 
+        DataManager.getSharedInstance().setWhatPanel(LogInPanel.LOGIN);
+
         super.setMinimumSize(new Dimension(1000,500));
         super.setSize(1200,750);
         super.setTitle("LogIn - Organizer");
@@ -74,8 +77,8 @@ public class MainView extends JFrame {
     }
 
     public void swapPanel(int whatPanel) {
+        DataManager.getSharedInstance().setWhatPanel(whatPanel);
         switch (whatPanel) {
-
             case SignInPanel.SIGNIN:
                 super.setTitle("SignIn - Organizer");
                 ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "signIn");

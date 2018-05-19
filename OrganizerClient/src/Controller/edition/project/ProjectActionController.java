@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -46,6 +47,7 @@ public class ProjectActionController implements ActionListener {
         } else if(e.getActionCommand().equals(ProjectPanel.ACTION_CATEGORY_ADD)) {
             addCategory();
         } else if(e.getActionCommand().equals(ProjectPanel.ACTION_PROJECT_BACK)) {
+            mainController.removeCommunicators();
             projectBackManagement();
         }
     }
@@ -58,7 +60,7 @@ public class ProjectActionController implements ActionListener {
             if(view.isProjectNameEditable()) {
                 view.setProjectNameEditable(false, view.getProjectName());
                 project.setName(view.getProjectName());
-                mainController.updatedProject();
+                mainController.updateProject();
                 mainController.setEditingState(false);
             } else {
                 JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
@@ -79,13 +81,12 @@ public class ProjectActionController implements ActionListener {
 
                 try {
 
-                    Image image = ImageIO.read(file);
+                    BufferedImage image = ImageIO.read(file);
 
                     if(image != null) {
-                        //TODO comprovar que el getPath tira nice
                         project.setBackground(image);
                         mainController.setBackgroundImage(image);
-                        mainController.updatedProject();
+                        mainController.updateProject();
                     } else {
                         JOptionPane.showMessageDialog(null, WRONG_FORMAT_MESSAGE, FILE_ERROR_TITLE,
                                 JOptionPane.WARNING_MESSAGE);
@@ -130,14 +131,7 @@ public class ProjectActionController implements ActionListener {
     private void addCategory() {
         if(!mainController.isEditing() && !view.getNewCategoryName().isEmpty()) {
             Category category = new Category(view.getNewCategoryName());
-            project.setCategory(category);
-            view.cleanNewCategoryName();
-            view.addCategory(category);
-            CategoryPanel categoryPanel = view.getCategoryPanel(project.getCategoriesSize() - 1);
-            categoryPanel.registerActionController(new CategoryActionController(mainController, categoryPanel, category));
-            categoryPanel.registerMouseController(new CategoryMouseController(mainController, category));
-            categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
-            mainController.updatedProject();
+            mainController.updateCategory(category);
         } else if(mainController.isEditing()) {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
                     EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
@@ -151,11 +145,9 @@ public class ProjectActionController implements ActionListener {
             categoryPanel.setCategoryNameEditable(false, project.getCategory(i).getName());
             categoryPanel.cleanNewTaskName();
         }
-
         view.setProjectNameEditable(false, project.getName());
         view.cleanNewCategoryName();
         mainController.showProjectSelection();
-
     }
 
 }

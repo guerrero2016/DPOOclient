@@ -8,21 +8,20 @@ import java.util.UUID;
 public class Category implements Serializable {
 
     public final static int INVALID_INDEX = -1;
+    public final static int serialVersionUID = 1234;
 
     private String id;
     private String name;
-    private int order;
+    private int order = -1;
     private ArrayList<model.project.Task> tasks;
 
     public Category(String name) {
-        id = UUID.randomUUID().toString();
         this.name = name.toString();
         order = INVALID_INDEX;
         tasks = new ArrayList<>();
     }
 
     public Category(String name, int order, ArrayList<Task> tasks) {
-        id = UUID.randomUUID().toString();
         this.name = name;
         this.order = order;
         this.tasks = tasks;
