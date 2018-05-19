@@ -4,18 +4,14 @@ import Controller.edition.EditionController;
 import Network.Communicable;
 import model.project.Category;
 import model.project.Project;
-import model.project.Tag;
 import model.project.Task;
 import model.user.User;
 import View.MainView;
 import Network.NetworkManager;
 import model.ServerObjectType;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class MainViewController {
 
@@ -105,6 +101,19 @@ public class MainViewController {
 
     public void shareProject(Project project, User user) {
         //TODO: Share project
+    }
+
+    public void addNewMemberInCharge(String taskId, User user) {
+        try {
+            sendToServer(ServerObjectType.SET_MEMBER, taskId);
+            sendToServer(ServerObjectType.SET_MEMBER, user);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addMemberInCharge(User user) {
+        editionController.addMemberInCharge(user);
     }
 
     public void resetSelectionView(){

@@ -182,4 +182,12 @@ public class DataManager {
             }
         }
     }
+
+    public void updateCategoriesOrder(int order) {
+        for(Category c: selectedProject.getCategories()) {
+            if(c.getOrder() > order) {
+                c.setOrder(c.getOrder() - 1);
+            }
+        }
+    }
 }

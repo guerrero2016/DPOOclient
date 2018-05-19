@@ -3,6 +3,7 @@ package Network.Communicators;
 import Controller.MainViewController;
 import model.DataManager;
 import Network.Communicable;
+import model.project.Category;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,7 +17,7 @@ public class CategoryDeleteCommunicator implements Communicable {
         try {
             String categoryID = objectIn.readObject().toString();
             DataManager.getSharedInstance().deleteCategory(categoryID);
-            //TODO avisar al controller
+            controller.getEditionController().deleteCategory(categoryID);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
