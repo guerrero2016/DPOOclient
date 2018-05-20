@@ -14,6 +14,7 @@ public class UserAddedCommunicator implements Communicable {
         try {
             User user = (User) objectIn.readObject();
             DataManager.getSharedInstance().addUser(user);
+            controller.userJoinedProject(user);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

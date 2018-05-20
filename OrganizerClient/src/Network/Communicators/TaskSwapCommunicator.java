@@ -2,6 +2,7 @@ package Network.Communicators;
 
 import Controller.MainViewController;
 import Network.Communicable;
+import model.DataManager;
 import model.project.Task;
 
 import java.io.IOException;
@@ -15,8 +16,10 @@ public class TaskSwapCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
-            ArrayList<Task> tasks = (ArrayList<Task>) objectIn.readObject();
-            //TODO: Avisar al datamanager
+            final ArrayList<Task> tasks = (ArrayList<Task>) objectIn.readObject();
+            final String categoryID = (String) objectIn.readObject();
+            DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID).setTasks(tasks);
+            controller.getEditionController().swapTasksInView(tasks, categoryID);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

@@ -29,9 +29,9 @@ import View.edition.user.UserPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EditionController {
-
     public final static String EDITING_ON_MESSAGE = "You should finish editing before doing something else";
     public final static String EDITING_ON_TITLE = "Information";
 
@@ -229,8 +229,9 @@ public class EditionController {
     public void updateProject(Project p) {
         if(mainController != null) {
             try {
-                Project aux = new Project(project.getId(), project.getName(), project.getColor(),
-                        project.getCategories(), project.getUsers(), project.isOwner());
+                Project aux = new Project(p.getId(), p.getName(), p.getColor(),
+                        p.getCategories(), p.getUsers(), p.isOwner());
+                aux.setBackground(p.getBackground());
                 mainController.sendToServer(ServerObjectType.SET_PROJECT, aux);
 
             } catch (IOException e) {
@@ -353,6 +354,10 @@ public class EditionController {
             }
         }
         return null;
+    }
+
+    public void userJoinedProject(User user) {
+        projectUserPanel.addUser(user);
     }
 
     public void addProjectUser(User user) {
@@ -550,6 +555,21 @@ public class EditionController {
         projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).updateTask(targetCategory.
                 getTaskIndex(targetTask), targetTask);
 
+    }
+
+    public void swapTask(Category category) {
+        try {
+            mainController.sendToServer(ServerObjectType.SWAP_TASK, category.getTasks());
+            mainController.sendToServer(null, category.getId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void swapTasksInView(ArrayList<Task> tasks, String categoryID) {
+        projectPanel.getCategoryPanel(DataManager.getSharedInstance().getSelectedProject().
+                getCategoryIndex(DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID))).
+                updateTasksList(tasks);
     }
 
 }
