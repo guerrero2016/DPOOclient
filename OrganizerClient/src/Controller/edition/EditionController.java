@@ -376,6 +376,9 @@ public class EditionController {
                 return project.getUser(i);
             }
         }
+        if(userName.equals(project.getOwnerName())) {
+            return new User(project.getOwnerName());
+        }
         return null;
     }
 

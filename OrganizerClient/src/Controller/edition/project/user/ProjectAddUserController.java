@@ -31,13 +31,11 @@ public class ProjectAddUserController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         JTextArea jtaMessage = new JTextArea(PROJECT_SHARED_MESSAGE + ": " + project.getId());
         jtaMessage.setEditable(false);
         jtaMessage.setOpaque(false);
         JOptionPane.showMessageDialog(null, jtaMessage, PROJECT_SHARED_TITLE,
                 JOptionPane.PLAIN_MESSAGE);
-
     }
 
 

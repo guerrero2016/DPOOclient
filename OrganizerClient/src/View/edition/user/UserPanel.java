@@ -1,5 +1,6 @@
 package View.edition.user;
 
+import model.DataManager;
 import model.user.User;
 import View.edition.document.DocumentEnablePanel;
 import View.edition.TransparentPanel;
@@ -78,7 +79,6 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
             tpAddUser.add(jlNewUser, BorderLayout.LINE_START);
             jbAddUser.setEnabled(true);
         }
-
     }
 
     public void setEditionState(boolean enableState) {
