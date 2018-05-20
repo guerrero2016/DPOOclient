@@ -76,16 +76,23 @@ public class TaskListController extends TransferHandler {
     @Override
     public boolean importData(TransferSupport support) {
         try {
+
             Task transferredTask = (Task) support.getTransferable().getTransferData(TaskListComponent.localObjectFlavor);
             JList.DropLocation dl = (JList.DropLocation) support.getDropLocation();
-            ((DefaultListModel<Task>) jlTasks.getModel()).add(dl.getIndex(), transferredTask);
-            beforeIndex = dl.getIndex() < index;
-            DefaultListModel<Task> tasks = (DefaultListModel<Task>) jlTasks.getModel();
-            for(int i = 0; i < tasks.getSize(); i++) {
-                Task task = tasks.getElementAt(i);
-                task.setOrder(i - 1);
+            DefaultListModel<Task> model = (DefaultListModel<Task>) jlTasks.getModel();
+
+            if(model.contains(transferredTask)) {
+
+                model.add(dl.getIndex(), transferredTask);
+                beforeIndex = dl.getIndex() < index;
+                DefaultListModel<Task> tasks = (DefaultListModel<Task>) jlTasks.getModel();
+                for (int i = 0; i < tasks.getSize(); i++) {
+                    Task task = tasks.getElementAt(i);
+                    task.setOrder(i - 1);
+                }
+                return true;
             }
-            return true;
+
         } catch (UnsupportedFlavorException | IOException e) {
             e.printStackTrace();
         }
