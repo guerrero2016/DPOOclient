@@ -3,7 +3,7 @@ package Network.Communicators;
 import Controller.MainViewController;
 import model.DataManager;
 import Network.Communicable;
-import model.project.Category;
+import Network.Communicable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

@@ -28,8 +28,9 @@ public class ProjectRemoveUserController implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         DataManager dataManager = DataManager.getSharedInstance();
-        if (dataManager.getUserName().equals(dataManager.getSelectedProject().getOwnerName())) {
-            if (e.getClickCount() == 2) {
+        if (e.getClickCount() == 2) {
+            if (dataManager.getUserName().equals(dataManager.getSelectedProject().getOwnerName())) {
+
                 JList userList = (JList) e.getSource();
                 int index = userList.locationToIndex(e.getPoint());
 
@@ -43,9 +44,9 @@ public class ProjectRemoveUserController implements MouseListener {
                         mainController.deleteUser(p.getUser(index));
                     }
                 }
+            } else {
+                JOptionPane.showMessageDialog(view,"No ets el propietari del projecte");
             }
-        } else {
-            JOptionPane.showMessageDialog(view,"No ets el propietari del projecte");
         }
     }
 
