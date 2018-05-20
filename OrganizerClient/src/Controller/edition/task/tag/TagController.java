@@ -22,7 +22,7 @@ public class TagController implements ActionListener {
     private JFrame dialogJFrame;
     private boolean isRemoving;
 
-    public TagController(EditionController mainController,Tag tag) {
+    public TagController(EditionController mainController, Tag tag) {
         this.mainController = mainController;
         this.tag = tag;
     }
@@ -53,10 +53,16 @@ public class TagController implements ActionListener {
 
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
                 if (colorPreviewController.getColor() != null) {
-                    tag.setName(tagEditionPanel.getTagName());
-                    tag.setColor(colorPreviewController.getColor());
-                    mainController.editTagInDB(tag);
+                    System.out.println("AQUI ES QUAN S?EDITASDASD");
+
+                    Tag aux = new Tag(tag.getId(), tagEditionPanel.getTagName(), colorPreviewController.getColor());
+                    mainController.editTagInDB(aux);
+                } else {
+                    Tag aux = new Tag(tag.getId(), tagEditionPanel.getTagName(), tag.getColor());
+                    mainController.editTagInDB(aux);
                 }
+                System.out.println(tag.getName() + "  " + tag.getHexColor());
+
             }
 
         } else {

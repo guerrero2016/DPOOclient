@@ -96,6 +96,15 @@ public class Task implements Serializable{
         }
     }
 
+    public int getTagOrder(Tag tag) {
+        for(int i = 0; i < tags.size();i++) {
+            if(tags.get(i).getId().equals(tag.getId())) {
+                return (i);
+            }
+        }
+        return INVALID_INDEX;
+    }
+
     public Tag getTag(int tagIndex) {
         if(tagIndex < tags.size()) {
             return tags.get(tagIndex);
