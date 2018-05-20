@@ -77,7 +77,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     public void updateProject(Project project) {
-        //TODO: Update project from database
+        editionController.updateProjectView(project);
     }
 
     public void updateCategory(Project project, Category category) {
@@ -174,7 +174,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if(JOptionPane.showConfirmDialog(view, "Estàs segur?") == JOptionPane.OK_OPTION){
+        if(JOptionPane.showConfirmDialog(view, "Sortir?") == JOptionPane.OK_OPTION){
             view.dispose();
             try {
                 sendToServer(ServerObjectType.LOGOUT, null);
@@ -187,9 +187,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            System.out.println("se pulsa");
-            sendToServer(ServerObjectType.LOGOUT, null);
-            swapPanel(LogInPanel.LOGIN);
+            if (JOptionPane.showConfirmDialog(view, "Tancar sessió?") == JOptionPane.OK_OPTION) {
+                sendToServer(ServerObjectType.LOGOUT, null);
+                swapPanel(LogInPanel.LOGIN);
+            }
         } catch (IOException e1) {
             e1.printStackTrace();
         }
