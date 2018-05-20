@@ -243,7 +243,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if(JOptionPane.showConfirmDialog(view, "Sortir?", "Sortir",
+        if(JOptionPane.showConfirmDialog(view, "Exit?", "Exit",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
             view.dispose();
             view.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -258,7 +258,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            if (JOptionPane.showConfirmDialog(view, "Tancar sessió?", "Tancar sessió",
+            if (JOptionPane.showConfirmDialog(view, "Log out?", "Log out",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                 sendToServer(ServerObjectType.LOGOUT, null);
                 swapPanel(LogInPanel.LOGIN);
