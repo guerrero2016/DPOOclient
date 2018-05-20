@@ -3,6 +3,7 @@ package Controller;
 import Controller.edition.EditionController;
 import Network.Communicable;
 import View.LogInPanel;
+import model.DataManager;
 import model.project.Project;
 import model.project.Tag;
 import model.user.User;
@@ -244,7 +245,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     @Override
     public void windowClosing(WindowEvent e) {
         if(JOptionPane.showConfirmDialog(view, "Exit?", "Exit",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             view.dispose();
             view.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             try {
@@ -259,8 +260,12 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         try {
             if (JOptionPane.showConfirmDialog(view, "Log out?", "Log out",
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 sendToServer(ServerObjectType.LOGOUT, null);
+                DataManager.getSharedInstance().setSelectedProject(null);
+                DataManager.getSharedInstance().setProjectOwnerList(null);
+                DataManager.getSharedInstance().setProjectSharedList(null);
+                DataManager.getSharedInstance().setUserName(null);
                 swapPanel(LogInPanel.LOGIN);
             }
         } catch (IOException e1) {

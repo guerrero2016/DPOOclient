@@ -21,6 +21,7 @@ public class DataManager {
     private DataManager() {
         selectedProject = new Project();
         projectOwnerList = new ArrayList<>();
+        projectSharedList = new ArrayList<>();
     }
 
     public Task getEditingTask() {
