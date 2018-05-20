@@ -19,7 +19,6 @@ public class CategorySetCommunicator implements Communicable {
             Category category = (Category) objectIn.readObject();
             boolean exists = false;
             int i;
-            System.out.println(category.getId());
             for(i = 0; i < DataManager.getSharedInstance().getSelectedProject().getCategories().size(); i++) {
                 String idAux = DataManager.getSharedInstance().getSelectedProject().getCategories().get(i).getId();
                 if(idAux.equals(category.getId())) {
