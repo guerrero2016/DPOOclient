@@ -2,19 +2,19 @@ package Network.Communicators;
 
 import Controller.MainViewController;
 import Network.Communicable;
-import model.user.User;
+import model.project.Tag;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class MemberAddedCommunicator implements Communicable {
+public class TagEditedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
             String categoryId = objectIn.readUTF();
             String taskId = objectIn.readUTF();
-            User user = (User) objectIn.readObject();
-            controller.addMemberInProject(categoryId, taskId, user);
+            Tag tag = (Tag) objectIn.readObject();
+            controller.editTagInProject(categoryId, taskId, tag);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

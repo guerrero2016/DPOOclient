@@ -104,6 +104,18 @@ public class Task implements Serializable{
         }
     }
 
+    public Tag getTagWithId(String tagId) {
+
+        for(Tag tag : tags) {
+            if(tag.getId().equals(tagId)) {
+                return tag;
+            }
+        }
+
+        return null;
+
+    }
+
     public void addTag(Tag tag){
         if(tag != null && !tags.contains(tag)) {
             tags.add(tag);

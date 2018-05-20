@@ -88,6 +88,10 @@ public class TagPanel extends JPanel {
         setBackground(tagColor);
     }
 
+    public ActionListener getActionListener() {
+        return actionListener;
+    }
+
     public void resetActionController() {
         jbTagEditor.addActionListener(actionListener);
         jbTagDelete.addActionListener(actionListener);
