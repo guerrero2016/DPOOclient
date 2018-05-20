@@ -45,7 +45,7 @@ public class ProjectRemoveUserController implements MouseListener {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(view,"You are not the owner of this project!");
+            JOptionPane.showMessageDialog(view,"You are not the owner of this project");
         }
     }
 
