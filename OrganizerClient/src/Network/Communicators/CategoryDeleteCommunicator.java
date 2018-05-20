@@ -16,8 +16,10 @@ public class CategoryDeleteCommunicator implements Communicable {
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
             String categoryID = objectIn.readObject().toString();
+            int i = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID).getOrder();
             DataManager.getSharedInstance().deleteCategory(categoryID);
-            controller.getEditionController().deleteCategory(categoryID);
+            controller.getEditionController().deleteCategoryInView(i);
+            DataManager.getSharedInstance().updateCategoriesOrder(i);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

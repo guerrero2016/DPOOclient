@@ -58,8 +58,7 @@ public class Main {
                 ProjectSelectionController sharedSelectionController =
                         new ProjectSelectionController(sharedSelectionView);
                 ProjectsMainViewController projectsMainViewController =
-                        new ProjectsMainViewController(projectsMainView, ownerSelectionController,
-                                sharedSelectionController);
+                        new ProjectsMainViewController(ownerSelectionController, sharedSelectionController);
 
                 ownerSelectionView.registerController(ownerSelectionController);
                 sharedSelectionView.registerController(sharedSelectionController);
@@ -79,11 +78,13 @@ public class Main {
                 network.addCommunicator(new TagSetCommunicator(), ServerObjectType.SET_TAG);
                 network.addCommunicator(new UserDeletedCommunicator(), ServerObjectType.DELETE_USER);
                 network.addCommunicator(new TaskSwapCommunicator(), ServerObjectType.SWAP_TASK);
+                network.addCommunicator(new TaskDoneCommunicator(), ServerObjectType.TASK_DONE);
+                network.addCommunicator(new TaskNotDoneCommunicator(), ServerObjectType.TASK_NOT_DONE);
 
                 EditionController editionController = new EditionController(editionPanel);
 
-                MainViewController mainViewController = new MainViewController(network, mainView, logInController,
-                        signInController, projectsMainViewController, editionController);
+                MainViewController mainViewController = new MainViewController(network, mainView,
+                        projectsMainViewController, editionController);
 
                 mainView.addController(mainViewController, mainViewController);
 

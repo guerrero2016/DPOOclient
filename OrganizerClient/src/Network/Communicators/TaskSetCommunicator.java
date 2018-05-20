@@ -38,7 +38,7 @@ public class TaskSetCommunicator implements Communicable {
             }
             if(exists) {
                 DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().set(i, task);
-                controller.getEditionController().updateTaskInView(task);
+                controller.getEditionController().updateTaskInView(categoryID, task);
             } else {
                 DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().add(task);
                 controller.getEditionController().addTask(c.getOrder(), task);

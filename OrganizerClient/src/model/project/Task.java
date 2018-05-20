@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class Task implements Serializable{
 
-    private final static int INVALID_INDEX = -1;
+    public final static int INVALID_INDEX = -1;
     public final static int serialVersionUID = 1237;
 
     private String id;
@@ -21,6 +21,7 @@ public class Task implements Serializable{
     private ArrayList<Tag> tags;
     private ArrayList<User> users;
     private int order;
+    private boolean isFinished;
 
 
     public Task() {
@@ -198,6 +199,14 @@ public class Task implements Serializable{
         if(order >= 0) {
             this.order = order;
         }
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 
     @Override

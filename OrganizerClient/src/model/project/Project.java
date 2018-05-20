@@ -240,8 +240,7 @@ public class Project implements Serializable{
                     if (category.getOrder() != -1) {
                         Category aux = categories.get(i);
                         aux.setOrder(category.getOrder());
-                        categories.remove(i);
-                        categories.add(aux.getOrder(), aux);
+                        categories.set(i, category);
                     }
                     return;
                 }
@@ -305,6 +304,19 @@ public class Project implements Serializable{
         }
     }
 
+    /**
+     * Getter d'un index a partir d'un usuari
+     * @param user Usuari a partir del qual volem rebre l'index.
+     * @return
+     */
+    public int getUserIndex(User user) {
+        if(users.contains(user)) {
+            return users.indexOf(user);
+        } else {
+            return INVALID_INDEX;
+        }
+    }
+    
     /**
      * Getter d'un usuari a partir d'un index.
      * @param userIndex Index a partir del qual volem aconseguir l'usuari.

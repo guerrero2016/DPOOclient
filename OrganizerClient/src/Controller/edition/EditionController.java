@@ -27,7 +27,6 @@ import View.edition.task.TaskPanel;
 import View.edition.task.tag.TagPanel;
 import View.edition.user.UserPanel;
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -107,7 +106,7 @@ public class EditionController {
     }
 
     public void addCategory(Category category) {
-        if(!this.isEditing() && !projectPanel.getNewCategoryName().isEmpty()) {
+        if(!this.isEditing()) {
             projectPanel.cleanNewCategoryName();
             projectPanel.addCategoryToView(category);
             project.setCategory(category);
@@ -198,6 +197,7 @@ public class EditionController {
 
         //Config task content
         taskPanel.setTaskName(task.getName());
+        taskPanel.setTaskFinished(task.isFinished());
         taskPanel.setDescription(task.getDescription());
         taskPanel.cleanTagsList();
         taskPanel.setTagsList(task.getTags());
@@ -316,8 +316,17 @@ public class EditionController {
         }
     }
 
-    public void updateTaskInView(Task task) {
-        taskPanel.setTaskName(task.getName());
+    public void updateTaskInView(String categoryId, Task task) {
+
+        if(this.task != null && this.task.getID().equals(task.getID())) {
+            taskPanel.setTaskName(task.getName());
+        }
+
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(
+                targetCategory));
+        categoryPanel.updateTask(targetCategory.getTaskIndex(task), task);
+
     }
 
     public void updateCategoryInView(Category category) {
@@ -334,21 +343,23 @@ public class EditionController {
             }
         }
     }
+
     public void deleteTaskInView() {
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(category));
         categoryPanel.removeTask(task);
         category.deleteTask(task);
     }
 
+    public void deleteCategoryInView(int i) {
+        projectPanel.removeCategory(i);
+    }
+
     public void deleteCategory(String id_category) {
         Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(id_category);
         int index = project.getCategoryIndex(category);
         if(index >= 0 && index < project.getCategoriesSize()) {
-            project.deleteCategory(category);
-            projectPanel.removeCategory(index);
             if(mainController != null) {
                 try {
-                    mainController.addCommunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
                     mainController.sendToServer(ServerObjectType.DELETE_CATEGORY, category);
                     mainController.sendToServer(null, project.getId());
                 } catch (IOException e) {
@@ -557,13 +568,58 @@ public class EditionController {
     }
 
     public void addTagInProject(String categoryId, String taskId, Tag tag) {
+
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
+
         if(task != null && task.getID().equals(taskId)) {
             taskPanel.addTag(tag);
             TagPanel tagPanel = taskPanel.getTagPanel(task.getTagIndex(tag));
             tagPanel.registerActionController(new TagController(this, tag));
         }
+
+        projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).updateTask(targetCategory.
+                getTaskIndex(targetTask), targetTask);
+
+    }
+
+    public void setTaskDoneInDB() {
+        if(mainController != null) {
+            mainController.setTaskDoneInDB(category.getId(), task.getID());
+        }
+    }
+
+    public void setTaskDoneInProject(String categoryId, String taskId) {
+
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        Task targetTask = targetCategory.getTaskWithId(taskId);
+
+        if(task != null && task.getID().equals(taskId)) {
+            taskPanel.setTaskFinished(true);
+        }
+
+        targetTask.setFinished(true);
+        projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).updateTask(targetCategory.
+                getTaskIndex(targetTask), targetTask);
+
+    }
+
+    public void setTaskNotDoneInDB() {
+        if(mainController != null) {
+            mainController.setTaskNotDoneInDB(category.getId(), task.getID());
+        }
+    }
+
+    public void setTaskNotDoneInProject(String categoryId, String taskId) {
+
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        Task targetTask = targetCategory.getTaskWithId(taskId);
+
+        if(task != null && task.getID().equals(taskId)) {
+            taskPanel.setTaskFinished(false);
+        }
+
+        targetTask.setFinished(false);
         projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).updateTask(targetCategory.
                 getTaskIndex(targetTask), targetTask);
 
@@ -582,6 +638,25 @@ public class EditionController {
         projectPanel.getCategoryPanel(DataManager.getSharedInstance().getSelectedProject().
                 getCategoryIndex(DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID))).
                 updateTasksList(tasks);
+    }
+
+    public void userLeftProject(User user) {
+
+        projectUserPanel.removeUser(project.getUserIndex(user));
+        project.deleteUser(project.getUserIndex(user));
+
+        if(task != null) {
+            if(task.getUserIndex(user) != Task.INVALID_INDEX) {
+                taskUserPanel.removeUser(task.getUserIndex(user));
+            }
+        }
+
+        for(int i = 0; i < project.getCategoriesSize(); i++) {
+            for(int j = 0; j < project.getCategory(i).getTasksSize(); j++) {
+                project.getCategory(i).getTask(j).removeUser(user);
+            }
+        }
+
     }
 
 }
