@@ -90,7 +90,6 @@ public class CategoryActionController implements ActionListener {
             if (mainController.isEditing() && view.isCategoryNameEditable()) {
                 mainController.setEditingState(false);
             }
-            DataManager.getSharedInstance().updateCategoriesOrder(category.getOrder());
             mainController.deleteCategory(category.getId());
         }
     }
