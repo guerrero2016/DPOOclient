@@ -2,9 +2,6 @@ package Controller.edition.task;
 
 import Controller.edition.EditionController;
 import Controller.edition.color.ColorPreviewController;
-import Controller.edition.task.tag.TagController;
-import View.edition.task.tag.TagPanel;
-import model.DataManager;
 import model.project.Tag;
 import model.project.Task;
 import View.edition.color.ColorChooserPanel;
@@ -42,6 +39,8 @@ public class TaskController implements ActionListener {
             descriptionManagement();
         } else if(e.getActionCommand().equals(TaskPanel.ACTION_TAG_ADD)) {
             addTag();
+        } else if(e.getActionCommand().equals(TaskPanel.ACTION_AFFIRMATIVE) || e.getActionCommand().equals(TaskPanel.ACTION_NEGATIVE)) {
+            taskStateManagement();
         }
     }
 
@@ -60,7 +59,7 @@ public class TaskController implements ActionListener {
         } else {
             if(view.isTaskNameEditable()) {
                 view.setTaskNameEditable(false, view.getTaskName());
-                //Copiem la tasca en una variable auxiliar perquè sinò no es passa correctament.
+                //Copiem la tasca en una variable auxiliar perquè sinó no es passa correctament.
                 Task aux =  new Task(view.getTaskName(), task.getDescription(), task.getTags(), task.getUsers(),
                         task.getOrder());
                 aux.setId(task.getID());
@@ -121,6 +120,14 @@ public class TaskController implements ActionListener {
                     EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
         }
 
+    }
+
+    private void taskStateManagement() {
+        Task aux = new Task(view.getTaskName(), task.getDescription(), task.getTags(), task.getUsers(),
+                task.getOrder());
+        aux.setId(task.getID());
+        aux.setFinished(view.isTaskFinished());
+        mainController.updateTask(aux);
     }
 
 }

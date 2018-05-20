@@ -76,7 +76,7 @@ public class Tag implements Serializable {
         }
 
         Tag tag = (Tag) o;
-        return Objects.equals(name, tag.name) && Objects.equals(color, tag.color);
+        return Objects.equals(name, tag.name) && Objects.equals(color, tag.color) && Objects.equals(id, tag.id);
 
     }
 

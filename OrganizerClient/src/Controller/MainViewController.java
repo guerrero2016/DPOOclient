@@ -3,17 +3,14 @@ package Controller;
 import Controller.edition.EditionController;
 import Network.Communicable;
 import View.LogInPanel;
-import model.project.Category;
 import model.project.Project;
 import model.project.Tag;
-import model.project.Task;
 import model.user.User;
 import View.MainView;
 import Network.NetworkManager;
 import model.ServerObjectType;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -24,24 +21,12 @@ public class MainViewController extends WindowAdapter implements ActionListener{
 
     final private NetworkManager network;
     private MainView view;
-    private LogInController logInController;
-    private SignInController signInController;
     private EditionController editionController;
     final private ProjectsMainViewController projectsMainViewController;
-//    public MainViewController(MainView view, NetworkManager network,) {
-//        this.view = view;
-//        this.network = network;
-//        logInController = new LogInController(this);
-//        signInController = new SignInController(this);
-//        projectSelectionController = new ProjectSelectionController(this);
-//        editionController = new EditionController(this, view.getEditionPanel());
-//    }
 
-    public MainViewController(NetworkManager network, MainView view, LogInController logInController, SignInController signInController,
-                              ProjectsMainViewController projectsMainViewController, EditionController editionController) {
+    public MainViewController(NetworkManager network, MainView view, ProjectsMainViewController projectsMainViewController,
+                              EditionController editionController) {
         this.view = view;
-        this.logInController = logInController;
-        this.signInController = signInController;
         this.projectsMainViewController = projectsMainViewController;
         this.editionController = editionController;
         this.network = network;
@@ -51,6 +36,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         return projectsMainViewController;
     }
 
+    /**
+     * Geter del controlador de la vista que mostra els detalls d'un projecte
+     * @return Controlador de la vista que mostra els detalls d'un projecte
+     */
     public EditionController getEditionController() {
         return editionController;
     }
@@ -59,33 +48,21 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         view.swapPanel(whatPanel);
     }
 
-    public Project[] getProjects() {
-
-        Project[] projects = new Project[10];
-
-        for(int i = 0; i < 10; i++) {
-            Project project = new Project(String.valueOf(i), "Name " + i, Color.CYAN, i % 2 == 0);
-        }
-
-        return projects;
-
-    }
-
+    /**
+     * Mètode encarregat de mostrar el contingut d'un projecte
+     * @param project Projecte a mostrar
+     */
     public void loadProject(Project project) {
         editionController.loadProject(project);
         editionController.showProjectContent();
     }
 
+    /**
+     * Mètode encarregat d'actualitzar el contingut d'un projecte que és mostrat
+     * @param project Projecte a actualitzar
+     */
     public void updateProject(Project project) {
         editionController.updateProjectView(project);
-    }
-
-    public void updateCategory(Project project, Category category) {
-        //TODO: Update category from database
-    }
-
-    public void deleteProject() {
-        //TODO: Remove user from project
     }
 
     public User getUserFromDB(String userName) {
@@ -93,10 +70,12 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         return new User(userName);
     }
 
-    public void shareProject(Project project, User user) {
-        //TODO: Share project
-    }
-
+    /**
+     * Mètode encarregat de comunicar al servidor que s'ha afegit un membre a una tasca
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la categoria on pertany el membre a afegir
+     * @param user Membre a afegir
+     */
     public void addMemberInDB(String categoryId, String taskId, User user) {
         try {
             sendToServer(ServerObjectType.SET_MEMBER, categoryId);
@@ -107,6 +86,12 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         }
     }
 
+    /**
+     * Métode encarregat d'afegir un membre a una tasca en concret
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la categoria on pertany el membre a afegir
+     * @param user Membre a afegir
+     */
     public void addMemberInProject(String categoryId, String taskId, User user) {
         editionController.addMemberInProject(categoryId, taskId, user);
     }
@@ -115,6 +100,12 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.userJoinedProject(user);
     }
 
+    /**
+     * Mètode encarregat de comunicar al servidor que s'ha eliminat un membre a una tasca
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la categoria on pertany el membre a eliminar
+     * @param user Membre a eliminar
+     */
     public void removeMemberInDB(String categoryId, String taskId, User user) {
         try {
             sendToServer(ServerObjectType.DELETE_MEMBER, categoryId);
@@ -125,10 +116,22 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         }
     }
 
+    /**
+     * Mètode encarregat d'eliminar un membre d'una tasca en concret
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la categoria on pertany el membre a eliminar
+     * @param user Membre a eliminar
+     */
     public void removeMemberInProject(String categoryId, String taskId, User user) {
         editionController.removeMemberInProject(categoryId, taskId, user);
     }
 
+    /**
+     * Mètode encarregat de notificar al servidor que es vol elimina una etiqueta
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la tasca on pertany l'etiqueta
+     * @param tag Etiqueta a eliminar
+     */
     public void removeTagInDB(String categoryId, String taskId, Tag tag) {
         try {
             sendToServer(ServerObjectType.DELETE_TAG, categoryId);
@@ -139,10 +142,21 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         }
     }
 
+    /**
+     * Mètode encarregat d'eliminar una etiqueta del projecte
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la tasca on pertany l'etiqueta
+     * @param tag Etiqueta a eliminar
+     */
     public void removeTagInProject(String categoryId, String taskId, Tag tag) {
         editionController.removeTagInProject(categoryId, taskId, tag);
     }
 
+    /**
+     * Mètode encarregat de comunicar al servidor que s'ha editat una etiqueta
+     * @param taskId Id de la tasca on pertany l'etiqueta
+     * @param tag Etiqueta a editar
+     */
     public void editTagInDB(String taskId, Tag tag) {
         try {
             sendToServer(ServerObjectType.EDIT_TAG, taskId);
@@ -152,10 +166,22 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         }
     }
 
+    /**
+     * Mètode encarregat d'editar una etiqueta del projecte
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la tasca on pertany l'etiqueta
+     * @param tag Etiqueta a editar
+     */
     public void editTagInProject(String categoryId, String taskId, Tag tag) {
         editionController.editTagInProject(categoryId, taskId, tag);
     }
 
+    /**
+     * Mètode encarregat d'afegir una etiqueta al projecte
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la tasca on es vol afegir la etiqueta
+     * @param tag Etiqueta a afegir
+     */
     public void addTagInProject(String categoryId, String taskId, Tag tag) {
         editionController.addTagInProject(categoryId, taskId, tag);
     }
@@ -176,6 +202,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     public void addCommunicator(Communicable communicator, ServerObjectType type){
         network.addCommunicator(communicator, type);
     }
+
     public void showDialog(String errorMSG) {
         view.showErrorDialog(errorMSG);
     }

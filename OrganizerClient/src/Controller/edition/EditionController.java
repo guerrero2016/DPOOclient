@@ -190,6 +190,7 @@ public class EditionController {
 
         //Config task content
         taskPanel.setTaskName(task.getName());
+        taskPanel.setTaskFinished(task.isFinished());
         taskPanel.setDescription(task.getDescription());
         taskPanel.cleanTagsList();
         taskPanel.setTagsList(task.getTags());
@@ -295,8 +296,17 @@ public class EditionController {
         }
     }
 
-    public void updateTaskInView(Task task) {
-        taskPanel.setTaskName(task.getName());
+    public void updateTaskInView(String categoryId, Task task) {
+
+        if(this.task != null && this.task.getID().equals(task.getID())) {
+            taskPanel.setTaskName(task.getName());
+        }
+
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(
+                targetCategory));
+        categoryPanel.updateTask(targetCategory.getTaskIndex(task), task);
+
     }
 
     public void updateCategoryInView(Category category) {

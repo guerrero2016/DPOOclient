@@ -17,6 +17,7 @@ public class Task implements Serializable{
     private ArrayList<Tag> tags;
     private ArrayList<User> users;
     private int order;
+    private boolean isFinished;
 
     public Task() {
         tags = new ArrayList<>();
@@ -184,6 +185,14 @@ public class Task implements Serializable{
         if(order >= 0) {
             this.order = order;
         }
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 
     @Override
