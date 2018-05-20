@@ -23,6 +23,9 @@ public class NetworkManager extends Thread {
     private ObjectOutputStream objectOut;
     private HashMap<ServerObjectType, Communicable> communicables;
 
+    /**
+     * Crea el network manager iniciant aquells atributs necessaris per a la comunicació
+     */
     public NetworkManager() {
         try {
             this.isOn = false;
@@ -36,6 +39,10 @@ public class NetworkManager extends Thread {
         }
     }
 
+    /**
+     * Procediment per a assignar un controlador.
+     * @param controller controlador a assignar
+     */
     public void setController(MainViewController controller) {
         this.controller = controller;
     }
@@ -80,6 +87,7 @@ public class NetworkManager extends Thread {
      * @throws IOException
      */
     public void sendToServer(ServerObjectType type, Object object) throws IOException {
+        objectOut.flush();
         if (type != null) {
             objectOut.writeInt(type.getValue());
         }

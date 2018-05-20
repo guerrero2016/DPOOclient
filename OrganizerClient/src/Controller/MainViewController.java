@@ -3,6 +3,7 @@ package Controller;
 import Controller.edition.EditionController;
 import Network.Communicable;
 import View.LogInPanel;
+import model.DataManager;
 import model.project.Project;
 import model.project.Tag;
 import model.user.User;
@@ -96,12 +97,12 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.addMemberInProject(categoryId, taskId, user);
     }
 
+    /**
+     * Procediment que s'encarrega d'afegir un usuari al projecte
+     * @param user
+     */
     public void userJoinedProject(User user) {
         editionController.userJoinedProject(user);
-    }
-
-    public void userLeftProject(int i) {
-        editionController.userLeftProject(i);
     }
 
     /**
@@ -216,27 +217,53 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.addTagInProject(categoryId, taskId, tag);
     }
 
+    /**
+     * Procediment que avisa al EditionController que un usuari ha estat expulsat.
+     * @param user usuari eliminat
+     */
     public void userLeftProject(User user) {
         editionController.userLeftProject(user);
     }
 
+    /**
+     * Procediment encarregat de netejar els projectes del panell de selecció.
+     */
     public void resetSelectionView(){
         projectsMainViewController.resetOwnerProjects();
         projectsMainViewController.resetSharedProjects();
     }
 
+    /**
+     * Procediment que envia dades al servidor
+     * @param type tipus de petició que es fa. Si és <code>null</code> no s'envia aquest paràmetre
+     * @param o objecte a enviar.
+     * @throws IOException
+     */
     public void sendToServer(ServerObjectType type, Object o) throws IOException {
         network.sendToServer(type, o);
     }
 
+    /**
+     * Procediment que elimina un communicator.
+     * @param serverObjectType clau del communicator
+     */
     public void removeCommunicator(ServerObjectType serverObjectType) {
         network.removeCommunicator(serverObjectType);
     }
 
+    /**
+     * Afegeix un communicator.
+     * @param communicator communicator a afegir
+     * @param type clau del communicator
+     */
     public void addCommunicator(Communicable communicator, ServerObjectType type){
         network.addCommunicator(communicator, type);
     }
 
+    /**
+     * Procediment que s'encarrega de mostrar un JOptionPane d'error amb un missatge.
+     * @param errorMSG missatge que es mostrarà.
+     */
     public void showDialog(String errorMSG) {
         view.showErrorDialog(errorMSG);
     }
@@ -244,7 +271,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     @Override
     public void windowClosing(WindowEvent e) {
         if(JOptionPane.showConfirmDialog(view, "Exit?", "Exit",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
             view.dispose();
             view.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             try {
@@ -259,8 +286,12 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         try {
             if (JOptionPane.showConfirmDialog(view, "Log out?", "Log out",
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 sendToServer(ServerObjectType.LOGOUT, null);
+                DataManager.getSharedInstance().setSelectedProject(null);
+                DataManager.getSharedInstance().setProjectOwnerList(null);
+                DataManager.getSharedInstance().setProjectSharedList(null);
+                DataManager.getSharedInstance().setUserName(null);
                 swapPanel(LogInPanel.LOGIN);
             }
         } catch (IOException e1) {

@@ -78,7 +78,6 @@ public class EditionController {
     }
 
     private void addCommunicators () {
-        mainController.addCommunicator(new ProjectEditedCommunicator(), ServerObjectType.SET_PROJECT);
         mainController.addCommunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
         mainController.addCommunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
         mainController.addCommunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
@@ -89,7 +88,6 @@ public class EditionController {
 
     public void removeCommunicators () {
         mainController.removeCommunicator(ServerObjectType.SWAP_CATEGORY);
-        mainController.removeCommunicator(ServerObjectType.SET_PROJECT);
         mainController.removeCommunicator(ServerObjectType.DELETE_PROJECT);
         mainController.removeCommunicator(ServerObjectType.SET_CATEGORY);
         mainController.removeCommunicator(ServerObjectType.DELETE_CATEGORY);
@@ -131,12 +129,12 @@ public class EditionController {
         projectPanel.cleanCategories();
         projectUserPanel.cleanUserList();
         this.project = project;
-        project.setOwner(true);
         category = null;
         task = null;
 
         //Config project content
         projectPanel.hideDeleteButton();
+        projectPanel.setProjectOwner(project.isOwner());
         editionPanel.setBackgroundImage(project.getBackground());
         projectPanel.setProjectName(project.getName());
         projectPanel.cleanCategories();
@@ -173,7 +171,6 @@ public class EditionController {
 
         //Configure user permissions
         projectUserPanel.setEditionState(project.isOwner());
-        taskUserPanel.setEditionState(project.isOwner());
 
     }
 

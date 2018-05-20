@@ -7,12 +7,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Classe encarregada de llegir la configuració.
+ */
 public class Configuration {
     private static Properties config;
-    //No fer push d'aixo.
     private final static String path = System.getProperty("user.dir") + System.getProperty("file.separator")
             + "config.json";
 
+    /**
+     * 
+     */
     public static void loadConfiguration() {
         BufferedReader br = null;
         config = new Properties();

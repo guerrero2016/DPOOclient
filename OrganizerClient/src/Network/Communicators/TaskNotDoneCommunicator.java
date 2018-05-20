@@ -6,6 +6,9 @@ import Network.Communicable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * S'encarrega de la comunicació quan una tasca es marca com a no feta.
+ */
 public class TaskNotDoneCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {

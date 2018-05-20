@@ -9,6 +9,9 @@ import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * S'encarrega de la comunicació quan s'elimina una tasca.
+ */
 public class TaskDeletedCommunicator implements Communicable {
 
     @Override

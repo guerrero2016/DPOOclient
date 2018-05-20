@@ -20,14 +20,17 @@ public class AuthCommunicator implements Communicable {
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
             int error = (Integer) objectIn.readObject();
+            projects = new ArrayList<>();
             switch (error) {
                 case 0:
                     DataManager dataManager = DataManager.getSharedInstance();
 
-                    dataManager.setProjectOwnerList(readProjects(objectIn));
+                    readProjects(objectIn);
+                    dataManager.setProjectOwnerList(projects);
                     controller.getProjectsMainViewController().createOwnerProjects(projects);
 
-                    dataManager.setProjectSharedList(readProjects(objectIn));
+                    readProjects(objectIn);
+                    dataManager.setProjectSharedList(projects);
                     controller.getProjectsMainViewController().createSharedProjects(projects);
                     break;
                 case 1:
@@ -49,19 +52,20 @@ public class AuthCommunicator implements Communicable {
         }
     }
 
-    private ArrayList<Project> readProjects(ObjectInputStream objectIn) throws IOException, ClassNotFoundException {
-
-        projects = new ArrayList<>();
+    /**
+     * Funció encarregada de llegir els projectes que rep del servidor
+     * @param objectIn inputStream que s'utilitza per a la comunicació
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readProjects(ObjectInputStream objectIn) throws IOException, ClassNotFoundException {
 
         int totalProjects = objectIn.readInt();
 
         for (int i = 0; i < totalProjects; i++) {
-            //TODO save hash
             final Project p = (Project) objectIn.readObject();
             projects.add(p);
         }
-
-        return projects;
     }
 
 }
