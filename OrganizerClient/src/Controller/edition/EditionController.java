@@ -162,7 +162,6 @@ public class EditionController {
         task = null;
 
         //Config project content
-        projectPanel.hideDeleteButton();
         projectPanel.setProjectOwner(project.isOwner());
         editionPanel.setBackgroundImage(project.getBackground());
         projectPanel.setProjectName(project.getName());

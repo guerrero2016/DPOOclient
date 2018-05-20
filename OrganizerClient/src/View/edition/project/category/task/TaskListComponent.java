@@ -11,6 +11,9 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
+/**
+ * Classe encarregada de generar els components d'una llista de tasques
+ */
 public class TaskListComponent extends JPanel implements Transferable {
 
     private final static String TASK_FINISHED = "Task finished";
@@ -27,6 +30,10 @@ public class TaskListComponent extends JPanel implements Transferable {
     public static DataFlavor[] supportedFlavors = {localObjectFlavor};
     private Task task;
 
+    /**
+     * Constructor a partir d'un objecte
+     * @param object Objecte
+     */
     public TaskListComponent(Object object) {
 
         if(!(object instanceof Task)) {

@@ -3,6 +3,9 @@ package View.edition.color;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe encarregada de generar un panell que permeti escollir colors d'una paleta
+ */
 public class ColorChooserPanel extends JPanel {
 
     private final static String PREVIEW_TITLE = "Color preview";
@@ -10,6 +13,9 @@ public class ColorChooserPanel extends JPanel {
     private final PalettePanel palettePanel;
     private final JPanel jpColor;
 
+    /**
+     * Constructor del selector
+     */
     public ColorChooserPanel() {
 
         //Config panel
@@ -33,10 +39,18 @@ public class ColorChooserPanel extends JPanel {
 
     }
 
+    /**
+     * Getter de la paleta de colors
+     * @return Paleta de colors
+     */
     public PalettePanel getPalettePanel() {
         return palettePanel;
     }
 
+    /**
+     * Mètode encarregat d'establir la previsualitació del color seleccionat
+     * @param color Color a mostrar
+     */
     public void setPreviewColor(Color color) {
         if(color != null) {
             jpColor.setBackground(color);

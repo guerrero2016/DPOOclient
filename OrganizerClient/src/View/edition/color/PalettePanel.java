@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe encarregada de generar una paleta de 6 colors
+ */
 public class PalettePanel extends JPanel {
 
     public final static String ACTION_GREEN_BUTTON = "GreenButton";
@@ -27,6 +30,9 @@ public class PalettePanel extends JPanel {
     private final JButton jbOrange;
     private final JButton jbPink;
 
+    /**
+     * Constructor del panell
+     */
     public PalettePanel() {
 
         //Panel config
@@ -77,6 +83,10 @@ public class PalettePanel extends JPanel {
 
     }
 
+    /**
+     * Mètode encarregat de registrar un ActionListener
+     * @param actionListener Controlador
+     */
     public void registerActionController(ActionListener actionListener) {
         jbGreen.addActionListener(actionListener);
         jbCyan.addActionListener(actionListener);

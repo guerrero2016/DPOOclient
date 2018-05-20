@@ -3,6 +3,9 @@ package View.edition.project.category.task;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe encarregada de fer un CellRenderer de tasques
+ */
 public class TaskListCellRenderer extends DefaultListCellRenderer {
 
     @Override
