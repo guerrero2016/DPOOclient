@@ -75,11 +75,7 @@ public class DataManager {
     }
 
     public void deleteCategory(String categoryID) {
-        for(Category category:selectedProject.getCategories()) {
-            if (category.getId() != null && category.getId().equals(categoryID)) {
-                deleteCategory(category);
-            }
-        }
+        deleteCategory(selectedProject.getCategoryWithId(categoryID));
     }
 
     public void setTask(Task task, String categoryID) {

@@ -58,7 +58,6 @@ public class TagController implements ActionListener {
                     mainController.editTagInDB(tag);
                 }
             }
-
         } else {
             dialogJFrame = new JFrame();
             dialogJFrame.setLocationRelativeTo(null);
@@ -81,7 +80,6 @@ public class TagController implements ActionListener {
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
                 mainController.removeTagInDB(tag);
             }
-
         }
     }
 

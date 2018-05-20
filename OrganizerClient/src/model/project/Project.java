@@ -153,8 +153,7 @@ public class Project implements Serializable{
                     if (category.getOrder() != -1) {
                         Category aux = categories.get(i);
                         aux.setOrder(category.getOrder());
-                        categories.remove(i);
-                        categories.add(aux.getOrder(), aux);
+                        categories.set(i, category);
                     }
                     return;
                 }

@@ -27,7 +27,6 @@ import View.edition.task.TaskPanel;
 import View.edition.task.tag.TagPanel;
 import View.edition.user.UserPanel;
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -103,7 +102,7 @@ public class EditionController {
     }
 
     public void addCategory(Category category) {
-        if(!this.isEditing() && !projectPanel.getNewCategoryName().isEmpty()) {
+        if(!this.isEditing()) {
             projectPanel.cleanNewCategoryName();
             projectPanel.addCategoryToView(category);
             project.setCategory(category);
@@ -331,15 +330,16 @@ public class EditionController {
         category.deleteTask(task);
     }
 
+    public void deleteCategoryInView(int i) {
+        projectPanel.removeCategory(i);
+    }
+
     public void deleteCategory(String id_category) {
         Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(id_category);
         int index = project.getCategoryIndex(category);
         if(index >= 0 && index < project.getCategoriesSize()) {
-            project.deleteCategory(category);
-            projectPanel.removeCategory(index);
             if(mainController != null) {
                 try {
-                    mainController.addCommunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
                     mainController.sendToServer(ServerObjectType.DELETE_CATEGORY, category);
                     mainController.sendToServer(null, project.getId());
                 } catch (IOException e) {
