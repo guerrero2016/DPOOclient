@@ -21,21 +21,33 @@ public class TagSetCommunicator implements Communicable {
             Tag tag = (Tag) objectIn.readObject();
             String taskID = objectIn.readObject().toString();
             String categoryID = objectIn.readObject().toString();
-            int categoryIndex = DataManager.getSharedInstance().getSelectedProject().
-                    getCategoryIndex(DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID));
-            int taskIndex = DataManager.getSharedInstance().getSelectedProject().getCategories().get(categoryIndex).
-                    getTaskIndex(DataManager.getSharedInstance().getSelectedProject().getCategories().get(categoryIndex).getTaskWithId(taskID));
-            Task targetTask = DataManager.getSharedInstance().getSelectedProject().getCategories().get(categoryIndex).getTasks().get(taskIndex);
 
-            //Check if tag exists
-            for(int i = 0; i < targetTask.getTagsSize(); i++) {
-                if(tag.getId().equals(targetTask.getTags().get(i).getId())) {
-                    controller.editTagInProject(categoryID, taskID, tag);
-                    return;
-                }
+            Task targetTask = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID)
+                    .getTaskWithId(taskID);
+
+            Tag t = targetTask.getTagWithId(tag.getId());
+
+            if (t != null) {
+                t.setName(tag.getName());
+                t.setColor(tag.getColor());
+                controller.editTagInProject(categoryID, taskID, tag);
+                return;
             }
 
+            //Check if tag exists
+//            for(int i = 0; i < targetTask.getTagsSize(); i++) {
+//                if(tag.getId().equals(targetTask.getTags().get(i).getId())) {
+//                    DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID).
+//                            getTaskWithId(taskID).getTags().set(DataManager.getSharedInstance().getSelectedProject().
+//                            getCategoryWithId(categoryID).getTaskWithId(taskID).getTagOrder(tag),tag);
+//                    controller.editTagInProject(categoryID, taskID, tag);
+//                    return;
+//                }
+//            }
+
             //New tag
+            DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID).
+                    getTaskWithId(taskID).addTag(tag);
             controller.addTagInProject(categoryID, taskID, tag);
 
         } catch (IOException | ClassNotFoundException e) {

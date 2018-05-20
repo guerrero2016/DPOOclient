@@ -1,6 +1,5 @@
 package Controller;
 
-import Network.NetworkManager;
 import View.*;
 import model.ServerObjectType;
 import model.project.Project;
@@ -19,9 +18,6 @@ public class ProjectSelectionController implements ActionListener {
 
     public ProjectSelectionController (ProjectSelectionView view) {
         this.view = view;
-        //ArrayList<Project> projects = new ArrayList<>(Arrays.asList(controller.getProjects()));
-       // controller.createOwnerBoxProjects(projects);
-       //controller.createSharedBoxProjects(projects);
     }
 
     public void setController(MainViewController controller) {
@@ -111,4 +107,5 @@ public class ProjectSelectionController implements ActionListener {
                 new ProjectCreationController(this);
         projectCreationController.createAddProjectView();
     }
+
 }

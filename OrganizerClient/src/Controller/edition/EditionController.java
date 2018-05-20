@@ -198,6 +198,7 @@ public class EditionController {
 
         //Config task content
         taskPanel.setTaskName(task.getName());
+        taskPanel.setTaskFinished(task.isFinished());
         taskPanel.setDescription(task.getDescription());
         taskPanel.cleanTagsList();
         taskPanel.setTagsList(task.getTags());
@@ -316,8 +317,17 @@ public class EditionController {
         }
     }
 
-    public void updateTaskInView(Task task) {
-        taskPanel.setTaskName(task.getName());
+    public void updateTaskInView(String categoryId, Task task) {
+
+        if(this.task != null && this.task.getID().equals(task.getID())) {
+            taskPanel.setTaskName(task.getName());
+        }
+
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(
+                targetCategory));
+        categoryPanel.updateTask(targetCategory.getTaskIndex(task), task);
+
     }
 
     public void updateCategoryInView(Category category) {
@@ -376,10 +386,6 @@ public class EditionController {
 
     public void userJoinedProject(User user) {
         projectUserPanel.addUser(user);
-    }
-
-    public void userLeftProject(int i) {
-        projectUserPanel.removeUser(i);
     }
 
     public void addProjectUser(User user) {
@@ -536,44 +542,34 @@ public class EditionController {
     }
 
     public void editTagInProject(String categoryId, String taskId, Tag tag) {
-
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
         Tag targetTag = targetTask.getTagWithId(tag.getId());
 
         if(task != null && task.getID().equals(taskId)) {
-
             TagPanel tagPanel = taskPanel.getTagPanel(targetTask.getTagIndex(tag));
             tagPanel.setTagName(tag.getName());
             tagPanel.setTagColor(tag.getColor());
             TagController controller = (TagController) taskPanel.getTagPanel(task.getTagIndex(tag)).getActionListener();
-
             if(!controller.isEditingTag(tag)) {
                 tagPanel.revalidate();
                 tagPanel.repaint();
             }
-
         }
-
         targetTag.setName(tag.getName());
         targetTag.setColor(tag.getColor());
         projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).
                 updateTask(targetCategory.getTaskIndex(targetTask), targetTask);
-
     }
 
     public void addTagInProject(String categoryId, String taskId, Tag tag) {
-
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
-        targetTask.addTag(tag);
-
         if(task != null && task.getID().equals(taskId)) {
             taskPanel.addTag(tag);
             TagPanel tagPanel = taskPanel.getTagPanel(task.getTagIndex(tag));
             tagPanel.registerActionController(new TagController(this, tag));
         }
-
         projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).updateTask(targetCategory.
                 getTaskIndex(targetTask), targetTask);
 

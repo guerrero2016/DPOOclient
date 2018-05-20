@@ -17,12 +17,17 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     public final static String ACTION_TASK_BACK = "TaskBack";
     public final static String ACTION_TASK_EDIT_NAME = "TaskEditName";
     public final static String ACTION_TASK_DELETE = "TaskDelete";
+    public final static String ACTION_AFFIRMATIVE = "StateAffirmative";
+    public final static String ACTION_NEGATIVE = "StateNegative";
     public final static String ACTION_DESCRIPTION_EDITION = "DescriptionEdition";
     public final static String ACTION_TAG_ADD = "TagAdd";
 
     private final static int MAX_TASK_LENGTH = 20;
     private final static int MAX_TAGS = 5;
 
+    private final static String TASK_STATE_TITLE = "Tasca finalitzada?";
+    private final static String AFFIRMATIVE_RADIO_BUTTON = "Sí";
+    private final static String NEGATIVE_RADIO_BUTTON = "No";
     private final static String TASK_TITLE = "Task";
     private final static String DESCRIPTION_TITLE = "Description";
     private final static String TAGS_TITLE = "Tags";
@@ -42,6 +47,8 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     private final TransparentPanel tpTagsList;
     private final JTextField jtfTagName;
     private final JButton jbTagAdder;
+    private final JRadioButton jrbAffirmative;
+    private final JRadioButton jrbNegative;
 
     private Image editorIcon;
     private Image checkIcon;
@@ -125,13 +132,48 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         tpContent.setLayout(new GridBagLayout());
         add(tpContent, BorderLayout.CENTER);
 
+        //Task state panel
+        final TransparentPanel tpTaskState = new TransparentPanel();
+        tpTaskState.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        GridBagConstraints gbcTaskState = new GridBagConstraints();
+        gbcTaskState.gridx = 0;
+        gbcTaskState.gridy = 0;
+        gbcTaskState.weightx = 1;
+        gbcTaskState.weighty = 0.2;
+        gbcTaskState.fill = GridBagConstraints.BOTH;
+
+        tpContent.add(tpTaskState, gbcTaskState);
+
+        //Task state title
+        final JLabel jlTaskState = new JLabel(TASK_STATE_TITLE);
+        jlTaskState.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
+        tpTaskState.add(jlTaskState);
+
+        //Affirmative button
+        jrbAffirmative = new JRadioButton(AFFIRMATIVE_RADIO_BUTTON);
+        jrbAffirmative.setOpaque(false);
+        jrbAffirmative.setActionCommand(ACTION_AFFIRMATIVE);
+        tpTaskState.add(jrbAffirmative);
+
+        //Negative button
+        jrbNegative = new JRadioButton(NEGATIVE_RADIO_BUTTON);
+        jrbNegative.setOpaque(false);
+        jrbNegative.setActionCommand(ACTION_NEGATIVE);
+        tpTaskState.add(jrbNegative);
+
+        //Button group
+        final ButtonGroup bgTaskState = new ButtonGroup();
+        bgTaskState.add(jrbAffirmative);
+        bgTaskState.add(jrbNegative);
+        jrbNegative.setSelected(true);
+
         //Description panel
         final TransparentPanel tpDescription = new TransparentPanel();
         tpDescription.setLayout(new BorderLayout());
 
         GridBagConstraints gbcDescription = new GridBagConstraints();
         gbcDescription.gridx = 0;
-        gbcDescription.gridy = 0;
         gbcDescription.weightx = 1;
         gbcDescription.weighty = 0.3;
         gbcDescription.fill = GridBagConstraints.BOTH;
@@ -178,7 +220,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         GridBagConstraints gbcTags = new GridBagConstraints();
         gbcTags.gridx = 0;
         gbcTags.weightx = 1;
-        gbcTags.weighty = 0.7;
+        gbcTags.weighty = 0.5;
         gbcTags.fill = GridBagConstraints.BOTH;
 
         tpContent.add(tpTags, gbcTags);
@@ -287,6 +329,14 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     public boolean isTaskNameEditable() {
         return jtfTaskName.isEditable();
+    }
+
+    public boolean isTaskFinished() {
+        return jrbAffirmative.isSelected();
+    }
+
+    public void setTaskFinished(boolean finishedState) {
+        jrbAffirmative.setSelected(finishedState);
     }
 
     public String getDescription() {
@@ -411,6 +461,8 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         jbTaskDelete.removeActionListener(actionListener);
         jbDescriptionEditor.removeActionListener(actionListener);
         jbTagAdder.removeActionListener(actionListener);
+        jrbAffirmative.removeActionListener(actionListener);
+        jrbNegative.removeActionListener(actionListener);
         actionListener = null;
     }
 
@@ -421,6 +473,8 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         jbTaskDelete.addActionListener(actionListener);
         jbDescriptionEditor.addActionListener(actionListener);
         jbTagAdder.addActionListener(actionListener);
+        jrbAffirmative.addActionListener(actionListener);
+        jrbNegative.addActionListener(actionListener);
     }
 
     public void registerDocumentController(DocumentListener documentListener) {
