@@ -7,10 +7,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-/**
- * Classe singleton encarregada de llegir la configuració.
- */
-public class Configuration {
+    /**
+     * Classe singleton encarregada de llegir la configuració.
+     */
+    public class Configuration {
     private static Configuration ourInstance = new Configuration();
     private Properties config;
     private final static String path = System.getProperty("user.dir") + System.getProperty("file.separator")
@@ -18,6 +18,7 @@ public class Configuration {
 
     /**
      * Constructor sense paràmetres
+     * Procediment encarregat de llegir el fitxer de configuració i el carregui al programa.
      */
     private Configuration() {}
 
