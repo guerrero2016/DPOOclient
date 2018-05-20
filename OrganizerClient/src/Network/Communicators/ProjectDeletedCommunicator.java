@@ -12,17 +12,13 @@ public class ProjectDeletedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
-            //TODO mirar si s'està dins del projecte
             DataManager dataManager = DataManager.getSharedInstance();
             final Project p = (Project) objectIn.readObject();
 
-            System.out.println(p.getOwnerName() + dataManager.getUserName());
-            System.out.println(dataManager.getUserName());
             if (dataManager.getUserName().equals(p.getOwnerName())) {
                 p.setOwner(true);
             }
 
-            System.out.println(p.isOwner());
             if (p.isOwner()) {
                 int i = dataManager.getOwnerProjectIndex(p);
                 System.out.println(i);

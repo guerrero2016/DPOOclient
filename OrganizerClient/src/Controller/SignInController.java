@@ -47,15 +47,12 @@ public class SignInController implements ActionListener {
             case SignInPanel.SIGN:
                 UserRegister register = view.getRegister();
 
-                if((register.checkSignIn() == 0)) {
-                    try {
-                        controller.sendToServer(ServerObjectType.REGISTER, register);
-                    } catch (IOException e1) {
-                        controller.showDialog("Error de connexió amb el servidor");
-                    }
-                } else {
-                    controller.showDialog("Error, dades incorectes");
+                try {
+                    controller.sendToServer(ServerObjectType.REGISTER, register);
+                } catch (IOException e1) {
+                    controller.showDialog("Error de connexió amb el servidor");
                 }
+
                 break;
         }
 

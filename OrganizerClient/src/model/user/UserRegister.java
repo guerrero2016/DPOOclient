@@ -2,6 +2,9 @@ package model.user;
 
 public class UserRegister extends User {
     public final static int serialVersionUID = 3321;
+    public final static int NAME_ERROR = 11;
+    public final static int EMAIL_ERROR = 13;
+    public final static int PASS_ERROR = 29;
 
     private final static int MIN_LENGTH = 8;
 
@@ -32,74 +35,80 @@ public class UserRegister extends User {
         return confirm;
     }
 
-    public void encryptPassword() {
+    public int encryptPassword() {
+        int error = checkSignIn();
 
-        if (checkSignIn() == 0 && (User.containsUpperCase(password) || User.containsUpperCase(confirm))) {
+        if (error == 0 && (User.containsUpperCase(password) || User.containsUpperCase(confirm))) {
             password = User.getMD5(password);
             confirm = User.getMD5(confirm);
         } else {
             password = "";
             confirm = "";
         }
+        return error;
     }
 
-    public int checkSignIn(){
+    private int checkSignIn() {
+        int error = 0;
 
-        if (userName == null){
-            return 3;
-        }
-        for(int i = 0; i < userName.length(); i++) {
-            if(!Character.isLetterOrDigit(userName.charAt(i)) && !(userName.charAt(i) == '_')) {
-                return 3;
+        if (userName == null || userName.equals("")) {
+            error = NAME_ERROR;
+        } else {
+            for (int i = 0; i < userName.length(); i++) {
+                if (!Character.isLetterOrDigit(userName.charAt(i)) && !(userName.charAt(i) == '_')) {
+                    error = NAME_ERROR;
+                }
             }
         }
 
         if (email == null) {
-            return 3;
-        }for(int i = 0; i < email.length(); i++) {
-            if(!Character.isLetterOrDigit(email.charAt(i)) && !(email.charAt(i) == '@') &&
-                    !(email.charAt(i) == '_') && !(email.charAt(i) == '.')) {
-                return 3;
-            }
-        }
-        boolean arroba = false;
-        boolean dot = false;
-        for (int i = 0; i < email.length(); i++) {
-            if (email.charAt(i) == '@') {
-                arroba = true;
-            }
-            if (email.charAt(i) == '.') {
-                dot = true;
-            }
-        }
-        if (!arroba || !dot) {
-            return 3;
-        }
-
-        if (!password.equals(confirm)) {
-            return 3;
-        }
-
-        if (password.length() < MIN_LENGTH) {
-            return 3;
-        }
-
-        boolean minus = false;
-        boolean num = false;
-        for (int i = 0; i < password.length(); i++) {
-            if (Character.isLowerCase(password.charAt(i))) {
-                minus = true;
+            error += EMAIL_ERROR;
+        } else {
+            for (int i = 0; i < email.length(); i++) {
+                if (!Character.isLetterOrDigit(email.charAt(i)) && !(email.charAt(i) == '@') &&
+                        !(email.charAt(i) == '_') && !(email.charAt(i) == '.')) {
+                    error += EMAIL_ERROR;
+                }
             }
 
-            if (Character.isDigit(password.charAt(i))) {
-                num = true;
+            if (error < 13) {
+                boolean arroba = false;
+                boolean dot = false;
+                for (int i = 0; i < email.length(); i++) {
+                    if (email.charAt(i) == '@') {
+                        arroba = true;
+                    }
+                    if (email.charAt(i) == '.') {
+                        dot = true;
+                    }
+                }
+                if (!arroba || !dot) {
+                    error += EMAIL_ERROR;
+                }
             }
         }
 
-        if (!minus || !num) {
-            return 3;
+        if (!password.equals(confirm) || password.length() < MIN_LENGTH) {
+            error += PASS_ERROR;
+        } else {
+
+            boolean minus = false;
+            boolean num = false;
+            for (int i = 0; i < password.length(); i++) {
+                if (Character.isLowerCase(password.charAt(i))) {
+                    minus = true;
+                }
+
+                if (Character.isDigit(password.charAt(i))) {
+                    num = true;
+                }
+            }
+
+            if (!minus || !num) {
+                error += PASS_ERROR;
+            }
         }
-        return 0;
+        return error;
     }
     
 }

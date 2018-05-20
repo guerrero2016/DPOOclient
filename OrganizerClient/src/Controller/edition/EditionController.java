@@ -248,6 +248,14 @@ public class EditionController {
         }
     }
 
+    public void deleteUser(User user) {
+        try {
+            mainController.sendToServer(ServerObjectType.DELETE_USER, user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void updateTask(Task task) {
         if(mainController != null) {
             try {
@@ -366,6 +374,10 @@ public class EditionController {
 
     public void userJoinedProject(User user) {
         projectUserPanel.addUser(user);
+    }
+
+    public void userLeftProject(int i) {
+        projectUserPanel.removeUser(i);
     }
 
     public void addProjectUser(User user) {
