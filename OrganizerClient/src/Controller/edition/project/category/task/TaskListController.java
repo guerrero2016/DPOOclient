@@ -12,6 +12,9 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Classe encarregada de controlar el drag and drop d'una llista de tasques
+ */
 public class TaskListController extends TransferHandler {
 
     private EditionController mainController;
@@ -21,17 +24,33 @@ public class TaskListController extends TransferHandler {
     private int index;
     private boolean beforeIndex = false;
 
-    public TaskListController(EditionController mainController, model.project.Category category, JList<Task> jlTasks) {
+    /**
+     * Constructor quie requereix d'un controlador extern, la categoria on pertany la llista i el component de la llista
+     * @param mainController Controlador extern
+     * @param category Categoria de la llista
+     * @param jlTasks Llista de tasques (JList<Task>)
+     */
+    public TaskListController(EditionController mainController, Category category, JList<Task> jlTasks) {
         this.mainController = mainController;
         this.category = category;
         this.jlTasks = jlTasks;
     }
 
+    /**
+     * Mètode encarregat de retornar el tipus d'acció DnD
+     * @param comp Component
+     * @return Tipus d'acció
+     */
     @Override
     public int getSourceActions(JComponent comp) {
         return MOVE;
     }
 
+    /**
+     * Mètode encarregat d'iniciar el DnD
+     * @param comp Component a moure
+     * @return Component que es mou
+     */
     @Override
     public Transferable createTransferable(JComponent comp) {
         index = jlTasks.getSelectedIndex();
@@ -56,6 +75,12 @@ public class TaskListController extends TransferHandler {
         };
     }
 
+    /**
+     * Mètode llençat quan s'ha pogut començar un DnD exitosament
+     * @param comp Component
+     * @param trans Objecte que es mou
+     * @param action Acció
+     */
     @Override
     public void exportDone(JComponent comp, Transferable trans, int action) {
         if (action == MOVE) {
@@ -68,11 +93,21 @@ public class TaskListController extends TransferHandler {
         mainController.swapTask(category);
     }
 
+    /**
+     * Mètode que indica si l'objecte que es mou es pot colocar on està el cursor
+     * @param support Objecte que es mou
+     * @return Si es pot colocar
+     */
     @Override
     public boolean canImport(TransferSupport support) {
         return support.isDrop() && support.isDataFlavorSupported(TaskListComponent.localObjectFlavor);
     }
 
+    /**
+     * Mètode que coloca l'objecte que s'ha deixat anar
+     * @param support Objecte a colocar
+     * @return Si s'ha pogut colocar
+     */
     @Override
     public boolean importData(TransferSupport support) {
         try {

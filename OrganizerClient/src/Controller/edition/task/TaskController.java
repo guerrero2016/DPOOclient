@@ -13,6 +13,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe encarregada de controlar els Action Event d'un TaskPanel
+ */
 public class TaskController implements ActionListener {
 
     private final static String TASK_DELETE_MESSAGE = "Do you want to delete";
@@ -23,6 +26,12 @@ public class TaskController implements ActionListener {
     private TaskPanel view;
     private Task task;
 
+    /**
+     * Constructor que requereix d'un controlador extern, la vista a controlar i la tasca origen
+     * @param mainController Controlador extern
+     * @param view Vista a controlar
+     * @param task Tasca origen
+     */
     public TaskController(EditionController mainController, TaskPanel view, Task task) {
         this.mainController = mainController;
         this.view = view;
@@ -30,6 +39,10 @@ public class TaskController implements ActionListener {
         DataManager.getSharedInstance().setEditingTask(task);
     }
 
+    /**
+     * Mètode encarregat de distingir les diferents possibles accions
+     * @param e Action Event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals(TaskPanel.ACTION_TASK_BACK)) {
@@ -49,7 +62,10 @@ public class TaskController implements ActionListener {
         }
     }
 
-    public void closeTask() {
+    /**
+     * Mètode encarregat de tancar la tasca
+     */
+    private void closeTask() {
         view.setDescriptionEditable(false);
         view.setDescription(task.getDescription());
         view.setTaskNameEditable(false, task.getName());
@@ -58,6 +74,9 @@ public class TaskController implements ActionListener {
         DataManager.getSharedInstance().setEditingTask(null);
     }
 
+    /**
+     * Mètode encarregat de la modificació del nom
+     */
     private void taskNameManagement() {
         if(!mainController.isEditing()) {
             mainController.setEditingState(true);
@@ -79,6 +98,9 @@ public class TaskController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat d'eliminar la tasca
+     */
     private void deleteTask() {
         int result = JOptionPane.showConfirmDialog(null,TASK_DELETE_MESSAGE + " '" +
                 task.getName() + "'?", TASK_DELETE_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -87,6 +109,9 @@ public class TaskController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat de l'edició de la descripció
+     */
     private void descriptionManagement() {
         if(!mainController.isEditing()) {
             mainController.setEditingState(true);
@@ -104,6 +129,9 @@ public class TaskController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat d'afegir una etiqueta
+     */
     private void addTag() {
 
         if(!mainController.isEditing() && !view.getNewTagName().isEmpty()) {
@@ -131,10 +159,16 @@ public class TaskController implements ActionListener {
 
     }
 
+    /**
+     * Mètode encarregat d'assingar una tasca com a finalitzada
+     */
     private void taskDoneManagement() {
         mainController.setTaskDoneInDB();
     }
 
+    /**
+     * Mètode encarregat d'assignar una tasca com a no finalitzada
+     */
     private void taskNotDoneManagement() {
         mainController.setTaskNotDoneInDB();
     }

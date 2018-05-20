@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * Classe encarregada d'eliminar un usuari d'un projecte
+ */
 public class ProjectRemoveUserController implements MouseListener {
 
     private final static String USER_REMOVE_TITLE = "User Remove";
@@ -19,12 +22,22 @@ public class ProjectRemoveUserController implements MouseListener {
     private UserPanel view;
     private Project project;
 
+    /**
+     * Constructor que requeriex d'un controlador extern, el panell a controlar i el projecte on s'eliminen els usuaris
+     * @param mainController Controlador extern
+     * @param view Vista a controlar
+     * @param project Projecte on s'eliminen usuaris
+     */
     public ProjectRemoveUserController(EditionController mainController, UserPanel view, Project project) {
         this.mainController = mainController;
         this.view = view;
         this.project = project;
     }
 
+    /**
+     * Mètode encarregat de controlar quan s'eliminen usuaris
+     * @param e Mouse Event
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         DataManager dataManager = DataManager.getSharedInstance();

@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe encarregada de contolar els Action Event d'un CategoryPanel
+ */
 public class CategoryActionController implements ActionListener {
 
     private final static String CATEGORY_REMOVE_MESSAGE = "Do you want to delete";
@@ -22,12 +25,22 @@ public class CategoryActionController implements ActionListener {
     private CategoryPanel view;
     private model.project.Category category;
 
-    public CategoryActionController(EditionController mainController, CategoryPanel view, model.project.Category category) {
+    /**
+     * Constructor que requereix d'un controlador extern, de la vista a controlar i de la categoria usada
+     * @param mainController Controlador extern
+     * @param view Vista a controlar
+     * @param category Categoria corresponent a la vista
+     */
+    public CategoryActionController(EditionController mainController, CategoryPanel view, Category category) {
         this.mainController = mainController;
         this.view = view;
         this.category = category;
     }
 
+    /**
+     * Mètode encarregat de distingir l'acció detectada
+     * @param e Action Event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_EDIT_NAME)) {
@@ -46,6 +59,9 @@ public class CategoryActionController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat de manegar els canvis de nom
+     */
     private void categoryNameManagement() {
         if(!mainController.isEditing()) {
             mainController.setEditingState(true);
@@ -64,6 +80,10 @@ public class CategoryActionController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat de reordenar les categories
+     * @param orderBy Ordenat dret o esquerre (TO_RIGHT, TO_LEFT)
+     */
     private void categoryReorder(int orderBy) {
         if(!mainController.isEditing()) {
             int index = mainController.getCategoryIndex(category);
@@ -82,6 +102,9 @@ public class CategoryActionController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat d'eliminar la categoria
+     */
     private void categoryDelete() {
         int result = JOptionPane.showConfirmDialog(null, CATEGORY_REMOVE_MESSAGE + " '" +
                category.getName() + "'?", CATEGORY_REMOVE_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.
@@ -94,6 +117,9 @@ public class CategoryActionController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat d'afegir una tasca
+     */
     private void addTask() {
         if(!mainController.isEditing() && !view.getNewTaskName().isEmpty()) {
             Task task = new Task(view.getNewTaskName());
