@@ -313,6 +313,7 @@ public class EditionController {
 
         if(this.task != null && this.task.getID().equals(task.getID())) {
             taskPanel.setTaskName(task.getName());
+            taskPanel.setDescription(task.getDescription());
         }
 
         Category targetCategory = project.getCategoryWithId(categoryId);
@@ -374,6 +375,9 @@ public class EditionController {
             if(userName.equals(project.getUser(i).getUserName())) {
                 return project.getUser(i);
             }
+        }
+        if(userName.equals(project.getOwnerName())) {
+            return new User(project.getOwnerName());
         }
         return null;
     }

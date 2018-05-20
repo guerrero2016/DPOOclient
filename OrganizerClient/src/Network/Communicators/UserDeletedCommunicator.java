@@ -9,6 +9,9 @@ import model.user.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * S'encarrega de la comunicació quan un usuari és eliminat del projecte
+ */
 public class UserDeletedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {

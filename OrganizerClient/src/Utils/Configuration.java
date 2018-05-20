@@ -7,12 +7,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Classe encarregada de llegir la configuració.
+ */
 public class Configuration {
     private static Properties config;
-    //No fer push d'aixo.
     private final static String path = System.getProperty("user.dir") + System.getProperty("file.separator")
             + "config.json";
 
+    /**
+     * Procediment encarregat de llegir el fitxer de configuració i el carregui al programa.
+     */
     public static void loadConfiguration() {
         BufferedReader br = null;
         config = new Properties();
@@ -43,10 +48,18 @@ public class Configuration {
         }
     }
 
+    /**
+     * Funció que recupera l'adreça IP de l'arxiu de configuració.
+     * @return adreça IP
+     */
     public static String getIPAddress () {
         return config.getProperty("IPaddress");
     }
 
+    /**
+     * Funció que recupera el port de l'arxiu de configuració
+     * @return port
+     */
     public static int getCommunicationPort() {
         return Integer.parseInt(config.getProperty("communicationPORT"));
     }
