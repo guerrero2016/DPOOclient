@@ -2,6 +2,9 @@ package model;
 
 import java.util.HashMap;
 
+/**
+ * Representació de tots els tipus de comunicació entre client i servidor
+ */
 public enum ServerObjectType {
     REGISTER(1), LOGIN(2), GET_PROJECT(3), SET_PROJECT(4), SET_CATEGORY(5), DELETE_CATEGORY(6), SET_TASK(7),
     DELETE_TASK(8), INVITE_USER(9), DELETE_USER(10), EXIT_PROJECT(11), LOGOUT(12), SET_TAG(13), DELETE_TAG(14),

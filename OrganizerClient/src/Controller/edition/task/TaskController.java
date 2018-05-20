@@ -64,6 +64,7 @@ public class TaskController implements ActionListener {
                 Task aux =  new Task(view.getTaskName(), task.getDescription(), task.getTags(), task.getUsers(),
                         task.getOrder());
                 aux.setId(task.getID());
+                task.setName(view.getTaskName());
                 mainController.updateTask(aux);
                 mainController.setEditingState(false);
             } else {
@@ -99,7 +100,9 @@ public class TaskController implements ActionListener {
     }
 
     private void addTag() {
+
         if(!mainController.isEditing() && !view.getNewTagName().isEmpty()) {
+
             ColorChooserPanel colorChooserPanel = new ColorChooserPanel();
             ColorPreviewController colorPreviewController = new ColorPreviewController(colorChooserPanel);
             colorChooserPanel.getPalettePanel().registerActionController(colorPreviewController);
@@ -109,15 +112,8 @@ public class TaskController implements ActionListener {
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
                 if (colorPreviewController.getColor() != null) {
                     Tag tag = new Tag(view.getNewTagName(), colorPreviewController.getColor());
-                    mainController.sendTag(task, tag);
-
-/*                    task.addTag(tag);
-                    mainController.updateTaskList();
                     view.cleanNewTagName();
-                    view.addTag(tag);
-                    TagPanel tagPanel = view.getTagPanel(task.getTagIndex(tag));
-                    tagPanel.registerActionController(new TagController(mainController, tagPanel, tag));
-                    mainController.updateTask(task);*/
+                    mainController.sendTag(task, tag);
                 }
             }
 
@@ -125,11 +121,7 @@ public class TaskController implements ActionListener {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
                     EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
         }
-    }
 
-    public void updateTask(Task task){
-        view.setDescription(task.getDescription());
-        view.setTaskName(task.getName());
     }
 
 }

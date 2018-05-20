@@ -34,12 +34,10 @@ public class TaskListController extends TransferHandler {
 
     @Override
     public Transferable createTransferable(JComponent comp) {
-
         index = jlTasks.getSelectedIndex();
         Task taskTransfer = jlTasks.getSelectedValue();
 
         return new Transferable() {
-
             @Override public DataFlavor[] getTransferDataFlavors() {
                 return new DataFlavor[] {TaskListComponent.localObjectFlavor};
             }
@@ -55,9 +53,7 @@ public class TaskListController extends TransferHandler {
                     throw new UnsupportedFlavorException(flavor);
                 }
             }
-
         };
-
     }
 
     @Override
@@ -69,6 +65,7 @@ public class TaskListController extends TransferHandler {
                 ((DefaultListModel<Task>) jlTasks.getModel()).remove(index);
             }
         }
+        mainController.swapTask(category);
     }
 
     @Override
@@ -78,30 +75,28 @@ public class TaskListController extends TransferHandler {
 
     @Override
     public boolean importData(TransferSupport support) {
-
         try {
 
             Task transferredTask = (Task) support.getTransferable().getTransferData(TaskListComponent.localObjectFlavor);
             JList.DropLocation dl = (JList.DropLocation) support.getDropLocation();
-            ((DefaultListModel<Task>) jlTasks.getModel()).add(dl.getIndex(), transferredTask);
-            beforeIndex = dl.getIndex() < index ? true : false;
-            DefaultListModel<Task> tasks = (DefaultListModel<Task>) jlTasks.getModel();
+            DefaultListModel<Task> model = (DefaultListModel<Task>) jlTasks.getModel();
 
-            for(int i = 0; i < tasks.getSize(); i++) {
-                Task task = tasks.getElementAt(i);
-                task.setOrder(i);
+            if(model.contains(transferredTask)) {
+
+                model.add(dl.getIndex(), transferredTask);
+                beforeIndex = dl.getIndex() < index;
+                DefaultListModel<Task> tasks = (DefaultListModel<Task>) jlTasks.getModel();
+                for (int i = 0; i < tasks.getSize(); i++) {
+                    Task task = tasks.getElementAt(i);
+                    task.setOrder(i - 1);
+                }
+                return true;
             }
-
-            return true;
 
         } catch (UnsupportedFlavorException | IOException e) {
             e.printStackTrace();
         }
-
-        mainController.updateCategory(category);
-
         return false;
-
     }
 
 }

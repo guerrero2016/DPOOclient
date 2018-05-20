@@ -160,6 +160,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.editTagInProject(categoryId, taskId, tag);
     }
 
+    public void addTagInProject(String categoryId, String taskId, Tag tag) {
+        editionController.addTagInProject(categoryId, taskId, tag);
+    }
+
     public void resetSelectionView(){
         projectsMainViewController.resetOwnerProjects();
         projectsMainViewController.resetSharedProjects();
@@ -169,11 +173,11 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         network.sendToServer(type, o);
     }
 
-    public void removeCommunicator (ServerObjectType serverObjectType) {
+    public void removeCommunicator(ServerObjectType serverObjectType) {
         network.removeCommunicator(serverObjectType);
     }
 
-    public void addComunicator (Communicable communicator, ServerObjectType type){
+    public void addCommunicator(Communicable communicator, ServerObjectType type){
         network.addCommunicator(communicator, type);
     }
     public void showDialog(String errorMSG) {

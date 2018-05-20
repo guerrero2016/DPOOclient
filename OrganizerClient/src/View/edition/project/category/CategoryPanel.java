@@ -10,6 +10,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
@@ -243,6 +244,12 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
             tasksList.setElementAt(task, taskIndex);
             revalidate();
             repaint();
+        }
+    }
+
+    public void updateTasksList(ArrayList<Task> tasks) {
+        for(Task t: tasks) {
+            updateTask(t.getOrder(), t);
         }
     }
 

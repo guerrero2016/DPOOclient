@@ -11,6 +11,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 
+/**
+ * Classe encarregada de controlar la conexió entre client i servidor
+ */
 public class NetworkManager extends Thread {
 
     private boolean isOn;
@@ -37,11 +40,17 @@ public class NetworkManager extends Thread {
         this.controller = controller;
     }
 
+    /**
+     * Funció encarregada de començar la conexió
+     */
     public void startCommunication() {
         isOn = true;
         this.start();
     }
 
+    /**
+     * Funció encarregada de desconectar el client del servidor
+     */
     public void stopCommunication() {
         this.isOn = false;
         this.interrupt();
@@ -49,7 +58,7 @@ public class NetworkManager extends Thread {
 
     @Override
     public void run() {
-
+        //Mentres estigui conectat comprovarem si algun comunicador es cridat desde el servidor
         while (isOn) {
             try {
                 int typeID = objectIn.readInt();
@@ -64,6 +73,12 @@ public class NetworkManager extends Thread {
         }
     }
 
+    /**
+     * Funció encarregada d'enviar dades al servidor
+     * @param type Tipus de dades a enviar
+     * @param object Objecte a enviar
+     * @throws IOException
+     */
     public void sendToServer(ServerObjectType type, Object object) throws IOException {
         if (type != null) {
             objectOut.writeInt(type.getValue());
@@ -71,10 +86,19 @@ public class NetworkManager extends Thread {
         objectOut.writeObject(object);
     }
 
+    /**
+     * Funció encarregada d'afegir un comunicador
+     * @param communicable Comunicador
+     * @param type Tipus de dada associada al comunicador
+     */
     public void addCommunicator(Communicable communicable, ServerObjectType type) {
         communicables.put(type, communicable);
     }
 
+    /**
+     * Funció encarregada d'eliminar un comunicador
+     * @param type Tipus de dades associada al comunicador
+     */
     public void removeCommunicator (ServerObjectType type) {
         communicables.remove(type);
     }

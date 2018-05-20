@@ -8,6 +8,9 @@ import Network.Communicable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Comunicador que s'encarrega de controlar l'eliminació d'un projecte
+ */
 public class ProjectDeletedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {

@@ -8,6 +8,9 @@ import Network.Communicable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Comunicador que controla l'acció d'afegir un usuari a un projecte
+ */
 public class UserAddedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
