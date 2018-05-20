@@ -19,8 +19,4 @@ public class UserLogIn extends User {
     public boolean checkLogIn() {
         return userName != null && password != null;
     }
-
-    public String getPassword() {
-        return password;
-    }
 }

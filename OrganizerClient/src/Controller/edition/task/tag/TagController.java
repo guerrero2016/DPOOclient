@@ -74,8 +74,8 @@ public class TagController implements ActionListener {
                     Tag aux = new Tag(tag.getId(), tagEditionPanel.getTagName(), tag.getColor());
                     mainController.editTagInDB(aux);
                 }
-
             }
+
         } else {
             dialogJFrame = new JFrame();
             dialogJFrame.setLocationRelativeTo(null);

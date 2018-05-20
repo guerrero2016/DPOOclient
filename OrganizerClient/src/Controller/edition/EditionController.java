@@ -172,7 +172,6 @@ public class EditionController {
             projectPanel.addCategoryToView(project.getCategory(i));
             CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i);
             categoryPanel.resetActionController();
-            System.out.println(project.getCategory(i).getId());
             categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel,
                     project.getCategory(i)));
             categoryPanel.resetMouseController();
@@ -206,7 +205,6 @@ public class EditionController {
      * Mètode encarregat de mostrar la vista d'un projecte prèviament carregat
      */
     public void showProjectContent() {
-        System.out.println("Project content");
         isEditing = false;
         category = null;
         task = null;

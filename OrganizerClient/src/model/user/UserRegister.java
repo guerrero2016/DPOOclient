@@ -26,18 +26,6 @@ public class UserRegister extends User {
         return userName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getConfirm() {
-        return confirm;
-    }
-
     /**
      * Funcio encargada d'encriptar la contrasenya
      * @return Si retorna 0 s'ha encriptat correctament, sino hi ha hagut algun error
@@ -56,8 +44,11 @@ public class UserRegister extends User {
     }
 
     /**
-     *
-     * @return
+     * Funció encarregada de revisar si el registre és correcte.
+     * @return un codi depenent de l'error. <code>NAME_ERROR</code> si hi ha hagut error al nom. <code>EMAIL_ERROR</code>
+     *          si hi ha hagut error al email. <code>PASS_ERROR</code> si n'hi ha hagut a la contrasenya.
+     *          Si hi ha hagut error en més d'un camp, els errors es sumen; per exemple si hi ha error al nom i al email,
+     *          el codi d'error serà <code>NAME_ERROR</code> + <code>EMAIL_ERROR</code>.
      */
     private int checkSignIn() {
         int error = 0;

@@ -84,22 +84,6 @@ public class ProjectsMainViewController implements ActionListener {
         sharedSelectionController.addProject(project);
     }
 
-    /**
-     * Funcio encarregada de borrar projectes propis del usuari
-     * @param index
-     */
-    public void deleteOwnerProject(int index) {
-        ownerSelectionController.deleteProject(index);
-    }
-
-    /**
-     * Funcio encarregada d'eliminar projectes compartits
-     * @param index
-     */
-    public void deleteSharedProject(int index) {
-        sharedSelectionController.deleteProject(index);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         projectCreationController.createAddProjectView();
