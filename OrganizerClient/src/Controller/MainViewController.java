@@ -84,10 +84,6 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         //TODO: Update category from database
     }
 
-    public void updateTask(String projectID, String categoryID, Task task) {
-        editionController.updateTaskView(task);
-    }
-
     public void deleteProject() {
         //TODO: Remove user from project
     }

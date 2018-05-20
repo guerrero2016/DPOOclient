@@ -8,6 +8,7 @@ import java.util.Objects;
  * Objecte que defineix com és un usuari.
  */
 public class User implements Serializable {
+    public final static int serialVersionUID = 5555;
 
     protected String userName;
 

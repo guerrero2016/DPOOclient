@@ -29,7 +29,9 @@ public class CategorySetCommunicator implements Communicable {
             }
             if(exists) {
                 DataManager.getSharedInstance().getSelectedProject().getCategories().set(i, category);
+                controller.getEditionController().updateCategoryInView(category);
             } else {
+                DataManager.getSharedInstance().getSelectedProject().getCategories().add(category);
                 controller.getEditionController().addCategory(category);
             }
         } catch (IOException | ClassNotFoundException e) {

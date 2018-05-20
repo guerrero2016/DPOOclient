@@ -78,18 +78,6 @@ public class Category implements Serializable {
         }
     }
 
-    public Task getTaskWithId(String taskId) {
-
-        for(Task task : tasks) {
-            if(task.getID().equals(taskId)) {
-                return task;
-            }
-        }
-
-        return null;
-
-    }
-
     public void setTask(Task task) {
         if(tasks.contains(task)) {
             tasks.remove(task);
@@ -136,4 +124,12 @@ public class Category implements Serializable {
         return Objects.hash(id, name, order, tasks);
     }
 
+    public Task getTaskWithId(String id_task){
+        for(Task t: tasks) {
+            if (t.getID().equals(id_task)) {
+                return t;
+            }
+        }
+        return null;
+    }
 }

@@ -391,9 +391,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
                 jbTaskEditor.setBorder(new JButton().getBorder());
             }
         }
-
         jtaDescription.setEditable(editableState);
-
     }
 
     public boolean isDescriptionEditable() {

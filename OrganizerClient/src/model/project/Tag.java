@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Tag implements Serializable {
+    public final static int serialVersionUID = 4312;
 
     private String id_category;
     private String id_task;

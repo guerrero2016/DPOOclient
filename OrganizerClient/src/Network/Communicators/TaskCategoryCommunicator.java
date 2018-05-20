@@ -20,7 +20,7 @@ public class TaskCategoryCommunicator implements Communicable {
             String toCategory = objectIn.readObject().toString();
             DataManager dataManager = DataManager.getSharedInstance();
 
-            dataManager.deleteTask(task, fromCategory);
+            //dataManager.deleteTask(task, fromCategory);
             dataManager.setTask(task, toCategory);
 
             //TODO avisar al controller

@@ -2,6 +2,7 @@ package Controller.edition.project.category;
 
 import Controller.edition.EditionController;
 import model.DataManager;
+import model.project.Category;
 import model.project.Task;
 import View.edition.project.category.CategoryPanel;
 
@@ -52,8 +53,9 @@ public class CategoryActionController implements ActionListener {
         } else {
             if(view.isCategoryNameEditable()) {
                 view.setCategoryNameEditable(false, view.getCategoryName());
-                category.setName(view.getCategoryName());
-                mainController.updateCategory(category);
+                Category c = category;
+                c.setName(view.getCategoryName());
+                mainController.updateCategory(c);
                 mainController.setEditingState(false);
             } else {
                 JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
@@ -67,10 +69,14 @@ public class CategoryActionController implements ActionListener {
             int index = mainController.getCategoryIndex(category);
             switch(orderBy) {
                 case TO_RIGHT:
-                    mainController.swapCategories(index, index + 1);
+                    if(index != DataManager.getSharedInstance().getSelectedProject().getCategories().size() - 1) {
+                        mainController.swapCategories(index, index + 1);
+                    }
                     break;
                 case TO_LEFT:
-                    mainController.swapCategories(index - 1, index);
+                    if(index != 0) {
+                        mainController.swapCategories(index - 1, index);
+                    }
                     break;
             }
         }
@@ -92,9 +98,6 @@ public class CategoryActionController implements ActionListener {
     private void addTask() {
         if(!mainController.isEditing() && !view.getNewTaskName().isEmpty()) {
             Task task = new Task(view.getNewTaskName());
-            category.addTask(task);
-            view.cleanNewTaskName();
-            view.addNewTask(task);
             mainController.createTask(task, category);
         } else if(mainController.isEditing()) {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.

@@ -190,4 +190,12 @@ public class DataManager {
             }
         }
     }
+
+    public void updateTasksOrder(int order) {
+        for(Category c: selectedProject.getCategories()) {
+            if(c.getOrder() > order) {
+                c.setOrder(c.getOrder() - 1);
+            }
+        }
+    }
 }

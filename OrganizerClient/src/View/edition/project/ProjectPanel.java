@@ -215,10 +215,8 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
             }
 
         }
-
         jtfProjectName.setOpaque(editableState);
         jtfProjectName.setEditable(editableState);
-
     }
 
     public boolean isProjectNameEditable() {
