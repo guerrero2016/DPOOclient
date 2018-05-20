@@ -11,8 +11,8 @@ public class TagDeletedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
-            String categoryId = objectIn.readUTF();
-            String taskId = objectIn.readUTF();
+            String categoryId = objectIn.readObject().toString();
+            String taskId = objectIn.readObject().toString();
             Tag tag = (Tag) objectIn.readObject();
             controller.removeTagInProject(categoryId, taskId, tag);
         } catch (IOException | ClassNotFoundException e) {

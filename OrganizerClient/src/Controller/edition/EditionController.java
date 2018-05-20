@@ -77,12 +77,12 @@ public class EditionController {
     }
 
     private void addCommunicators () {
-        mainController.addComunicator(new ProjectEditedCommunicator(), ServerObjectType.SET_PROJECT);
-        mainController.addComunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
-        mainController.addComunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
-        mainController.addComunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
-        mainController.addComunicator(new CategorySwapCommunicator(), ServerObjectType.SWAP_CATEGORY);
-        mainController.addComunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
+        mainController.addCommunicator(new ProjectEditedCommunicator(), ServerObjectType.SET_PROJECT);
+        mainController.addCommunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
+        mainController.addCommunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
+        mainController.addCommunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
+        mainController.addCommunicator(new CategorySwapCommunicator(), ServerObjectType.SWAP_CATEGORY);
+        mainController.addCommunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
     }
 
     public void removeCommunicators () {
@@ -121,14 +121,6 @@ public class EditionController {
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i_category);
         categoryPanel.cleanNewTaskName();
         categoryPanel.addNewTask(task);
-    }
-
-    public void addTag(Tag tag) {
-        task.addTag(tag);
-        taskPanel.cleanNewTagName();
-        taskPanel.addTag(tag);
-        TagPanel tagPanel = taskPanel.getTagPanel(task.getTagIndex(tag));
-        tagPanel.registerActionController(new TagController(this, tagPanel, tag));
     }
 
     public void loadProject(Project project) {
@@ -207,7 +199,7 @@ public class EditionController {
         for(int i = 0; i < task.getTagsSize(); i++) {
             TagPanel tagPanel = editionPanel.getTaskPanel().getTagPanel(i);
             tagPanel.resetActionController();
-            tagPanel.registerActionController(new TagController(this, tagPanel, task.getTag(i)));
+            tagPanel.registerActionController(new TagController(this, task.getTag(i)));
         }
 
         //Config task users controllers
@@ -291,7 +283,7 @@ public class EditionController {
 
     public void sendTag (Task task, Tag tag) {
         try {
-            mainController.addComunicator(new TagSetCommunicator(), ServerObjectType.SET_TAG);
+            mainController.addCommunicator(new TagSetCommunicator(), ServerObjectType.SET_TAG);
             mainController.sendToServer(ServerObjectType.SET_TAG, task.getID());
             mainController.sendToServer(null, tag);
         } catch (IOException e) {
@@ -310,7 +302,7 @@ public class EditionController {
     public void deleteTask() {
         if(mainController != null) {
             try {
-                mainController.addComunicator(new TaskDeletedCommunicator(), ServerObjectType.DELETE_TASK);
+                mainController.addCommunicator(new TaskDeletedCommunicator(), ServerObjectType.DELETE_TASK);
                 mainController.sendToServer(ServerObjectType.DELETE_TASK, task);
                 mainController.sendToServer(null, category.getId());
             } catch (IOException e) {
@@ -337,7 +329,7 @@ public class EditionController {
             projectPanel.removeCategory(index);
             if(mainController != null) {
                 try {
-                    mainController.addComunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
+                    mainController.addCommunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
                     mainController.sendToServer(ServerObjectType.DELETE_CATEGORY, category);
                     mainController.sendToServer(null, project.getId());
                 } catch (IOException e) {
@@ -387,11 +379,6 @@ public class EditionController {
     public void swapCategoriesInView(int firstCategoryIndex, int secondCategoryIndex) {
         project.swapCategories(firstCategoryIndex, secondCategoryIndex);
         projectPanel.swapCategories(firstCategoryIndex, secondCategoryIndex);
-    }
-
-    public void updateTaskList() {
-        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(category));
-        categoryPanel.updateTask(category.getTaskIndex(task), task);
     }
 
     public void showProjectSelection() {
@@ -522,11 +509,13 @@ public class EditionController {
     }
 
     public void editTagInProject(String categoryId, String taskId, Tag tag) {
+
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
         Tag targetTag = targetTask.getTagWithId(tag.getId());
 
         if(task != null && task.getID().equals(taskId)) {
+
             TagPanel tagPanel = taskPanel.getTagPanel(targetTask.getTagIndex(tag));
             tagPanel.setTagName(tag.getName());
             tagPanel.setTagColor(tag.getColor());
@@ -536,6 +525,7 @@ public class EditionController {
                 tagPanel.revalidate();
                 tagPanel.repaint();
             }
+
         }
 
         targetTag.setName(tag.getName());
@@ -544,4 +534,22 @@ public class EditionController {
                 updateTask(targetCategory.getTaskIndex(targetTask), targetTask);
 
     }
+
+    public void addTagInProject(String categoryId, String taskId, Tag tag) {
+
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        Task targetTask = targetCategory.getTaskWithId(taskId);
+        targetTask.addTag(tag);
+
+        if(task != null && task.getID().equals(taskId)) {
+            taskPanel.addTag(tag);
+            TagPanel tagPanel = taskPanel.getTagPanel(task.getTagIndex(tag));
+            tagPanel.registerActionController(new TagController(this, tag));
+        }
+
+        projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).updateTask(targetCategory.
+                getTaskIndex(targetTask), targetTask);
+
+    }
+
 }

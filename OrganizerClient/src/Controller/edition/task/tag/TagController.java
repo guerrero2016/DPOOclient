@@ -18,14 +18,12 @@ public class TagController implements ActionListener {
     private final static String TAG_EDITION_TITLE = "Tag Edition";
 
     private EditionController mainController;
-    private TagPanel view;
     private Tag tag;
     private JFrame dialogJFrame;
     private boolean isRemoving;
 
-    public TagController(EditionController mainController, TagPanel view, Tag tag) {
+    public TagController(EditionController mainController,Tag tag) {
         this.mainController = mainController;
-        this.view = view;
         this.tag = tag;
     }
 
