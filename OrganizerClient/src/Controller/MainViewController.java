@@ -100,6 +100,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.userJoinedProject(user);
     }
 
+    public void userLeftProject(int i) {
+        editionController.userLeftProject(i);
+    }
+
     /**
      * Mètode encarregat de comunicar al servidor que s'ha eliminat un membre a una tasca
      * @param categoryId Id de la categoria on pertany la tasca

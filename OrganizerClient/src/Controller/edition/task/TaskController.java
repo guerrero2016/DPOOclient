@@ -2,6 +2,7 @@ package Controller.edition.task;
 
 import Controller.edition.EditionController;
 import Controller.edition.color.ColorPreviewController;
+import model.DataManager;
 import model.project.Tag;
 import model.project.Task;
 import View.edition.color.ColorChooserPanel;

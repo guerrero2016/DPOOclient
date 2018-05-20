@@ -388,6 +388,10 @@ public class EditionController {
         projectUserPanel.addUser(user);
     }
 
+    public void userLeftProject(int i) {
+        projectUserPanel.removeUser(i);
+    }
+
     public void addProjectUser(User user) {
         taskUserPanel.addUser(user);
     }
