@@ -106,21 +106,17 @@ public class EditionController {
     }
 
     public void addCategory(Category category) {
-        if(!this.isEditing()) {
-            projectPanel.cleanNewCategoryName();
-            projectPanel.addCategoryToView(category);
-            project.setCategory(category);
-            CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoriesSize() - 1);
-            categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel, category));
-            categoryPanel.registerMouseController(new CategoryMouseController(this, category));
-            categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
-            categoryPanel.resetDnDController();
-            categoryPanel.registerDnDController(new TaskListController(this, category,
-                    categoryPanel.getListComponent()));
-        } else if(this.isEditing()) {
-            JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
-                    EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
-        }
+        projectPanel.cleanNewCategoryName();
+        projectPanel.addCategoryToView(category);
+        project.setCategory(category);
+        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoriesSize() - 1);
+        categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel, category));
+        categoryPanel.registerMouseController(new CategoryMouseController(this, category));
+        categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
+        categoryPanel.resetDnDController();
+        categoryPanel.registerDnDController(new TaskListController(this, category,
+                categoryPanel.getListComponent()));
+
     }
 
     public void addTask(int i_category, Task task) {
