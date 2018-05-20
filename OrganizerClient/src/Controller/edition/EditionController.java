@@ -141,7 +141,7 @@ public class EditionController {
         task = null;
 
         //Config project content
-        projectPanel.hideDeleteButton(!project.isOwner());
+        projectPanel.hideDeleteButton();
         editionPanel.setBackgroundImage(project.getBackground());
         projectPanel.setProjectName(project.getName());
         projectPanel.cleanCategories();
@@ -425,14 +425,15 @@ public class EditionController {
 
     public void deleteProject() {
         if(mainController != null) {
-            //TODO: Delete project in database
+            try {
+                mainController.sendToServer(ServerObjectType.DELETE_PROJECT,
+                        DataManager.getSharedInstance().getSelectedProject().getId());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             System.exit(0);
         }
-    }
-
-    public void setBackgroundImage(Image image) {
-        editionPanel.setBackgroundImage(image);
     }
 
     public User getUserFromDB(String userName) {

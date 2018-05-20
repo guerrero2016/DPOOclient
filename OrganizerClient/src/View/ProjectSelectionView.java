@@ -124,7 +124,6 @@ public class ProjectSelectionView extends JPanel {
      */
     public void removeProject(int index) {
         projectBoxViews.remove(index);
-
         String [] titles = new String[projectBoxViews.size()];
         Color [] colors = new Color [projectBoxViews.size()];
         ProjectBoxController [] controllers = new ProjectBoxController[projectBoxViews.size()];

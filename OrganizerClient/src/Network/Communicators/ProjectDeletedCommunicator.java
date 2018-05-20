@@ -24,7 +24,6 @@ public class ProjectDeletedCommunicator implements Communicable {
 
             if (p.isOwner()) {
                 int i = dataManager.getOwnerProjectIndex(p);
-                System.out.println(i);
                 dataManager.deleteOwnerProjectByID(p.getId());
                 controller.getProjectsMainViewController().getOwnerSelectionController().deleteProject(i);
             }else {
@@ -32,7 +31,6 @@ public class ProjectDeletedCommunicator implements Communicable {
                 dataManager.deleteSharedProjectByID(p.getId());
                 controller.getProjectsMainViewController().getSharedSelectionController().deleteProject(i);
             }
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

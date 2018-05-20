@@ -1,5 +1,6 @@
 package model.project;
 
+import model.DataManager;
 import model.user.User;
 
 import javax.imageio.ImageIO;

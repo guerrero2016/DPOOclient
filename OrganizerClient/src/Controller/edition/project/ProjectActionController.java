@@ -61,6 +61,7 @@ public class ProjectActionController implements ActionListener {
                 view.setProjectNameEditable(false, view.getProjectName());
                 Project p = project;
                 p.setName(view.getProjectName());
+                System.out.println(p.getName());
                 mainController.updateProject(p);
                 mainController.setEditingState(false);
             } else {
@@ -83,19 +84,15 @@ public class ProjectActionController implements ActionListener {
                         Project p = project;
                         p.setBackground(image);
                         mainController.updateProject(p);
-                        //TODO falta actualitzar el background a la resposta del server
                     } else {
                         JOptionPane.showMessageDialog(null, WRONG_FORMAT_MESSAGE, FILE_ERROR_TITLE,
                                 JOptionPane.WARNING_MESSAGE);
                     }
-
                 } catch(IOException e) {
                     JOptionPane.showMessageDialog(null, FILE_ERROR_MESSAGE, FILE_ERROR_TITLE,
                             JOptionPane.WARNING_MESSAGE);
                 }
-
             }
-
         } else {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
                     EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
@@ -103,26 +100,20 @@ public class ProjectActionController implements ActionListener {
     }
 
     private void deleteProject() {
-
         int result = JOptionPane.showConfirmDialog(null, PROJECT_REMOVE_MESSAGE + " '" +
                 project.getName() + "'?", PROJECT_REMOVE_TITLE, JOptionPane.
                 OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-
         if(result != JOptionPane.CLOSED_OPTION && result != JOptionPane.CANCEL_OPTION) {
-
             for (int i = 0; i < project.getCategoriesSize(); i++) {
                 CategoryPanel categoryPanel = view.getCategoryPanel(i);
                 categoryPanel.setCategoryNameEditable(false, project.getCategory(i).getName());
                 categoryPanel.cleanNewTaskName();
             }
-
             view.setProjectNameEditable(false, project.getName());
             view.cleanNewCategoryName();
             mainController.deleteProject();
             mainController.showProjectSelection();
-
         }
-
     }
 
     private void addCategory() {
@@ -136,7 +127,6 @@ public class ProjectActionController implements ActionListener {
     }
 
     private void projectBackManagement() {
-
         for(int i = 0; i < project.getCategoriesSize(); i++) {
             CategoryPanel categoryPanel = view.getCategoryPanel(i);
             categoryPanel.setCategoryNameEditable(false, project.getCategory(i).getName());
