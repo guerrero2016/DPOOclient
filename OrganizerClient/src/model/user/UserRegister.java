@@ -1,7 +1,7 @@
 package model.user;
 
 public class UserRegister extends User {
-    public final static int serialVersionUID = 3321;
+    public final static int serialVersionUID = 1240;
     public final static int NAME_ERROR = 11;
     public final static int EMAIL_ERROR = 13;
     public final static int PASS_ERROR = 29;

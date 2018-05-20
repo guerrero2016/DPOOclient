@@ -15,6 +15,7 @@ import java.util.Objects;
 public class Project implements Serializable{
 
     private final static int INVALID_INDEX = -1;
+    public final static int serialVersionUID = 1235;
 
     private String id;
     private String name;
