@@ -313,6 +313,7 @@ public class EditionController {
 
         if(this.task != null && this.task.getID().equals(task.getID())) {
             taskPanel.setTaskName(task.getName());
+            taskPanel.setDescription(task.getDescription());
         }
 
         Category targetCategory = project.getCategoryWithId(categoryId);

@@ -16,7 +16,7 @@ public class Configuration {
             + "config.json";
 
     /**
-     * 
+     * Procediment encarregat de llegir el fitxer de configuració i el carregui al programa.
      */
     public static void loadConfiguration() {
         BufferedReader br = null;
@@ -48,10 +48,18 @@ public class Configuration {
         }
     }
 
+    /**
+     * Funció que recupera l'adreça IP de l'arxiu de configuració.
+     * @return adreça IP
+     */
     public static String getIPAddress () {
         return config.getProperty("IPaddress");
     }
 
+    /**
+     * Funció que recupera el port de l'arxiu de configuració
+     * @return port
+     */
     public static int getCommunicationPort() {
         return Integer.parseInt(config.getProperty("communicationPORT"));
     }
