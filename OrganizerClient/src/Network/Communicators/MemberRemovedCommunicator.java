@@ -2,6 +2,7 @@ package Network.Communicators;
 
 import Controller.MainViewController;
 import Network.Communicable;
+import model.DataManager;
 import model.user.User;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ public class MemberRemovedCommunicator implements Communicable {
             String taskId = objectIn.readObject().toString();
             User user = (User) objectIn.readObject();
             controller.removeMemberInProject(categoryId, taskId, user);
+            DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryId)
+                    .getTaskWithId(taskId).removeUser(user);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
