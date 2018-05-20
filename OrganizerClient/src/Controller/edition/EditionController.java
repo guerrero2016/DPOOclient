@@ -234,8 +234,9 @@ public class EditionController {
     public void updateProject(Project p) {
         if(mainController != null) {
             try {
-                Project aux = new Project(project.getId(), project.getName(), project.getColor(),
-                        project.getCategories(), project.getUsers(), project.isOwner());
+                Project aux = new Project(p.getId(), p.getName(), p.getColor(),
+                        p.getCategories(), p.getUsers(), p.isOwner());
+                aux.setBackground(p.getBackground());
                 mainController.sendToServer(ServerObjectType.SET_PROJECT, aux);
 
             } catch (IOException e) {
