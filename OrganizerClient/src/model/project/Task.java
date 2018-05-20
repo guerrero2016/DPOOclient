@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Task implements Serializable{
 
     private final static int INVALID_INDEX = -1;
-    public final static int serialVersionUID = 900;
+    public final static int serialVersionUID = 1237;
 
     private String id;
     private String name;

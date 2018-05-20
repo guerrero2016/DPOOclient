@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Tag implements Serializable {
-    public final static int serialVersionUID = 4312;
+    public final static int serialVersionUID = 1236;
 
     private String id;
     private String name;

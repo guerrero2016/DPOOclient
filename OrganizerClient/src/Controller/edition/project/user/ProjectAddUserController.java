@@ -31,39 +31,14 @@ public class ProjectAddUserController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!view.getNewUser().isEmpty()) {
 
-            User user = mainController.getUserFromDB(view.getNewUser());
+        JTextArea jtaMessage = new JTextArea(PROJECT_SHARED_MESSAGE + ": " + project.getId());
+        jtaMessage.setEditable(false);
+        jtaMessage.setOpaque(false);
+        JOptionPane.showMessageDialog(null, jtaMessage, PROJECT_SHARED_TITLE,
+                JOptionPane.PLAIN_MESSAGE);
 
-            if(user != null && !isUserAdded(user)) {
-
-                int result = JOptionPane.showConfirmDialog(null, USER_ADD_MESSAGE + " '" +
-                        user.getUserName() + "'?", USER_ADD_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.
-                        QUESTION_MESSAGE);
-
-                if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
-                    JTextArea jtaMessage = new JTextArea(PROJECT_SHARED_MESSAGE + ": " + project.getId());
-                    jtaMessage.setEditable(false);
-                    jtaMessage.setOpaque(false);
-                    JOptionPane.showMessageDialog(null, jtaMessage, PROJECT_SHARED_TITLE,
-                            JOptionPane.PLAIN_MESSAGE);
-                }
-
-                view.cleanNewUser();
-
-            } else if(user == null) {
-                JOptionPane.showMessageDialog(null, USER_NOT_FOUND_MESSAGE, USER_MESSAGE_TITLE,
-                        JOptionPane.WARNING_MESSAGE);
-            } else if(isUserAdded(user)) {
-                JOptionPane.showMessageDialog(null, USER_ALREADY_EXISTS_MESSAGE, USER_MESSAGE_TITLE,
-                        JOptionPane.WARNING_MESSAGE);
-            }
-
-        }
     }
 
-    private boolean isUserAdded(User user) {
-        return project.getUsers().contains(user);
-    }
 
 }

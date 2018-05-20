@@ -66,11 +66,11 @@ public class EditionPanel extends BackgroundPanel {
         add(tpRight, BorderLayout.LINE_END);
 
         //Link add user panel
-        projectUserPanel = new UserPanel();
+        projectUserPanel = new UserPanel(0);
         tpRight.add(projectUserPanel, PROJECT_USER_PANEL);
 
         //Link remove user panel
-        taskUserPanel = new UserPanel();
+        taskUserPanel = new UserPanel(1);
         tpRight.add(taskUserPanel, TASK_USER_PANEL);
 
     }

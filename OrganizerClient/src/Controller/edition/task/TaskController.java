@@ -11,6 +11,7 @@ import View.edition.color.ColorChooserPanel;
 import View.edition.task.TaskPanel;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,6 +29,7 @@ public class TaskController implements ActionListener {
         this.mainController = mainController;
         this.view = view;
         this.task = task;
+        DataManager.getSharedInstance().setEditingTask(task);
     }
 
     @Override
@@ -45,12 +47,13 @@ public class TaskController implements ActionListener {
         }
     }
 
-    private void closeTask() {
+    public void closeTask() {
         view.setDescriptionEditable(false);
         view.setDescription(task.getDescription());
         view.setTaskNameEditable(false, task.getName());
         view.cleanNewTagName();
         mainController.showProjectContent();
+        DataManager.getSharedInstance().setEditingTask(null);
     }
 
     private void taskNameManagement() {

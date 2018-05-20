@@ -19,6 +19,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Vista general que conté els altres panells del programa.
+ * Té un JMenuBar quan es s'inicia sessió amb un botó per a tancar-la.
+ * Utilitza CardLayout
+ */
 public class MainView extends JFrame {
     private static final String IMAGE_PATH = System.getProperty("user.dir") + System.getProperty("file.separator") +
             "img" + System.getProperty("file.separator") + "identifyImage.jpg";
@@ -34,6 +39,13 @@ public class MainView extends JFrame {
     private EditionPanel editionPanel;
     private JButton jbLogout;
 
+    /**
+     * Constructor que crea la vista i guarda els diferents panells del programa.
+     * @param logInPanel Panell per a iniciar sessió
+     * @param signInPanel Panell per a registrar-se
+     * @param projectsMainView Panell per a seleccionar projectes
+     * @param editionPanel Panell per a editar projectes.
+     */
     public MainView(LogInPanel logInPanel, SignInPanel signInPanel, ProjectsMainView projectsMainView,
                     EditionPanel editionPanel) {
 
@@ -83,6 +95,10 @@ public class MainView extends JFrame {
 
     }
 
+    /**
+     * Procediment que s'encarrega de canviar quin panell s'està mostrant.
+     * @param whatPanel indica quin panell es mostrarà
+     */
     public void swapPanel(int whatPanel) {
         DataManager.getSharedInstance().setWhatPanel(whatPanel);
         switch (whatPanel) {
@@ -121,11 +137,20 @@ public class MainView extends JFrame {
         }
     }
 
+    /**
+     * Procediment que afegeix controladors a la vista i al botó del menú (per a tancar sessió)
+     * @param wl <code>WindowsListener</code> que controlarà la finestra
+     * @param al <code>ActionListener</code> que controlarà el botó
+     */
     public void addController (WindowListener wl, ActionListener al){
         this.addWindowListener(wl);
         jbLogout.addActionListener(al);
     }
 
+    /**
+     * Procediment que crea un JOptionPane d'error amb un missatge.
+     * @param errorMSG missatge a mostrar en el JOptionPane.
+     */
     public void showErrorDialog(String errorMSG) {
         JOptionPane.showMessageDialog(this, errorMSG,
                 "Error", JOptionPane.ERROR_MESSAGE);
