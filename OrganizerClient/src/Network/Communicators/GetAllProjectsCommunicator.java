@@ -31,6 +31,8 @@ public class GetAllProjectsCommunicator implements Communicable {
                 dataManager.setUserName(username.toString());
             }
 
+            controller.resetSelectionView();
+
             dataManager.setProjectOwnerList(readProjects(objectIn));
             controller.getProjectsMainViewController().createOwnerProjects(projects);
             dataManager.setProjectSharedList(readProjects(objectIn));
