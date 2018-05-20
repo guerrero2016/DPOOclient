@@ -6,6 +6,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Classe que representa una tasca.
+ */
+
 public class Task implements Serializable{
 
     private final static int INVALID_INDEX = -1;
@@ -17,6 +21,7 @@ public class Task implements Serializable{
     private ArrayList<Tag> tags;
     private ArrayList<User> users;
     private int order;
+
 
     public Task() {
         tags = new ArrayList<>();
