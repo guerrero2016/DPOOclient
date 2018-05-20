@@ -85,7 +85,7 @@ public class MainView extends JFrame {
 
         DataManager.getSharedInstance().setWhatPanel(LogInPanel.LOGIN);
 
-        jbLogout = new JButton("Tancar sessió");
+        jbLogout = new JButton("Logout");
 
         super.setMinimumSize(new Dimension(1000,500));
         super.setSize(1200,750);

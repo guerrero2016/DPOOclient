@@ -12,8 +12,8 @@ import java.awt.event.ActionListener;
  * Classe que genera el panell per a iniciar sessió
  */
 public class LogInPanel extends JPanel{
-    public static final String LOG = "ENTRAR";
-    public static final String SIGN = "CREAR COMPTE";
+    public static final String LOG = "ENTER";
+    public static final String SIGN = "CREATE ACCOUNT";
     public static final int LOGIN = 1;
 
     private JTextField jtfUsername;
@@ -40,7 +40,7 @@ public class LogInPanel extends JPanel{
 
         c.gridx = 0;
         c.gridy = 0;
-        jpBorder.add(new JLabel("Nom d'usuari"), c);
+        jpBorder.add(new JLabel("Username"), c);
 
         //JTextField per al nom d'usuari
         c.gridx = 1;
@@ -55,7 +55,7 @@ public class LogInPanel extends JPanel{
         c.gridx = 0;
         c.gridy = 1;
         c.weightx = 0;
-        jpBorder.add(new JLabel("Contrasenya"), c);
+        jpBorder.add(new JLabel("Password"), c);
 
         //JTextField per la contrasenya
         c.gridx = 1;
@@ -82,7 +82,7 @@ public class LogInPanel extends JPanel{
         this.add(jpLog);
 
         JPanel jpSign = new JPanel(new BorderLayout());
-        jpSign.setBorder(BorderFactory.createTitledBorder("No tens compte?"));
+        jpSign.setBorder(BorderFactory.createTitledBorder("Don't have an account?"));
         JPanel aux4 = new JPanel(new BorderLayout());
         aux4.setBorder(BorderFactory.createEmptyBorder(10,30,10,30));
         jbSignIn = new JButton(SIGN);
