@@ -115,6 +115,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.userJoinedProject(user);
     }
 
+    public void userLeftProject(int i) {
+        editionController.userLeftProject(i);
+    }
+
     public void removeMemberInDB(String categoryId, String taskId, User user) {
         try {
             sendToServer(ServerObjectType.DELETE_MEMBER, categoryId);
@@ -182,7 +186,8 @@ public class MainViewController extends WindowAdapter implements ActionListener{
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if(JOptionPane.showConfirmDialog(view, "Sortir?") == JOptionPane.OK_OPTION){
+        if(JOptionPane.showConfirmDialog(view, "Sortir?", "Sortir",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
             view.dispose();
             try {
                 sendToServer(ServerObjectType.LOGOUT, null);
@@ -195,7 +200,8 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            if (JOptionPane.showConfirmDialog(view, "Tancar sessió?") == JOptionPane.OK_OPTION) {
+            if (JOptionPane.showConfirmDialog(view, "Tancar sessió?", "Tancar sessió",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                 sendToServer(ServerObjectType.LOGOUT, null);
                 swapPanel(LogInPanel.LOGIN);
             }

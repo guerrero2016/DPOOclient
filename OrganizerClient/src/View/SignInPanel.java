@@ -5,6 +5,7 @@ import model.user.User;
 import model.user.UserRegister;
 
 import javax.swing.*;
+import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -140,24 +141,59 @@ public class SignInPanel extends JPanel {
         String password = String.valueOf(jpfPassword.getPassword());
         String confirm = String.valueOf(jpfConfirm.getPassword());
         UserRegister userRegister = new UserRegister(username, email, password, confirm);
-        userRegister.encryptPassword();
+        setErrorsView(userRegister.encryptPassword());
         return userRegister;
     }
 
-    public void setEmailBorder(Color color) {
-        jtfEmail.setBorder(BorderFactory.createLineBorder(color));
+    private void setErrorsView(int error){
+        clearFieldsBorder();
+        if (error >= UserRegister.PASS_ERROR) {
+            error -= UserRegister.PASS_ERROR;
+            setPasswordBorder(Color.RED);
+        }
+
+        if (error >= UserRegister.EMAIL_ERROR) {
+            error -= UserRegister.EMAIL_ERROR;
+            setEmailBorder(Color.RED);
+        }
+
+        if (error >= UserRegister.NAME_ERROR) {
+            setUsernameBorder(Color.RED);
+        }
+        System.out.println(error);
     }
 
-    public void setPasswordBorder(Color color) {
-        jpfPassword.setBorder(BorderFactory.createLineBorder(color));
+    private void setEmailBorder(Color color) {
+        if (color == null) {
+            jtfEmail.setBorder(UIManager.getBorder("TextField.border"));
+        } else {
+            jtfEmail.setBorder(BorderFactory.createLineBorder(color));
+        }
     }
 
-    public void setPasswordConfirmBorder(Color color) {
-        jpfConfirm.setBorder(BorderFactory.createLineBorder(color));
+    private void setPasswordBorder(Color color) {
+        if (color == null) {
+            jpfPassword.setBorder(UIManager.getBorder("TextField.border"));
+            jpfConfirm.setBorder(UIManager.getBorder("TextField.border"));
+        } else {
+            jpfPassword.setBorder(BorderFactory.createLineBorder(color));
+            jpfConfirm.setBorder(BorderFactory.createLineBorder(color));
+        }
+
     }
 
-    public void setUsernameBorder(Color color) {
-        jtfUsername.setBorder(BorderFactory.createLineBorder(color));
+    private void setUsernameBorder(Color color) {
+        if (color == null) {
+            jtfUsername.setBorder(UIManager.getBorder("TextField.border"));
+        } else {
+            jtfUsername.setBorder(BorderFactory.createLineBorder(color));
+        }
+    }
+
+    private void clearFieldsBorder() {
+        setEmailBorder(null);
+        setUsernameBorder(null);
+        setPasswordBorder(null);
     }
 
     public void showError(String message) {
@@ -179,6 +215,7 @@ public class SignInPanel extends JPanel {
      * Procediment per netejar els camps
      */
     public void clearScreen(){
+        clearFieldsBorder();
         jtfEmail.setText(null);
         jtfUsername.setText(null);
         jpfPassword.setText(null);

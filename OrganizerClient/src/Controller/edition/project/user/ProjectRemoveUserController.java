@@ -1,6 +1,7 @@
 package Controller.edition.project.user;
 
 import Controller.edition.EditionController;
+import model.DataManager;
 import model.project.Project;
 import model.user.User;
 import View.edition.user.UserPanel;
@@ -26,23 +27,25 @@ public class ProjectRemoveUserController implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getClickCount() == 2) {
-            JList userList = (JList) e.getSource();
-            int index = userList.locationToIndex(e.getPoint());
+        DataManager dataManager = DataManager.getSharedInstance();
+        if (dataManager.getUserName().equals(dataManager.getSelectedProject().getOwnerName())) {
+            if (e.getClickCount() == 2) {
+                JList userList = (JList) e.getSource();
+                int index = userList.locationToIndex(e.getPoint());
 
-            if(index == userList.getSelectedIndex()) {
-                int result = JOptionPane.showConfirmDialog(null, USER_REMOVE_MESSAGE + " '" +
-                        ((User) userList.getSelectedValue()).getUserName() + "'?", USER_REMOVE_TITLE, JOptionPane.
-                        OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (index == userList.getSelectedIndex()) {
+                    int result = JOptionPane.showConfirmDialog(null, USER_REMOVE_MESSAGE + " '" +
+                            ((User) userList.getSelectedValue()).getUserName() + "'?", USER_REMOVE_TITLE, JOptionPane.
+                            OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 
-                if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
-                    Project p = project;
-                    p.deleteUser(index);
-                    //TODO: La seguent puta linia s'ha de fer a la resposta del server, no aqui xd
-                    //view.removeUser(index);
-                    mainController.updateProject(p);
+                    if (result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
+                        Project p = project;
+                        mainController.deleteUser(p.getUser(index));
+                    }
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(view,"No ets el propietari del projecte");
         }
     }
 

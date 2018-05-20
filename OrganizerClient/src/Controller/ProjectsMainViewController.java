@@ -107,15 +107,7 @@ public class ProjectsMainViewController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case ProjectsMainView.ADD_PROJECT_ACTION_COMMAND:
-                projectCreationController.createAddProjectView();
-                break;
-            case ProjectsMainView.LOG_OUT_ACTION_COMMAND:
-
-                break;
-            default:
-        }
+        projectCreationController.createAddProjectView();
     }
 }
 

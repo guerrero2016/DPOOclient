@@ -127,7 +127,10 @@ public class EditionController {
     }
 
     public void loadProject(Project project) {
+
         //Default config
+        projectPanel.cleanCategories();
+        projectUserPanel.cleanUserList();
         this.project = project;
         project.setOwner(true);
         category = null;
@@ -240,6 +243,14 @@ public class EditionController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void deleteUser(User user) {
+        try {
+            mainController.sendToServer(ServerObjectType.DELETE_USER, user);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -358,6 +369,10 @@ public class EditionController {
         projectUserPanel.addUser(user);
     }
 
+    public void userLeftProject(int i) {
+        projectUserPanel.removeUser(i);
+    }
+
     public void addProjectUser(User user) {
         taskUserPanel.addUser(user);
     }
@@ -386,7 +401,6 @@ public class EditionController {
 
     public void showProjectSelection() {
         if (mainController != null) {
-            //TODO: Save changes
             try {
                 project = null;
                 category = null;

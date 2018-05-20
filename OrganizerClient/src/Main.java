@@ -70,13 +70,14 @@ public class Main {
                 NetworkManager network = new NetworkManager();
 
                 network.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
-                network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
+                network.addCommunicator(new GetAllProjectsCommunicator(), ServerObjectType.GET_PROJECT_LIST);
                 network.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
                 network.addCommunicator(new MemberAddedCommunicator(), ServerObjectType.SET_MEMBER);
                 network.addCommunicator(new MemberRemovedCommunicator(), ServerObjectType.DELETE_MEMBER);
                 network.addCommunicator(new TagDeletedCommunicator(), ServerObjectType.DELETE_TAG);
                 network.addCommunicator(new UserAddedCommunicator(), ServerObjectType.JOIN_PROJECT);
                 network.addCommunicator(new TagSetCommunicator(), ServerObjectType.SET_TAG);
+                network.addCommunicator(new UserDeletedCommunicator(), ServerObjectType.DELETE_USER);
                 network.addCommunicator(new TaskSwapCommunicator(), ServerObjectType.SWAP_TASK);
 
                 EditionController editionController = new EditionController(editionPanel);
