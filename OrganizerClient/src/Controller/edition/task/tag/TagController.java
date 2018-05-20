@@ -8,6 +8,7 @@ import View.edition.task.tag.TagEditionPanel;
 import View.edition.task.tag.TagPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

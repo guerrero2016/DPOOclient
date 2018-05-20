@@ -9,6 +9,7 @@ import View.edition.color.ColorChooserPanel;
 import View.edition.task.TaskPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -114,13 +115,15 @@ public class TaskController implements ActionListener {
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
-                if (colorPreviewController.getColor() != null) {
-                    Tag tag = new Tag(view.getNewTagName(), colorPreviewController.getColor());
-                    view.cleanNewTagName();
-                    mainController.sendTag(task, tag);
+                Tag tag;
+                if(colorPreviewController.getColor() == null) {
+                    tag = new Tag(view.getNewTagName(), Color.RED);
+                } else {
+                    tag = new Tag(view.getNewTagName(), colorPreviewController.getColor());
                 }
+                view.cleanNewTagName();
+                mainController.sendTag(task, tag);
             }
-
         } else {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
                     EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);

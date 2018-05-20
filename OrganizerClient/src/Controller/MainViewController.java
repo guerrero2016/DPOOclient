@@ -67,7 +67,6 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     public User getUserFromDB(String userName) {
-        //TODO: Check if user exists in the database
         return new User(userName);
     }
 
