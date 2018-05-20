@@ -20,9 +20,6 @@ public class AuthCommunicator implements Communicable {
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
             int error = (Integer) objectIn.readObject();
-
-            System.out.println(error);
-
             switch (error) {
                 case 0:
                     DataManager dataManager = DataManager.getSharedInstance();

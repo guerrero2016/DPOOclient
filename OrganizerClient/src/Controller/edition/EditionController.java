@@ -111,6 +111,9 @@ public class EditionController {
             categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel, category));
             categoryPanel.registerMouseController(new CategoryMouseController(this, category));
             categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
+            categoryPanel.resetDnDController();
+            categoryPanel.registerDnDController(new TaskListController(this, category,
+                    categoryPanel.getListComponent()));
         } else if(this.isEditing()) {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
                     EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
@@ -329,12 +332,7 @@ public class EditionController {
     }
 
     public void deleteCategory(String id_category) {
-        Category category = null;
-        for(Category c: project.getCategories()){
-            if(c.getId().equals(id_category)) {
-                category = c;
-            }
-        }
+        Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(id_category);
         int index = project.getCategoryIndex(category);
         if(index >= 0 && index < project.getCategoriesSize()) {
             project.deleteCategory(category);

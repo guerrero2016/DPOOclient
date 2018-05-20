@@ -132,6 +132,7 @@ public class ProjectSelectionView extends JPanel {
         for (int i = 0; i < projectBoxViews.size(); i++) {
             titles[i] = projectBoxViews.get(i).getTitle();
             colors[i] = projectBoxViews.get(i).getBackground();
+            controllers[i] = (ProjectBoxController) projectBoxViews.get(i).getController();
         }
 
         projectBoxViews = new ArrayList<>();
