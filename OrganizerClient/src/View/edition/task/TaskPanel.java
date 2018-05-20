@@ -140,7 +140,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         gbcTaskState.gridx = 0;
         gbcTaskState.gridy = 0;
         gbcTaskState.weightx = 1;
-        gbcTaskState.weighty = 0.2;
+        gbcTaskState.weighty = 0.05;
         gbcTaskState.fill = GridBagConstraints.BOTH;
 
         tpContent.add(tpTaskState, gbcTaskState);
@@ -175,7 +175,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         GridBagConstraints gbcDescription = new GridBagConstraints();
         gbcDescription.gridx = 0;
         gbcDescription.weightx = 1;
-        gbcDescription.weighty = 0.3;
+        gbcDescription.weighty = 0.35;
         gbcDescription.fill = GridBagConstraints.BOTH;
 
         tpContent.add(tpDescription, gbcDescription);
@@ -220,7 +220,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         GridBagConstraints gbcTags = new GridBagConstraints();
         gbcTags.gridx = 0;
         gbcTags.weightx = 1;
-        gbcTags.weighty = 0.5;
+        gbcTags.weighty = 0.6;
         gbcTags.fill = GridBagConstraints.BOTH;
 
         tpContent.add(tpTags, gbcTags);
