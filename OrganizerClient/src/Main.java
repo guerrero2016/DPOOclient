@@ -73,7 +73,7 @@ public class Main {
                 network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
                 network.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
                 network.addCommunicator(new MemberAddedCommunicator(), ServerObjectType.SET_MEMBER);
-                network.addCommunicator(new MemberRemovedComunicator(), ServerObjectType.DELETE_MEMBER);
+                network.addCommunicator(new MemberRemovedCommunicator(), ServerObjectType.DELETE_MEMBER);
                 network.addCommunicator(new TagDeletedCommunicator(), ServerObjectType.DELETE_TAG);
                 network.addCommunicator(new UserAddedCommunicator(), ServerObjectType.JOIN_PROJECT);
                 network.addCommunicator(new TagSetCommunicator(), ServerObjectType.SET_TAG);

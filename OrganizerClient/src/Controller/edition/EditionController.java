@@ -463,7 +463,7 @@ public class EditionController {
 
         if(task != null && task.getID().equals(taskId)) {
 
-            TaskRemoveUserController controller = (TaskRemoveUserController) taskUserPanel.getMouseListeners()[0];
+            TaskRemoveUserController controller = (TaskRemoveUserController) taskUserPanel.getMouseListener();
 
             if(controller.isRemovingUser(user)) {
                 controller.closeDialog();

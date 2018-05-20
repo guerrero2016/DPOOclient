@@ -141,8 +141,13 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
         jbAddUser.addActionListener(actionListener);
     }
 
+    public MouseListener getMouseListener() {
+        return mouseListener;
+    }
+
     public void resetMouseController() {
         jlUserList.removeMouseListener(mouseListener);
+        mouseListener = null;
     }
 
     public void registerMouseController(MouseListener mouseListener) {
