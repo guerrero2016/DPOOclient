@@ -176,6 +176,32 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.editTagInProject(categoryId, taskId, tag);
     }
 
+    public void setTaskDoneInDB(String categoryId, String taskId) {
+        try {
+            sendToServer(ServerObjectType.TASK_DONE, categoryId);
+            sendToServer(null, taskId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setTaskDoneInProject(String categoryId, String taskId) {
+        editionController.setTaskDoneInProject(categoryId, taskId);
+    }
+
+    public void setTaskNotDoneInDB(String categoryId, String taskId) {
+        try {
+            sendToServer(ServerObjectType.TASK_NOT_DONE, categoryId);
+            sendToServer(null, taskId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setTaskNotDoneInProject(String categoryId, String taskId) {
+        editionController.setTaskNotDoneInProject(categoryId, taskId);
+    }
+
     /**
      * Mètode encarregat d'afegir una etiqueta al projecte
      * @param categoryId Id de la categoria on pertany la tasca
@@ -184,6 +210,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
      */
     public void addTagInProject(String categoryId, String taskId, Tag tag) {
         editionController.addTagInProject(categoryId, taskId, tag);
+    }
+
+    public void userLeftProject(User user) {
+        editionController.userLeftProject(user);
     }
 
     public void resetSelectionView(){

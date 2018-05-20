@@ -16,12 +16,10 @@ public class UserDeletedCommunicator implements Communicable {
             User user = (User) objectIn.readObject();
             DataManager dataManager = DataManager.getSharedInstance();
             if (!user.getUserName().equals(dataManager.getUserName())) {
-                int i = dataManager.getSelectedProject().getUsers().indexOf(user);
-                DataManager.getSharedInstance().getSelectedProject().getUsers().remove(user);
-                controller.userLeftProject(i);
+                controller.userLeftProject(user);
             } else {
                 dataManager.setSelectedProject(null);
-                controller.showDialog("T'han expulsat del projecte.");
+                controller.showDialog("T'han expulsat del projecte");
                 controller.sendToServer(ServerObjectType.EXIT_PROJECT, null);
             }
         } catch (IOException | ClassNotFoundException e) {
