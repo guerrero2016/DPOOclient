@@ -90,7 +90,7 @@ public class MainView extends JFrame {
         super.setMinimumSize(new Dimension(1000,500));
         super.setSize(1200,750);
         super.setTitle("LogIn - Organizer");
-        super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        super.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         super.setLocationRelativeTo(null);
 
     }

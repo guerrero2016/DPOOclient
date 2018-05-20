@@ -97,14 +97,9 @@ public class ProjectSelectionController implements ActionListener {
         String actionCommand = ((JButton)e.getSource()).getActionCommand();
 
         switch (actionCommand){
-            case ProjectBoxView.DELETE_AC:
-                CustomProjectButton button = (CustomProjectButton) e.getSource();
-                deleteProject(button.getProjectIndex());
-                break;
             case ProjectsMainView.ADD_PROJECT_ACTION_COMMAND:
                 createAddProjectWindow();
             default:
-
         }
     }
 

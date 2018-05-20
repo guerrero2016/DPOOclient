@@ -189,6 +189,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         if(JOptionPane.showConfirmDialog(view, "Sortir?", "Sortir",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION){
             view.dispose();
+            view.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             try {
                 sendToServer(ServerObjectType.LOGOUT, null);
             } catch (IOException e1) {
