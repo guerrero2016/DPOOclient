@@ -143,13 +143,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.removeTagInProject(categoryId, taskId, tag);
     }
 
-    public void editTagInDB(String categoryId, String taskId, Tag tag, String tagName, Color color) {
+    public void editTagInDB(String taskId, Tag tag) {
         try {
-            sendToServer(ServerObjectType.EDIT_TAG, categoryId);
-            sendToServer(null, taskId);
+            sendToServer(ServerObjectType.EDIT_TAG, taskId);
             sendToServer(null, tag);
-            sendToServer(null, tagName);
-            sendToServer(null, color);
         } catch(IOException e) {
             e.printStackTrace();
         }

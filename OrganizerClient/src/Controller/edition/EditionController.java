@@ -78,13 +78,15 @@ public class EditionController {
 
     private void addCommunicators () {
         mainController.addComunicator(new ProjectEditedCommunicator(), ServerObjectType.SET_PROJECT);
+        mainController.addComunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
         mainController.addComunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
         mainController.addComunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
-        mainController.addComunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
+        mainController.addComunicator(new CategorySwapCommunicator(), ServerObjectType.SWAP_CATEGORY);
         mainController.addComunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
     }
 
     public void removeCommunicators () {
+        mainController.removeCommunicator(ServerObjectType.SWAP_CATEGORY);
         mainController.removeCommunicator(ServerObjectType.SET_PROJECT);
         mainController.removeCommunicator(ServerObjectType.DELETE_PROJECT);
         mainController.removeCommunicator(ServerObjectType.SET_CATEGORY);
@@ -122,6 +124,7 @@ public class EditionController {
     }
 
     public void addTag(Tag tag) {
+        task.addTag(tag);
         taskPanel.cleanNewTagName();
         taskPanel.addTag(tag);
         TagPanel tagPanel = taskPanel.getTagPanel(task.getTagIndex(tag));
@@ -374,7 +377,6 @@ public class EditionController {
     }
 
     public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
-        mainController.addComunicator(new CategorySwapCommunicator(), ServerObjectType.SWAP_CATEGORY);
         try {
             Category c1 = DataManager.getSharedInstance().getSelectedProject().getCategories().get(firstCategoryIndex);
             Category c2 = DataManager.getSharedInstance().getSelectedProject().getCategories().get(secondCategoryIndex);
@@ -520,18 +522,16 @@ public class EditionController {
 
     }
 
-    public void editTagInDB(Tag tag, String tagName, Color tagColor) {
-        mainController.editTagInDB(category.getId(), task.getID(), tag, tagName, tagColor);
+    public void editTagInDB(Tag tag) {
+        mainController.editTagInDB(task.getID(), tag);
     }
 
     public void editTagInProject(String categoryId, String taskId, Tag tag) {
-
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
         Tag targetTag = targetTask.getTagWithId(tag.getId());
 
         if(task != null && task.getID().equals(taskId)) {
-
             TagPanel tagPanel = taskPanel.getTagPanel(targetTask.getTagIndex(tag));
             tagPanel.setTagName(tag.getName());
             tagPanel.setTagColor(tag.getColor());
@@ -541,7 +541,6 @@ public class EditionController {
                 tagPanel.revalidate();
                 tagPanel.repaint();
             }
-
         }
 
         targetTag.setName(tag.getName());

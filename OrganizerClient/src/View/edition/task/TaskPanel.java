@@ -399,13 +399,10 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     public TagPanel getTagPanel(int tagIndex) {
-
         if(tagIndex < tagPanels.size()) {
             return tagPanels.get(tagIndex);
         }
-
         return null;
-
     }
 
     public void resetActionController() {

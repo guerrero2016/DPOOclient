@@ -1,6 +1,7 @@
 package model.user;
 
 public class UserRegister extends User {
+    public final static int serialVersionUID = 3321;
 
     private final static int MIN_LENGTH = 8;
 
