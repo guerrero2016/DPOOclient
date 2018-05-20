@@ -145,6 +145,11 @@ public class SignInPanel extends JPanel {
         return userRegister;
     }
 
+    /**
+     * Procediment que s'encarrega de, donat un codi d'error, saber quins són els camps els quals contenen errors.
+     * Pinta els camps amb errors de color vermerll.
+     * @param error
+     */
     private void setErrorsView(int error){
         clearFieldsBorder();
         if (error >= UserRegister.PASS_ERROR) {
@@ -163,6 +168,11 @@ public class SignInPanel extends JPanel {
         System.out.println(error);
     }
 
+    /**
+     * Procediment que pinta el Border del JTextField del correu.
+     * @param color camp que indica de quin color es vol pintar. Si es <code>null</code>, es retorna al color per
+     *              defecte.
+     */
     private void setEmailBorder(Color color) {
         if (color == null) {
             jtfEmail.setBorder(UIManager.getBorder("TextField.border"));
@@ -171,6 +181,11 @@ public class SignInPanel extends JPanel {
         }
     }
 
+    /**
+     * Procediment que pinta el Border dels JTextField de contrasenya i de confirm.
+     * @param color camp que indica de quin color es vol pintar. Si es <code>null</code>, es retorna al color per
+     *              defecte.
+     */
     private void setPasswordBorder(Color color) {
         if (color == null) {
             jpfPassword.setBorder(UIManager.getBorder("TextField.border"));
@@ -182,6 +197,11 @@ public class SignInPanel extends JPanel {
 
     }
 
+    /**
+     * Procediment que pinta el Border del JTextField d'usuari.
+     * @param color camp que indica de quin color es vol pintar. Si es <code>null</code>, es retorna al color per
+     *              defecte.
+     */
     private void setUsernameBorder(Color color) {
         if (color == null) {
             jtfUsername.setBorder(UIManager.getBorder("TextField.border"));
@@ -190,16 +210,13 @@ public class SignInPanel extends JPanel {
         }
     }
 
+    /**
+     * Procediment que neteja els colors dels Borders dels JTextFields.
+     */
     private void clearFieldsBorder() {
         setEmailBorder(null);
         setUsernameBorder(null);
         setPasswordBorder(null);
-    }
-
-    public void showError(String message) {
-        JOptionPane.showMessageDialog(null, message,
-                "WARNING_MESSAGE", JOptionPane.WARNING_MESSAGE);
-
     }
 
     /**
