@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Classe que representa la finestra d'afegir un nou projecte
+ */
 public class AddProjectView extends JPanel {
 
     private final JTextField nameTextField;
@@ -68,9 +71,16 @@ public class AddProjectView extends JPanel {
         colorsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         joinProjectPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
+        selectColor(colorsPanels.get(0));
+
         dialog = new CustomDialog("Afegir projecte", this);
     }
 
+    /**
+     * Funcio que va visible la vista en forma de Dialog. D'aquesta manera les altres pantalles queden
+     * temporalment inactives.
+     * @param isVisible
+     */
     public void setDialogVisible(boolean isVisible) {
         dialog.setDialogVisible(isVisible);
     }
@@ -84,6 +94,10 @@ public class AddProjectView extends JPanel {
         return idTextField.getText();
     }
 
+    /**
+     * Funcio encarregada de crear la paleta de colors
+     * @return JPanel que representa la paleta de colors
+     */
     public JPanel createColorsPalette () {
         final JPanel palettePanel = new JPanel(new GridLayout(2,4));
         palettePanel.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
@@ -106,12 +120,19 @@ public class AddProjectView extends JPanel {
         joinButton.addActionListener(controller);
     }
 
+    /**
+     * Funcio encarregada de seleccionar un color
+     * @param colorPanel
+     */
     public void selectColor (JPanel colorPanel) {
         deselectAllColors();
         colorPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
         selectedColor = colorPanel.getBackground();
     }
 
+    /**
+     * Funcio que deselecciona tots els colors
+     */
     private void deselectAllColors () {
         for (JPanel colorPanel:colorsPanels) {
             colorPanel.setBorder(BorderFactory.createEmptyBorder());

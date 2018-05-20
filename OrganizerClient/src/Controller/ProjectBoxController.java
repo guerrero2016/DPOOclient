@@ -11,6 +11,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+/**
+ * Classe encarregada de controlar cada projecte.
+ */
 public class ProjectBoxController implements MouseListener, ActionListener {
 
     private ProjectBoxView view;

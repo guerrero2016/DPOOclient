@@ -7,6 +7,9 @@ import model.project.Category;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Classe que representa el comunicador que controla el canvi d'ordre d'una categoría
+ */
 public class CategorySwapCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {

@@ -3,6 +3,9 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe encarregada de crear dialogs a partir d'un JPanel qualsevol
+ */
 public class CustomDialog extends JDialog{
 
     private final JPanel view;
@@ -18,6 +21,10 @@ public class CustomDialog extends JDialog{
         this.setModal(false);
     }
 
+    /**
+     * Funcio que fa visible el dialog.
+     * @param isVisible
+     */
     public void setDialogVisible(boolean isVisible) {
         this.setModal(isVisible);
         this.setVisible(isVisible);

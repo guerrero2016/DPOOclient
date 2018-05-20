@@ -13,6 +13,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+/**
+ * Classe que controla la pantalla de creacio de projectes.
+ */
 public class ProjectCreationController implements MouseListener, ActionListener {
 
     private ProjectSelectionController projectSelectionController;
@@ -23,6 +26,9 @@ public class ProjectCreationController implements MouseListener, ActionListener 
         this.projectSelectionController = projectSelectionController;
     }
 
+    /**
+     * Funcio encarregada de crear la vista
+     */
     public void createAddProjectView () {
         view = new AddProjectView();
         view.registerMouseListener(this);
