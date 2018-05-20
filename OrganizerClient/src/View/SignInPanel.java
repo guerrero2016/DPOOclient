@@ -165,7 +165,6 @@ public class SignInPanel extends JPanel {
         if (error >= UserRegister.NAME_ERROR) {
             setUsernameBorder(Color.RED);
         }
-        System.out.println(error);
     }
 
     /**

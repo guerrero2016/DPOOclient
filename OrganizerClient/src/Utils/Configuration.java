@@ -7,18 +7,31 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-/**
- * Classe encarregada de llegir la configuració.
- */
-public class Configuration {
-    private static Properties config;
+    /**
+     * Classe singleton encarregada de llegir la configuració.
+     */
+    public class Configuration {
+    private static Configuration ourInstance = new Configuration();
+    private Properties config;
     private final static String path = System.getProperty("user.dir") + System.getProperty("file.separator")
             + "config.json";
 
     /**
+     * Constructor sense paràmetres
      * Procediment encarregat de llegir el fitxer de configuració i el carregui al programa.
      */
-    public static void loadConfiguration() {
+    private Configuration() {}
+
+    /**
+     * Getter del singleton.
+     * @return Singleton de configuració.
+     */
+    public static Configuration getInstance() {return ourInstance;}
+
+    /**
+     * Carrega els paràmetres de configuració a partir del config.json
+     */
+    public void loadConfiguration() {
         BufferedReader br = null;
         config = new Properties();
 
@@ -49,18 +62,18 @@ public class Configuration {
     }
 
     /**
-     * Funció que recupera l'adreça IP de l'arxiu de configuració.
-     * @return adreça IP
+     * Getter de l'adreça IP del client.
+     * @return Adreça IP.
      */
-    public static String getIPAddress () {
+    public String getIPAddress () {
         return config.getProperty("IPaddress");
     }
 
     /**
-     * Funció que recupera el port de l'arxiu de configuració
-     * @return port
+     * Getter del port de comunicació amb el servidor.
+     * @return Port de comunicació amb el servidor.
      */
-    public static int getCommunicationPort() {
+    public int getCommunicationPort() {
         return Integer.parseInt(config.getProperty("communicationPORT"));
     }
 }

@@ -82,14 +82,6 @@ public class Project implements Serializable{
     }
 
     /**
-     * Setter del OwnerName.
-     * @param ownerName Nom a settejar.
-     */
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
-
-    /**
      * Getter de l'id.
      * @return Id gettejat.
      */
@@ -138,26 +130,6 @@ public class Project implements Serializable{
     }
 
     /**
-     * Setter del codi hex del color a partir d'un color.
-     * @param color Color a partir del qual es genera el codi hex.
-     */
-    public void setColorFromCode(String color) {
-        this.color = Color.decode(color);
-    }
-
-    /**
-     * Getter del codi hex del color.
-     * @return Color hex retornat.
-     */
-    public String getHexColor () {
-        if (color == null) return null;
-        int rgb = color.getRGB()&0xffffff;
-        String zeros = "000000";
-        String data = Integer.toHexString(rgb);
-        return "#" + (zeros.substring(data.length()) + data).toUpperCase();
-    }
-
-    /**
      * Retorna la mida de les categories.
      * @return Mida de les categories.
      */
@@ -171,16 +143,6 @@ public class Project implements Serializable{
      */
     public ArrayList<Category> getCategories() {
         return categories;
-    }
-
-    /**
-     * Setter de les categories.
-     * @param categories Categories a settejar.
-     */
-    public void setCategories(ArrayList<Category> categories) {
-        if(categories != null) {
-            this.categories = categories;
-        }
     }
 
     /**
@@ -221,9 +183,7 @@ public class Project implements Serializable{
                 return category;
             }
         }
-
         return null;
-
     }
 
     /**
@@ -397,17 +357,6 @@ public class Project implements Serializable{
         this.isOwner = isOwner;
     }
 
-    /**
-     * Setter dels membres del projecte.
-     * @param names Membres a settejar
-     */
-    public void setMembersName (ArrayList<String> names) {
-        ArrayList<User> users = new ArrayList<>();
-        for (String name:names) {
-            users.add(new User(name));
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
 
@@ -433,5 +382,4 @@ public class Project implements Serializable{
     public int hashCode() {
         return Objects.hash(id, name, color, categories, users, background);
     }
-
 }

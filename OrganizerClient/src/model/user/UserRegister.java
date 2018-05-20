@@ -26,18 +26,6 @@ public class UserRegister extends User {
         return userName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getConfirm() {
-        return confirm;
-    }
-
     /**
      * Funcio encargada d'encriptar la contrasenya
      * @return Si retorna 0 s'ha encriptat correctament, sino hi ha hagut algun error

@@ -49,7 +49,6 @@ public class LogInController implements ActionListener {
                     try {
                         controller.sendToServer(ServerObjectType.LOGIN, logIn);
                     } catch (IOException e1) {
-                        System.out.println("No tira el login");
                     }
                 }
                 break;
