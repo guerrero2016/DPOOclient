@@ -124,7 +124,10 @@ public class EditionController {
     }
 
     public void loadProject(Project project) {
+
         //Default config
+        projectPanel.cleanCategories();
+        projectUserPanel.cleanUserList();
         this.project = project;
         project.setOwner(true);
         category = null;
@@ -388,7 +391,6 @@ public class EditionController {
 
     public void showProjectSelection() {
         if (mainController != null) {
-            //TODO: Save changes
             try {
                 project = null;
                 category = null;
@@ -463,7 +465,7 @@ public class EditionController {
 
         if(task != null && task.getID().equals(taskId)) {
 
-            TaskRemoveUserController controller = (TaskRemoveUserController) taskUserPanel.getMouseListeners()[0];
+            TaskRemoveUserController controller = (TaskRemoveUserController) taskUserPanel.getMouseListener();
 
             if(controller.isRemovingUser(user)) {
                 controller.closeDialog();
