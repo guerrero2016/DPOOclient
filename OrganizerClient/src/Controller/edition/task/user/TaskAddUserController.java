@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe encarregada de gestionar els Action Event d'un UserPanel d'una tasca
+ */
 public class TaskAddUserController implements ActionListener {
 
     private final static String USER_MESSAGE_TITLE = "Information";
@@ -19,12 +22,22 @@ public class TaskAddUserController implements ActionListener {
     private UserPanel view;
     private Task task;
 
+    /**
+     * Constructor que requereix d'un controlador extern, de la vista a controlar i de la tasca on pertenyen els usuaris
+     * @param mainController Controlador extern
+     * @param view Vista a controlar
+     * @param task Tasca a controlar
+     */
     public TaskAddUserController(EditionController mainController, UserPanel view, Task task) {
         this.mainController = mainController;
         this.view = view;
         this.task = task;
     }
 
+    /**
+     * Mètode que afegeix un usuari si es pot
+     * @param e Action Event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(!view.getNewUser().isEmpty()) {
@@ -45,6 +58,11 @@ public class TaskAddUserController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode auxliar que indica si ja està afegit l'usuari
+     * @param user Usuari a comprovar
+     * @return Si està afegit
+     */
     private boolean isUserAdded(User user) {
         return task.getUsers().contains(user);
     }

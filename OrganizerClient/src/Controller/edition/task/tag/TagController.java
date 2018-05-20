@@ -11,6 +11,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe encarregada de gestionar els Action Event d'un TagPanel
+ */
 public class TagController implements ActionListener {
 
     private final static String TAG_REMOVE_TITLE = "Tag Remove";
@@ -22,11 +25,20 @@ public class TagController implements ActionListener {
     private JFrame dialogJFrame;
     private boolean isRemoving;
 
+    /**
+     * Constructor que requereix d'un controlador extern i de l'etiqueta origen
+     * @param mainController Controlador extern
+     * @param tag Etiqueta origen
+     */
     public TagController(EditionController mainController, Tag tag) {
         this.mainController = mainController;
         this.tag = tag;
     }
 
+    /**
+     * Mètode encarregat de distingir la'cció detectada
+     * @param e Action Event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(TagPanel.ACTION_TAG_NAME_EDIT)) {
@@ -36,6 +48,9 @@ public class TagController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat d'actualitzar una etiqueta
+     */
     private void manageTagEdit() {
         if(!mainController.isEditing()) {
             //Create panel
@@ -53,15 +68,12 @@ public class TagController implements ActionListener {
 
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
                 if (colorPreviewController.getColor() != null) {
-                    System.out.println("AQUI ES QUAN S?EDITASDASD");
-
                     Tag aux = new Tag(tag.getId(), tagEditionPanel.getTagName(), colorPreviewController.getColor());
                     mainController.editTagInDB(aux);
                 } else {
                     Tag aux = new Tag(tag.getId(), tagEditionPanel.getTagName(), tag.getColor());
                     mainController.editTagInDB(aux);
                 }
-                System.out.println(tag.getName() + "  " + tag.getHexColor());
 
             }
         } else {
@@ -73,6 +85,9 @@ public class TagController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat d'eliminar l'etiqueta
+     */
     private void tagDelete() {
         if(!mainController.isEditing()) {
             isRemoving = true;
@@ -89,14 +104,27 @@ public class TagController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat d'indicar si s'està eliminant l'etiqueta
+     * @param tag Etiqueta a comparar
+     * @return Si s'està eliminat
+     */
     public boolean isRemovingTag(Tag tag) {
         return this.tag.equals(tag) && dialogJFrame != null && isRemoving;
     }
 
+    /**
+     * Mètode encarregat d'indicar si s'està modificant l'etiqueta
+     * @param tag Etiqueta a comparar
+     * @return Si s'està modificant
+     */
     public boolean isEditingTag(Tag tag) {
         return this.tag.equals(tag) && dialogJFrame != null && !isRemoving;
     }
 
+    /**
+     * Mètode encarregat de tancar els dialog oberts pel controlador
+     */
     public void closeDialog() {
         if(dialogJFrame != null) {
             dialogJFrame.dispose();
