@@ -97,12 +97,12 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.addMemberInProject(categoryId, taskId, user);
     }
 
+    /**
+     * Procediment que s'encarrega d'afegir un usuari al projecte
+     * @param user
+     */
     public void userJoinedProject(User user) {
         editionController.userJoinedProject(user);
-    }
-
-    public void userLeftProject(int i) {
-        editionController.userLeftProject(i);
     }
 
     /**
@@ -217,27 +217,53 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.addTagInProject(categoryId, taskId, tag);
     }
 
+    /**
+     * Procediment que avisa al EditionController que un usuari ha estat expulsat.
+     * @param user usuari eliminat
+     */
     public void userLeftProject(User user) {
         editionController.userLeftProject(user);
     }
 
+    /**
+     * Procediment encarregat de netejar els projectes del panell de selecció.
+     */
     public void resetSelectionView(){
         projectsMainViewController.resetOwnerProjects();
         projectsMainViewController.resetSharedProjects();
     }
 
+    /**
+     * Procediment que envia dades al servidor
+     * @param type tipus de petició que es fa. Si és <code>null</code> no s'envia aquest paràmetre
+     * @param o objecte a enviar.
+     * @throws IOException
+     */
     public void sendToServer(ServerObjectType type, Object o) throws IOException {
         network.sendToServer(type, o);
     }
 
+    /**
+     * Procediment que elimina un communicator.
+     * @param serverObjectType clau del communicator
+     */
     public void removeCommunicator(ServerObjectType serverObjectType) {
         network.removeCommunicator(serverObjectType);
     }
 
+    /**
+     * Afegeix un communicator.
+     * @param communicator communicator a afegir
+     * @param type clau del communicator
+     */
     public void addCommunicator(Communicable communicator, ServerObjectType type){
         network.addCommunicator(communicator, type);
     }
 
+    /**
+     * Procediment que s'encarrega de mostrar un JOptionPane d'error amb un missatge.
+     * @param errorMSG missatge que es mostrarà.
+     */
     public void showDialog(String errorMSG) {
         view.showErrorDialog(errorMSG);
     }
