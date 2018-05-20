@@ -40,7 +40,6 @@ public class TagController implements ActionListener {
 
     private void manageTagEdit() {
         if(!mainController.isEditing()) {
-
             //Create panel
             TagEditionPanel tagEditionPanel = new TagEditionPanel(tag.getName());
             ColorChooserPanel colorChooserPanel = tagEditionPanel.getColorChooserPanel();
@@ -56,7 +55,9 @@ public class TagController implements ActionListener {
 
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
                 if (colorPreviewController.getColor() != null) {
-                    mainController.editTagInDB(tag, tagEditionPanel.getTagName(), colorPreviewController.getColor());
+                    tag.setName(tagEditionPanel.getTagName());
+                    tag.setColor(colorPreviewController.getColor());
+                    mainController.editTagInDB(tag);
                 }
             }
 
@@ -71,7 +72,6 @@ public class TagController implements ActionListener {
 
     private void tagDelete() {
         if(!mainController.isEditing()) {
-
             isRemoving = true;
             dialogJFrame = new JFrame();
             dialogJFrame.setLocationRelativeTo(null);

@@ -20,24 +20,13 @@ public class TagSetCommunicator implements Communicable {
             Tag tag = (Tag) objectIn.readObject();
             String taskID = objectIn.readObject().toString();
             String categoryID = objectIn.readObject().toString();
-            int i;
-            int j;
+            int j = DataManager.getSharedInstance().getSelectedProject().
+                    getCategoryIndex(DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID));
+            int i = DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).
+                    getTaskIndex(DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTaskWithId(taskID));
             int k;
             boolean exists = false;
-            Category c = null;
-            Task t = null;
-            for(j = 0; j < DataManager.getSharedInstance().getSelectedProject().getCategories().size(); j++) {
-                if(DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getId().equals(categoryID)) {
-                    c = DataManager.getSharedInstance().getSelectedProject().getCategories().get(j);
-                    break;
-                }
-            }
-            for(i = 0; i < c.getTasksSize(); i++) {
-                if(taskID.equals(c.getTasks().get(i).getID())) {
-                    t = c.getTasks().get(i);
-                    break;
-                }
-            }
+            Task t = DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().get(i);
             for(k = 0; k < t.getTagsSize(); k++) {
                 if(tag.getId().equals(t.getTags().get(k).getId())) {
                     exists = true;
