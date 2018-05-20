@@ -13,8 +13,8 @@ import java.io.IOException;
 
 public class TaskListComponent extends JPanel implements Transferable {
 
-    private final static String TASK_FINISHED = "Tasca acabada";
-    private final static String TASK_NOT_FINISHED = "Tasca no acabada";
+    private final static String TASK_FINISHED = "Task finished";
+    private final static String TASK_NOT_FINISHED = "Task not finished";
 
     public static DataFlavor localObjectFlavor;
     static {

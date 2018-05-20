@@ -13,8 +13,8 @@ import java.awt.event.ActionListener;
  * Classe que genera el panell per a registrar-se.
  */
 public class SignInPanel extends JPanel {
-    public static final String SIGN = "REGISTRAR-SE";
-    public static final String LOG = "INICIA SESSIÓ";
+    public static final String SIGN = "REGISTER";
+    public static final String LOG = "LOG IN";
     public static final int SIGNIN = 0;
 
     private JTextField jtfEmail;
@@ -43,7 +43,7 @@ public class SignInPanel extends JPanel {
 
         c.gridx = 0;
         c.gridy = 0;
-        jpBorder.add(new JLabel("Nom d'usuari"), c);
+        jpBorder.add(new JLabel("Username"), c);
 
         //JTextField per al nom d'usuari
         c.gridx = 1;
@@ -58,7 +58,7 @@ public class SignInPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 1;
         c.weightx = 0;
-        jpBorder.add(new JLabel("Correu electrònic"), c);
+        jpBorder.add(new JLabel("Email"), c);
 
         //JTextField per al nom d'usuari
         c.gridx = 1;
@@ -74,7 +74,7 @@ public class SignInPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 2;
         c.weightx = 0;
-        jpBorder.add(new JLabel("Contrasenya"), c);
+        jpBorder.add(new JLabel("Password"), c);
 
         //JTextField per la contrasenya
         c.gridx = 1;
@@ -91,7 +91,7 @@ public class SignInPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 3;
         c.weightx = 0;
-        jpBorder.add(new JLabel("Confirma contrasenya"), c);
+        jpBorder.add(new JLabel("Confirm your password"), c);
 
         //JTextField per la confirmació
         c.gridx = 1;
@@ -118,7 +118,7 @@ public class SignInPanel extends JPanel {
         this.add(jpSign);
 
         JPanel jpLog = new JPanel(new BorderLayout());
-        jpLog.setBorder(BorderFactory.createTitledBorder("Ja tens compte?"));
+        jpLog.setBorder(BorderFactory.createTitledBorder("Already have an account?"));
         JPanel aux6 = new JPanel(new BorderLayout());
         aux6.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));
         jbLogIn = new JButton(LOG);

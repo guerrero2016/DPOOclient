@@ -26,7 +26,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     private final static int MAX_TAGS = 5;
 
     private final static String TASK_STATE_TITLE = "Tasca finalitzada?";
-    private final static String AFFIRMATIVE_RADIO_BUTTON = "Sí";
+    private final static String AFFIRMATIVE_RADIO_BUTTON = "Yes";
     private final static String NEGATIVE_RADIO_BUTTON = "No";
     private final static String TASK_TITLE = "Task";
     private final static String DESCRIPTION_TITLE = "Description";

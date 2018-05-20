@@ -50,7 +50,7 @@ public class SignInController implements ActionListener {
                 try {
                     controller.sendToServer(ServerObjectType.REGISTER, register);
                 } catch (IOException e1) {
-                    controller.showDialog("Error de connexió amb el servidor");
+                    controller.showDialog("Server connection error");
                 }
 
                 break;

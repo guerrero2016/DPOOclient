@@ -25,7 +25,7 @@ public class AddProjectView extends JPanel {
         colorsPanels = new ArrayList<>();
 
         JPanel northPanel = new JPanel(new BorderLayout());
-        JLabel nameLabel = new JLabel("Nom");
+        JLabel nameLabel = new JLabel("Name");
         nameTextField = new JTextField();
 
         northPanel.add(nameLabel, BorderLayout.NORTH);
@@ -38,28 +38,28 @@ public class AddProjectView extends JPanel {
         colorsPanel.add(palettePanel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
-        createButton = new JButton("Afegir");
+        createButton = new JButton("Add");
         buttonPanel.add(createButton);
 
         JPanel leftPanel = new JPanel(new BorderLayout());
-        leftPanel.setBorder(BorderFactory.createTitledBorder("Crear nou projecte"));
+        leftPanel.setBorder(BorderFactory.createTitledBorder("Create a new project"));
         leftPanel.add(buttonPanel,BorderLayout.SOUTH);
         leftPanel.add(northPanel, BorderLayout.NORTH);
         leftPanel.add(colorsPanel, BorderLayout.CENTER);
 
         JPanel joinProjectPanel = new JPanel(new BorderLayout());
-        JLabel idLabel = new JLabel("ID projecte");
+        JLabel idLabel = new JLabel("Project's ID");
         idTextField = new JTextField();
 
         JPanel joinButtonPanel = new JPanel(new FlowLayout());
-        joinButton = new JButton("Unir-se");
+        joinButton = new JButton("Join");
         joinButtonPanel.add(joinButton);
 
         joinProjectPanel.add(idLabel, BorderLayout.NORTH);
         joinProjectPanel.add(idTextField, BorderLayout.CENTER);
 
         JPanel rightPanel = new JPanel(new BorderLayout());
-        rightPanel.setBorder(BorderFactory.createTitledBorder("Unir-se a un projecte"));
+        rightPanel.setBorder(BorderFactory.createTitledBorder("Join a un project"));
         rightPanel.add(joinProjectPanel, BorderLayout.NORTH);
         rightPanel.add(joinButtonPanel, BorderLayout.SOUTH);
 
@@ -73,7 +73,7 @@ public class AddProjectView extends JPanel {
 
         selectColor(colorsPanels.get(0));
 
-        dialog = new CustomDialog("Afegir projecte", this);
+        dialog = new CustomDialog("Add a project", this);
     }
 
     /**

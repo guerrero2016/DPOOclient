@@ -33,7 +33,7 @@ public class ProjectCreationController implements MouseListener, ActionListener 
     @Override
     public void actionPerformed(ActionEvent e) {
         String button = ((JButton)e.getSource()).getText();
-        if (button.equals("Afegir")) {
+        if (button.equals("Add")) {
             if (view.getProjectName() == null || view.getProjectName().isEmpty()) {
                 System.out.println("Missing parameters");
             } else {

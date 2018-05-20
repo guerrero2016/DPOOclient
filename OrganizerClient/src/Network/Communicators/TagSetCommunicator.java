@@ -34,17 +34,6 @@ public class TagSetCommunicator implements Communicable {
                 return;
             }
 
-            //Check if tag exists
-//            for(int i = 0; i < targetTask.getTagsSize(); i++) {
-//                if(tag.getId().equals(targetTask.getTags().get(i).getId())) {
-//                    DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID).
-//                            getTaskWithId(taskID).getTags().set(DataManager.getSharedInstance().getSelectedProject().
-//                            getCategoryWithId(categoryID).getTaskWithId(taskID).getTagOrder(tag),tag);
-//                    controller.editTagInProject(categoryID, taskID, tag);
-//                    return;
-//                }
-//            }
-
             //New tag
             DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID).
                     getTaskWithId(taskID).addTag(tag);
