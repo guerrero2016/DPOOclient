@@ -13,6 +13,9 @@ import java.io.IOException;
 
 public class TaskListComponent extends JPanel implements Transferable {
 
+    private final static String TASK_FINISHED = "Tasca acabada";
+    private final static String TASK_NOT_FINISHED = "Tasca no acabada";
+
     public static DataFlavor localObjectFlavor;
     static {
         try {
@@ -39,7 +42,21 @@ public class TaskListComponent extends JPanel implements Transferable {
         //Task name
         final JLabel jlTask = new JLabel(task.getName());
         jlTask.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
-        add(jlTask, BorderLayout.CENTER);
+        add(jlTask, BorderLayout.PAGE_START);
+
+        //Task state panel
+        final TransparentPanel tpTaskState = new TransparentPanel();
+        tpTaskState.setLayout(new FlowLayout(FlowLayout.LEFT));
+        add(tpTaskState, BorderLayout.CENTER);
+        final JLabel jlTaskState = new JLabel();
+        jlTaskState.setFont(new Font(Font.DIALOG, Font.PLAIN, 13));
+        tpTaskState.add(jlTaskState);
+
+        if(task.isFinished()) {
+            jlTaskState.setText(TASK_FINISHED);
+        } else {
+            jlTaskState.setText(TASK_NOT_FINISHED);
+        }
 
         //Tags panel
         final TransparentPanel tpTags = new TransparentPanel();

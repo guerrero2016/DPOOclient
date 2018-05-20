@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Task implements Serializable{
 
     private final static int INVALID_INDEX = -1;
-    public final static int serialVersionUID = 900;
+    public final static int serialVersionUID = 1237;
 
     private String id;
     private String name;
@@ -17,6 +17,7 @@ public class Task implements Serializable{
     private ArrayList<Tag> tags;
     private ArrayList<User> users;
     private int order;
+    private boolean isFinished;
 
     public Task() {
         tags = new ArrayList<>();
@@ -94,6 +95,15 @@ public class Task implements Serializable{
         } else {
             return INVALID_INDEX;
         }
+    }
+
+    public int getTagOrder(Tag tag) {
+        for(int i = 0; i < tags.size();i++) {
+            if(tags.get(i).getId().equals(tag.getId())) {
+                return (i);
+            }
+        }
+        return INVALID_INDEX;
     }
 
     public Tag getTag(int tagIndex) {
@@ -184,6 +194,14 @@ public class Task implements Serializable{
         if(order >= 0) {
             this.order = order;
         }
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 
     @Override

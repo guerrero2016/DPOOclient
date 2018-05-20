@@ -58,8 +58,7 @@ public class Main {
                 ProjectSelectionController sharedSelectionController =
                         new ProjectSelectionController(sharedSelectionView);
                 ProjectsMainViewController projectsMainViewController =
-                        new ProjectsMainViewController(projectsMainView, ownerSelectionController,
-                                sharedSelectionController);
+                        new ProjectsMainViewController(ownerSelectionController, sharedSelectionController);
 
                 ownerSelectionView.registerController(ownerSelectionController);
                 sharedSelectionView.registerController(sharedSelectionController);
@@ -82,8 +81,8 @@ public class Main {
 
                 EditionController editionController = new EditionController(editionPanel);
 
-                MainViewController mainViewController = new MainViewController(network, mainView, logInController,
-                        signInController, projectsMainViewController, editionController);
+                MainViewController mainViewController = new MainViewController(network, mainView,
+                        projectsMainViewController, editionController);
 
                 mainView.addController(mainViewController, mainViewController);
 

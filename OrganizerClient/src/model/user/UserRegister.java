@@ -1,7 +1,10 @@
 package model.user;
 
+/**
+ * Representacio d'un usuari en el moment de registrar-se
+ */
 public class UserRegister extends User {
-    public final static int serialVersionUID = 3321;
+    public final static int serialVersionUID = 1240;
     public final static int NAME_ERROR = 11;
     public final static int EMAIL_ERROR = 13;
     public final static int PASS_ERROR = 29;
@@ -35,6 +38,10 @@ public class UserRegister extends User {
         return confirm;
     }
 
+    /**
+     * Funcio encargada d'encriptar la contrasenya
+     * @return Si retorna 0 s'ha encriptat correctament, sino hi ha hagut algun error
+     */
     public int encryptPassword() {
         int error = checkSignIn();
 
@@ -48,6 +55,10 @@ public class UserRegister extends User {
         return error;
     }
 
+    /**
+     *
+     * @return
+     */
     private int checkSignIn() {
         int error = 0;
 

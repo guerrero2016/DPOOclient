@@ -15,11 +15,20 @@ public class DataManager {
     private ArrayList<Project> projectOwnerList;
     private ArrayList<Project> projectSharedList;
     private Project selectedProject;
+    private Task editingTask;
     private int whatPanel;
 
     private DataManager() {
         selectedProject = new Project();
         projectOwnerList = new ArrayList<>();
+    }
+
+    public Task getEditingTask() {
+        return editingTask;
+    }
+
+    public void setEditingTask(Task editingTask) {
+        this.editingTask = editingTask;
     }
 
     public String getUserName() {

@@ -1,6 +1,5 @@
 package Controller;
 
-import Network.NetworkManager;
 import View.ProjectsMainView;
 import model.project.Project;
 
@@ -13,15 +12,12 @@ import java.util.ArrayList;
  */
 public class ProjectsMainViewController implements ActionListener {
 
-    private final ProjectsMainView view;
     private final ProjectSelectionController ownerSelectionController;
     private final ProjectSelectionController sharedSelectionController;
     private final ProjectCreationController projectCreationController;
-    private MainViewController controller;
 
-    public ProjectsMainViewController(ProjectsMainView view, ProjectSelectionController ownerSelectionController,
+    public ProjectsMainViewController(ProjectSelectionController ownerSelectionController,
                                       ProjectSelectionController sharedSelectionController) {
-        this.view = view;
         this.ownerSelectionController = ownerSelectionController;
         this.sharedSelectionController = sharedSelectionController;
         ownerSelectionController.createProjects(new ArrayList<>());
@@ -68,7 +64,6 @@ public class ProjectsMainViewController implements ActionListener {
     }
 
     public void setController(MainViewController controller) {
-        this.controller = controller;
         ownerSelectionController.setController(controller);
         sharedSelectionController.setController(controller);
     }
@@ -93,7 +88,7 @@ public class ProjectsMainViewController implements ActionListener {
      * Funcio encarregada de borrar projectes propis del usuari
      * @param index
      */
-    public void deleteOwnerProject (int index) {
+    public void deleteOwnerProject(int index) {
         ownerSelectionController.deleteProject(index);
     }
 
@@ -101,7 +96,7 @@ public class ProjectsMainViewController implements ActionListener {
      * Funcio encarregada d'eliminar projectes compartits
      * @param index
      */
-    public void deleteSharedProject (int index) {
+    public void deleteSharedProject(int index) {
         sharedSelectionController.deleteProject(index);
     }
 
@@ -109,5 +104,6 @@ public class ProjectsMainViewController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         projectCreationController.createAddProjectView();
     }
+
 }
 
