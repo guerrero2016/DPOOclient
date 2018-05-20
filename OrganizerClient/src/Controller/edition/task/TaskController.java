@@ -64,6 +64,7 @@ public class TaskController implements ActionListener {
                 Task aux =  new Task(view.getTaskName(), task.getDescription(), task.getTags(), task.getUsers(),
                         task.getOrder());
                 aux.setId(task.getID());
+                task.setName(view.getTaskName());
                 mainController.updateTask(aux);
                 mainController.setEditingState(false);
             } else {
