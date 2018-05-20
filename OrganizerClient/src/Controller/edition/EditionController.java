@@ -126,7 +126,6 @@ public class EditionController {
     public void loadProject(Project project) {
 
         //Default config
-        project.setOwner(true);
         projectPanel.cleanCategories();
         projectUserPanel.cleanUserList();
         this.project = project;
