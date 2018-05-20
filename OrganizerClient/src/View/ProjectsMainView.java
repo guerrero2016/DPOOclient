@@ -24,8 +24,8 @@ public class ProjectsMainView extends JPanel {
 
         JPanel ownerPane = new JPanel(new BorderLayout());
         JPanel friendPane = new JPanel(new BorderLayout());
-        JLabel ownerLabel = new JLabel("Els teus projectes");
-        JLabel friendLabel = new JLabel("Projectes compartits");
+        JLabel ownerLabel = new JLabel("Your projects");
+        JLabel friendLabel = new JLabel("Shared projects");
         ownerLabel.setFont(ownerLabel.getFont().deriveFont(Font.BOLD, 30));
         ownerLabel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         friendLabel.setFont(ownerLabel.getFont());

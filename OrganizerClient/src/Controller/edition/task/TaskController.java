@@ -9,7 +9,6 @@ import View.edition.color.ColorChooserPanel;
 import View.edition.task.TaskPanel;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -42,8 +41,10 @@ public class TaskController implements ActionListener {
             descriptionManagement();
         } else if(e.getActionCommand().equals(TaskPanel.ACTION_TAG_ADD)) {
             addTag();
-        } else if(e.getActionCommand().equals(TaskPanel.ACTION_AFFIRMATIVE) || e.getActionCommand().equals(TaskPanel.ACTION_NEGATIVE)) {
-            taskStateManagement();
+        } else if(e.getActionCommand().equals(TaskPanel.ACTION_AFFIRMATIVE)) {
+            taskDoneManagement();
+        } else if(e.getActionCommand().equals(TaskPanel.ACTION_NEGATIVE)) {
+            taskNotDoneManagement();
         }
     }
 
@@ -127,12 +128,12 @@ public class TaskController implements ActionListener {
 
     }
 
-    private void taskStateManagement() {
-        Task aux = new Task(view.getTaskName(), task.getDescription(), task.getTags(), task.getUsers(),
-                task.getOrder());
-        aux.setId(task.getID());
-        aux.setFinished(view.isTaskFinished());
-        mainController.updateTask(aux);
+    private void taskDoneManagement() {
+        mainController.setTaskDoneInDB();
+    }
+
+    private void taskNotDoneManagement() {
+        mainController.setTaskNotDoneInDB();
     }
 
 }

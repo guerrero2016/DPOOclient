@@ -336,7 +336,11 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     public void setTaskFinished(boolean finishedState) {
-        jrbAffirmative.setSelected(finishedState);
+        if(finishedState) {
+            jrbAffirmative.setSelected(finishedState);
+        } else {
+            jrbNegative.setSelected(!finishedState);
+        }
     }
 
     public String getDescription() {

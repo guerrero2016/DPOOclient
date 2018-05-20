@@ -6,9 +6,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Classe que representa una tasca.
+ */
+
 public class Task implements Serializable{
 
-    private final static int INVALID_INDEX = -1;
+    public final static int INVALID_INDEX = -1;
     public final static int serialVersionUID = 1237;
 
     private String id;
@@ -18,6 +22,7 @@ public class Task implements Serializable{
     private ArrayList<User> users;
     private int order;
     private boolean isFinished;
+
 
     public Task() {
         tags = new ArrayList<>();
