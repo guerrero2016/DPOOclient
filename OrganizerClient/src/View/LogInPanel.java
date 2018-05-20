@@ -104,14 +104,6 @@ public class LogInPanel extends JPanel{
         return new UserLogIn(userName, password);
     }
 
-    public void setPasswordBorder(Color color) {
-        jpfPassword.setBorder(BorderFactory.createLineBorder(color));
-    }
-
-    public void setUsernameBorder(Color color) {
-        jtfUsername.setBorder(BorderFactory.createLineBorder(color));
-    }
-
     /**
      * Procediment que registra els botons amb un <code>ActionListener</code>.
      * @param al <code>ActionListener</code> el qual serà notificat quan es premi un botó.

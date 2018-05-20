@@ -48,6 +48,8 @@ public class EditionController {
     private Category category;
     private Task task;
 
+    private TaskController taskController;
+
     private boolean isEditing;
 
     private MainViewController mainController;
@@ -83,6 +85,7 @@ public class EditionController {
         mainController.addCommunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
         mainController.addCommunicator(new CategorySwapCommunicator(), ServerObjectType.SWAP_CATEGORY);
         mainController.addCommunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
+        mainController.addCommunicator(new TaskDeletedCommunicator(), ServerObjectType.DELETE_TASK);
     }
 
     public void removeCommunicators () {
@@ -91,6 +94,7 @@ public class EditionController {
         mainController.removeCommunicator(ServerObjectType.DELETE_PROJECT);
         mainController.removeCommunicator(ServerObjectType.SET_CATEGORY);
         mainController.removeCommunicator(ServerObjectType.DELETE_CATEGORY);
+        mainController.removeCommunicator(ServerObjectType.DELETE_TASK);
     }
 
     public MainViewController getMainController() {
@@ -111,6 +115,9 @@ public class EditionController {
             categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel, category));
             categoryPanel.registerMouseController(new CategoryMouseController(this, category));
             categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
+            categoryPanel.resetDnDController();
+            categoryPanel.registerDnDController(new TaskListController(this, category,
+                    categoryPanel.getListComponent()));
         } else if(this.isEditing()) {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
                     EDITING_ON_TITLE, JOptionPane.WARNING_MESSAGE);
@@ -134,7 +141,7 @@ public class EditionController {
         task = null;
 
         //Config project content
-        projectPanel.hideDeleteButton(!project.isOwner());
+        projectPanel.hideDeleteButton();
         editionPanel.setBackgroundImage(project.getBackground());
         projectPanel.setProjectName(project.getName());
         projectPanel.cleanCategories();
@@ -176,6 +183,7 @@ public class EditionController {
     }
 
     public void showProjectContent() {
+        System.out.println("Project content");
         isEditing = false;
         category = null;
         task = null;
@@ -197,8 +205,9 @@ public class EditionController {
 
         //Link controllers
         taskPanel.resetActionController();
-        taskPanel.registerActionController(new TaskController(this, editionPanel.getTaskPanel(),
-                task));
+        taskController = new TaskController(this, editionPanel.getTaskPanel(),
+                task);
+        taskPanel.registerActionController(taskController);
 
         for(int i = 0; i < task.getTagsSize(); i++) {
             TagPanel tagPanel = editionPanel.getTaskPanel().getTagPanel(i);
@@ -226,6 +235,10 @@ public class EditionController {
         return isEditing;
     }
 
+    public TaskController getTaskController() {
+        return taskController;
+    }
+
     public void setEditingState(boolean enableState) {
         isEditing = enableState;
     }
@@ -241,6 +254,14 @@ public class EditionController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void deleteUser(User user) {
+        try {
+            mainController.sendToServer(ServerObjectType.DELETE_USER, user);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -316,7 +337,6 @@ public class EditionController {
     public void deleteTask() {
         if(mainController != null) {
             try {
-                mainController.addCommunicator(new TaskDeletedCommunicator(), ServerObjectType.DELETE_TASK);
                 mainController.sendToServer(ServerObjectType.DELETE_TASK, task);
                 mainController.sendToServer(null, category.getId());
             } catch (IOException e) {
@@ -331,12 +351,7 @@ public class EditionController {
     }
 
     public void deleteCategory(String id_category) {
-        Category category = null;
-        for(Category c: project.getCategories()){
-            if(c.getId().equals(id_category)) {
-                category = c;
-            }
-        }
+        Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(id_category);
         int index = project.getCategoryIndex(category);
         if(index >= 0 && index < project.getCategoriesSize()) {
             project.deleteCategory(category);
@@ -416,14 +431,15 @@ public class EditionController {
 
     public void deleteProject() {
         if(mainController != null) {
-            //TODO: Delete project in database
+            try {
+                mainController.sendToServer(ServerObjectType.DELETE_PROJECT,
+                        DataManager.getSharedInstance().getSelectedProject().getId());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             System.exit(0);
         }
-    }
-
-    public void setBackgroundImage(Image image) {
-        editionPanel.setBackgroundImage(image);
     }
 
     public User getUserFromDB(String userName) {
@@ -526,44 +542,34 @@ public class EditionController {
     }
 
     public void editTagInProject(String categoryId, String taskId, Tag tag) {
-
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
         Tag targetTag = targetTask.getTagWithId(tag.getId());
 
         if(task != null && task.getID().equals(taskId)) {
-
             TagPanel tagPanel = taskPanel.getTagPanel(targetTask.getTagIndex(tag));
             tagPanel.setTagName(tag.getName());
             tagPanel.setTagColor(tag.getColor());
             TagController controller = (TagController) taskPanel.getTagPanel(task.getTagIndex(tag)).getActionListener();
-
             if(!controller.isEditingTag(tag)) {
                 tagPanel.revalidate();
                 tagPanel.repaint();
             }
-
         }
-
         targetTag.setName(tag.getName());
         targetTag.setColor(tag.getColor());
         projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).
                 updateTask(targetCategory.getTaskIndex(targetTask), targetTask);
-
     }
 
     public void addTagInProject(String categoryId, String taskId, Tag tag) {
-
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
-        targetTask.addTag(tag);
-
         if(task != null && task.getID().equals(taskId)) {
             taskPanel.addTag(tag);
             TagPanel tagPanel = taskPanel.getTagPanel(task.getTagIndex(tag));
             tagPanel.registerActionController(new TagController(this, tag));
         }
-
         projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).updateTask(targetCategory.
                 getTaskIndex(targetTask), targetTask);
 

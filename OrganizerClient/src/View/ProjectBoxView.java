@@ -26,6 +26,7 @@ public class ProjectBoxView extends JPanel {
     private CustomProjectButton jbDelete;
     private final int index;
     private final boolean isOwner;
+    private ActionListener controller;
 
     public ProjectBoxView (String title, Color color, int index, boolean isOwner, ProjectBoxController controller) {
         setLayout(new BorderLayout());
@@ -81,7 +82,12 @@ public class ProjectBoxView extends JPanel {
     }
 
     public void registerButtonListener (ActionListener controller){
+        this.controller = controller;
         jbDelete.addActionListener(controller);
+    }
+
+    public ActionListener getController() {
+        return controller;
     }
 
     /**

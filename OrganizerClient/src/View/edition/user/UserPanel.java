@@ -15,20 +15,26 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
 
     private final static int PANEL_WIDTH = 225;
 
+    private final static String INVITE_USER = "Invite User";
     private final static String NEW_USER_TITLE = "New User";
     private final static String ADD_TITLE = "+";
 
     private final JList<User> jlUserList;
     private final TransparentPanel tpAddUser;
-    private final JTextField jtfNewUser;
     private final JButton jbAddUser;
+    private final JTextField jtfNewUser;
 
     private DefaultListModel<User> userList;
 
     private ActionListener actionListener;
     private MouseListener mouseListener;
 
-    public UserPanel() {
+    /**
+     * Crea un panell per afegir un usuari si el parametre d'entrada és 1 o crea un panell per a convidar usuaris si és
+     * 0. Els dos panells tenen un botó i un text. Només el panell per afegir usuari té JTextField.
+     * @param i indica quin dels dos panells es crearà.
+     */
+    public UserPanel(int i) {
 
         //Panel settings
         setLayout(new BorderLayout());
@@ -49,21 +55,29 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
         tpAddUser.setLayout(new BorderLayout());
         add(tpAddUser, BorderLayout.PAGE_END);
 
-        //New member title
-        final JLabel jlNewUser = new JLabel(NEW_USER_TITLE);
-        jlNewUser.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
-        jlNewUser.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
-        tpAddUser.add(jlNewUser, BorderLayout.LINE_START);
-
-        //New member field
-        jtfNewUser = new JTextField();
-        jtfNewUser.setEditable(true);
-        tpAddUser.add(jtfNewUser, BorderLayout.CENTER);
-
         //User adder button
         jbAddUser = new JButton(ADD_TITLE);
         jbAddUser.setEnabled(false);
         tpAddUser.add(jbAddUser, BorderLayout.LINE_END);
+
+        //New member title
+        jtfNewUser = new JTextField();
+        if (i == 1) {
+            final JLabel jlNewUser = new JLabel(NEW_USER_TITLE);
+            jlNewUser.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+            jlNewUser.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+            tpAddUser.add(jlNewUser, BorderLayout.LINE_START);
+
+            //New member field
+            jtfNewUser.setEditable(true);
+            tpAddUser.add(jtfNewUser, BorderLayout.CENTER);
+        } else {
+            final JLabel jlNewUser = new JLabel(INVITE_USER);
+            jlNewUser.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
+            jlNewUser.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+            tpAddUser.add(jlNewUser, BorderLayout.LINE_START);
+            jbAddUser.setEnabled(true);
+        }
 
     }
 
@@ -157,11 +171,14 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
 
     public void registerDocumentListener(DocumentListener documentListener) {
         jtfNewUser.getDocument().addDocumentListener(documentListener);
+
     }
 
     @Override
     public void setDocumentEnableState(boolean enableState) {
+
         jbAddUser.setEnabled(enableState);
+
     }
 
 }

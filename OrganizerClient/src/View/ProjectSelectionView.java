@@ -124,7 +124,6 @@ public class ProjectSelectionView extends JPanel {
      */
     public void removeProject(int index) {
         projectBoxViews.remove(index);
-
         String [] titles = new String[projectBoxViews.size()];
         Color [] colors = new Color [projectBoxViews.size()];
         ProjectBoxController [] controllers = new ProjectBoxController[projectBoxViews.size()];
@@ -132,6 +131,7 @@ public class ProjectSelectionView extends JPanel {
         for (int i = 0; i < projectBoxViews.size(); i++) {
             titles[i] = projectBoxViews.get(i).getTitle();
             colors[i] = projectBoxViews.get(i).getBackground();
+            controllers[i] = (ProjectBoxController) projectBoxViews.get(i).getController();
         }
 
         projectBoxViews = new ArrayList<>();

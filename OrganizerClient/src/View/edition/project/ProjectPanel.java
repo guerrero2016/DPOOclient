@@ -123,16 +123,17 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         tpProjectButtons.add(jbBackground);
 
         //Project delete button
-        if(deleteIcon != null) {
+        if (deleteIcon != null) {
             jbProjectDelete = new JButton(new ImageIcon(deleteIcon.getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
             jbProjectDelete.setBorder(null);
         } else {
             jbProjectDelete = new JButton(DELETE_BUTTON);
             jbProjectDelete.setFont(new Font(Font.DIALOG, Font.BOLD, 12));
         }
-
         jbProjectDelete.setActionCommand(ACTION_PROJECT_DELETE);
         tpProjectButtons.add(jbProjectDelete);
+
+
 
         //Categories scrollable list
         TransparentScrollPanel tspCategories = new TransparentScrollPanel();
@@ -164,7 +165,6 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         jbCategoryAdder.setEnabled(false);
         jbCategoryAdder.setActionCommand(ACTION_CATEGORY_ADD);
         tpNewCategory.add(jbCategoryAdder, BorderLayout.LINE_END);
-
     }
 
     public void setProjectName(String projectName) {
@@ -307,8 +307,9 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         jtfCategoryName.setText(null);
     }
 
-    public void hideDeleteButton(boolean hideState) {
-        if(hideState) {
+    public void hideDeleteButton() {
+        if(!DataManager.getSharedInstance().getSelectedProject().getOwnerName().
+                equals(DataManager.getSharedInstance().getUserName())) {
             tpProjectButtons.remove(jbProjectDelete);
         } else {
             tpProjectButtons.add(jbProjectDelete);
