@@ -87,12 +87,15 @@ public class MainView extends JFrame {
         DataManager.getSharedInstance().setWhatPanel(whatPanel);
         switch (whatPanel) {
             case SignInPanel.SIGNIN:
+                this.signInPanel.clearScreen();
                 super.setTitle("SignIn - Organizer");
                 ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "signIn");
                 ((CardLayout)this.getContentPane().getLayout()).show(this.getContentPane(), "identify");
                 break;
 
             case LogInPanel.LOGIN:
+                this.setJMenuBar(null);
+                this.logInPanel.clearScreen();
                 super.setTitle("LogIn - Organizer");
                 ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "logIn");
                 ((CardLayout)this.getContentPane().getLayout()).show(this.getContentPane(), "identify");

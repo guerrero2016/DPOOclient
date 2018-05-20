@@ -226,8 +226,9 @@ public class EditionController {
     public void updateProject() {
         if(mainController != null) {
             try {
-                System.out.println("Se envia" + project.getName());
-                mainController.sendToServer(ServerObjectType.SET_PROJECT, project);
+                Project aux = new Project(project.getId(), project.getName(), project.getColor(),
+                        project.getCategories(), project.getUsers(), project.isOwner());
+                mainController.sendToServer(ServerObjectType.SET_PROJECT, aux);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -261,6 +262,12 @@ public class EditionController {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void updateProjectView(Project p) {
+        project = p;
+        editionPanel.getProjectPanel().setProjectName(p.getName());
+        editionPanel.setBackgroundImage(p.getBackground());
     }
 
     public void createTask (Task task, Category category) {
