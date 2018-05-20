@@ -109,6 +109,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
 
         jbProjectEditor.setActionCommand(ACTION_PROJECT_EDIT_NAME);
         tpProjectButtons.add(jbProjectEditor);
+        jbProjectEditor.setVisible(false);
 
         //Project background button
         if(backgroundIcon != null) {
@@ -165,6 +166,10 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         jbCategoryAdder.setEnabled(false);
         jbCategoryAdder.setActionCommand(ACTION_CATEGORY_ADD);
         tpNewCategory.add(jbCategoryAdder, BorderLayout.LINE_END);
+    }
+
+    public void setProjectOwner(boolean owner) {
+        jbProjectEditor.setVisible(owner);
     }
 
     public void setProjectName(String projectName) {

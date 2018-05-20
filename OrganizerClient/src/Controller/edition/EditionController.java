@@ -129,12 +129,12 @@ public class EditionController {
         projectPanel.cleanCategories();
         projectUserPanel.cleanUserList();
         this.project = project;
-        project.setOwner(true);
         category = null;
         task = null;
 
         //Config project content
         projectPanel.hideDeleteButton();
+        projectPanel.setProjectOwner(project.isOwner());
         editionPanel.setBackgroundImage(project.getBackground());
         projectPanel.setProjectName(project.getName());
         projectPanel.cleanCategories();
@@ -171,7 +171,6 @@ public class EditionController {
 
         //Configure user permissions
         projectUserPanel.setEditionState(project.isOwner());
-        taskUserPanel.setEditionState(project.isOwner());
 
     }
 
