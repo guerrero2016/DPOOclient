@@ -361,6 +361,10 @@ public class EditionController {
         return null;
     }
 
+    public void userJoinedProject(User user) {
+        projectUserPanel.addUser(user);
+    }
+
     public void addProjectUser(User user) {
         taskUserPanel.addUser(user);
     }

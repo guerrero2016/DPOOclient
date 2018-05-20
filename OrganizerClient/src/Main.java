@@ -76,6 +76,7 @@ public class Main {
                 network.addCommunicator(new MemberRemovedComunicator(), ServerObjectType.DELETE_MEMBER);
                 network.addCommunicator(new TagDeletedCommunicator(), ServerObjectType.DELETE_TAG);
                 network.addCommunicator(new TagSetCommunicator(), ServerObjectType.EDIT_TAG);
+                network.addCommunicator(new UserAddedCommunicator(), ServerObjectType.JOIN_PROJECT);
 
                 EditionController editionController = new EditionController(editionPanel);
 
