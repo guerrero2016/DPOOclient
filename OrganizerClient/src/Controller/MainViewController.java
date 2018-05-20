@@ -111,6 +111,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.addMemberInProject(categoryId, taskId, user);
     }
 
+    public void userJoinedProject(User user) {
+        editionController.userJoinedProject(user);
+    }
+
     public void removeMemberInDB(String categoryId, String taskId, User user) {
         try {
             sendToServer(ServerObjectType.DELETE_MEMBER, categoryId);
