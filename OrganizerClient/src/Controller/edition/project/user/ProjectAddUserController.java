@@ -42,8 +42,11 @@ public class ProjectAddUserController implements ActionListener {
                         QUESTION_MESSAGE);
 
                 if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
-                    JOptionPane.showMessageDialog(null, PROJECT_SHARED_MESSAGE + ": " +
-                                    project.getId(), PROJECT_SHARED_TITLE, JOptionPane.PLAIN_MESSAGE);
+                    JTextArea jtaMessage = new JTextArea(PROJECT_SHARED_MESSAGE + ": " + project.getId());
+                    jtaMessage.setEditable(false);
+                    jtaMessage.setOpaque(false);
+                    JOptionPane.showMessageDialog(null, jtaMessage, PROJECT_SHARED_TITLE,
+                            JOptionPane.PLAIN_MESSAGE);
                 }
 
                 view.cleanNewUser();

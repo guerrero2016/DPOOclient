@@ -72,12 +72,17 @@ public class Main {
                 network.addCommunicator(new AuthCommunicator(), ServerObjectType.AUTH);
                 network.addCommunicator(new GetAllProjectsComunicator(), ServerObjectType.GET_PROJECT_LIST);
                 network.addCommunicator(new ProjectDetailCommunicator(), ServerObjectType.GET_PROJECT);
-
+                network.addCommunicator(new MemberAddedCommunicator(), ServerObjectType.SET_MEMBER);
+                network.addCommunicator(new MemberRemovedComunicator(), ServerObjectType.DELETE_MEMBER);
+                network.addCommunicator(new TagDeletedCommunicator(), ServerObjectType.DELETE_TAG);
+                network.addCommunicator(new TagSetCommunicator(), ServerObjectType.EDIT_TAG);
 
                 EditionController editionController = new EditionController(editionPanel);
 
                 MainViewController mainViewController = new MainViewController(network, mainView, logInController,
                         signInController, projectsMainViewController, editionController);
+
+                mainView.addController(mainViewController, mainViewController);
 
                 editionController.setMainController(mainViewController);
                 signInController.setController(mainViewController);

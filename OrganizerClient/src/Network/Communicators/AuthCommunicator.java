@@ -40,7 +40,10 @@ public class AuthCommunicator implements Communicable {
                     controller.showDialog("Error, aquest correu d'usuari ja està registrat.");
                     break;
                 case 3:
-                    controller.showDialog("Error, dades incorrectes");
+                    controller.showDialog("Error, dades incorrectes.");
+                    break;
+                case 4:
+                    controller.showDialog("Error, aquest usuari ja ha iniciat sessió.");
                     break;
             }
 

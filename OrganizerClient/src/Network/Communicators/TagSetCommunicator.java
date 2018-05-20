@@ -45,7 +45,8 @@ public class TagSetCommunicator implements Communicable {
                 }
             }
             if(exists) {
-                DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().get(i).getTags().set(k, tag);
+                //DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().get(i).getTags().set(k, tag);
+                controller.editTagInProject(categoryID, taskID, tag);
             } else {
                 DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().get(i).getTags().add(tag);
                 controller.getEditionController().addTag(tag);

@@ -10,6 +10,10 @@ import View.edition.EditionPanel;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +32,7 @@ public class MainView extends JFrame {
     private LogInPanel logInPanel;
     private ProjectsMainView projectsView;
     private EditionPanel editionPanel;
+    private JButton jbLogout;
 
     public MainView(LogInPanel logInPanel, SignInPanel signInPanel, ProjectsMainView projectsMainView,
                     EditionPanel editionPanel) {
@@ -68,6 +73,8 @@ public class MainView extends JFrame {
 
         DataManager.getSharedInstance().setWhatPanel(LogInPanel.LOGIN);
 
+        jbLogout = new JButton("Tancar sessió");
+
         super.setMinimumSize(new Dimension(1000,500));
         super.setSize(1200,750);
         super.setTitle("LogIn - Organizer");
@@ -82,15 +89,25 @@ public class MainView extends JFrame {
             case SignInPanel.SIGNIN:
                 super.setTitle("SignIn - Organizer");
                 ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "signIn");
+                ((CardLayout)this.getContentPane().getLayout()).show(this.getContentPane(), "identify");
                 break;
 
             case LogInPanel.LOGIN:
                 super.setTitle("LogIn - Organizer");
                 ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "logIn");
+                ((CardLayout)this.getContentPane().getLayout()).show(this.getContentPane(), "identify");
                 break;
 
             case ProjectsMainView.VIEW_TAG:
                 super.setTitle("Organizer");
+                JMenuBar jMenuBar = new JMenuBar();
+                jMenuBar.add(Box.createHorizontalGlue());
+                jMenuBar.setBorder(BorderFactory.createEmptyBorder(5,5,5,10));
+                jMenuBar.setForeground(Color.CYAN);
+                jMenuBar.add(jbLogout);
+
+                setJMenuBar(jMenuBar);
+
                 ((CardLayout)this.getContentPane().getLayout()).show(this.getContentPane(), ProjectsMainView.VIEW_NAME);
                 break;
 
@@ -101,9 +118,9 @@ public class MainView extends JFrame {
         }
     }
 
-    public void addControllerButton (LogInController lic, SignInController sic) {
-        logInPanel.addControllerButton(lic);
-        signInPanel.addControllerButton(sic);
+    public void addController (WindowListener wl, ActionListener al){
+        this.addWindowListener(wl);
+        jbLogout.addActionListener(al);
     }
 
     public void showErrorDialog(String errorMSG) {

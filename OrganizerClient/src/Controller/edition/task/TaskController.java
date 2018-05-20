@@ -110,6 +110,14 @@ public class TaskController implements ActionListener {
                 if (colorPreviewController.getColor() != null) {
                     Tag tag = new Tag(view.getNewTagName(), colorPreviewController.getColor());
                     mainController.sendTag(task, tag);
+
+/*                    task.addTag(tag);
+                    mainController.updateTaskList();
+                    view.cleanNewTagName();
+                    view.addTag(tag);
+                    TagPanel tagPanel = view.getTagPanel(task.getTagIndex(tag));
+                    tagPanel.registerActionController(new TagController(mainController, tagPanel, tag));
+                    mainController.updateTask(task);*/
                 }
             }
 
