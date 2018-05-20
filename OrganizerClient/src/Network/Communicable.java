@@ -10,8 +10,8 @@ import java.io.ObjectInputStream;
 public interface Communicable {
     /**
      * Aquesta funció conté l'acció per dur a terme quan el comunicador és cridat
-     * @param controller
-     * @param objectIn
+     * @param controller controlador de la vista general
+     * @param objectIn inputStream que comunica amb el servidor
      */
     void communicate(MainViewController controller, ObjectInputStream objectIn);
 }

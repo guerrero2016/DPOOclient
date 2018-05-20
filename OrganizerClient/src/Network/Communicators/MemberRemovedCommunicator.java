@@ -8,6 +8,9 @@ import model.user.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * S'encarrega de la comunicació quan s'elimina l'assignació d'un membre a una tasca.
+ */
 public class MemberRemovedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
