@@ -29,9 +29,9 @@ import View.edition.user.UserPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EditionController {
-
     public final static String EDITING_ON_MESSAGE = "You should finish editing before doing something else";
     public final static String EDITING_ON_TITLE = "Information";
 
@@ -543,5 +543,20 @@ public class EditionController {
         projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory)).
                 updateTask(targetCategory.getTaskIndex(targetTask), targetTask);
 
+    }
+
+    public void swapTask(Category category) {
+        try {
+            mainController.sendToServer(ServerObjectType.SWAP_TASK, category.getTasks());
+            mainController.sendToServer(null, category.getId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void swapTasksInView(ArrayList<Task> tasks, String categoryID) {
+        projectPanel.getCategoryPanel(DataManager.getSharedInstance().getSelectedProject().
+                getCategoryIndex(DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID))).
+                updateTasksList(tasks);
     }
 }
