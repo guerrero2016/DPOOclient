@@ -28,6 +28,10 @@ public class ProjectSelectionController implements ActionListener {
         this.controller = controller;
     }
 
+    /**
+     * Funcio que fa la peticio al network manager per afegir un projecte.
+     * @param project
+     */
     public void requestProject(Project project) {
         try {
             controller.sendToServer(ServerObjectType.ADD_PROJECT, project);
@@ -36,6 +40,10 @@ public class ProjectSelectionController implements ActionListener {
         }
     }
 
+    /**
+     * Funcio que fa la peticio al network manager per unir-te a un projecte d'algun altre usuari
+     * @param projectID
+     */
     public void requestProject(String projectID) {
         try {
             controller.sendToServer(ServerObjectType.JOIN_PROJECT, projectID);
@@ -44,10 +52,18 @@ public class ProjectSelectionController implements ActionListener {
         }
     }
 
+    /**
+     * Funcio per afegir un projecte a la vista
+     * @param project
+     */
     public void addProject (Project project) {
         view.addProjectBox(project.getName(), project.getColor(), new ProjectBoxController(project, controller));
     }
 
+    /**
+     * Funcio que inicialitza els projectes a la vista
+     * @param projects
+     */
     public void createProjects (ArrayList<Project> projects) {
         String [] titles = new String[projects.size()];
         Color[] colors = new Color[projects.size()];
@@ -60,10 +76,18 @@ public class ProjectSelectionController implements ActionListener {
         view.createProjectBoxes(titles, colors, controllers);
     }
 
+
+    /**
+     * Funcio encarregada d'eliminar un projecte a la vista
+     * @param index
+     */
     public void deleteProject (int index) {
         view.removeProject(index);
     }
 
+    /**
+     * Funcio encarregada d'eliminar tots els projectes de la vista
+     */
     public void resetProjectViews () {
         view.resetAll();
     }
@@ -84,6 +108,9 @@ public class ProjectSelectionController implements ActionListener {
         }
     }
 
+    /**
+     * Funcio encarregada de crear la vista on l'usuari creara un nou projecte.
+     */
     private void createAddProjectWindow () {
         final ProjectCreationController  projectCreationController =
                 new ProjectCreationController(this);

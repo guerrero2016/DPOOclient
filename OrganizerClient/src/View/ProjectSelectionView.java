@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Classe que representa el panell de seleccio de projectes
+ */
 public class ProjectSelectionView extends JPanel {
 
     private final boolean isOwner;
@@ -43,6 +46,9 @@ public class ProjectSelectionView extends JPanel {
         }
     }
 
+    /**
+     * Reseteja tots els projectes de la vista
+     */
     public void resetAll () {
         projectBoxViews = new ArrayList<>();
         projectBoxControllers = new ArrayList<>();
@@ -51,6 +57,12 @@ public class ProjectSelectionView extends JPanel {
         scrollPane.getViewport().setView(gridPanel);
     }
 
+    /**
+     * Inicialitza els projectes de la vista
+     * @param titles titols dels projectes
+     * @param colors colors dels projectes
+     * @param controllers controladors dels projectes
+     */
     public void createProjectBoxes (String [] titles, Color[] colors, ProjectBoxController[] controllers) {
         setVisible(false);
         nBoxes = titles.length;
@@ -68,6 +80,14 @@ public class ProjectSelectionView extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * Funcio que crea una caixa d'un projecte.
+     * @param title titol del projecte
+     * @param color color del projecte
+     * @param controller controlador del projecte
+     * @param x coordenada x del projecte en la graella
+     * @param y coordenada y del projecte en la graella
+     */
     private void createProjectBoxView (String title, Color color, ProjectBoxController controller, int x, int y) {
         gridBagConstraints.fill = GridBagConstraints.NONE;
         gridBagConstraints.gridx = x;
@@ -81,6 +101,12 @@ public class ProjectSelectionView extends JPanel {
         scrollPane.getViewport().setView(gridPanel);
     }
 
+    /**
+     * Funció encarregada d'afegir la caixa d'un projecte
+     * @param title Títol del projecte
+     * @param color Color del projecte
+     * @param controller Controlador del projecte
+     */
     public void addProjectBox (String title, Color color, ProjectBoxController controller) {
         int y = calculateNumberRows(nBoxes) - 1;
         int x = nBoxes - numberOfColumns*(y);
@@ -92,6 +118,10 @@ public class ProjectSelectionView extends JPanel {
         nBoxes++;
     }
 
+    /**
+     * Funció encarregada d'eliminar un projecte
+     * @param index Index on es troba el projecte
+     */
     public void removeProject(int index) {
         projectBoxViews.remove(index);
 
@@ -114,6 +144,11 @@ public class ProjectSelectionView extends JPanel {
         setVisible(true);
     }
 
+    /**
+     * Funció encarregada de calcular el nombre de files de la graella
+     * @param nBoxes Nombre de caixes
+     * @return
+     */
     private int calculateNumberRows (int nBoxes) {
         if (nBoxes % numberOfColumns == 0) {
             return nBoxes/numberOfColumns;

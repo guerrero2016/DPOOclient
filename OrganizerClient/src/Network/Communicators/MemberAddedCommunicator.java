@@ -7,6 +7,9 @@ import model.user.User;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Comunicador que controla l'acció d'afegir un membre al projecte
+ */
 public class MemberAddedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {

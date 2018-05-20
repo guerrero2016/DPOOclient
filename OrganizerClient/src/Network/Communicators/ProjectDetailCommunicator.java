@@ -9,6 +9,9 @@ import Network.Communicable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Comunicador que s'encarrega de rebre l'informació detallada d'un projecte
+ */
 public class ProjectDetailCommunicator implements Communicable {
 
     @Override

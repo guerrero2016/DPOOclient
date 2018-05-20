@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Funcio que representa una caixa d'un projecte
+ */
 public class ProjectBoxView extends JPanel {
     public static final String INFO_AC = "INFO";
     public static final String DELETE_AC = "DELETE";
@@ -81,18 +84,18 @@ public class ProjectBoxView extends JPanel {
         jbDelete.addActionListener(controller);
     }
 
+    /**
+     * Funcio que detecta si un titol es molt llarg, si ho es subtitueix els ultims caracters per "..."
+     * @param text
+     * @return text amb la mida arreglada
+     */
     private String configureLabelMaxTextWidth (String text) {
         if (text.length() > MAX_CHARS) {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(text.substring(0,MAX_CHARS - 4)).append("...");
+            stringBuilder.append(text.substring(0, MAX_CHARS - 4)).append("...");
             return stringBuilder.toString();
         }
         return text;
-    }
-
-    private int getTextWidth (String text) {
-        FontMetrics fm = getFontMetrics(titleLabel.getFont());
-        return fm.stringWidth(text);
     }
 
 }

@@ -7,6 +7,9 @@ import model.project.Tag;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * Comunicador que s'encarrega de controlar l'eliminació d'un tag
+ */
 public class TagDeletedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
