@@ -61,7 +61,6 @@ public class ProjectActionController implements ActionListener {
                 view.setProjectNameEditable(false, view.getProjectName());
                 Project p = project;
                 p.setName(view.getProjectName());
-                System.out.println(p.getName());
                 mainController.updateProject(p);
                 mainController.setEditingState(false);
             } else {

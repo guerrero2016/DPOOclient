@@ -31,7 +31,8 @@ public class NetworkManager extends Thread {
             this.isOn = false;
             this.controller = controller;
             this.communicables = new HashMap<>();
-            this.socketToServer = new Socket(Configuration.getIPAddress(), Configuration.getCommunicationPort());
+            this.socketToServer = new Socket(Configuration.getInstance().getIPAddress(), Configuration.getInstance().
+                    getCommunicationPort());
             this.objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
             this.objectIn = new ObjectInputStream(socketToServer.getInputStream());
         } catch (IOException e) {
@@ -70,7 +71,6 @@ public class NetworkManager extends Thread {
             try {
                 int typeID = objectIn.readInt();
                 ServerObjectType serverObjectType = ServerObjectType.valueOf(typeID);
-                System.out.println(serverObjectType);
                 if (communicables.get(serverObjectType) != null) {
                     communicables.get(serverObjectType).communicate(controller, objectIn);
                 }

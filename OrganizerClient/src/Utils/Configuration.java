@@ -8,17 +8,29 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Classe encarregada de llegir la configuració.
+ * Classe singleton encarregada de llegir la configuració.
  */
 public class Configuration {
-    private static Properties config;
+    private static Configuration ourInstance = new Configuration();
+    private Properties config;
     private final static String path = System.getProperty("user.dir") + System.getProperty("file.separator")
             + "config.json";
 
     /**
-     * 
+     * Constructor sense paràmetres
      */
-    public static void loadConfiguration() {
+    private Configuration() {}
+
+    /**
+     * Getter del singleton.
+     * @return Singleton de configuració.
+     */
+    public static Configuration getInstance() {return ourInstance;}
+
+    /**
+     * Carrega els paràmetres de configuració a partir del config.json
+     */
+    public void loadConfiguration() {
         BufferedReader br = null;
         config = new Properties();
 
@@ -48,11 +60,19 @@ public class Configuration {
         }
     }
 
-    public static String getIPAddress () {
+    /**
+     * Getter de l'adreça IP del client.
+     * @return Adreça IP.
+     */
+    public String getIPAddress () {
         return config.getProperty("IPaddress");
     }
 
-    public static int getCommunicationPort() {
+    /**
+     * Getter del port de comunicació amb el servidor.
+     * @return Port de comunicació amb el servidor.
+     */
+    public int getCommunicationPort() {
         return Integer.parseInt(config.getProperty("communicationPORT"));
     }
 }

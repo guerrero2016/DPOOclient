@@ -53,16 +53,12 @@ public class TagController implements ActionListener {
 
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
                 if (colorPreviewController.getColor() != null) {
-                    System.out.println("AQUI ES QUAN S?EDITASDASD");
-
                     Tag aux = new Tag(tag.getId(), tagEditionPanel.getTagName(), colorPreviewController.getColor());
                     mainController.editTagInDB(aux);
                 } else {
                     Tag aux = new Tag(tag.getId(), tagEditionPanel.getTagName(), tag.getColor());
                     mainController.editTagInDB(aux);
                 }
-                System.out.println(tag.getName() + "  " + tag.getHexColor());
-
             }
         } else {
             dialogJFrame = new JFrame();

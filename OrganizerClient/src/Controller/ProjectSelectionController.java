@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ProjectSelectionController implements ActionListener {
-
-    //TODO: Project box panels (admin and shared)
     private final ProjectSelectionView view;
     private MainViewController controller;
 

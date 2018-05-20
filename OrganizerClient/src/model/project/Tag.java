@@ -37,14 +37,6 @@ public class Tag implements Serializable {
     }
 
     /**
-     * Setter de l'identificador de l'etiqueta.
-     * @param id Identificador a settejar.
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
      * Getter de l'identificador.
      * @return Identificador de l'etiqueta.
      */
@@ -86,18 +78,6 @@ public class Tag implements Serializable {
         if(color != null) {
             this.color = color;
         }
-    }
-
-    /**
-     * Getter del color en format hex.
-     * @return Color en format hex de l'etiqueta.
-     */
-    public String getHexColor () {
-        if (color == null) return null;
-        int rgb = color.getRGB()&0xffffff;
-        String zeros = "000000";
-        String data = Integer.toHexString(rgb);
-        return "#" + (zeros.substring(data.length()) + data).toUpperCase();
     }
 
     @Override
