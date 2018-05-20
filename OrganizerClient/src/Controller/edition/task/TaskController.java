@@ -4,6 +4,7 @@ import Controller.edition.EditionController;
 import Controller.edition.color.ColorPreviewController;
 import Controller.edition.task.tag.TagController;
 import View.edition.task.tag.TagPanel;
+import model.DataManager;
 import model.project.Tag;
 import model.project.Task;
 import View.edition.color.ColorChooserPanel;
@@ -22,7 +23,6 @@ public class TaskController implements ActionListener {
     private EditionController mainController;
     private TaskPanel view;
     private Task task;
-
 
     public TaskController(EditionController mainController, TaskPanel view, Task task) {
         this.mainController = mainController;
@@ -60,9 +60,8 @@ public class TaskController implements ActionListener {
         } else {
             if(view.isTaskNameEditable()) {
                 view.setTaskNameEditable(false, view.getTaskName());
-                task.setName(view.getTaskName());
                 //Copiem la tasca en una variable auxiliar perquè sinò no es passa correctament.
-                Task aux =  new Task(task.getName(), task.getDescription(), task.getTags(), task.getUsers(),
+                Task aux =  new Task(view.getTaskName(), task.getDescription(), task.getTags(), task.getUsers(),
                         task.getOrder());
                 aux.setId(task.getID());
                 mainController.updateTask(aux);
@@ -75,15 +74,11 @@ public class TaskController implements ActionListener {
     }
 
     private void deleteTask() {
-
         int result = JOptionPane.showConfirmDialog(null,TASK_DELETE_MESSAGE + " '" +
                 task.getName() + "'?", TASK_DELETE_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-
         if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
             mainController.deleteTask();
-            mainController.showProjectContent();
         }
-
     }
 
     private void descriptionManagement() {
@@ -105,7 +100,6 @@ public class TaskController implements ActionListener {
 
     private void addTag() {
         if(!mainController.isEditing() && !view.getNewTagName().isEmpty()) {
-
             ColorChooserPanel colorChooserPanel = new ColorChooserPanel();
             ColorPreviewController colorPreviewController = new ColorPreviewController(colorChooserPanel);
             colorChooserPanel.getPalettePanel().registerActionController(colorPreviewController);
@@ -113,18 +107,10 @@ public class TaskController implements ActionListener {
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
-
                 if (colorPreviewController.getColor() != null) {
                     Tag tag = new Tag(view.getNewTagName(), colorPreviewController.getColor());
-                    task.addTag(tag);
-                    mainController.updateTaskList();
-                    view.cleanNewTagName();
-                    view.addTag(tag);
-                    TagPanel tagPanel = view.getTagPanel(task.getTagIndex(tag));
-                    tagPanel.registerActionController(new TagController(mainController, tagPanel, task, tag));
-                    mainController.updateTask(task);
+                    mainController.sendTag(task, tag);
                 }
-
             }
 
         } else {

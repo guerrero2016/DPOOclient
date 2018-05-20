@@ -27,24 +27,22 @@ public class ProjectRemoveUserController implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if(e.getClickCount() == 2) {
-
             JList userList = (JList) e.getSource();
             int index = userList.locationToIndex(e.getPoint());
 
             if(index == userList.getSelectedIndex()) {
-
                 int result = JOptionPane.showConfirmDialog(null, USER_REMOVE_MESSAGE + " '" +
                         ((User) userList.getSelectedValue()).getUserName() + "'?", USER_REMOVE_TITLE, JOptionPane.
                         OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 
                 if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
-                    project.deleteUser(index);
-                    view.removeUser(index);
-                    mainController.updateProject();
+                    Project p = project;
+                    p.deleteUser(index);
+                    //TODO: La seguent puta linia s'ha de fer a la resposta del server, no aqui xd
+                    //view.removeUser(index);
+                    mainController.updateProject(p);
                 }
-
             }
-
         }
     }
 

@@ -13,13 +13,14 @@ public class TaskDeletedCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
-            Task task = (Task) objectIn.readObject();
-            String categoryID = objectIn.readUTF();
+            Task task = (Task)objectIn.readObject();
+            String categoryID = objectIn.readObject().toString();
 
             DataManager.getSharedInstance().deleteTask(task, categoryID);
-
-            //TODO avisar al controller
-
+            DataManager.getSharedInstance().updateTasksOrder(task.getOrder());
+            controller.getEditionController().deleteTaskInView();
+            System.out.println("fresas con nata");
+            controller.getEditionController().showProjectContent();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

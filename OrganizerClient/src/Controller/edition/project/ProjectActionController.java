@@ -59,8 +59,9 @@ public class ProjectActionController implements ActionListener {
         } else {
             if(view.isProjectNameEditable()) {
                 view.setProjectNameEditable(false, view.getProjectName());
-                project.setName(view.getProjectName());
-                mainController.updateProject();
+                Project p = project;
+                p.setName(view.getProjectName());
+                mainController.updateProject(p);
                 mainController.setEditingState(false);
             } else {
                 JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
@@ -71,22 +72,18 @@ public class ProjectActionController implements ActionListener {
 
     private void backgroundManagement() {
         if(!mainController.isEditing()) {
-
             JFileChooser jfc = new JFileChooser();
             int result = jfc.showOpenDialog(null);
-
             if(result == JFileChooser.APPROVE_OPTION) {
-
                 File file = jfc.getSelectedFile();
-
                 try {
-
                     BufferedImage image = ImageIO.read(file);
-
                     if(image != null) {
                         project.setBackground(image);
-                        mainController.setBackgroundImage(image);
-                        mainController.updateProject();
+                        Project p = project;
+                        p.setBackground(image);
+                        mainController.updateProject(p);
+                        //TODO falta actualitzar el background a la resposta del server
                     } else {
                         JOptionPane.showMessageDialog(null, WRONG_FORMAT_MESSAGE, FILE_ERROR_TITLE,
                                 JOptionPane.WARNING_MESSAGE);

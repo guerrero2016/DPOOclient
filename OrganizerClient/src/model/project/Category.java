@@ -124,4 +124,12 @@ public class Category implements Serializable {
         return Objects.hash(id, name, order, tasks);
     }
 
+    public Task getTaskWithId(String id_task){
+        for(Task t: tasks) {
+            if (t.getID().equals(id_task)) {
+                return t;
+            }
+        }
+        return null;
+    }
 }

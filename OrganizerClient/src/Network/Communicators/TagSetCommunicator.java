@@ -1,29 +1,31 @@
 package Network.Communicators;
 
 import Controller.MainViewController;
+import Network.Communicable;
 import model.DataManager;
 import model.project.Category;
+import model.project.Tag;
 import model.project.Task;
-import Network.Communicable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
 
 /**
  * Comunicador que s'encarrega de escoltar si algun usuari ha afegit o modificat alguna tasca.
  */
-public class TaskSetCommunicator implements Communicable {
+public class TagSetCommunicator implements Communicable {
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
-            Task task = (Task) objectIn.readObject();
+            Tag tag = (Tag) objectIn.readObject();
+            String taskID = objectIn.readObject().toString();
             String categoryID = objectIn.readObject().toString();
             int i;
             int j;
+            int k;
             boolean exists = false;
             Category c = null;
-
+            Task t = null;
             for(j = 0; j < DataManager.getSharedInstance().getSelectedProject().getCategories().size(); j++) {
                 if(DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getId().equals(categoryID)) {
                     c = DataManager.getSharedInstance().getSelectedProject().getCategories().get(j);
@@ -31,17 +33,22 @@ public class TaskSetCommunicator implements Communicable {
                 }
             }
             for(i = 0; i < c.getTasksSize(); i++) {
-                if(task.getID().equals(c.getTasks().get(i).getID())) {
+                if(taskID.equals(c.getTasks().get(i).getID())) {
+                    t = c.getTasks().get(i);
+                    break;
+                }
+            }
+            for(k = 0; k < t.getTagsSize(); k++) {
+                if(tag.getId().equals(t.getTags().get(k).getId())) {
                     exists = true;
                     break;
                 }
             }
             if(exists) {
-                DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().set(i, task);
-                controller.getEditionController().updateTaskInView(task);
+                DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().get(i).getTags().set(k, tag);
             } else {
-                DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().add(task);
-                controller.getEditionController().addTask(c.getOrder(), task);
+                DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().get(i).getTags().add(tag);
+                controller.getEditionController().addTag(tag);
             }
 
         } catch (IOException | ClassNotFoundException e) {
