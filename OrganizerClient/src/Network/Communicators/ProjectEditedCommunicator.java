@@ -23,7 +23,7 @@ public class ProjectEditedCommunicator implements Communicable {
             final Project p = (Project) objectIn.readObject();
 
             if (p == null){
-                controller.showDialog("Aquest projecte no existeix o ja hi ets dins.");
+                controller.showDialog("This project doesn't exist or you already joined it");
             } else {
 
                 if (dataManager.getWhatPanel() == MainView.PROJECT_ID) {
