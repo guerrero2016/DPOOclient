@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Rep els projectes separats depenent de si es propietari o no.
  */
 
-public class GetAllProjectsComunicator implements Communicable {
+public class GetAllProjectsCommunicator implements Communicable {
 
     private ArrayList<Project> projects;
 
@@ -23,6 +23,7 @@ public class GetAllProjectsComunicator implements Communicable {
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         DataManager dataManager = DataManager.getSharedInstance();
         try {
+
             Object username = objectIn.readObject();
             if (username == null) {
                 controller.showDialog("El projecte en el que estaves s'ha eliminat.");
