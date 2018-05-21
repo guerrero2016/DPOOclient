@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe que representa una etiqueta a la vista.
+ */
 public class TagPanel extends JPanel {
 
     public final static String ACTION_TAG_NAME_EDIT = "TagNameEdit";
@@ -26,6 +29,12 @@ public class TagPanel extends JPanel {
 
     private ActionListener actionListener;
 
+    /**
+     * Crea el panell de la tasca amb els diferents botons i amb el nom de la tasca correcsponent.
+     * @param editorIcon icona d'edició
+     * @param deleteIcon icona d'eliminar
+     * @param tag tag que representa
+     */
     public TagPanel(Image editorIcon, Image deleteIcon, Tag tag) {
 
         //Panel config
@@ -75,6 +84,10 @@ public class TagPanel extends JPanel {
 
     }
 
+    /**
+     * Procediment que assigna el nom de la tasca. Si és massa llarg l'escurça
+     * @param tagName
+     */
     public void setTagName(String tagName) {
         if(tagName.length() <= MAX_TAG_LENGTH) {
             jlTagName.setText(tagName);
@@ -84,20 +97,35 @@ public class TagPanel extends JPanel {
         }
     }
 
+    /**
+     * Procediment que assigna el color del panell.
+     * @param tagColor color de la tasca que representa
+     */
     public void setTagColor(Color tagColor) {
         setBackground(tagColor);
     }
 
+    /**
+     * Funció que recupera l'ActionListener
+     * @return ActionListener del panell
+     */
     public ActionListener getActionListener() {
         return actionListener;
     }
 
+    /**
+     * Procediment que reseteja el Listener
+     */
     public void resetActionController() {
         jbTagEditor.addActionListener(actionListener);
         jbTagDelete.addActionListener(actionListener);
         actionListener = null;
     }
 
+    /**
+     * Procediment que registra un ActionListener als botons.
+     * @param actionListener
+     */
     public void registerActionController(ActionListener actionListener) {
         this.actionListener = actionListener;
         jbTagEditor.addActionListener(actionListener);

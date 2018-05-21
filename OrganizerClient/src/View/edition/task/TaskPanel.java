@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Classe que representa el panell de l'edició d'una tasca
+ */
 public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     public final static String ACTION_TASK_BACK = "TaskBack";
@@ -58,6 +61,13 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     private ActionListener actionListener;
 
+    /**
+     * Crea el panell d'edició de tasca amb tots els botons, tags, icones...
+     * @param backIcon icona per a tornar enrere
+     * @param editorIcon icona per a editar
+     * @param deleteIcon icona per eliminar
+     * @param checkIcon icona per a revisar
+     */
     public TaskPanel(Image backIcon, Image editorIcon, Image deleteIcon, Image checkIcon) {
 
         //Save needed icons
@@ -269,6 +279,10 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     }
 
+    /**
+     * Funció que recupera el nom de la tasca
+     * @return
+     */
     public String getTaskName() {
 
         if(jtfTaskName.getText() != null) {
@@ -279,6 +293,10 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     }
 
+    /**
+     * Procediment que assigna un nom a la tasca. Si es massa llarg l'escurça
+     * @param taskName nom de la tasca
+     */
     public void setTaskName(String taskName) {
         if(taskName.length() <= MAX_TASK_LENGTH) {
             jtfTaskName.setText(taskName);
@@ -288,6 +306,11 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         }
     }
 
+    /**
+     * Procediment que assigna si el nom de la tasca es editable o no. Quan acaba de ser editat s'envia al servidor
+     * @param editableState indica si és editable o no
+     * @param completeTaskName nom de la tasca complet
+     */
     public void setTaskNameEditable(boolean editableState, String completeTaskName) {
 
         if(editableState) {
@@ -327,14 +350,18 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     }
 
+    /**
+     * Funció que retorna si el nom de la tasca és editable o no.
+     * @return si és editable o no
+     */
     public boolean isTaskNameEditable() {
         return jtfTaskName.isEditable();
     }
 
-    public boolean isTaskFinished() {
-        return jrbAffirmative.isSelected();
-    }
-
+    /**
+     * Procediment que assigna si una tasca està assignada o no. Modifica els RadioButton de la vista.
+     * @param finishedState
+     */
     public void setTaskFinished(boolean finishedState) {
         if(finishedState) {
             jrbAffirmative.setSelected(finishedState);
@@ -343,14 +370,25 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         }
     }
 
+    /**
+     * Funció que recupera la descripció de la tasca des del TextArea
+     * @return descripció de la tasca
+     */
     public String getDescription() {
         return jtaDescription.getText();
     }
 
+    /**
+     * Procediment que assigna una descripció al TextArea
+     * @param description
+     */
     public void setDescription(String description) {
         jtaDescription.setText(description);
     }
 
+    /**
+     * Procediment que neteja la llista d'etiquetes
+     */
     public void cleanTagsList() {
         tagPanels = new ArrayList<>();
         tpTagsList.removeAll();
@@ -358,6 +396,10 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         repaint();
     }
 
+    /**
+     * Procediment que assigna la llista d'etiquetes a la vista.
+     * @param tags llista d'etiquetes.
+     */
     public void setTagsList(ArrayList<Tag> tags) {
         if(tags != null) {
 
@@ -373,6 +415,10 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         }
     }
 
+    /**
+     * Procediment encarregat d'afegir una etiqueta a la llista d'etiquetes
+     * @param tag
+     */
     public void addTag(Tag tag) {
         tagPanels.add(new TagPanel(editorIcon, deleteIcon, tag));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -386,6 +432,10 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         repaint();
     }
 
+    /**
+     * Procediment encarregat d'eliminar una etiqueta de la llista
+     * @param tagIndex índex de l'etiqueta
+     */
     public void removeTag(int tagIndex) {
         if(tagIndex < tagPanels.size()) {
 
@@ -410,14 +460,25 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         }
     }
 
+    /**
+     * Funció que recupera el nom de la nova etiqueta creada
+     * @return nom de l'etiqueta
+     */
     public String getNewTagName() {
         return jtfTagName.getText();
     }
 
+    /**
+     * Procediment que neteja el camp d'afegir etiqueta
+     */
     public void cleanNewTagName() {
         jtfTagName.setText(null);
     }
 
+    /**
+     * Procediment que assigna si la descripció de la tasca es editable o no. Quan acaba de ser editat s'envia al servidor
+     * @param editableState estat de la descripció
+     */
     public void setDescriptionEditable(boolean editableState) {
 
         if(editableState) {
@@ -448,10 +509,19 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         jtaDescription.setEditable(editableState);
     }
 
+    /**
+     * Funció que recupera si la descripció s'està editant o no.
+     * @return true si s'està editant, false si no
+     */
     public boolean isDescriptionEditable() {
         return jtaDescription.isEditable();
     }
 
+    /**
+     * Funció que recupera una etiqueta de la llista. Retorna null si no existeix
+     * @param tagIndex índex de l'etiqueta
+     * @return
+     */
     public TagPanel getTagPanel(int tagIndex) {
         if(tagIndex < tagPanels.size()) {
             return tagPanels.get(tagIndex);
@@ -459,6 +529,9 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         return null;
     }
 
+    /**
+     * Procediment que reseteja el ActionListener
+     */
     public void resetActionController() {
         jbTaskBack.removeActionListener(actionListener);
         jbTaskEditor.removeActionListener(actionListener);
@@ -470,6 +543,10 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         actionListener = null;
     }
 
+    /**
+     * Procediment que assigna un ActionListener als botons
+     * @param actionListener Listener dels botons
+     */
     public void registerActionController(ActionListener actionListener) {
         this.actionListener = actionListener;
         jbTaskBack.addActionListener(actionListener);
@@ -481,6 +558,10 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         jrbNegative.addActionListener(actionListener);
     }
 
+    /**
+     * Procediment que assigna un DocumentListener al camp de text
+     * @param documentListener Listener del text
+     */
     public void registerDocumentController(DocumentListener documentListener) {
         jtfTagName.getDocument().addDocumentListener(documentListener);
     }
