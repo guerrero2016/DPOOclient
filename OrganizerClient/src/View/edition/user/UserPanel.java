@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+/**
+ * Classe encarregada de genera un panell on mostrar un llistat d'usuaris
+ */
 public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
 
     private final static int PANEL_WIDTH = 225;
