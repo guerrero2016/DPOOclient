@@ -23,7 +23,7 @@ public class CustomDialog extends JDialog{
 
     /**
      * Funcio que fa visible el dialog.
-     * @param isVisible
+     * @param isVisible Estat
      */
     public void setDialogVisible(boolean isVisible) {
         this.setModal(isVisible);

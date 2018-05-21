@@ -78,7 +78,7 @@ public class AddProjectView extends JPanel {
     /**
      * Funcio que va visible la vista en forma de Dialog. D'aquesta manera les altres pantalles queden
      * temporalment inactives.
-     * @param isVisible
+     * @param isVisible Estat
      */
     public void setDialogVisible(boolean isVisible) {
         dialog.setDialogVisible(isVisible);
@@ -121,7 +121,7 @@ public class AddProjectView extends JPanel {
 
     /**
      * Funcio encarregada de seleccionar un color
-     * @param colorPanel
+     * @param colorPanel Panell de colors
      */
     public void selectColor (JPanel colorPanel) {
         deselectAllColors();

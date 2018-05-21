@@ -281,7 +281,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     /**
      * Funció que recupera el nom de la tasca
-     * @return
+     * @return Nom de la tasca
      */
     public String getTaskName() {
 
@@ -360,7 +360,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     /**
      * Procediment que assigna si una tasca està assignada o no. Modifica els RadioButton de la vista.
-     * @param finishedState
+     * @param finishedState Estat
      */
     public void setTaskFinished(boolean finishedState) {
         if(finishedState) {
@@ -380,7 +380,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     /**
      * Procediment que assigna una descripció al TextArea
-     * @param description
+     * @param description Descripció
      */
     public void setDescription(String description) {
         jtaDescription.setText(description);
@@ -417,7 +417,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
     /**
      * Procediment encarregat d'afegir una etiqueta a la llista d'etiquetes
-     * @param tag
+     * @param tag Etiqueta a afegir
      */
     public void addTag(Tag tag) {
         tagPanels.add(new TagPanel(editorIcon, deleteIcon, tag));
@@ -520,7 +520,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     /**
      * Funció que recupera una etiqueta de la llista. Retorna null si no existeix
      * @param tagIndex índex de l'etiqueta
-     * @return
+     * @return Panell de l'etiqueta
      */
     public TagPanel getTagPanel(int tagIndex) {
         if(tagIndex < tagPanels.size()) {

@@ -84,7 +84,7 @@ public class NetworkManager extends Thread {
      * Funció encarregada d'enviar dades al servidor
      * @param type Tipus de dades a enviar
      * @param object Objecte a enviar
-     * @throws IOException
+     * @throws IOException Error
      */
     public void sendToServer(ServerObjectType type, Object object) throws IOException {
         objectOut.flush();

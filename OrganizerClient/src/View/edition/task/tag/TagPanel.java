@@ -86,7 +86,7 @@ public class TagPanel extends JPanel {
 
     /**
      * Procediment que assigna el nom de la tasca. Si és massa llarg l'escurça
-     * @param tagName
+     * @param tagName Nom de l'etiqueta
      */
     public void setTagName(String tagName) {
         if(tagName.length() <= MAX_TAG_LENGTH) {
@@ -124,7 +124,7 @@ public class TagPanel extends JPanel {
 
     /**
      * Procediment que registra un ActionListener als botons.
-     * @param actionListener
+     * @param actionListener Controlador
      */
     public void registerActionController(ActionListener actionListener) {
         this.actionListener = actionListener;

@@ -58,7 +58,7 @@ public class EditionController {
 
     /**
      * Constructor que deixa preparada la vista a espera d'inserir contingut
-     * @param editionPanel
+     * @param editionPanel Panell a controlar
      */
     public EditionController(EditionPanel editionPanel) {
 
@@ -476,7 +476,7 @@ public class EditionController {
     /**
      * Mètode encarregat d'obtenir l'índex d'una categoria
      * @param category Categoria a buscar
-     * @return Índex de la categoria al projecte
+     * @return Index de la categoria al projecte
      */
     public int getCategoryIndex(Category category) {
         return project.getCategoryIndex(category);
@@ -484,8 +484,8 @@ public class EditionController {
 
     /**
      * Mètode encarregat de canviar d'ordre 2 categories
-     * @param firstCategoryIndex Índex del projecte de la primera categoria
-     * @param secondCategoryIndex Índex del projecte de la segona categoria
+     * @param firstCategoryIndex Index del projecte de la primera categoria
+     * @param secondCategoryIndex Index del projecte de la segona categoria
      */
     public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
         try {
@@ -502,8 +502,8 @@ public class EditionController {
 
     /**
      * Mètode encarregat de canviar d'ordre 2 categories a la vista
-     * @param firstCategoryIndex Índex del projecte de la primera categoria
-     * @param secondCategoryIndex Índex del projecte de la segona categoria
+     * @param firstCategoryIndex Index del projecte de la primera categoria
+     * @param secondCategoryIndex Index del projecte de la segona categoria
      */
     public void swapCategoriesInView(int firstCategoryIndex, int secondCategoryIndex) {
         project.swapCategories(firstCategoryIndex, secondCategoryIndex);
@@ -577,7 +577,7 @@ public class EditionController {
 
     /**
      * Mètode encarregat d'eliminar un usuari d'una tasca al servidor
-     * @param user
+     * @param user Usuari
      */
     public void removeMemberInDB(User user) {
         if(mainController != null) {

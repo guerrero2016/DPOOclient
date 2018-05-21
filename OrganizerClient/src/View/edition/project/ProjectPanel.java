@@ -192,7 +192,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
 
     /**
      * Mètode encarregat d'establir el nom del projecte
-     * @param projectName
+     * @param projectName Nom del projecte
      */
     public void setProjectName(String projectName) {
         if(projectName != null) {
@@ -257,7 +257,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
 
     /**
      * Mètode que indica si el nom del projecte és editable
-     * @return
+     * @return Si és editable
      */
     public boolean isProjectNameEditable() {
         return jtfProjectName.isEditable();
@@ -265,7 +265,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
 
     /**
      * Getter d'un panell d'una categoria
-     * @param categoryIndex Índex del panell
+     * @param categoryIndex Index del panell
      * @return Panell de la categoria
      */
     public CategoryPanel getCategoryPanel(int categoryIndex) {
@@ -331,8 +331,8 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
 
     /**
      * Mètode que permet canviar d'ordre 2 categories
-     * @param firstCategoryIndex Índex de la primera categoria
-     * @param secondCategoryIndex Índex de la segona categoria
+     * @param firstCategoryIndex Index de la primera categoria
+     * @param secondCategoryIndex Index de la segona categoria
      */
     public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
         if(firstCategoryIndex >= 0 && firstCategoryIndex < categoryPanels.size() && secondCategoryIndex <

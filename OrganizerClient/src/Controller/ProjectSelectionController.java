@@ -24,7 +24,7 @@ public class ProjectSelectionController implements ActionListener {
 
     /**
      * Funcio que fa la peticio al network manager per afegir un projecte.
-     * @param project
+     * @param project Projecte a demanar
      */
     public void requestProject(Project project) {
         try {
@@ -36,7 +36,7 @@ public class ProjectSelectionController implements ActionListener {
 
     /**
      * Funcio que fa la peticio al network manager per unir-te a un projecte d'algun altre usuari
-     * @param projectID
+     * @param projectID Id del projecte
      */
     public void requestProject(String projectID) {
         try {
@@ -48,7 +48,7 @@ public class ProjectSelectionController implements ActionListener {
 
     /**
      * Funcio per afegir un projecte a la vista
-     * @param project
+     * @param project Projecte a afegir
      */
     public void addProject (Project project) {
         view.addProjectBox(project.getName(), project.getColor(), new ProjectBoxController(project, controller));
@@ -56,7 +56,7 @@ public class ProjectSelectionController implements ActionListener {
 
     /**
      * Funcio que inicialitza els projectes a la vista
-     * @param projects
+     * @param projects Projectes a inicialitzar
      */
     public void createProjects (ArrayList<Project> projects) {
         String [] titles = new String[projects.size()];
@@ -73,7 +73,7 @@ public class ProjectSelectionController implements ActionListener {
 
     /**
      * Funcio encarregada d'eliminar un projecte a la vista
-     * @param index
+     * @param index Index del projecte
      */
     public void deleteProject (int index) {
         view.removeProject(index);

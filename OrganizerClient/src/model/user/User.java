@@ -19,7 +19,7 @@ public class User implements Serializable {
 
     /**
      * Crea un <code>User</code> i l'inicialitza amb el nom d'usuari especificat.
-     * @param userName
+     * @param userName Nom d'usuari
      */
     public User(String userName) {
         if(userName != null) {

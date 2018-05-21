@@ -267,7 +267,7 @@ public class Project implements Serializable{
     /**
      * Getter d'un index a partir d'un usuari
      * @param user Usuari a partir del qual volem rebre l'index.
-     * @return
+     * @return Index de l'suari
      */
     public int getUserIndex(User user) {
         if(users.contains(user)) {
@@ -276,11 +276,11 @@ public class Project implements Serializable{
             return INVALID_INDEX;
         }
     }
-    
+
     /**
      * Getter d'un usuari a partir d'un index.
      * @param userIndex Index a partir del qual volem aconseguir l'usuari.
-     * @return
+     * @return Usuari
      */
     public User getUser(int userIndex) {
         if(userIndex >= 0 && userIndex < users.size()) {

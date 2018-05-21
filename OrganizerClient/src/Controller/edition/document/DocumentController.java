@@ -14,7 +14,7 @@ public class DocumentController implements DocumentListener {
 
     /**
      * Constructor que demana la vista que implementa DocumentEnablePanel
-     * @param view
+     * @param view Vista
      */
     public DocumentController(DocumentEnablePanel view) {
         this.view = view;

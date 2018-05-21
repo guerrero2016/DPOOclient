@@ -18,7 +18,7 @@ public class ProjectAddUserController implements ActionListener {
 
     /**
      * Constructor que requereix el projecte a compartir
-     * @param project
+     * @param project Projecte
      */
     public ProjectAddUserController(Project project) {
         this.project = project;

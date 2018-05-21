@@ -49,7 +49,7 @@ public class ProjectsMainViewController implements ActionListener {
 
     /**
      * Funcio encarregada d'inicialitzar els projectes en els quals l'usuari es propietari
-     * @param projects
+     * @param projects Projectes propis
      */
     public void createOwnerProjects (ArrayList<Project> projects) {
         ownerSelectionController.createProjects(projects);
@@ -57,7 +57,7 @@ public class ProjectsMainViewController implements ActionListener {
 
     /**
      * Funcio encarregada d'inicialitzar projectes compartits
-     * @param projects
+     * @param projects Projectes compartits
      */
     public void createSharedProjects (ArrayList<Project> projects) {
         sharedSelectionController.createProjects(projects);
@@ -70,7 +70,7 @@ public class ProjectsMainViewController implements ActionListener {
 
     /**
      * Funcio encarregada d'afegir un projecte a la vista de projectes del propietari
-     * @param project
+     * @param project Projecte propi
      */
     public void addOwnerProject (Project project) {
         ownerSelectionController.addProject(project);
@@ -78,7 +78,7 @@ public class ProjectsMainViewController implements ActionListener {
 
     /**
      * Funcio encarregada d'afegir projectes compartits
-     * @param project
+     * @param project Projecte compartit
      */
     public void addSharedProject (Project project) {
         sharedSelectionController.addProject(project);

@@ -103,7 +103,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
 
     /**
      * Procediment que s'encarrega d'afegir un usuari al projecte
-     * @param user
+     * @param user Usuari a afegir
      */
     public void userJoinedProject(User user) {
         editionController.userJoinedProject(user);
@@ -261,7 +261,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
      * Procediment que envia dades al servidor
      * @param type tipus de petició que es fa. Si és <code>null</code> no s'envia aquest paràmetre
      * @param o objecte a enviar.
-     * @throws IOException
+     * @throws IOException Error
      */
     public void sendToServer(ServerObjectType type, Object o) throws IOException {
         network.sendToServer(type, o);

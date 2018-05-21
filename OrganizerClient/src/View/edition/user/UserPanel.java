@@ -99,7 +99,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
 
     /**
      * Mètode encarregat d'establir el títol de la finestra principal
-     * @param title
+     * @param title Títol
      */
     public void setTitle(String title) {
         if(title != null) {
@@ -109,7 +109,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
 
     /**
      * Mètode encarregat d'establir la llista d'usuaris
-     * @param users
+     * @param users Llista d'usuaris
      */
     public void setUserList(ArrayList<User> users) {
         if(users != null) {
@@ -139,7 +139,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
 
     /**
      * Mètode encarregat d'eliminar un usuari
-     * @param userIndex Índex de l'usuari
+     * @param userIndex Index de l'usuari
      */
     public void removeUser(int userIndex) {
         if(userIndex < userList.size()) {
