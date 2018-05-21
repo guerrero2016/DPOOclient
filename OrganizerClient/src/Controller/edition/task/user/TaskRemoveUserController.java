@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * Classe encarregada dels Mouse Event d'un UserPanel d'una tasca
+ */
 public class TaskRemoveUserController implements MouseListener {
 
     private final static String USER_REMOVE_TITLE = "User Remove";
@@ -16,10 +19,18 @@ public class TaskRemoveUserController implements MouseListener {
     private JFrame dialogJFrame;
     private User selectedUser;
 
+    /**
+     * Constructor que requereix d'un controlador extern
+     * @param mainController Controlador extern
+     */
     public TaskRemoveUserController(EditionController mainController) {
         this.mainController = mainController;
     }
 
+    /**
+     * Mètode encarregat d'eliminar un usuari si es pot
+     * @param e Mouse Event
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         if(e.getClickCount() == 2) {
@@ -48,10 +59,18 @@ public class TaskRemoveUserController implements MouseListener {
         }
     }
 
+    /**
+     * Mètode que indica si s'està eliminat un usuari
+     * @param user Usuari a comporvar
+     * @return Si s'està eliminant
+     */
     public boolean isRemovingUser(User user) {
         return dialogJFrame != null && selectedUser.equals(user);
     }
 
+    /**
+     * Mètode encarregat de tancar el dialog obert pel controlador
+     */
     public void closeDialog() {
         if(dialogJFrame != null) {
             dialogJFrame.dispose();

@@ -1,6 +1,5 @@
 package View.edition.user;
 
-import model.DataManager;
 import model.user.User;
 import View.edition.document.DocumentEnablePanel;
 import View.edition.TransparentPanel;
@@ -12,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+/**
+ * Classe encarregada de genera un panell on mostrar un llistat d'usuaris
+ */
 public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
 
     private final static int PANEL_WIDTH = 225;
@@ -81,6 +83,10 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
         }
     }
 
+    /**
+     * Mètode que permet afegir els usuaris
+     * @param enableState Estat
+     */
     public void setEditionState(boolean enableState) {
 
         remove(tpAddUser);
@@ -91,12 +97,20 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
 
     }
 
+    /**
+     * Mètode encarregat d'establir el títol de la finestra principal
+     * @param title
+     */
     public void setTitle(String title) {
         if(title != null) {
             setBorder(BorderFactory.createTitledBorder(title));
         }
     }
 
+    /**
+     * Mètode encarregat d'establir la llista d'usuaris
+     * @param users
+     */
     public void setUserList(ArrayList<User> users) {
         if(users != null) {
 
@@ -113,12 +127,20 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
         }
     }
 
+    /**
+     * Mètode encarregat d'afegir un usuari
+     * @param user Usuari a afegir
+     */
     public void addUser(User user) {
         userList.addElement(user);
         revalidate();
         repaint();
     }
 
+    /**
+     * Mètode encarregat d'eliminar un usuari
+     * @param userIndex Índex de l'usuari
+     */
     public void removeUser(int userIndex) {
         if(userIndex < userList.size()) {
             userList.remove(userIndex);
@@ -127,6 +149,9 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
         }
     }
 
+    /**
+     * Mètode encarregat de netejar la llista d'usuaris
+     */
     public void cleanUserList() {
         userList = new DefaultListModel<>();
         jlUserList.setModel(userList);
@@ -134,51 +159,79 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
         repaint();
     }
 
+    /**
+     * Getter del nom del nou usuari
+     * @return Nom del nou usuari
+     */
     public String getNewUser() {
         return jtfNewUser.getText();
     }
 
+    /**
+     * Mètode encarregat de netejar el nom del nou usuari
+     */
     public void cleanNewUser() {
         jtfNewUser.setText(null);
     }
 
-    public void cleanActionController() {
-        jbAddUser.removeActionListener(actionListener);
-    }
-
+    /**
+     * Mètode encarregat d'eliminar l'ActionListener de la vista
+     */
     public void resetActionController() {
         jbAddUser.removeActionListener(actionListener);
+        actionListener = null;
     }
 
+    /**
+     * Mètode encarregat d'eliminar un ActionListener
+     * @param actionListener Controlador
+     */
     public void registerActionController(ActionListener actionListener) {
         this.actionListener = actionListener;
         jbAddUser.addActionListener(actionListener);
     }
 
+    /**
+     * Getter del MouseListener de la vista
+     * @return Controlador
+     */
     public MouseListener getMouseListener() {
         return mouseListener;
     }
 
+    /**
+     * Mètode encarregat d'esborrar el MouseListener associat a la vista
+     */
     public void resetMouseController() {
         jlUserList.removeMouseListener(mouseListener);
         mouseListener = null;
     }
 
+    /**
+     * Mètode encarregat d'afegir un MouseListener
+     * @param mouseListener Controlador
+     */
     public void registerMouseController(MouseListener mouseListener) {
         this.mouseListener = mouseListener;
         jlUserList.addMouseListener(mouseListener);
     }
 
+    /**
+     * Mètode encarregat de registrar un DocumentListener
+     * @param documentListener Controlador
+     */
     public void registerDocumentListener(DocumentListener documentListener) {
         jtfNewUser.getDocument().addDocumentListener(documentListener);
 
     }
 
+    /**
+     * Mètode encarregat d'habilitar i deshabilitar l'afegir usuaris
+     * @param enableState Estat
+     */
     @Override
     public void setDocumentEnableState(boolean enableState) {
-
         jbAddUser.setEnabled(enableState);
-
     }
 
 }

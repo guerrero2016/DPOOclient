@@ -21,7 +21,6 @@ public class AddProjectView extends JPanel {
     private Color selectedColor;
 
     public AddProjectView () {
-
         colorsPanels = new ArrayList<>();
 
         JPanel northPanel = new JPanel(new BorderLayout());

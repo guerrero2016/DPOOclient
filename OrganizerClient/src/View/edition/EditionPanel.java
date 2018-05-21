@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Classe encarregada de generar un panell on es mostraran tots els detalls d'un projecte
+ */
 public class EditionPanel extends BackgroundPanel {
 
     public final static String PROJECT_PANEL = "ProjectPanel";
@@ -41,6 +44,9 @@ public class EditionPanel extends BackgroundPanel {
     private final TaskPanel taskPanel;
     private final UserPanel taskUserPanel;
 
+    /**
+     * Constructor de la vista buida
+     */
     public EditionPanel() {
 
         //Main config
@@ -75,6 +81,9 @@ public class EditionPanel extends BackgroundPanel {
 
     }
 
+    /**
+     * Mètode encarregat de carregar els icones per evitar futres carregues
+     */
     private void loadIcons() {
 
         //Back icon
@@ -128,36 +137,57 @@ public class EditionPanel extends BackgroundPanel {
 
     }
 
+    /**
+     * Mètode que permet establir una imatge de fons
+     * @param background Imatge de fons
+     */
     public void setBackgroundImage(Image background) {
         super.setBackgroundImage(background);
     }
 
+    /**
+     * Getter del panell del projecte
+     * @return Panell del projecte
+     */
     public ProjectPanel getProjectPanel() {
         return projectPanel;
     }
 
+    /**
+     * Getter del panell d'usuaris del projecte
+     * @return Panell d'usuaris del projecte
+     */
     public UserPanel getProjectUserPanel() {
         return projectUserPanel;
     }
 
+    /**
+     * Mètode encarregat de mostrar el panell del projecte
+     */
     public void showProjectPanel() {
         ((CardLayout) tpCenter.getLayout()).show(tpCenter, PROJECT_PANEL);
         ((CardLayout) tpRight.getLayout()).show(tpRight, PROJECT_USER_PANEL);
     }
 
+    /**
+     * Getter del panell de la tasca
+     * @return Panel de la tasca
+     */
     public TaskPanel getTaskPanel() {
         return taskPanel;
     }
 
-    public void registerTaskActionController(ActionListener actionListener) {
-        taskPanel.resetActionController();
-        taskPanel.registerActionController(actionListener);
-    }
-
+    /**
+     * Getter del panell d'suaris de la tasca
+     * @return Panell d'suaris de la tasca
+     */
     public UserPanel getTaskUserPanel() {
         return taskUserPanel;
     }
 
+    /**
+     * Mètode encarregat de mostrar el panell de la tasca
+     */
     public void showTaskPanel() {
         ((CardLayout) tpCenter.getLayout()).show(tpCenter, TASK_PANEL);
         ((CardLayout) tpRight.getLayout()).show(tpRight, TASK_USER_PANEL);

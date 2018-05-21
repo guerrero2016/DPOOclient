@@ -79,7 +79,6 @@ public class Main {
                 editionController.setMainController(mainViewController);
                 signInController.setController(mainViewController);
                 logInController.setController(mainViewController);
-                editionController.registerMainController(mainViewController);
                 projectsMainViewController.setController(mainViewController);
 
                 //NETWORK

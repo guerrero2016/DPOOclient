@@ -18,6 +18,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
+/**
+ * Classe encarrageada de comunica-se amb el servidor i amb els controladors
+ */
 public class MainViewController extends WindowAdapter implements ActionListener{
 
     final private NetworkManager network;
@@ -25,6 +28,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     private EditionController editionController;
     final private ProjectsMainViewController projectsMainViewController;
 
+    //TODO
     public MainViewController(NetworkManager network, MainView view, ProjectsMainViewController projectsMainViewController,
                               EditionController editionController) {
         this.view = view;
@@ -33,6 +37,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         this.network = network;
     }
 
+    /**
+     * Getter del ProjectsMainViewController
+     * @return ProjectsMainViewController assignat
+     */
     public ProjectsMainViewController getProjectsMainViewController() {
         return projectsMainViewController;
     }
@@ -45,6 +53,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         return editionController;
     }
 
+    //TODO
     public void swapPanel(int whatPanel) {
         view.swapPanel(whatPanel);
     }
@@ -64,11 +73,6 @@ public class MainViewController extends WindowAdapter implements ActionListener{
      */
     public void updateProject(Project project) {
         editionController.updateProjectView(project);
-    }
-
-    public User getUserFromDB(String userName) {
-        //TODO: Check if user exists in the database
-        return new User(userName);
     }
 
     /**
@@ -181,6 +185,11 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         editionController.editTagInProject(categoryId, taskId, tag);
     }
 
+    /**
+     * Mètode encarregat de marcar una tasca com a finalitzada al servidor
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la tasca
+     */
     public void setTaskDoneInDB(String categoryId, String taskId) {
         try {
             sendToServer(ServerObjectType.TASK_DONE, categoryId);
@@ -190,10 +199,20 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         }
     }
 
+    /**
+     * Mètode encarregat de marcar una tasca com a finalitzada al projecte
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la tasca
+     */
     public void setTaskDoneInProject(String categoryId, String taskId) {
         editionController.setTaskDoneInProject(categoryId, taskId);
     }
 
+    /**
+     * Mètode encarregat de marcar una tasca com a no finalitzada al servidor
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la tasca
+     */
     public void setTaskNotDoneInDB(String categoryId, String taskId) {
         try {
             sendToServer(ServerObjectType.TASK_NOT_DONE, categoryId);
@@ -203,6 +222,11 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         }
     }
 
+    /**
+     * Mètode encarregat de marcar una tasca com a no finalitzada al projecte
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la tasca
+     */
     public void setTaskNotDoneInProject(String categoryId, String taskId) {
         editionController.setTaskNotDoneInProject(categoryId, taskId);
     }
@@ -268,6 +292,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         view.showErrorDialog(errorMSG);
     }
 
+    /**
+     * Mètode encarregat de tancar correctament el programa
+     * @param e Window Event
+     */
     @Override
     public void windowClosing(WindowEvent e) {
         if(JOptionPane.showConfirmDialog(view, "Exit?", "Exit",
@@ -282,6 +310,10 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         }
     }
 
+    /**
+     * Mètode encarregat de detectar events de butons
+     * @param e Action Event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -298,4 +330,5 @@ public class MainViewController extends WindowAdapter implements ActionListener{
             e1.printStackTrace();
         }
     }
+
 }

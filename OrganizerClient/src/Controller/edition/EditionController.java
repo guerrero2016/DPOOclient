@@ -26,11 +26,14 @@ import View.edition.project.ProjectPanel;
 import View.edition.task.TaskPanel;
 import View.edition.task.tag.TagPanel;
 import View.edition.user.UserPanel;
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Clase encarregada de controlar tot allò relacionat amb un projecte i communicar els canvis a un altre controlador
+ */
 public class EditionController {
+
     public final static String EDITING_ON_MESSAGE = "You should finish editing before doing something else";
     public final static String EDITING_ON_TITLE = "Information";
 
@@ -53,6 +56,10 @@ public class EditionController {
 
     private MainViewController mainController;
 
+    /**
+     * Constructor que deixa preparada la vista a espera d'inserir contingut
+     * @param editionPanel
+     */
     public EditionController(EditionPanel editionPanel) {
 
         //Link variables
@@ -77,7 +84,8 @@ public class EditionController {
         taskUserPanel.registerDocumentListener(new DocumentController(taskUserPanel));
     }
 
-    private void addCommunicators () {
+    //TODO
+    private void addCommunicators() {
         mainController.addCommunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
         mainController.addCommunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
         mainController.addCommunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
@@ -86,6 +94,7 @@ public class EditionController {
         mainController.addCommunicator(new TaskDeletedCommunicator(), ServerObjectType.DELETE_TASK);
     }
 
+    //TODO
     public void removeCommunicators () {
         mainController.removeCommunicator(ServerObjectType.SWAP_CATEGORY);
         mainController.removeCommunicator(ServerObjectType.DELETE_PROJECT);
@@ -94,15 +103,27 @@ public class EditionController {
         mainController.removeCommunicator(ServerObjectType.DELETE_TASK);
     }
 
+    /**
+     * Getter del controlador que gestiona EditionController
+     * @return Controlador que gestiona aquest controlador
+     */
     public MainViewController getMainController() {
         return mainController;
     }
 
+    /**
+     * Setter del controlador que gestiona EditionController
+     * @param mainController Controlador que gestionarà aquest controlador
+     */
     public void setMainController(MainViewController mainController) {
         this.mainController = mainController;
         addCommunicators();
     }
 
+    /**
+     * Mètode encarregat d'afegir una categoria amb els corresponents canvis
+     * @param category Categoria a afegir
+     */
     public void addCategory(Category category) {
         projectPanel.cleanNewCategoryName();
         projectPanel.addCategoryToView(category);
@@ -114,15 +135,23 @@ public class EditionController {
         categoryPanel.resetDnDController();
         categoryPanel.registerDnDController(new TaskListController(this, category,
                 categoryPanel.getListComponent()));
-
     }
 
-    public void addTask(int i_category, Task task) {
-        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i_category);
+    /**
+     * Mètode encarregat d'afegir una tasca a una determinada categoria
+     * @param categoryIndex Index de la categoria
+     * @param task Tasca a afegir
+     */
+    public void addTask(int categoryIndex, Task task) {
+        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(categoryIndex);
         categoryPanel.cleanNewTaskName();
         categoryPanel.addNewTask(task);
     }
 
+    /**
+     * Mètode encarregat d'afegir el contingut d'un projecte a la vista
+     * @param project Projecte a mostrar
+     */
     public void loadProject(Project project) {
 
         //Default config
@@ -133,7 +162,6 @@ public class EditionController {
         task = null;
 
         //Config project content
-        projectPanel.hideDeleteButton();
         projectPanel.setProjectOwner(project.isOwner());
         editionPanel.setBackgroundImage(project.getBackground());
         projectPanel.setProjectName(project.getName());
@@ -161,8 +189,7 @@ public class EditionController {
         //Config users panel
         projectUserPanel.setUserList(project.getUsers());
         projectUserPanel.resetActionController();
-        projectUserPanel.registerActionController(new ProjectAddUserController(this, projectUserPanel,
-                project));
+        projectUserPanel.registerActionController(new ProjectAddUserController(project));
         projectUserPanel.resetMouseController();
         projectUserPanel.registerMouseController(new ProjectRemoveUserController(this, projectUserPanel,
                 project));
@@ -173,6 +200,9 @@ public class EditionController {
 
     }
 
+    /**
+     * Mètode encarregat de mostrar la vista d'un projecte prèviament carregat
+     */
     public void showProjectContent() {
         isEditing = false;
         category = null;
@@ -180,6 +210,11 @@ public class EditionController {
         editionPanel.showProjectPanel();
     }
 
+    /**
+     * Mètode encarregat d'afegir el contingut d'una tasca a la vista
+     * @param category Categoria on pertany la tasca
+     * @param task Tasca a mostrar
+     */
     public void setTaskContent(Category category, Task task) {
 
         //Default config
@@ -216,23 +251,34 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat de mostrar la vista d'una tasca prèviament carregada
+     */
     public void showTaskContent() {
         isEditing = false;
         editionPanel.showTaskPanel();
     }
 
+    /**
+     * Mètode que indica si algun camp d'edició està encara habilitat
+     * @return Indica si algun camp està sent editat
+     */
     public boolean isEditing() {
         return isEditing;
     }
 
-    public TaskController getTaskController() {
-        return taskController;
-    }
-
+    /**
+     * Mètode que permet canviar l'estat d'edició del projecte
+     * @param enableState Estat d'edició
+     */
     public void setEditingState(boolean enableState) {
         isEditing = enableState;
     }
 
+    /**
+     * Mètode encarregat d'actualitzar el contingut d'un projecte al servidor
+     * @param p Projecte a actualitzar
+     */
     public void updateProject(Project p) {
         if(mainController != null) {
             try {
@@ -240,13 +286,16 @@ public class EditionController {
                         p.getCategories(), p.getUsers(), p.isOwner());
                 aux.setBackground(p.getBackground());
                 mainController.sendToServer(ServerObjectType.SET_PROJECT, aux);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    /**
+     * Mètode encarregat d'eliminar un usuari del projecte al servidor
+     * @param user Usuari a a eliminar
+     */
     public void deleteUser(User user) {
         try {
             mainController.sendToServer(ServerObjectType.DELETE_USER, user);
@@ -255,6 +304,10 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat d'actualitzar una tasca al servidor
+     * @param task Tasca a actualitzar
+     */
     public void updateTask(Task task) {
         if(mainController != null) {
             try {
@@ -266,6 +319,10 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat d'actualitzar una categoria al servidor
+     * @param category Categoria a actualitzar
+     */
     public void updateCategory(Category category) {
         if(mainController != null) {
             try {
@@ -279,12 +336,21 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat d'actualitzar el projecte de la vista
+     * @param p Projecte a actualitzar
+     */
     public void updateProjectView(Project p) {
         project = p;
         editionPanel.getProjectPanel().setProjectName(p.getName());
         editionPanel.setBackgroundImage(p.getBackground());
     }
 
+    /**
+     * Mètode encarregat de crear una tasca al servidor
+     * @param task Tasca a afegir
+     * @param category Categoria on pertany la tasca
+     */
     public void createTask (Task task, Category category) {
         if (task.getOrder() == -1) {
             task.setOrder(category.getTasksSize());
@@ -297,6 +363,11 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat d'enviar una etiqueta al servidor
+     * @param task Tasca on pertany l'etiqueta
+     * @param tag Etiqueta a enviar
+     */
     public void sendTag (Task task, Tag tag) {
         try {
             mainController.addCommunicator(new TagSetCommunicator(), ServerObjectType.SET_TAG);
@@ -307,6 +378,11 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat d'actualitzar una tasca a la vista
+     * @param categoryId Id de la categoria de la tasca
+     * @param task Tasca a actualitzar
+     */
     public void updateTaskInView(String categoryId, Task task) {
 
         if(this.task != null && this.task.getID().equals(task.getID())) {
@@ -321,10 +397,17 @@ public class EditionController {
 
     }
 
+    /**
+     * Mètode encarregat d'actualitzar una categoria a la vista
+     * @param category Categoria a actualitzar
+     */
     public void updateCategoryInView(Category category) {
         projectPanel.getCategoryPanel(category.getOrder()).setCategoryName(category.getName());
     }
 
+    /**
+     * Mètode encarregat d'eliminar una tasca al servidor
+     */
     public void deleteTask() {
         if(mainController != null) {
             try {
@@ -336,12 +419,19 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat d'eliminar una tasca de la vista
+     */
     public void deleteTaskInView() {
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(category));
         categoryPanel.removeTask(task);
         category.deleteTask(task);
     }
 
+    /**
+     * Mètode encarregat d'eliminar una categoria de la vista
+     * @param i Index de la categoria
+     */
     public void deleteCategoryInView(int i) {
         projectPanel.removeCategory(i);
     }
@@ -361,13 +451,11 @@ public class EditionController {
         }
     }
 
-    public void deleteTag(Tag tag) {
-        taskPanel.removeTag(task.getTagIndex(tag));
-        if(mainController != null) {
-            //TODO: Delete tag in database
-        }
-    }
-
+    /**
+     * Mètode encarregat d'obtenir un usuari del projecte si existeix
+     * @param userName Nom de l'usuari a buscar
+     * @return Usuari del projecte (null si no existeix)
+     */
     public User getProjectUser(String userName) {
         for(int i = 0; i < project.getUsers().size(); i++) {
             if(userName.equals(project.getUser(i).getUserName())) {
@@ -380,22 +468,25 @@ public class EditionController {
         return null;
     }
 
+    //TODO
     public void userJoinedProject(User user) {
         projectUserPanel.addUser(user);
     }
 
-    public void userLeftProject(int i) {
-        projectUserPanel.removeUser(i);
-    }
-
-    public void addProjectUser(User user) {
-        taskUserPanel.addUser(user);
-    }
-
+    /**
+     * Mètode encarregat d'obtenir l'índex d'una categoria
+     * @param category Categoria a buscar
+     * @return Índex de la categoria al projecte
+     */
     public int getCategoryIndex(Category category) {
         return project.getCategoryIndex(category);
     }
 
+    /**
+     * Mètode encarregat de canviar d'ordre 2 categories
+     * @param firstCategoryIndex Índex del projecte de la primera categoria
+     * @param secondCategoryIndex Índex del projecte de la segona categoria
+     */
     public void swapCategories(int firstCategoryIndex, int secondCategoryIndex) {
         try {
             Category c1 = DataManager.getSharedInstance().getSelectedProject().getCategories().get(firstCategoryIndex);
@@ -409,11 +500,19 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat de canviar d'ordre 2 categories a la vista
+     * @param firstCategoryIndex Índex del projecte de la primera categoria
+     * @param secondCategoryIndex Índex del projecte de la segona categoria
+     */
     public void swapCategoriesInView(int firstCategoryIndex, int secondCategoryIndex) {
         project.swapCategories(firstCategoryIndex, secondCategoryIndex);
         projectPanel.swapCategories(firstCategoryIndex, secondCategoryIndex);
     }
 
+    /**
+     * Mètode encarregat de mostrar la vista de selecció de projectes
+     */
     public void showProjectSelection() {
         if (mainController != null) {
             try {
@@ -429,6 +528,9 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat d'eliminar un projecte al servidor
+     */
     public void deleteProject() {
         if(mainController != null) {
             try {
@@ -442,18 +544,10 @@ public class EditionController {
         }
     }
 
-    public User getUserFromDB(String userName) {
-        if(mainController != null) {
-            return mainController.getUserFromDB(userName);
-        } else {
-            return new User(userName);
-        }
-    }
-
-    public void registerMainController(MainViewController mainController) {
-        this.mainController = mainController;
-    }
-
+    /**
+     * Mètode encarregat d'afegir un usuari d'una tasca  al servidor
+     * @param user Usuari a afegir
+     */
     public void addMemberInDB(User user) {
         if(mainController != null) {
             mainController.addMemberInDB(category.getId(), task.getID(), user);
@@ -463,6 +557,12 @@ public class EditionController {
         }
     }
 
+    /**
+     * MNètode encarregat d'afegir un usuari d'una tasca al projecte
+     * @param categoryId Id de la categoria de la tasca
+     * @param taskId Id de la tasca
+     * @param user Usuari de la tasca a afegir
+     */
     public void addMemberInProject(String categoryId, String taskId, User user) {
 
         Category targetCategory = project.getCategoryWithId(categoryId);
@@ -475,6 +575,10 @@ public class EditionController {
 
     }
 
+    /**
+     * Mètode encarregat d'eliminar un usuari d'una tasca al servidor
+     * @param user
+     */
     public void removeMemberInDB(User user) {
         if(mainController != null) {
             mainController.removeMemberInDB(category.getId(), task.getID(), user);
@@ -484,6 +588,12 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat d'elimina un usuari d'una tasca al projecte
+     * @param categoryId Id de la categoria de la tasca
+     * @param taskId Id de la tasca
+     * @param user Usuari de la tasca a eliminar
+     */
     public void removeMemberInProject(String categoryId, String taskId, User user) {
 
         Category targetCategory = project.getCategoryWithId(categoryId);
@@ -505,6 +615,10 @@ public class EditionController {
 
     }
 
+    /**
+     * Mètode encarregat d'eliminar una etiqueta al servidor
+     * @param tag Etiqueta a eliminar
+     */
     public void removeTagInDB(Tag tag) {
         if(mainController != null) {
             mainController.removeTagInDB(category.getId(), task.getID(), tag);
@@ -514,6 +628,12 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat d'eliminar una etiqueta al projecte
+     * @param categoryId Id de la categoria de la tasca
+     * @param taskId Id de la tasca de l'etiqueta
+     * @param tag Etiqueta a eliminar
+     */
     public void removeTagInProject(String categoryId, String taskId, Tag tag) {
 
         Category targetCategory = project.getCategoryWithId(categoryId);
@@ -537,10 +657,20 @@ public class EditionController {
 
     }
 
+    /**
+     * Mètode encarregat d'actualitzar una etiqueta al servidor
+     * @param tag Etiqueta a actualitzar
+     */
     public void editTagInDB(Tag tag) {
         mainController.editTagInDB(task.getID(), tag);
     }
 
+    /**
+     * Mètode encarregat d'editar una etiqueta al projecte
+     * @param categoryId Id de la categoria de la tasca
+     * @param taskId Id de la tasca de l'etiqueta
+     * @param tag Etiqueta a actualitzar
+     */
     public void editTagInProject(String categoryId, String taskId, Tag tag) {
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
@@ -562,6 +692,12 @@ public class EditionController {
                 updateTask(targetCategory.getTaskIndex(targetTask), targetTask);
     }
 
+    /**
+     * Mètode encarregat d'afegir una etiqueta al projecte
+     * @param categoryId Id de la categoria de la tasca
+     * @param taskId Id de la tasca de l'etiqueta
+     * @param tag Etiqueta a afegir
+     */
     public void addTagInProject(String categoryId, String taskId, Tag tag) {
 
         Category targetCategory = project.getCategoryWithId(categoryId);
@@ -578,12 +714,20 @@ public class EditionController {
 
     }
 
+    /**
+     * Mètode encarregat d'establir una tasca com a finalitzada al servidor
+     */
     public void setTaskDoneInDB() {
         if(mainController != null) {
             mainController.setTaskDoneInDB(category.getId(), task.getID());
         }
     }
 
+    /**
+     * Mètode encarregat d'establir una tasca com a finalitzada al projecte
+     * @param categoryId Id de la categoria de la tasca
+     * @param taskId Id de la tasca finalitzada
+     */
     public void setTaskDoneInProject(String categoryId, String taskId) {
 
         Category targetCategory = project.getCategoryWithId(categoryId);
@@ -599,12 +743,20 @@ public class EditionController {
 
     }
 
+    /**
+     * Mètode encarregat d'establir una tasca com a no finalitzada al servidor
+     */
     public void setTaskNotDoneInDB() {
         if(mainController != null) {
             mainController.setTaskNotDoneInDB(category.getId(), task.getID());
         }
     }
 
+    /**
+     * Mètode encarregat d'establir una tasca com a no finalitzada al projecte
+     * @param categoryId Id de la categoria de la tasca
+     * @param taskId Id de la tasca no finalitzada
+     */
     public void setTaskNotDoneInProject(String categoryId, String taskId) {
 
         Category targetCategory = project.getCategoryWithId(categoryId);
@@ -620,6 +772,10 @@ public class EditionController {
 
     }
 
+    /**
+     * Mètode encarregat de canviar l'ordre de les tasques al servidor
+     * @param category Categoria on pertanyen les tasques
+     */
     public void swapTask(Category category) {
         try {
             mainController.sendToServer(ServerObjectType.SWAP_TASK, category.getTasks());
@@ -629,12 +785,18 @@ public class EditionController {
         }
     }
 
+    /**
+     * Mètode encarregat de canviar l'ordre de les tasques al projecte
+     * @param tasks Tasques reordenades
+     * @param categoryID Id de la categoria de les tasques
+     */
     public void swapTasksInView(ArrayList<Task> tasks, String categoryID) {
         projectPanel.getCategoryPanel(DataManager.getSharedInstance().getSelectedProject().
                 getCategoryIndex(DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID))).
                 updateTasksList(tasks);
     }
 
+    //TODO
     public void userLeftProject(User user) {
 
         projectUserPanel.removeUser(project.getUserIndex(user));

@@ -5,8 +5,14 @@ import model.user.User;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe encarregada de generar el CellRenderer d'usuaris
+ */
 public class UserListCellRenderer implements ListCellRenderer<User> {
 
+    /**
+     * Classe que genera els components de la llista
+     */
     public static class UserComponent extends JLabel {
 
         public UserComponent(String memberName) {

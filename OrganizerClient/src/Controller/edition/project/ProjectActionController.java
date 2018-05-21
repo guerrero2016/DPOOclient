@@ -1,9 +1,6 @@
 package Controller.edition.project;
 
 import Controller.edition.EditionController;
-import Controller.edition.document.DocumentController;
-import Controller.edition.project.category.CategoryActionController;
-import Controller.edition.project.category.CategoryMouseController;
 import model.project.Category;
 import model.project.Project;
 import View.edition.project.ProjectPanel;
@@ -11,13 +8,15 @@ import View.edition.project.category.CategoryPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Classe encarregada de controlar els Action Event d'un ProjectPanel
+ */
 public class ProjectActionController implements ActionListener {
 
     private final static String WRONG_FORMAT_MESSAGE = "The chosen file is not a picture";
@@ -30,12 +29,22 @@ public class ProjectActionController implements ActionListener {
     private ProjectPanel view;
     private Project project;
 
+    /**
+     * Constructor que requereix d'un controlador extern, la vista a controlar i el model del projecte
+     * @param mainController Controlador extern
+     * @param view Vista a controlar
+     * @param project Projecte
+     */
     public ProjectActionController(EditionController mainController, ProjectPanel view, Project project) {
         this.mainController = mainController;
         this.view = view;
         this.project = project;
     }
 
+    /**
+     * Mètode encarregat d'identificar l'acció a realitzar
+     * @param e Action Event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals(ProjectPanel.ACTION_PROJECT_EDIT_NAME)) {
@@ -52,6 +61,9 @@ public class ProjectActionController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat de manegar els canvis de nom
+     */
     private void projectNameManagement() {
         if(!mainController.isEditing()) {
             mainController.setEditingState(true);
@@ -70,6 +82,9 @@ public class ProjectActionController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat de manegar els canvis de fons de pantalla
+     */
     private void backgroundManagement() {
         if(!mainController.isEditing()) {
             JFileChooser jfc = new JFileChooser();
@@ -98,6 +113,9 @@ public class ProjectActionController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat de manegar l'eliminació del projecte
+     */
     private void deleteProject() {
         int result = JOptionPane.showConfirmDialog(null, PROJECT_REMOVE_MESSAGE + " '" +
                 project.getName() + "'?", PROJECT_REMOVE_TITLE, JOptionPane.
@@ -115,6 +133,9 @@ public class ProjectActionController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat d'afegir categories
+     */
     private void addCategory() {
         if(!mainController.isEditing() && !view.getNewCategoryName().isEmpty()) {
             Category category = new Category(view.getNewCategoryName());
@@ -125,6 +146,9 @@ public class ProjectActionController implements ActionListener {
         }
     }
 
+    /**
+     * Mètode encarregat de tornar a la pantalla de selecció de projectes
+     */
     private void projectBackManagement() {
         for(int i = 0; i < project.getCategoriesSize(); i++) {
             CategoryPanel categoryPanel = view.getCategoryPanel(i);

@@ -6,10 +6,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe encarregada de controlar el color seleccionat en una paleta de 6 colors
+ */
 public class ColorKeeperController implements ActionListener {
 
     protected Color color;
 
+    /**
+     * Mètode encarregat d'identificar quin color s'ha clickat
+     * @param e Action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals(PalettePanel.ACTION_GREEN_BUTTON)) {
@@ -27,6 +34,10 @@ public class ColorKeeperController implements ActionListener {
         }
     }
 
+    /**
+     * Geter de l'útlim color clickat (null per defecte)
+     * @return Últim color seleccionat
+     */
     public Color getColor() {
         return color;
     }
