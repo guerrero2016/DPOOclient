@@ -87,7 +87,7 @@ public class EditionController {
     /**
      * Afegeix els communicators pertinents per a la comunicació quan s'edita el projecte
      */
-    private void addCommunicators() {
+    public void addCommunicators() {
         mainController.addCommunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
         mainController.addCommunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
         mainController.addCommunicator(new CategorySwapCommunicator(), ServerObjectType.SWAP_CATEGORY);
@@ -120,7 +120,6 @@ public class EditionController {
      */
     public void setMainController(MainViewController mainController) {
         this.mainController = mainController;
-        addCommunicators();
     }
 
     /**
@@ -518,10 +517,14 @@ public class EditionController {
      */
     public void showProjectSelection() {
         if (mainController != null) {
-            project = null;
-            category = null;
-            task = null;
-            //mainController.sendToServer(ServerObjectType.EXIT_PROJECT, null);
+            try {
+                project = null;
+                category = null;
+                task = null;
+                mainController.sendToServer(ServerObjectType.EXIT_PROJECT, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             System.exit(0);
         }

@@ -129,7 +129,6 @@ public class ProjectActionController implements ActionListener {
             view.setProjectNameEditable(false, project.getName());
             view.cleanNewCategoryName();
             mainController.deleteProject();
-            mainController.showProjectSelection();
         }
     }
 

@@ -27,6 +27,7 @@ public class GetAllProjectsCommunicator implements Communicable {
             Object username = objectIn.readObject();
             if (username == null) {
                 controller.showDialog("El projecte en el que estaves s'ha eliminat.");
+                controller.getEditionController().removeCommunicators();
             } else {
                 dataManager.setUserName(username.toString());
             }
