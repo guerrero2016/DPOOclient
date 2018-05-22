@@ -58,7 +58,7 @@ public class ProjectRemoveUserController implements MouseListener {
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(view,"No ets el propietari del projecte");
+                JOptionPane.showMessageDialog(view,"You have no permissions.");
             }
         }
     }
