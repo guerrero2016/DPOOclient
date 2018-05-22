@@ -84,7 +84,9 @@ public class EditionController {
         taskUserPanel.registerDocumentListener(new DocumentController(taskUserPanel));
     }
 
-    //TODO
+    /**
+     * Afegeix els communicators pertinents per a la comunicació quan s'edita el projecte
+     */
     private void addCommunicators() {
         mainController.addCommunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
         mainController.addCommunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
@@ -93,7 +95,9 @@ public class EditionController {
         mainController.addCommunicator(new TaskDeletedCommunicator(), ServerObjectType.DELETE_TASK);
     }
 
-    //TODO
+    /**
+     * Elimina els communicators que només serveixen per a l'edició de projectes.
+     */
     public void removeCommunicators () {
         mainController.removeCommunicator(ServerObjectType.DELETE_CATEGORY);
         mainController.removeCommunicator(ServerObjectType.SET_CATEGORY);
@@ -514,14 +518,10 @@ public class EditionController {
      */
     public void showProjectSelection() {
         if (mainController != null) {
-            try {
-                project = null;
-                category = null;
-                task = null;
-                mainController.sendToServer(ServerObjectType.EXIT_PROJECT, null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            project = null;
+            category = null;
+            task = null;
+            //mainController.sendToServer(ServerObjectType.EXIT_PROJECT, null);
         } else {
             System.exit(0);
         }
