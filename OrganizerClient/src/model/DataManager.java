@@ -12,6 +12,7 @@ import java.util.Arrays;
  * Classe que implementa Singleton que s'encarrega de guardar les dades més importants del programa.
  */
 public class DataManager {
+
     private static DataManager sharedInstance = new DataManager();
 
     private String userName;

@@ -705,6 +705,7 @@ public class EditionController {
 
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
+        this.task = targetTask;
 
         if(task != null && task.getID().equals(taskId)) {
             taskPanel.addTag(tag);
