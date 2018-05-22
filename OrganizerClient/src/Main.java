@@ -68,6 +68,8 @@ public class Main {
                 network.addCommunicator(new TaskDoneCommunicator(), ServerObjectType.TASK_DONE);
                 network.addCommunicator(new TaskNotDoneCommunicator(), ServerObjectType.TASK_NOT_DONE);
                 network.addCommunicator(new ProjectEditedCommunicator(), ServerObjectType.SET_PROJECT);
+                network.addCommunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
+
 
                 EditionController editionController = new EditionController(editionPanel);
 

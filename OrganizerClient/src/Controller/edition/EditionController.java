@@ -86,7 +86,6 @@ public class EditionController {
 
     //TODO
     private void addCommunicators() {
-        mainController.addCommunicator(new ProjectDeletedCommunicator(), ServerObjectType.DELETE_PROJECT);
         mainController.addCommunicator(new CategoryDeleteCommunicator(), ServerObjectType.DELETE_CATEGORY);
         mainController.addCommunicator(new CategorySetCommunicator(), ServerObjectType.SET_CATEGORY);
         mainController.addCommunicator(new CategorySwapCommunicator(), ServerObjectType.SWAP_CATEGORY);
@@ -96,10 +95,10 @@ public class EditionController {
 
     //TODO
     public void removeCommunicators () {
-        mainController.removeCommunicator(ServerObjectType.SWAP_CATEGORY);
-        mainController.removeCommunicator(ServerObjectType.DELETE_PROJECT);
-        mainController.removeCommunicator(ServerObjectType.SET_CATEGORY);
         mainController.removeCommunicator(ServerObjectType.DELETE_CATEGORY);
+        mainController.removeCommunicator(ServerObjectType.SET_CATEGORY);
+        mainController.removeCommunicator(ServerObjectType.SWAP_CATEGORY);
+        mainController.removeCommunicator(ServerObjectType.SET_TASK);
         mainController.removeCommunicator(ServerObjectType.DELETE_TASK);
     }
 
