@@ -129,6 +129,7 @@ public class EditionController {
     public void addCategory(Category category) {
         projectPanel.cleanNewCategoryName();
         projectPanel.addCategoryToView(category);
+        this.project = DataManager.getSharedInstance().getSelectedProject();
         project.setCategory(category);
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoriesSize() - 1);
         categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel, category));
