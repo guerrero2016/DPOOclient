@@ -1,6 +1,7 @@
-package View;
+package View.project;
 
-import Controller.ProjectCreationController;
+import Controller.project.ProjectCreationController;
+import View.utils.CustomDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,9 @@ public class AddProjectView extends JPanel {
     private final CustomDialog dialog;
     private Color selectedColor;
 
+    /**
+     * Constructor per defecte
+     */
     public AddProjectView () {
         colorsPanels = new ArrayList<>();
 
@@ -76,19 +80,32 @@ public class AddProjectView extends JPanel {
     }
 
     /**
-     * Funcio que va visible la vista en forma de Dialog. D'aquesta manera les altres pantalles queden
-     * temporalment inactives.
+     * Funcio que fa visible la vista en forma de Dialog. D'aquesta manera les altres pantalles queden
+     * temporalment inactives
      * @param isVisible Estat
      */
     public void setDialogVisible(boolean isVisible) {
         dialog.setDialogVisible(isVisible);
     }
 
+    /**
+     * Getter del nom del projecte
+     * @return Nom del projecte
+     */
     public String getProjectName () {
         return nameTextField.getText();
     }
+
+    /**
+     * Getter del color del projecte
+     * @return Color
+     */
     public Color getProjectColor () {return selectedColor;}
 
+    /**
+     * Getter de la ID del projecte
+     * @return ID
+     */
     public String getProjectID () {
         return idTextField.getText();
     }
@@ -97,11 +114,11 @@ public class AddProjectView extends JPanel {
      * Funcio encarregada de crear la paleta de colors
      * @return JPanel que representa la paleta de colors
      */
-    public JPanel createColorsPalette () {
+    private JPanel createColorsPalette () {
         final JPanel palettePanel = new JPanel(new GridLayout(2,4));
         palettePanel.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
 
-        for (Color color:this.COLORS) {
+        for(Color color: this.COLORS) {
             JPanel colorPanel = new JPanel();
             colorPanel.setBackground(color);
             palettePanel.add(colorPanel);
@@ -109,8 +126,13 @@ public class AddProjectView extends JPanel {
         }
 
         return palettePanel;
+
     }
 
+    /**
+     * Metode encarregat de registrar el controlador de la vista
+     * @param controller Controlador
+     */
     public void registerMouseListener (ProjectCreationController controller) {
         for (JPanel colorPanel: colorsPanels) {
             colorPanel.addMouseListener(controller);
@@ -137,4 +159,5 @@ public class AddProjectView extends JPanel {
             colorPanel.setBorder(BorderFactory.createEmptyBorder());
         }
     }
+
 }

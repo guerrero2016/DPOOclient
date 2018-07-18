@@ -1,4 +1,4 @@
-package View.edition.color;
+package View.utils.color;
 
 import javax.swing.*;
 import java.awt.*;
@@ -84,7 +84,7 @@ public class PalettePanel extends JPanel {
     }
 
     /**
-     * Mètode encarregat de registrar un ActionListener
+     * Metode encarregat de registrar un ActionListener
      * @param actionListener Controlador
      */
     public void registerActionController(ActionListener actionListener) {

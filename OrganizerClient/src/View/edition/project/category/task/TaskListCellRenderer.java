@@ -8,6 +8,7 @@ import java.awt.*;
  */
 public class TaskListCellRenderer extends DefaultListCellRenderer {
 
+    @SuppressWarnings("Duplicates")
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object object, int index, boolean isSelected,
                                                   boolean cellHasFocus) {

@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 /**
- * Objecte que defineix com és un usuari.
+ * Objecte que defineix com es un usuari
  */
 public class User implements Serializable {
     public final static int serialVersionUID = 1238;
@@ -13,12 +13,12 @@ public class User implements Serializable {
     protected String userName;
 
     /**
-     * Crea un <code>User</code> buit.
+     * Crea un <code>User</code> buit
      */
     public User() {}
 
     /**
-     * Crea un <code>User</code> i l'inicialitza amb el nom d'usuari especificat.
+     * Crea un <code>User</code> i l'inicialitza amb el nom d'usuari especificat
      * @param userName Nom d'usuari
      */
     public User(String userName) {
@@ -37,8 +37,8 @@ public class User implements Serializable {
 
     /**
      * Encripta un <code>String</code>.
-     * @param entry <code>String</code> a encriptar.
-     * @return El <code>String</code> d'entrada encriptat.
+     * @param entry <code>String</code> a encriptar
+     * @return <code>String</code> d'entrada encriptat
      */
     public static String getMD5(String entry) {
         try {
@@ -56,9 +56,9 @@ public class User implements Serializable {
     }
 
     /**
-     * Comprova si un <code>String</code> té alguna majúscula.
+     * Comprova si un <code>String</code> te alguna majuscula
      * @param entry <code>String</code> a comprovar
-     * @return <code>true</code> sie en té alguna, <code>false</code> si no en té.
+     * @return <code>true</code> si en te alguna, <code>false</code> si no en te
      */
     public static boolean containsUpperCase(String entry) {
         for (char c : entry.toCharArray()) {
@@ -67,6 +67,11 @@ public class User implements Serializable {
         return false;
     }
 
+    /**
+     * Equals
+     * @param o Objecte
+     * @return Si equival
+     */
     @Override
     public boolean equals(Object o) {
 
@@ -83,6 +88,10 @@ public class User implements Serializable {
 
     }
 
+    /**
+     * Hashcode
+     * @return Hashcode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(userName);

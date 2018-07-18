@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Classe encarregada de contolar els Action Event d'un CategoryPanel
+ * Classe encarregada de contolar els ActionEvent d'un CategoryPanel
  */
 public class CategoryActionController implements ActionListener {
 
@@ -23,7 +23,7 @@ public class CategoryActionController implements ActionListener {
 
     private EditionController mainController;
     private CategoryPanel view;
-    private model.project.Category category;
+    private Category category;
 
     /**
      * Constructor que requereix d'un controlador extern, de la vista a controlar i de la categoria usada
@@ -38,19 +38,16 @@ public class CategoryActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de distingir l'acció detectada
+     * Metode encarregat de distingir l'accio detectada
      * @param e Action Event
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_EDIT_NAME)) {
-            category = DataManager.getSharedInstance().getSelectedProject().getCategory(category.getOrder());
             categoryNameManagement();
         } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_LEFT)) {
-            category = DataManager.getSharedInstance().getSelectedProject().getCategory(category.getOrder());
             categoryReorder(TO_LEFT);
         } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_RIGHT)) {
-            category = DataManager.getSharedInstance().getSelectedProject().getCategory(category.getOrder());
             categoryReorder(TO_RIGHT);
         } else if(e.getActionCommand().equals(CategoryPanel.ACTION_CATEGORY_DELETE)) {
             categoryDelete();
@@ -60,7 +57,7 @@ public class CategoryActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de manegar els canvis de nom
+     * Metode encarregat de manegar els canvis de nom
      */
     private void categoryNameManagement() {
         if(!mainController.isEditing()) {
@@ -69,7 +66,7 @@ public class CategoryActionController implements ActionListener {
         } else {
             if(view.isCategoryNameEditable()) {
                 view.setCategoryNameEditable(false, view.getCategoryName());
-                Category c = category;
+                Category c = new Category(category);
                 c.setName(view.getCategoryName());
                 mainController.updateCategory(c);
                 mainController.setEditingState(false);
@@ -81,7 +78,7 @@ public class CategoryActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de reordenar les categories
+     * Metode encarregat de reordenar les categories
      * @param orderBy Ordenat dret o esquerre (TO_RIGHT, TO_LEFT)
      */
     private void categoryReorder(int orderBy) {
@@ -103,7 +100,7 @@ public class CategoryActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'eliminar la categoria
+     * Metode encarregat d'eliminar la categoria
      */
     private void categoryDelete() {
         int result = JOptionPane.showConfirmDialog(null, CATEGORY_REMOVE_MESSAGE + " '" +
@@ -118,7 +115,7 @@ public class CategoryActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'afegir una tasca
+     * Metode encarregat d'afegir una tasca
      */
     private void addTask() {
         if(!mainController.isEditing() && !view.getNewTaskName().isEmpty()) {

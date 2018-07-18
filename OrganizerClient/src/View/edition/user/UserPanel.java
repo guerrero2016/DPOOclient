@@ -2,7 +2,7 @@ package View.edition.user;
 
 import model.user.User;
 import View.edition.document.DocumentEnablePanel;
-import View.edition.TransparentPanel;
+import View.utils.TransparentPanel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
@@ -33,9 +33,9 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     private MouseListener mouseListener;
 
     /**
-     * Crea un panell per afegir un usuari si el parametre d'entrada és 1 o crea un panell per a convidar usuaris si és
-     * 0. Els dos panells tenen un botó i un text. Només el panell per afegir usuari té JTextField.
-     * @param i indica quin dels dos panells es crearà.
+     * Crea un panell per afegir un usuari si el parametre d'entrada es 1 o crea un panell per a convidar usuaris si ée
+     * 0. Els dos panells tenen un boto i un text. Nomes el panell per afegir usuari te JTextField
+     * @param i Indica quin dels dos panells es creara
      */
     public UserPanel(int i) {
 
@@ -81,10 +81,13 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
             tpAddUser.add(jlNewUser, BorderLayout.LINE_START);
             jbAddUser.setEnabled(true);
         }
+
+        userList = new DefaultListModel<>();
+
     }
 
     /**
-     * Mètode que permet afegir els usuaris
+     * Metode que permet afegir els usuaris
      * @param enableState Estat
      */
     public void setEditionState(boolean enableState) {
@@ -98,8 +101,8 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Mètode encarregat d'establir el títol de la finestra principal
-     * @param title Títol
+     * Metode encarregat d'establir el títol de la finestra principal
+     * @param title Titol
      */
     public void setTitle(String title) {
         if(title != null) {
@@ -108,7 +111,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Mètode encarregat d'establir la llista d'usuaris
+     * Metode encarregat d'establir la llista d'usuaris
      * @param users Llista d'usuaris
      */
     public void setUserList(ArrayList<User> users) {
@@ -116,8 +119,8 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
 
             userList = new DefaultListModel<>();
 
-            for (int i = 0; i < users.size(); i++) {
-                userList.addElement(users.get(i));
+            for (User user : users) {
+                userList.addElement(user);
             }
 
             jlUserList.setModel(userList);
@@ -128,32 +131,34 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Mètode encarregat d'afegir un usuari
+     * Metode encarregat d'afegir un usuari
      * @param user Usuari a afegir
      */
     public void addUser(User user) {
-        userList.addElement(user);
-        revalidate();
-        repaint();
-    }
-
-    /**
-     * Mètode encarregat d'eliminar un usuari
-     * @param userIndex Index de l'usuari
-     */
-    public void removeUser(int userIndex) {
-        if(userIndex < userList.size()) {
-            userList.remove(userIndex);
+        if(!userList.contains(user)) {
+            userList.addElement(user);
             revalidate();
             repaint();
         }
     }
 
     /**
-     * Mètode encarregat de netejar la llista d'usuaris
+     * Metode encarregat d'eliminar un usuari
+     * @param user Usuari
+     */
+    public void removeUser(User user) {
+        if(userList.contains(user)) {
+            userList.removeElement(user);
+            revalidate();
+            repaint();
+        }
+    }
+
+    /**
+     * Metode encarregat de netejar la llista d'usuaris
      */
     public void cleanUserList() {
-        userList = new DefaultListModel<>();
+        userList.clear();
         jlUserList.setModel(userList);
         revalidate();
         repaint();
@@ -168,14 +173,14 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Mètode encarregat de netejar el nom del nou usuari
+     * Metode encarregat de netejar el nom del nou usuari
      */
     public void cleanNewUser() {
         jtfNewUser.setText(null);
     }
 
     /**
-     * Mètode encarregat d'eliminar l'ActionListener de la vista
+     * Metode encarregat d'eliminar l'ActionListener de la vista
      */
     public void resetActionController() {
         jbAddUser.removeActionListener(actionListener);
@@ -183,7 +188,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Mètode encarregat d'eliminar un ActionListener
+     * Metode encarregat d'eliminar un ActionListener
      * @param actionListener Controlador
      */
     public void registerActionController(ActionListener actionListener) {
@@ -200,7 +205,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Mètode encarregat d'esborrar el MouseListener associat a la vista
+     * Metode encarregat d'esborrar el MouseListener associat a la vista
      */
     public void resetMouseController() {
         jlUserList.removeMouseListener(mouseListener);
@@ -208,7 +213,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Mètode encarregat d'afegir un MouseListener
+     * Metode encarregat d'afegir un MouseListener
      * @param mouseListener Controlador
      */
     public void registerMouseController(MouseListener mouseListener) {
@@ -217,7 +222,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Mètode encarregat de registrar un DocumentListener
+     * Metode encarregat de registrar un DocumentListener
      * @param documentListener Controlador
      */
     public void registerDocumentListener(DocumentListener documentListener) {
@@ -226,7 +231,7 @@ public class UserPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Mètode encarregat d'habilitar i deshabilitar l'afegir usuaris
+     * Metode encarregat d'habilitar i deshabilitar l'afegir usuaris
      * @param enableState Estat
      */
     @Override

@@ -1,4 +1,4 @@
-package Controller.edition.document;
+package Controller.utils.document;
 
 import View.edition.document.DocumentEnablePanel;
 
@@ -21,8 +21,8 @@ public class DocumentController implements DocumentListener {
     }
 
     /**
-     * Mètode encarregat d'habilitar quelcom
-     * @param e Document event
+     * Metode encarregat d'habilitar quelcom
+     * @param e DocumentEvent
      */
     @Override
     public void insertUpdate(DocumentEvent e) {
@@ -32,8 +32,8 @@ public class DocumentController implements DocumentListener {
     }
 
     /**
-     * Mètode encarregat d'inhabilitar quelcom
-     * @param e Document event
+     * Metode encarregat d'inhabilitar quelcom
+     * @param e DocumentEvent
      */
     @Override
     public void removeUpdate(DocumentEvent e) {
@@ -42,6 +42,10 @@ public class DocumentController implements DocumentListener {
         }
     }
 
+    /**
+     * Metode no usat
+     * @param e DocumentEvent
+     */
     @Override
     public void changedUpdate(DocumentEvent e) {}
 

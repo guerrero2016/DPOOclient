@@ -1,8 +1,9 @@
 package Controller;
 
 import Controller.edition.EditionController;
+import Controller.project.ProjectsMainViewController;
 import Network.Communicable;
-import View.LogInPanel;
+import View.user.LogInPanel;
 import model.DataManager;
 import model.project.Project;
 import model.project.Tag;
@@ -28,7 +29,13 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     private EditionController editionController;
     final private ProjectsMainViewController projectsMainViewController;
 
-    //TODO
+    /**
+     * Constructor a partir dels parametres de control de les vistes i de les connexions amb el servidor
+     * @param network Manager de les connexions
+     * @param view Vista a controlar
+     * @param projectsMainViewController Controlador de la vista
+     * @param editionController Controlador de l'edicio de projectes
+     */
     public MainViewController(NetworkManager network, MainView view, ProjectsMainViewController projectsMainViewController,
                               EditionController editionController) {
         this.view = view;
@@ -53,22 +60,25 @@ public class MainViewController extends WindowAdapter implements ActionListener{
         return editionController;
     }
 
-    //TODO
+    /**
+     * Metode encarregat de canviar la vista a mostrar
+     * @param whatPanel Identificador numeric
+     */
     public void swapPanel(int whatPanel) {
         view.swapPanel(whatPanel);
     }
 
     /**
-     * Mètode encarregat de mostrar el contingut d'un projecte
+     * Metode encarregat de mostrar el contingut d'un projecte
      * @param project Projecte a mostrar
      */
-    public void loadProject(Project project) {
-        editionController.loadProject(project);
+    public void loadProject(Project project, User user) {
+        editionController.loadProject(project, user);
         editionController.showProjectContent();
     }
 
     /**
-     * Mètode encarregat d'actualitzar el contingut d'un projecte que és mostrat
+     * Metode encarregat d'actualitzar el contingut d'un projecte que es mostrat
      * @param project Projecte a actualitzar
      */
     public void updateProject(Project project) {
@@ -76,7 +86,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat de comunicar al servidor que s'ha afegit un membre a una tasca
+     * Metode encarregat de comunicar al servidor que s'ha afegit un membre a una tasca
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la categoria on pertany el membre a afegir
      * @param user Membre a afegir
@@ -92,7 +102,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Métode encarregat d'afegir un membre a una tasca en concret
+     * Metode encarregat d'afegir un membre a una tasca en concret
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la categoria on pertany el membre a afegir
      * @param user Membre a afegir
@@ -110,7 +120,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat de comunicar al servidor que s'ha eliminat un membre a una tasca
+     * Metode encarregat de comunicar al servidor que s'ha eliminat un membre a una tasca
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la categoria on pertany el membre a eliminar
      * @param user Membre a eliminar
@@ -126,7 +136,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat d'eliminar un membre d'una tasca en concret
+     * Metode encarregat d'eliminar un membre d'una tasca en concret
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la categoria on pertany el membre a eliminar
      * @param user Membre a eliminar
@@ -136,7 +146,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat de notificar al servidor que es vol elimina una etiqueta
+     * Metode encarregat de notificar al servidor que es vol elimina una etiqueta
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la tasca on pertany l'etiqueta
      * @param tag Etiqueta a eliminar
@@ -152,7 +162,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat d'eliminar una etiqueta del projecte
+     * Metode encarregat d'eliminar una etiqueta del projecte
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la tasca on pertany l'etiqueta
      * @param tag Etiqueta a eliminar
@@ -162,7 +172,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat de comunicar al servidor que s'ha editat una etiqueta
+     * Metode encarregat de comunicar al servidor que s'ha editat una etiqueta
      * @param taskId Id de la tasca on pertany l'etiqueta
      * @param tag Etiqueta a editar
      */
@@ -176,7 +186,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat d'editar una etiqueta del projecte
+     * Metode encarregat d'editar una etiqueta del projecte
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la tasca on pertany l'etiqueta
      * @param tag Etiqueta a editar
@@ -186,7 +196,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat de marcar una tasca com a finalitzada al servidor
+     * Metode encarregat de marcar una tasca com a finalitzada al servidor
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la tasca
      */
@@ -200,7 +210,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat de marcar una tasca com a finalitzada al projecte
+     * Metode encarregat de marcar una tasca com a finalitzada al projecte
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la tasca
      */
@@ -209,7 +219,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat de marcar una tasca com a no finalitzada al servidor
+     * Metode encarregat de marcar una tasca com a no finalitzada al servidor
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la tasca
      */
@@ -223,7 +233,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat de marcar una tasca com a no finalitzada al projecte
+     * Metode encarregat de marcar una tasca com a no finalitzada al projecte
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la tasca
      */
@@ -232,7 +242,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat d'afegir una etiqueta al projecte
+     * Metode encarregat d'afegir una etiqueta al projecte
      * @param categoryId Id de la categoria on pertany la tasca
      * @param taskId Id de la tasca on es vol afegir la etiqueta
      * @param tag Etiqueta a afegir
@@ -242,15 +252,15 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Procediment que avisa al EditionController que un usuari ha estat expulsat.
-     * @param user usuari eliminat
+     * Procediment que avisa al EditionController que un usuari ha estat expulsat
+     * @param user Usuari eliminat
      */
     public void userLeftProject(User user) {
         editionController.userLeftProject(user);
     }
 
     /**
-     * Procediment encarregat de netejar els projectes del panell de selecció.
+     * Procediment encarregat de netejar els projectes del panell de seleccio
      */
     public void resetSelectionView(){
         projectsMainViewController.resetOwnerProjects();
@@ -259,8 +269,8 @@ public class MainViewController extends WindowAdapter implements ActionListener{
 
     /**
      * Procediment que envia dades al servidor
-     * @param type tipus de petició que es fa. Si és <code>null</code> no s'envia aquest paràmetre
-     * @param o objecte a enviar.
+     * @param type Tipus de peticio que es fa. Si es <code>null</code> no s'envia aquest parametre
+     * @param o Objecte a enviar
      * @throws IOException Error
      */
     public void sendToServer(ServerObjectType type, Object o) throws IOException {
@@ -268,33 +278,33 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Procediment que elimina un communicator.
-     * @param serverObjectType clau del communicator
+     * Procediment que elimina un communicator
+     * @param serverObjectType Clau del communicator
      */
     public void removeCommunicator(ServerObjectType serverObjectType) {
         network.removeCommunicator(serverObjectType);
     }
 
     /**
-     * Afegeix un communicator.
-     * @param communicator communicator a afegir
-     * @param type clau del communicator
+     * Afegeix un communicator
+     * @param communicator Communicator a afegir
+     * @param type Clau del communicator
      */
     public void addCommunicator(Communicable communicator, ServerObjectType type){
         network.addCommunicator(communicator, type);
     }
 
     /**
-     * Procediment que s'encarrega de mostrar un JOptionPane d'error amb un missatge.
-     * @param errorMSG missatge que es mostrarà.
+     * Procediment que s'encarrega de mostrar un JOptionPane d'error amb un missatge
+     * @param errorMSG Missatge que es mostrara
      */
     public void showDialog(String errorMSG) {
         view.showErrorDialog(errorMSG);
     }
 
     /**
-     * Mètode encarregat de tancar correctament el programa
-     * @param e Window Event
+     * Metode encarregat de tancar correctament el programa
+     * @param e WindowEvent
      */
     @Override
     public void windowClosing(WindowEvent e) {
@@ -311,8 +321,8 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     }
 
     /**
-     * Mètode encarregat de detectar events de butons
-     * @param e Action Event
+     * Metode encarregat de detectar events de butons
+     * @param e ActionEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {

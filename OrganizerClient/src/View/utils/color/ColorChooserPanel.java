@@ -1,4 +1,4 @@
-package View.edition.color;
+package View.utils.color;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +48,7 @@ public class ColorChooserPanel extends JPanel {
     }
 
     /**
-     * Mètode encarregat d'establir la previsualitació del color seleccionat
+     * Metode encarregat d'establir la previsualitacio del color seleccionat
      * @param color Color a mostrar
      */
     public void setPreviewColor(Color color) {

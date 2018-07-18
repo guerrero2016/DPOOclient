@@ -12,6 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+/**
+ * Classe que correspon als panells de categories
+ */
 public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     public final static String ACTION_CATEGORY_EDIT_NAME = "CategoryEditName";
@@ -48,6 +51,15 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
     private ActionListener actionListener;
     private MouseListener mouseListener;
 
+    /**
+     * Constructor que requereix de la categoria a mostrar i les imatges dels botons desitjats
+     * @param category Categoria
+     * @param editorIcon Imatge del boto d'edicio
+     * @param deleteIcon Imatge d'eliminacio de categoria
+     * @param leftIcon Imatge d'ordenament cap a l'esquerra
+     * @param rightIcon Imatge d'ordenament cap a la dreta
+     * @param checkIcon Imatge del boto de confirmacio
+     */
     public CategoryPanel(Category category, Image editorIcon, Image deleteIcon, Image leftIcon, Image rightIcon,
                          Image checkIcon) {
 
@@ -164,6 +176,10 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     }
 
+    /**
+     * Setter del nom de la categoria
+     * @param categoryName Nom de la categoria
+     */
     public void setCategoryName(String categoryName) {
         if(categoryName.length() <= MAX_CATEGORY_LENGTH) {
             jtfCategoryName.setText(categoryName);
@@ -173,10 +189,20 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
         }
     }
 
+    /**
+     * Getter del nom de la categoria
+     * @return Nom de la categoria
+     */
     public String getCategoryName() {
         return jtfCategoryName.getText();
     }
 
+    /**
+     * Metode que indica si el nom de la categoria es editable
+     * @param editableState Estat
+     * @param completeCategoryName Nom de la categoria
+     */
+    @SuppressWarnings("Duplicates")
     public void setCategoryNameEditable(boolean editableState, String completeCategoryName) {
 
         if(editableState) {
@@ -215,30 +241,54 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     }
 
+    /**
+     * Getter de l'estat d'edicio de la categoria
+     * @return Estat
+     */
     public boolean isCategoryNameEditable() {
         return jtfCategoryName.isEditable();
     }
 
+    /**
+     * Getter del nom de la tasca que es vol afegir
+     * @return Nom de la tasca
+     */
     public String getNewTaskName() {
         return jtfTaskName.getText();
     }
 
+    /**
+     * Metode que buida el camp de la nova tasca
+     */
     public void cleanNewTaskName() {
         jtfTaskName.setText(null);
     }
 
+    /**
+     * Metode que afegeix una nova tasca
+     * @param task Tasca a afegir
+     */
     public void addNewTask(Task task) {
         tasksList.addElement(task);
         revalidate();
         repaint();
     }
 
+    /**
+     * Metode encarregat d'eliminar una tasca
+     * @param task Tasca a eliminar
+     */
     public void removeTask(Task task) {
         tasksList.removeElement(task);
         revalidate();
         repaint();
     }
 
+    /**
+     * Metode encarregat d'actualitzar el contingut d'una tasca
+     * @param taskIndex Index de la tasca
+     * @param task Tasca
+     */
     public void updateTask(int taskIndex, Task task) {
         if(task != null && taskIndex >= 0 && taskIndex < tasksList.size()) {
             tasksList.setElementAt(task, taskIndex);
@@ -247,16 +297,26 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
         }
     }
 
-    public void updateTasksList(ArrayList<Task> tasks) {
-        for(Task t: tasks) {
-            updateTask(t.getOrder(), t);
-        }
+    /**
+     * Metode encarregat d'actualitzar la llista de tasques
+     */
+    public void updateTasksList() {
+        revalidate();
+        repaint();
     }
 
+    /**
+     * Getter del component de la llista de tasques
+     * @return JList de tasques
+     */
     public JList<Task> getListComponent() {
         return jlTasks;
     }
 
+    /**
+     * Metode encarregat d'eliminar l'ActionListener
+     */
+    @SuppressWarnings("Duplicates")
     public void resetActionController() {
         jbCategoryEditor.removeActionListener(actionListener);
         jbCategoryLeft.removeActionListener(actionListener);
@@ -266,6 +326,11 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
         actionListener = null;
     }
 
+    /**
+     * Metode encarregat de registrar el l'ActionListener de la vista
+     * @param actionListener Controlador
+     */
+    @SuppressWarnings("Duplicates")
     public void registerActionController(ActionListener actionListener) {
         this.actionListener = actionListener;
         jbCategoryEditor.addActionListener(actionListener);
@@ -275,32 +340,54 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
         jbTaskAdder.addActionListener(actionListener);
     }
 
+    /**
+     * Metode encarregat d'eliminar el MouseListener
+     */
     public void resetMouseController() {
         jlTasks.removeMouseListener(mouseListener);
         mouseListener = null;
     }
 
+    /**
+     * Metode encarregat de registrar un MouseListener
+     * @param mouseListener Controlador
+     */
     public void registerMouseController(MouseListener mouseListener) {
         this.mouseListener = mouseListener;
         jlTasks.addMouseListener(mouseListener);
     }
 
+    /**
+     * Metode encarregat de registrar un DocumentListener
+     * @param documentListener Controlador
+     */
     public void registerDocumentController(DocumentListener documentListener) {
         jtfTaskName.getDocument().addDocumentListener(documentListener);
     }
 
+    /**
+     * Metode encarregat d'eliminar el controlador drag & drop (DnD)
+     */
     public void resetDnDController() {
         jlTasks.setTransferHandler(null);
         jlTasks.setDropMode(DropMode.USE_SELECTION);
         jlTasks.setDragEnabled(false);
     }
 
+    /**
+     * Metode encarregat de registrar un controlador drag & drop (DnD)
+     * @param transferHandler Controlador
+     */
     public void registerDnDController(TransferHandler transferHandler) {
         jlTasks.setTransferHandler(transferHandler);
         jlTasks.setDropMode(DropMode.INSERT);
         jlTasks.setDragEnabled(true);
     }
 
+    /**
+     * Metode encarregat d'establir l'estat del boto d'afegir tasques
+     * @param enableState Estat
+     */
     @Override
     public void setDocumentEnableState(boolean enableState) {
         jbTaskAdder.setEnabled(enableState);

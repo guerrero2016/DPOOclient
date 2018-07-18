@@ -1,30 +1,27 @@
 package View;
 
-import Controller.LogInController;
-import Controller.ProjectSelectionController;
-import Controller.SignInController;
+import View.project.ProjectsMainView;
+import View.user.LogInPanel;
+import View.user.SignInPanel;
 import model.DataManager;
-import model.project.Project;
 import View.edition.EditionPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
- * Vista general que conté els altres panells del programa.
- * Té un JMenuBar quan es s'inicia sessió amb un botó per a tancar-la.
+ * Vista general que conte els altres panells del programa.
+ * Te un JMenuBar quan s'inicia sessio amb un boto per a tancar-la.
  * Utilitza CardLayout
  */
 public class MainView extends JFrame {
+
     private static final String IMAGE_PATH = System.getProperty("user.dir") + System.getProperty("file.separator") +
             "img" + System.getProperty("file.separator") + "identifyImage.jpg";
 
@@ -35,16 +32,14 @@ public class MainView extends JFrame {
     private JPanel jpLogSign;
     private SignInPanel signInPanel;
     private LogInPanel logInPanel;
-    private ProjectsMainView projectsView;
-    private EditionPanel editionPanel;
     private JButton jbLogout;
 
     /**
-     * Constructor que crea la vista i guarda els diferents panells del programa.
-     * @param logInPanel Panell per a iniciar sessió
+     * Constructor que crea la vista i guarda els diferents panells del programa
+     * @param logInPanel Panell per a iniciar sessio
      * @param signInPanel Panell per a registrar-se
      * @param projectsMainView Panell per a seleccionar projectes
-     * @param editionPanel Panell per a editar projectes.
+     * @param editionPanel Panell per a editar projectes
      */
     public MainView(LogInPanel logInPanel, SignInPanel signInPanel, ProjectsMainView projectsMainView,
                     EditionPanel editionPanel) {
@@ -64,7 +59,6 @@ public class MainView extends JFrame {
         jpIdentifyPanel.add(jlPicLabel, BorderLayout.LINE_START);
         this.logInPanel = logInPanel;
         this.signInPanel = signInPanel;
-        this.projectsView = projectsMainView;
 
         jpLogSign = new JPanel(new CardLayout());
 
@@ -77,10 +71,9 @@ public class MainView extends JFrame {
 
         this.getContentPane().setLayout(new CardLayout());
         this.add(jpIdentifyPanel, "identify");
-        this.add(projectsView, ProjectsMainView.VIEW_NAME);
+        this.add(projectsMainView, ProjectsMainView.VIEW_NAME);
 
         //Edition panel
-        this.editionPanel = editionPanel;
         add(editionPanel, PROJECT_CONSTRAINT);
 
         DataManager.getSharedInstance().setWhatPanel(LogInPanel.LOGIN);
@@ -96,13 +89,13 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Procediment que s'encarrega de canviar quin panell s'està mostrant.
-     * @param whatPanel indica quin panell es mostrarà
+     * Procediment que s'encarrega de canviar quin panell s'esta mostrant
+     * @param whatPanel Indica quin panell es mostrara
      */
     public void swapPanel(int whatPanel) {
         DataManager.getSharedInstance().setWhatPanel(whatPanel);
         switch (whatPanel) {
-            case SignInPanel.SIGNIN:
+            case SignInPanel.SIGN_IN:
                 this.signInPanel.clearScreen();
                 super.setTitle("SignIn - Organizer");
                 ((CardLayout)jpLogSign.getLayout()).show(jpLogSign, "signIn");
@@ -138,9 +131,9 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Procediment que afegeix controladors a la vista i al botó del menú (per a tancar sessió)
-     * @param wl <code>WindowsListener</code> que controlarà la finestra
-     * @param al <code>ActionListener</code> que controlarà el botó
+     * Procediment que afegeix controladors a la vista i al boto del menu (per tancar sessio)
+     * @param wl <code>WindowsListener</code> que controlara la finestra
+     * @param al <code>ActionListener</code> que controlara el boto
      */
     public void addController (WindowListener wl, ActionListener al){
         this.addWindowListener(wl);
@@ -148,8 +141,8 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Procediment que crea un JOptionPane d'error amb un missatge.
-     * @param errorMSG missatge a mostrar en el JOptionPane.
+     * Procediment que crea un JOptionPane d'error amb un missatge
+     * @param errorMSG Missatge a mostrar al JOptionPane
      */
     public void showErrorDialog(String errorMSG) {
         JOptionPane.showMessageDialog(this, errorMSG,

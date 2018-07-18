@@ -1,20 +1,22 @@
 package Controller.edition.task;
 
 import Controller.edition.EditionController;
-import Controller.edition.color.ColorPreviewController;
+import Controller.utils.color.ColorPreviewController;
 import model.DataManager;
+import model.project.Project;
 import model.project.Tag;
 import model.project.Task;
-import View.edition.color.ColorChooserPanel;
+import View.utils.color.ColorChooserPanel;
 import View.edition.task.TaskPanel;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Classe encarregada de controlar els Action Event d'un TaskPanel
+ * Classe encarregada de controlar els ActionEvent d'un TaskPanel
  */
 public class TaskController implements ActionListener {
 
@@ -25,22 +27,25 @@ public class TaskController implements ActionListener {
     private EditionController mainController;
     private TaskPanel view;
     private Task task;
+    private Project project;
 
     /**
      * Constructor que requereix d'un controlador extern, la vista a controlar i la tasca origen
      * @param mainController Controlador extern
      * @param view Vista a controlar
      * @param task Tasca origen
+     * @param project Projecte
      */
-    public TaskController(EditionController mainController, TaskPanel view, Task task) {
+    public TaskController(EditionController mainController, TaskPanel view, Task task, Project project) {
         this.mainController = mainController;
         this.view = view;
         this.task = task;
+        this.project = project;
         DataManager.getSharedInstance().setEditingTask(task);
     }
 
     /**
-     * Mètode encarregat de distingir les diferents possibles accions
+     * Metode encarregat de distingir les diferents possibles accions
      * @param e Action Event
      */
     @Override
@@ -63,7 +68,7 @@ public class TaskController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de tancar la tasca
+     * Metode encarregat de tancar la tasca
      */
     private void closeTask() {
         view.setDescriptionEditable(false);
@@ -75,7 +80,7 @@ public class TaskController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de la modificació del nom
+     * Metode encarregat de la modificacio del nom
      */
     private void taskNameManagement() {
         if(!mainController.isEditing()) {
@@ -84,12 +89,9 @@ public class TaskController implements ActionListener {
         } else {
             if(view.isTaskNameEditable()) {
                 view.setTaskNameEditable(false, view.getTaskName());
-                //Copiem la tasca en una variable auxiliar perquè sinó no es passa correctament.
-                Task aux =  new Task(view.getTaskName(), task.getDescription(), task.getTags(), task.getUsers(),
-                        task.getOrder());
-                aux.setId(task.getID());
-                task.setName(view.getTaskName());
-                mainController.updateTask(aux);
+                Task t =  new Task(task);
+                t.setName(view.getTaskName());
+                mainController.updateTask(t);
                 mainController.setEditingState(false);
             } else {
                 JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE,
@@ -99,7 +101,7 @@ public class TaskController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'eliminar la tasca
+     * Metode encarregat d'eliminar la tasca
      */
     private void deleteTask() {
         int result = JOptionPane.showConfirmDialog(null,TASK_DELETE_MESSAGE + " '" +
@@ -110,7 +112,7 @@ public class TaskController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de l'edició de la descripció
+     * Metode encarregat de l'edició de la descripcio
      */
     private void descriptionManagement() {
         if(!mainController.isEditing()) {
@@ -130,7 +132,7 @@ public class TaskController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'afegir una etiqueta
+     * Metode encarregat d'afegir una etiqueta
      */
     private void addTag() {
 
@@ -142,15 +144,22 @@ public class TaskController implements ActionListener {
             int result = JOptionPane.showConfirmDialog(null, colorChooserPanel, TAG_CREATION_TITLE,
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
-            if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
-                Tag tag;
-                if(colorPreviewController.getColor() == null) {
-                    tag = new Tag(view.getNewTagName(), Color.RED);
-                } else {
-                    tag = new Tag(view.getNewTagName(), colorPreviewController.getColor());
-                }
+            if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION &&
+                    DataManager.getSharedInstance().getSelectedProject() != null &&
+                    DataManager.getSharedInstance().getSelectedProject().equals(project)) {
+
+                String name = view.getNewTagName();
                 view.cleanNewTagName();
-                mainController.sendTag(task, tag);
+                Color color;
+
+                if(colorPreviewController.getColor() == null) {
+                    color = Color.RED;
+                } else {
+                    color = colorPreviewController.getColor();
+                }
+
+                mainController.sendTag(task, new Tag(name, color));
+
             }
         } else {
             JOptionPane.showMessageDialog(null, EditionController.EDITING_ON_MESSAGE, EditionController.
@@ -160,14 +169,14 @@ public class TaskController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'assingar una tasca com a finalitzada
+     * Metode encarregat d'assingar una tasca com a finalitzada
      */
     private void taskDoneManagement() {
         mainController.setTaskDoneInDB();
     }
 
     /**
-     * Mètode encarregat d'assignar una tasca com a no finalitzada
+     * Metode encarregat d'assignar una tasca com a no finalitzada
      */
     private void taskNotDoneManagement() {
         mainController.setTaskNotDoneInDB();

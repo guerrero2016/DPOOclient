@@ -1,6 +1,5 @@
-package View;
+package View.user;
 
-import Controller.LogInController;
 import model.user.User;
 import model.user.UserLogIn;
 
@@ -9,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * Classe que genera el panell per a iniciar sessió
+ * Classe que genera el panell per iniciar sessio
  */
 public class LogInPanel extends JPanel{
     public static final String LOG = "ENTER";
@@ -22,7 +21,7 @@ public class LogInPanel extends JPanel{
     private JButton jbSignIn;
 
     /**
-     * Crea el panell amb els diferents botons i zones de text.
+     * Crea el panell amb els diferents botons i zones de text
      */
     public LogInPanel() {
 
@@ -95,8 +94,8 @@ public class LogInPanel extends JPanel{
     }
 
     /**
-     * Funció que recupera allò escrit en les diferents zones de text.
-     * @return Un objecte de tipus <code>UserLogin</code> amb els atributs iniciats amb allò que l'usuari ha escrit.
+     * Funcio que recupera allo escrit en les diferents zones de text
+     * @return Un objecte de tipus <code>UserLogin</code> amb els atributs iniciats amb allo que l'usuari ha escrit
      */
     public UserLogIn getLogin() {
         String userName = jtfUsername.getText();
@@ -106,7 +105,7 @@ public class LogInPanel extends JPanel{
 
     /**
      * Procediment que registra els botons amb un <code>ActionListener</code>.
-     * @param al <code>ActionListener</code> el qual serà notificat quan es premi un botó.
+     * @param al <code>ActionListener</code> el qual serà notificat quan es premi un boto
      */
     public void addControllerButton (ActionListener al) {
         jbSignIn.addActionListener(al);
@@ -114,7 +113,7 @@ public class LogInPanel extends JPanel{
     }
 
     /**
-     * Neteja els camps de l'usuari i la contrasenya.
+     * Neteja els camps de l'usuari i la contrasenya
      */
     public void clearScreen(){
         jtfUsername.setText(null);

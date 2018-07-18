@@ -1,6 +1,6 @@
-package Controller.edition.color;
+package Controller.utils.color;
 
-import View.edition.color.ColorChooserPanel;
+import View.utils.color.ColorChooserPanel;
 
 import java.awt.event.ActionEvent;
 
@@ -20,7 +20,7 @@ public class ColorPreviewController extends ColorKeeperController {
     }
 
     /**
-     * Mètode encarregat de mostrar el color sel·leccionat a la vista
+     * Metode encarregat de mostrar el color seleccionat a la vista
      * @param e Action event
      */
     @Override

@@ -1,18 +1,23 @@
 package Network.Communicators;
 
 import Controller.MainViewController;
-import View.edition.project.category.CategoryPanel;
 import model.DataManager;
 import model.project.Category;
 import Network.Communicable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 /**
  * Comunicador que escolta si algun usuari ha afegit o modificat una categoria
  */
 public class CategorySetCommunicator implements Communicable {
+    /**
+     * Metode usat com a resposta del servidor quan una categoria es editada o creada
+     * @param controller Controlador de la vista general
+     * @param objectIn InputStream que comunica amb el servidor
+     */
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
@@ -27,8 +32,10 @@ public class CategorySetCommunicator implements Communicable {
                 }
             }
             if(exists) {
-                DataManager.getSharedInstance().getSelectedProject().getCategories().set(i, category);
-                controller.getEditionController().updateCategoryInView(category);
+                ArrayList<Category> categories = DataManager.getSharedInstance().getSelectedProject().getCategories();
+                Category existentCategory = categories.get(i);
+                existentCategory.update(category);
+                controller.getEditionController().updateCategoryInView(existentCategory);
             } else {
                 DataManager.getSharedInstance().getSelectedProject().getCategories().add(category);
                 controller.getEditionController().addCategory(category);

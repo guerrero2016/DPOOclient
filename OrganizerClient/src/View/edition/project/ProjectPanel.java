@@ -1,10 +1,9 @@
 package View.edition.project;
 
-import model.DataManager;
 import model.project.Category;
 import View.edition.document.DocumentEnablePanel;
-import View.edition.TransparentPanel;
-import View.edition.TransparentScrollPanel;
+import View.utils.TransparentPanel;
+import View.utils.TransparentScrollPanel;
 import View.edition.project.category.CategoryPanel;
 
 import javax.swing.*;
@@ -14,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Constructor encarregat de generar un panell on mostrar la informació d'un projecte
+ * Constructor encarregat de generar un panell on mostrar la informacio d'un projecte
  */
 public class ProjectPanel extends TransparentPanel implements DocumentEnablePanel {
 
@@ -42,7 +41,6 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     private Image checkIcon;
 
     private final JTextField jtfProjectName;
-    private final TransparentPanel tpProjectButtons;
     private final JButton jbProjectBack;
     private final JButton jbProjectEditor;
     private final JButton jbBackground;
@@ -57,13 +55,13 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
 
     /**
      * Constructor que requereix unes imatges per als butons que usa (poden valdre null)
-     * @param editorIcon Botó d'edició
-     * @param backgroundIcon Botó de canvi de fons de pantalla
-     * @param deleteIcon Botó d'eliminar
-     * @param leftIcon Botó de moure a l'esquerre
-     * @param rightIcon Botó de moure a la dreta
-     * @param checkIcon Botó de finalitzat
-     * @param backIcon Botó de tornar enrere
+     * @param editorIcon Boto d'edicio
+     * @param backgroundIcon Boto de canvi de fons de pantalla
+     * @param deleteIcon Boto d'eliminar
+     * @param leftIcon Boto de moure a l'esquerre
+     * @param rightIcon Boto de moure a la dreta
+     * @param checkIcon Boto de finalitzat
+     * @param backIcon Boto de tornar enrere
      */
     public ProjectPanel(Image editorIcon, Image backgroundIcon, Image deleteIcon, Image leftIcon, Image rightIcon,
                         Image checkIcon, Image backIcon) {
@@ -95,7 +93,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
         tpProjectTitle.add(jtfProjectName, BorderLayout.CENTER);
 
         //Project buttons panel
-        tpProjectButtons = new TransparentPanel();
+        TransparentPanel tpProjectButtons = new TransparentPanel();
         tpProjectButtons.setLayout(new FlowLayout(FlowLayout.LEFT));
         tpProjectTitle.add(tpProjectButtons, BorderLayout.LINE_END);
 
@@ -182,8 +180,8 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode que permet indicar els privilegis de l'usuari
-     * @param owner Si és propietari
+     * Metode que permet indicar els privilegis de l'usuari
+     * @param owner Si es propietari
      */
     public void setProjectOwner(boolean owner) {
         jbProjectEditor.setVisible(owner);
@@ -191,7 +189,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode encarregat d'establir el nom del projecte
+     * Metode encarregat d'establir el nom del projecte
      * @param projectName Nom del projecte
      */
     public void setProjectName(String projectName) {
@@ -214,10 +212,11 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode que permet editar el nom d'un projecte
-     * @param editableState Estat d'edició
+     * Metode que permet editar el nom d'un projecte
+     * @param editableState Estat d'edicio
      * @param completeProjectName Nom del projecte
      */
+    @SuppressWarnings("Duplicates")
     public void setProjectNameEditable(boolean editableState, String completeProjectName) {
 
         if(editableState) {
@@ -256,8 +255,8 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode que indica si el nom del projecte és editable
-     * @return Si és editable
+     * Metode que indica si el nom del projecte es editable
+     * @return Si es editable
      */
     public boolean isProjectNameEditable() {
         return jtfProjectName.isEditable();
@@ -276,7 +275,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode que permet eliminar tots els panells de categories
+     * Metode que permet eliminar tots els panells de categories
      */
     public void cleanCategories() {
         categoryPanels = new ArrayList<>();
@@ -286,7 +285,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode que permet afegir una categoria
+     * Metode que permet afegir una categoria
      * @param category Categoria a afegir
      */
     public void addCategoryToView(Category category) {
@@ -316,8 +315,8 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode que permet eliminar una categoria
-     * @param categoryIndex índex de la categoria
+     * Metode que permet eliminar una categoria
+     * @param categoryIndex Index de la categoria
      */
     public void removeCategory(int categoryIndex) {
         if(categoryIndex >= 0 && categoryIndex < categoryPanels.size()) {
@@ -330,7 +329,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode que permet canviar d'ordre 2 categories
+     * Metode que permet canviar d'ordre 2 categories
      * @param firstCategoryIndex Index de la primera categoria
      * @param secondCategoryIndex Index de la segona categoria
      */
@@ -369,15 +368,16 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode que neteja el nom de la nova categoria
+     * Metode que neteja el nom de la nova categoria
      */
     public void cleanNewCategoryName() {
         jtfCategoryName.setText(null);
     }
 
     /**
-     * Mètode encarregat d'eliminar l'actionListener de la vista
+     * Metode encarregat d'eliminar l'actionListener de la vista
      */
+    @SuppressWarnings("Duplicates")
     public void resetActionController() {
         jbProjectBack.removeActionListener(actionListener);
         jbProjectEditor.removeActionListener(actionListener);
@@ -388,9 +388,10 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode encarregat de registrar un actionListener
+     * Metode encarregat de registrar un actionListener
      * @param actionListener Controlador
      */
+    @SuppressWarnings("Duplicates")
     public void registerActionController(ActionListener actionListener) {
         this.actionListener = actionListener;
         jbProjectBack.addActionListener(actionListener);
@@ -401,7 +402,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode encarregat de registrar un DocumentListener
+     * Metode encarregat de registrar un DocumentListener
      * @param documentListener Controlador
      */
     public void registerDocumentController(DocumentListener documentListener) {
@@ -409,7 +410,7 @@ public class ProjectPanel extends TransparentPanel implements DocumentEnablePane
     }
 
     /**
-     * Mètode que permet habilitar o deshabilitar l'afegir categories
+     * Metode que permet habilitar o deshabilitar l'afegir categories
      * @param enableState Estat
      */
     @Override

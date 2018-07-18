@@ -2,8 +2,8 @@ package View.edition.task;
 
 import model.project.Tag;
 import View.edition.document.DocumentEnablePanel;
-import View.edition.TransparentPanel;
-import View.edition.TransparentScrollPanel;
+import View.utils.TransparentPanel;
+import View.utils.TransparentScrollPanel;
 import View.edition.task.tag.TagPanel;
 
 import javax.swing.*;
@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Classe que representa el panell de l'edició d'una tasca
+ * Classe que representa el panell de l'edicio d'una tasca
  */
 public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
 
@@ -62,11 +62,11 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     private ActionListener actionListener;
 
     /**
-     * Crea el panell d'edició de tasca amb tots els botons, tags, icones...
-     * @param backIcon icona per a tornar enrere
-     * @param editorIcon icona per a editar
-     * @param deleteIcon icona per eliminar
-     * @param checkIcon icona per a revisar
+     * Crea el panell d'edicio de tasca amb tots els botons, tags, icones...
+     * @param backIcon Icona per a tornar enrere
+     * @param editorIcon Icona per a editar
+     * @param deleteIcon Icona per eliminar
+     * @param checkIcon Icona per a revisar
      */
     public TaskPanel(Image backIcon, Image editorIcon, Image deleteIcon, Image checkIcon) {
 
@@ -280,7 +280,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Funció que recupera el nom de la tasca
+     * Funcio que recupera el nom de la tasca
      * @return Nom de la tasca
      */
     public String getTaskName() {
@@ -294,8 +294,8 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Procediment que assigna un nom a la tasca. Si es massa llarg l'escurça
-     * @param taskName nom de la tasca
+     * Procediment que assigna un nom a la tasca. Si es massa llarg l'escurca
+     * @param taskName Nom de la tasca
      */
     public void setTaskName(String taskName) {
         if(taskName.length() <= MAX_TASK_LENGTH) {
@@ -307,10 +307,12 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Procediment que assigna si el nom de la tasca es editable o no. Quan acaba de ser editat s'envia al servidor
-     * @param editableState indica si és editable o no
-     * @param completeTaskName nom de la tasca complet
+     * Procediment que assigna si el nom de la tasca es editable o no. Quan acaba de ser editat, s'envia les dades al
+     * servidor
+     * @param editableState Indica si es editable o no
+     * @param completeTaskName Nom de la tasca complet
      */
+    @SuppressWarnings("Duplicates")
     public void setTaskNameEditable(boolean editableState, String completeTaskName) {
 
         if(editableState) {
@@ -351,15 +353,15 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Funció que retorna si el nom de la tasca és editable o no.
-     * @return si és editable o no
+     * Funcio que retorna si el nom de la tasca es editable o no.
+     * @return Si es editable o no
      */
     public boolean isTaskNameEditable() {
         return jtfTaskName.isEditable();
     }
 
     /**
-     * Procediment que assigna si una tasca està assignada o no. Modifica els RadioButton de la vista.
+     * Procediment que assigna si una tasca esta assignada o no. Modifica els RadioButton de la vista
      * @param finishedState Estat
      */
     public void setTaskFinished(boolean finishedState) {
@@ -371,16 +373,16 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Funció que recupera la descripció de la tasca des del TextArea
-     * @return descripció de la tasca
+     * Funcio que recupera la descripcio de la tasca
+     * @return Descripcio de la tasca
      */
     public String getDescription() {
         return jtaDescription.getText();
     }
 
     /**
-     * Procediment que assigna una descripció al TextArea
-     * @param description Descripció
+     * Procediment que assigna una descripcio al TextArea
+     * @param description Descripcio
      */
     public void setDescription(String description) {
         jtaDescription.setText(description);
@@ -397,8 +399,8 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Procediment que assigna la llista d'etiquetes a la vista.
-     * @param tags llista d'etiquetes.
+     * Procediment que assigna la llista d'etiquetes a la vista
+     * @param tags Llista d'etiquetes
      */
     public void setTagsList(ArrayList<Tag> tags) {
         if(tags != null) {
@@ -420,21 +422,22 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
      * @param tag Etiqueta a afegir
      */
     public void addTag(Tag tag) {
-        tagPanels.add(new TagPanel(editorIcon, deleteIcon, tag));
+        TagPanel tagPanel = new TagPanel(editorIcon, deleteIcon, tag);
+        tagPanels.add(tagPanel);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = (tagPanels.size() - 1) % MAX_TAGS;
         gbc.gridy = (tagPanels.size() - 1) / MAX_TAGS;
         gbc.weightx = 1;
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.NONE;
-        tpTagsList.add(tagPanels.get(tagPanels.size() - 1), gbc);
+        tpTagsList.add(tagPanel, gbc);
         revalidate();
         repaint();
     }
 
     /**
      * Procediment encarregat d'eliminar una etiqueta de la llista
-     * @param tagIndex índex de l'etiqueta
+     * @param tagIndex Index de l'etiqueta
      */
     public void removeTag(int tagIndex) {
         if(tagIndex < tagPanels.size()) {
@@ -461,8 +464,8 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Funció que recupera el nom de la nova etiqueta creada
-     * @return nom de l'etiqueta
+     * Funcio que recupera el nom de la nova etiqueta creada
+     * @return Nom de l'etiqueta
      */
     public String getNewTagName() {
         return jtfTagName.getText();
@@ -476,9 +479,11 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Procediment que assigna si la descripció de la tasca es editable o no. Quan acaba de ser editat s'envia al servidor
-     * @param editableState estat de la descripció
+     * Procediment que assigna si la descripcio de la tasca es editable o no. Quan acaba de ser editada s'envien les
+     * dades al servidor
+     * @param editableState Estat de la descripcio
      */
+    @SuppressWarnings("Duplicates")
     public void setDescriptionEditable(boolean editableState) {
 
         if(editableState) {
@@ -510,16 +515,16 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Funció que recupera si la descripció s'està editant o no.
-     * @return true si s'està editant, false si no
+     * Funcio que recupera si la descripcio s'està editant o no
+     * @return True si s'esta editant, false si no
      */
     public boolean isDescriptionEditable() {
         return jtaDescription.isEditable();
     }
 
     /**
-     * Funció que recupera una etiqueta de la llista. Retorna null si no existeix
-     * @param tagIndex índex de l'etiqueta
+     * Funcio que recupera una etiqueta de la llista. Retorna null si no existeix
+     * @param tagIndex Index de l'etiqueta
      * @return Panell de l'etiqueta
      */
     public TagPanel getTagPanel(int tagIndex) {
@@ -530,7 +535,7 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Procediment que reseteja el ActionListener
+     * Procediment que reseteja l'ActionListener
      */
     public void resetActionController() {
         jbTaskBack.removeActionListener(actionListener);
@@ -566,6 +571,10 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
         jtfTagName.getDocument().addDocumentListener(documentListener);
     }
 
+    /**
+     * Metode que habilitat o deshabilita el boto d'afegir etiquetes
+     * @param enableState Estat
+     */
     @Override
     public void setDocumentEnableState(boolean enableState) {
         jbTagAdder.setEnabled(enableState);

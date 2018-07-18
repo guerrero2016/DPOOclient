@@ -3,11 +3,10 @@ package model.project;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Classe que representa la categoria d'un projecte.
- * Té un id únic.
+ * Te un id unic
  */
 public class Category implements Serializable {
 
@@ -17,24 +16,24 @@ public class Category implements Serializable {
     private String id;
     private String name;
     private int order = -1;
-    private ArrayList<model.project.Task> tasks;
+    private ArrayList<Task> tasks;
 
     /**
      * Crea una categoria a partir d'un <code>String</code>.
-     * @param name nom de la categoria
+     * @param name Nom de la categoria
      */
     public Category(String name) {
-        this.name = name.toString();
+        this.name = name;
         order = INVALID_INDEX;
         tasks = new ArrayList<>();
     }
 
     /**
-     * Crea una categoria amb els atributs inciats amb el que es passa per paràmetre
-     * @param id identificador de la categoria
-     * @param name nom de la categoria
-     * @param order posició de la categoria
-     * @param tasks conjunt de tasques que conté la categoria
+     * Crea una categoria amb els atributs inciats amb el que es passa per parametre
+     * @param id Identificador de la categoria
+     * @param name Nom de la categoria
+     * @param order Posicio de la categoria
+     * @param tasks Conjunt de tasques que conte la categoria
      */
     public Category(String id, String name, int order, ArrayList<Task> tasks) {
         this.id = id;
@@ -44,75 +43,90 @@ public class Category implements Serializable {
     }
 
     /**
-     * Funció per a recuperar l'identificador.
-     * @return identificador de la categoria
+     * Constructor encarregat de clonar una categoria
+     * @param category Categoria
+     */
+    public Category(Category category) {
+        id = category.id;
+        name = category.name;
+        order = category.order;
+        tasks = new ArrayList<>();
+        for(int i = 0; i < category.tasks.size(); i++) {
+            tasks.add(new Task(tasks.get(i)));
+        }
+    }
+
+    /**
+     * Funcio per a recuperar l'identificador
+     * @return Identificador de la categoria
      */
     public String getId() {
         return id;
     }
 
     /**
-     * Funció per a recuperar el nom
-     * @return nom de la categoria
+     * Funcio per a recuperar el nom
+     * @return Nom de la categoria
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Procediment per a assignar el nom de la categoria.
-     * @param name nom que tindrà la categoria
+     * Procediment per a assignar el nom de la categoria
+     * @param name Nom que tindra la categoria
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Funció per a recuperar l'ordre o posició de la categoria.
-     * @return ordre o posició de la categoria
+     * Funcio per recuperar l'ordre o posicio de la categoria
+     * @return Ordre o posicio de la categoria
      */
     public int getOrder() {
         return order;
     }
 
     /**
-     * Procediment per a assignar l'ordre o posició de la categoria.
-     * @param order ordre o posició que tindrà la categoria
+     * Procediment per a assignar l'ordre o posicio de la categoria
+     * @param order Ordre o posicio que tindra la categoria
      */
     public void setOrder(int order) {
         this.order = order;
     }
 
     /**
-     * Funció que recupera el número de tasques que té la categoria.
-     * @return número de tasques
+     * Funcio que recupera el número de tasques que te la categoria
+     * @return Numero de tasques
      */
     public int getTasksSize() {
         return tasks.size();
     }
 
     /**
-     * Funció que recupera la llista de tasques de la categoria.
-     * @return llista de tasques
+     * Funcio que recupera la llista de tasques de la categoria
+     * @return Llista de tasques
      */
     public ArrayList<Task> getTasks() {
         return tasks;
     }
 
     /**
-     * Procediment per a assignar la llista de tasques de la categoria.
-     * @param tasks llista de tasques que tindrà
+     * Procediment per a assignar la llista de tasques de la categoria
+     * @param tasks Llista de tasques que tindra
      */
     public void setTasks(ArrayList<Task> tasks) {
         if(tasks != null) {
-            this.tasks = tasks;
+            this.tasks = new ArrayList<>();
+            this.tasks.addAll(tasks);
         }
     }
 
     /**
-     * Procediment per a recuperar en quina posició de la llista està una tasca.
-     * @param task tasca de la qual es vol saber la posició
-     * @return posició de la tasca en la llista.
+     * Procediment per a recuperar en quina posicio de la llista esta una tasca
+     * @param task Tasca de la qual es vol saber la posicio
+     * @return Posicio de la tasca en la llista
      */
     public int getTaskIndex(Task task) {
         if(tasks.contains(task)) {
@@ -123,9 +137,9 @@ public class Category implements Serializable {
     }
 
     /**
-     * Funció per a recuperar una tasca de la llista.
-     * @param taskIndex posició de la tasca en la llista
-     * @return retorna la tasca de la posició que es passa. Si no n'hi ha cap en aquest índex retorna <code>null</code>
+     * Funcio per a recuperar una tasca de la llista
+     * @param taskIndex Posicio de la tasca en la llista
+     * @return Tasca de la posicio que es passa. Si no n'hi ha cap en aquest index, retorna <code>null</code>
      */
     public Task getTask(int taskIndex) {
         if(taskIndex < tasks.size()) {
@@ -136,21 +150,21 @@ public class Category implements Serializable {
     }
 
     /**
-     * Procediment per a assignar una tasca. Si ja existeix l'actualitza i sinó, l'afegeix al final.
-     * @param task tasca a afegir
+     * Procediment per assignar una tasca. Si ja existeix l'actualitza i sino, l'afegeix al final
+     * @param task Tasca a afegir
      */
     public void setTask(Task task) {
-        if(getTaskWithId(task.getID()) != null) {
-            tasks.remove(task);
-            tasks.add(task.getOrder(), task);
+        Task existentTask = getTaskWithId(task.getId());
+        if(existentTask != null) {
+            existentTask.updateTask(existentTask);
         } else {
             tasks.add(task.getOrder(), task);
         }
     }
 
     /**
-     * Procediment per a esborrar una tasca.
-     * @param task tasca a esborrar
+     * Procediment per esborrar una tasca
+     * @param task Tasca a esborrar
      */
     public void deleteTask(Task task) {
         if (tasks.contains(task)) {
@@ -159,19 +173,34 @@ public class Category implements Serializable {
     }
 
     /**
-     * Funció per a recuperar una tasca a partir d'un identificador.
-     * @param id_task identificador de la tasca a esborrar
-     * @return si existeix una tasca amb aquest identificador la retorna. Si no, retorna <code>null</code>
+     * Funcio per recuperar una tasca a partir d'un identificador
+     * @param taskId Identificador de la tasca a esborrar
+     * @return Si existeix una tasca amb aquest identificador la retorna. Sino, retorna <code>null</code>
      */
-    public Task getTaskWithId(String id_task){
+    public Task getTaskWithId(String taskId){
         for(Task t: tasks) {
-            if (t.getID().equals(id_task)) {
+            if(t.getId().equals(taskId)) {
                 return t;
             }
         }
         return null;
     }
 
+    /**
+     * Metode encarregat d'actualitzar la categoria a partir d'una altra
+     * @param category Categoria amb dades a actualitzar
+     */
+    public void update(Category category) {
+        name = category.name;
+        order = category.order;
+        tasks = category.tasks;
+    }
+
+    /**
+     * Equals
+     * @param o Objecte
+     * @return Si equival
+     */
     @Override
     public boolean equals(Object o) {
 
@@ -192,6 +221,10 @@ public class Category implements Serializable {
 
     }
 
+    /**
+     * Hashcode
+     * @return Hashcode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id, name, order, tasks);

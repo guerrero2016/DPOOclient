@@ -3,10 +3,11 @@ package View.edition;
 import View.edition.project.ProjectPanel;
 import View.edition.task.TaskPanel;
 import View.edition.user.UserPanel;
+import View.utils.BackgroundPanel;
+import View.utils.TransparentPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,10 +16,10 @@ import java.io.IOException;
  */
 public class EditionPanel extends BackgroundPanel {
 
-    public final static String PROJECT_PANEL = "ProjectPanel";
-    public final static String PROJECT_USER_PANEL = "ProjectUserPanel";
-    public final static String TASK_PANEL = "TaskPanel";
-    public final static String TASK_USER_PANEL = "TaskUserPanel";
+    private final static String PROJECT_PANEL = "ProjectPanel";
+    private final static String PROJECT_USER_PANEL = "ProjectUserPanel";
+    private final static String TASK_PANEL = "TaskPanel";
+    private final static String TASK_USER_PANEL = "TaskUserPanel";
 
     private final static String IMG_PATH = "img";
     private final static String EDITOR_ICON_FILE = "editor_icon.png";
@@ -82,7 +83,7 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     /**
-     * Mètode encarregat de carregar els icones per evitar futres carregues
+     * Metode encarregat de carregar els icones per evitar futres carregues
      */
     private void loadIcons() {
 
@@ -138,7 +139,7 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     /**
-     * Mètode que permet establir una imatge de fons
+     * Metode que permet establir una imatge de fons
      * @param background Imatge de fons
      */
     public void setBackgroundImage(Image background) {
@@ -162,7 +163,7 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     /**
-     * Mètode encarregat de mostrar el panell del projecte
+     * Metode encarregat de mostrar el panell del projecte
      */
     public void showProjectPanel() {
         ((CardLayout) tpCenter.getLayout()).show(tpCenter, PROJECT_PANEL);
@@ -186,7 +187,7 @@ public class EditionPanel extends BackgroundPanel {
     }
 
     /**
-     * Mètode encarregat de mostrar el panell de la tasca
+     * Metode encarregat de mostrar el panell de la tasca
      */
     public void showTaskPanel() {
         ((CardLayout) tpCenter.getLayout()).show(tpCenter, TASK_PANEL);

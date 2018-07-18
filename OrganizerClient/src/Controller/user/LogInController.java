@@ -1,7 +1,8 @@
-package Controller;
+package Controller.user;
 
-import View.LogInPanel;
-import View.SignInPanel;
+import Controller.MainViewController;
+import View.user.LogInPanel;
+import View.user.SignInPanel;
 import model.ServerObjectType;
 import model.user.UserLogIn;
 
@@ -11,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
- * Classe Listener que controla la vista d'iniciar sessió.
+ * Classe Listener que controla la vista d'iniciar sessio.
  * Implementa ActionListener.
  */
 public class LogInController implements ActionListener {
@@ -19,28 +20,32 @@ public class LogInController implements ActionListener {
     private LogInPanel view;
 
     /**
-     * Crea el controlador i li assigna la vista.
-     * @param view Vista que controlarà.
+     * Crea el controlador i li assigna la vista
+     * @param view Vista que controlara
      */
     public LogInController(LogInPanel view) {
         this.view = view;
     }
 
     /**
-     * Vincula el controlador general amb aquest.
-     * @param controller Controlador general que comunica els diferents controladors i la vista general.
+     * Vincula el controlador general amb aquest
+     * @param controller Controlador general que comunica els diferents controladors i la vista general
      */
     public void setController(MainViewController controller) {
         this.controller = controller;
     }
 
+    /**
+     * Metode encarregat de manegar els clicks dels botons
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String button = ((JButton)e.getSource()).getText();
 
         switch (button){
             case LogInPanel.SIGN:
-                controller.swapPanel(SignInPanel.SIGNIN);
+                controller.swapPanel(SignInPanel.SIGN_IN);
                 break;
 
             case LogInPanel.LOG:

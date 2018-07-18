@@ -7,9 +7,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
- * S'encarrega de la comunicació quan una tasca està acabada.
+ * S'encarrega de la comunicacio quan una tasca esta acabada
  */
 public class TaskDoneCommunicator implements Communicable {
+    /**
+     * Metode usat com a resposta del servidor quan una tasca es marcada com a finalitzada
+     * @param controller Controlador de la vista general
+     * @param objectIn InputStream que comunica amb el servidor
+     */
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {

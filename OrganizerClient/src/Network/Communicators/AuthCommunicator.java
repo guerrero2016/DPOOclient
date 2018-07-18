@@ -16,6 +16,11 @@ public class AuthCommunicator implements Communicable {
 
     private ArrayList<Project> projects;
 
+    /**
+     * Metode usat com a resposta del servidor per manegar la connecxio d'un usuari
+     * @param controller Controlador de la vista general
+     * @param objectIn InputStream que comunica amb el servidor
+     */
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
@@ -53,10 +58,10 @@ public class AuthCommunicator implements Communicable {
     }
 
     /**
-     * Funció encarregada de llegir els projectes que rep del servidor
-     * @param objectIn inputStream que s'utilitza per a la comunicació
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * Funcio encarregada de llegir els projectes que rep del servidor
+     * @param objectIn InputStream que s'utilitza per a la comunicacio
+     * @throws IOException Error
+     * @throws ClassNotFoundException Error
      */
     private void readProjects(ObjectInputStream objectIn) throws IOException, ClassNotFoundException {
 

@@ -15,6 +15,13 @@ public class UserRegister extends User {
     private String password;
     private String confirm;
 
+    /**
+     * Constructor a partir de diversos parameters
+     * @param userName Nom d'usuari
+     * @param email Email
+     * @param password Contrasenya
+     * @param confirm Confirmacio
+     */
     public UserRegister(String userName, String email, String password, String confirm) {
         this.userName = userName;
         this.email = email;
@@ -22,13 +29,9 @@ public class UserRegister extends User {
         this.confirm = confirm;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
     /**
      * Funcio encargada d'encriptar la contrasenya
-     * @return Si retorna 0 s'ha encriptat correctament, sino hi ha hagut algun error
+     * @return Si retorna 0 s'ha encriptat correctament, sino ha hagut algun error
      */
     public int encryptPassword() {
         int error = checkSignIn();
@@ -44,11 +47,12 @@ public class UserRegister extends User {
     }
 
     /**
-     * Funció encarregada de revisar si el registre és correcte.
-     * @return un codi depenent de l'error. <code>NAME_ERROR</code> si hi ha hagut error al nom. <code>EMAIL_ERROR</code>
-     *          si hi ha hagut error al email. <code>PASS_ERROR</code> si n'hi ha hagut a la contrasenya.
-     *          Si hi ha hagut error en més d'un camp, els errors es sumen; per exemple si hi ha error al nom i al email,
-     *          el codi d'error serà <code>NAME_ERROR</code> + <code>EMAIL_ERROR</code>.
+     * Funcio encarregada de revisar si el registre es correcte
+     * @return Codi d'error: <code>NAME_ERROR</code> si ha hagut error al nom; <code>EMAIL_ERROR</code>
+     *          si ha hagut error a l'email; <code>PASS_ERROR</code> si ha hagut error a la contrasenya;
+     *          si ha hagut error en més d'un camp.
+     *          Els errors es sumen. Per exemple si hi ha error al nom i a l'email,
+     *          el codi d'error sera <code>NAME_ERROR</code> + <code>EMAIL_ERROR</code>.
      */
     private int checkSignIn() {
         int error = 0;
@@ -112,5 +116,5 @@ public class UserRegister extends User {
         }
         return error;
     }
-    
+
 }

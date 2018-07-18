@@ -1,19 +1,18 @@
 package Controller.edition.task.tag;
 
-import Controller.edition.color.ColorPreviewController;
+import Controller.utils.color.ColorPreviewController;
 import Controller.edition.EditionController;
 import model.project.Tag;
-import View.edition.color.ColorChooserPanel;
+import View.utils.color.ColorChooserPanel;
 import View.edition.task.tag.TagEditionPanel;
 import View.edition.task.tag.TagPanel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Classe encarregada de gestionar els Action Event d'un TagPanel
+ * Classe encarregada de gestionar els ActionEvent d'un TagPanel
  */
 public class TagController implements ActionListener {
 
@@ -37,8 +36,8 @@ public class TagController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de distingir la'cció detectada
-     * @param e Action Event
+     * Metode encarregat de distingir l'accio detectada
+     * @param e ActionEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -50,7 +49,7 @@ public class TagController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'actualitzar una etiqueta
+     * Metode encarregat d'actualitzar una etiqueta
      */
     private void manageTagEdit() {
         if(!mainController.isEditing()) {
@@ -87,7 +86,7 @@ public class TagController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'eliminar l'etiqueta
+     * Metode encarregat d'eliminar l'etiqueta
      */
     private void tagDelete() {
         if(!mainController.isEditing()) {
@@ -106,7 +105,7 @@ public class TagController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'indicar si s'està eliminant l'etiqueta
+     * Metode encarregat d'indicar si s'esta eliminant l'etiqueta
      * @param tag Etiqueta a comparar
      * @return Si s'està eliminat
      */
@@ -115,16 +114,16 @@ public class TagController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'indicar si s'està modificant l'etiqueta
+     * Metode encarregat d'indicar si s'esta modificant l'etiqueta
      * @param tag Etiqueta a comparar
-     * @return Si s'està modificant
+     * @return Si s'esta modificant
      */
     public boolean isEditingTag(Tag tag) {
         return this.tag.equals(tag) && dialogJFrame != null && !isRemoving;
     }
 
     /**
-     * Mètode encarregat de tancar els dialog oberts pel controlador
+     * Metode encarregat de tancar els dialog oberts pel controlador
      */
     public void closeDialog() {
         if(dialogJFrame != null) {

@@ -9,9 +9,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
- * Comunicador que controla l'acció d'afegir un usuari a un projecte
+ * Comunicador que controla l'accio d'afegir un usuari a un projecte
  */
 public class UserAddedCommunicator implements Communicable {
+    /**
+     * Metode usat com a resposta del servidor quan s'afegeix un usuari al projecte
+     * @param controller Controlador de la vista general
+     * @param objectIn InputStream que comunica amb el servidor
+     */
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {

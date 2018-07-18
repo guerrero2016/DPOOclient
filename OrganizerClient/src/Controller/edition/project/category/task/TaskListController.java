@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * Classe encarregada de controlar el drag and drop d'una llista de tasques
+ * Classe encarregada de controlar el drag and drop (DnD) d'una llista de tasques
  */
 public class TaskListController extends TransferHandler {
 
@@ -21,11 +21,12 @@ public class TaskListController extends TransferHandler {
     private Category category;
     private JList<Task> jlTasks;
 
-    private int index;
+    private int oldIndex;
+    private int newIndex;
     private boolean beforeIndex = false;
 
     /**
-     * Constructor quie requereix d'un controlador extern, la categoria on pertany la llista i el component de la llista
+     * Constructor que requereix d'un controlador extern, la categoria on pertany la llista i el component de la llista
      * @param mainController Controlador extern
      * @param category Categoria de la llista
      * @param jlTasks Llista de tasques
@@ -37,9 +38,9 @@ public class TaskListController extends TransferHandler {
     }
 
     /**
-     * Mètode encarregat de retornar el tipus d'acció DnD
+     * Metode encarregat de retornar el tipus d'accio DnD
      * @param comp Component
-     * @return Tipus d'acció
+     * @return Tipus d'accio
      */
     @Override
     public int getSourceActions(JComponent comp) {
@@ -47,13 +48,14 @@ public class TaskListController extends TransferHandler {
     }
 
     /**
-     * Mètode encarregat d'iniciar el DnD
+     * Metode encarregat d'iniciar el DnD
      * @param comp Component a moure
      * @return Component que es mou
      */
     @Override
     public Transferable createTransferable(JComponent comp) {
-        index = jlTasks.getSelectedIndex();
+
+        oldIndex = jlTasks.getSelectedIndex();
         Task taskTransfer = jlTasks.getSelectedValue();
 
         return new Transferable() {
@@ -76,25 +78,31 @@ public class TaskListController extends TransferHandler {
     }
 
     /**
-     * Mètode llençat quan s'ha pogut començar un DnD exitosament
+     * Metode llencat quan s'ha pogut comencar un DnD exitosament
      * @param comp Component
      * @param trans Objecte que es mou
-     * @param action Acció
+     * @param action Accio
      */
     @Override
     public void exportDone(JComponent comp, Transferable trans, int action) {
-        if (action == MOVE) {
+        if(action == MOVE) {
+            DefaultListModel<Task> taskModel = (DefaultListModel<Task>) jlTasks.getModel();
             if(beforeIndex) {
-                ((DefaultListModel<Task>) jlTasks.getModel()).remove(index + 1);
+                taskModel.remove(oldIndex + 1);
             } else {
-                ((DefaultListModel<Task>) jlTasks.getModel()).remove(index);
+                taskModel.remove(oldIndex);
+                if(newIndex == taskModel.size()) {
+                    newIndex--;
+                }
+            }
+            if(oldIndex != newIndex) {
+                mainController.swapTask(category, oldIndex, newIndex);
             }
         }
-        mainController.swapTask(category);
     }
 
     /**
-     * Mètode que indica si l'objecte que es mou es pot colocar on està el cursor
+     * Metode que indica si l'objecte que es mou es pot colocar on esta el cursor
      * @param support Objecte que es mou
      * @return Si es pot colocar
      */
@@ -104,7 +112,7 @@ public class TaskListController extends TransferHandler {
     }
 
     /**
-     * Mètode que coloca l'objecte que s'ha deixat anar
+     * Metode que coloca l'objecte que s'ha deixat anar
      * @param support Objecte a colocar
      * @return Si s'ha pogut colocar
      */
@@ -117,14 +125,9 @@ public class TaskListController extends TransferHandler {
             DefaultListModel<Task> model = (DefaultListModel<Task>) jlTasks.getModel();
 
             if(model.contains(transferredTask)) {
-
                 model.add(dl.getIndex(), transferredTask);
-                beforeIndex = dl.getIndex() < index;
-                DefaultListModel<Task> tasks = (DefaultListModel<Task>) jlTasks.getModel();
-                for (int i = 0; i < tasks.getSize(); i++) {
-                    Task task = tasks.getElementAt(i);
-                    task.setOrder(i - 1);
-                }
+                beforeIndex = dl.getIndex() < oldIndex;
+                newIndex = dl.getIndex();
                 return true;
             }
 

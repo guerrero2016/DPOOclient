@@ -1,4 +1,4 @@
-package View;
+package View.utils;
 
 import javax.swing.*;
 
@@ -25,4 +25,5 @@ public class CustomProjectButton extends JButton {
     public int getProjectIndex() {
         return projectIndex;
     }
+
 }

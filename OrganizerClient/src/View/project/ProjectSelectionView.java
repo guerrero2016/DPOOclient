@@ -1,8 +1,8 @@
 
-package View;
+package View.project;
 
-import Controller.ProjectBoxController;
-import Controller.ProjectSelectionController;
+import Controller.project.ProjectBoxController;
+import Controller.project.ProjectSelectionController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,18 +18,19 @@ public class ProjectSelectionView extends JPanel {
     private JPanel gridPanel;
     private int nBoxes;
     private ArrayList<ProjectBoxView> projectBoxViews;
-    private ArrayList<ProjectBoxController> projectBoxControllers;
-    private ProjectSelectionController projectSelectionController;
     private GridBagConstraints gridBagConstraints;
 
     private final int numberOfColumns = 3;
 
-    public ProjectSelectionView (boolean isOwner) {
+    /**
+     * Constructor que requereix saber si es tracta d'un panell del propietari
+     * @param isOwner Si es propietari
+     */
+    public ProjectSelectionView(boolean isOwner) {
 
         this.isOwner = isOwner;
 
         projectBoxViews = new ArrayList<>();
-        projectBoxControllers = new ArrayList<>();
         setLayout(new BorderLayout());
 
         gridPanel = new JPanel(new GridBagLayout());
@@ -40,7 +41,6 @@ public class ProjectSelectionView extends JPanel {
     }
 
     public void registerController(ProjectSelectionController controller) {
-        this.projectSelectionController = controller;
         for (ProjectBoxView projectBoxView: projectBoxViews) {
             projectBoxView.registerButtonListener(controller);
         }
@@ -51,7 +51,6 @@ public class ProjectSelectionView extends JPanel {
      */
     public void resetAll () {
         projectBoxViews = new ArrayList<>();
-        projectBoxControllers = new ArrayList<>();
         gridPanel = new JPanel(new GridBagLayout());
         gridBagConstraints = new GridBagConstraints();
         scrollPane.getViewport().setView(gridPanel);
@@ -59,9 +58,9 @@ public class ProjectSelectionView extends JPanel {
 
     /**
      * Inicialitza els projectes de la vista
-     * @param titles titols dels projectes
-     * @param colors colors dels projectes
-     * @param controllers controladors dels projectes
+     * @param titles Titols dels projectes
+     * @param colors Colors dels projectes
+     * @param controllers Controladors dels projectes
      */
     public void createProjectBoxes (String [] titles, Color[] colors, ProjectBoxController[] controllers) {
         setVisible(false);
@@ -81,12 +80,12 @@ public class ProjectSelectionView extends JPanel {
     }
 
     /**
-     * Funcio que crea una caixa d'un projecte.
-     * @param title titol del projecte
-     * @param color color del projecte
-     * @param controller controlador del projecte
-     * @param x coordenada x del projecte en la graella
-     * @param y coordenada y del projecte en la graella
+     * Funcio que crea una caixa d'un projecte
+     * @param title Titol del projecte
+     * @param color Color del projecte
+     * @param controller Controlador del projecte
+     * @param x Coordenada x del projecte en la graella
+     * @param y Coordenada y del projecte en la graella
      */
     private void createProjectBoxView (String title, Color color, ProjectBoxController controller, int x, int y) {
         gridBagConstraints.fill = GridBagConstraints.NONE;
@@ -102,8 +101,8 @@ public class ProjectSelectionView extends JPanel {
     }
 
     /**
-     * Funció encarregada d'afegir la caixa d'un projecte
-     * @param title Títol del projecte
+     * Funcio encarregada d'afegir la caixa d'un projecte
+     * @param title Titol del projecte
      * @param color Color del projecte
      * @param controller Controlador del projecte
      */
@@ -119,7 +118,7 @@ public class ProjectSelectionView extends JPanel {
     }
 
     /**
-     * Funció encarregada d'eliminar un projecte
+     * Funcio encarregada d'eliminar un projecte
      * @param index Index on es troba el projecte
      */
     public void removeProject(int index) {
@@ -145,9 +144,9 @@ public class ProjectSelectionView extends JPanel {
     }
 
     /**
-     * Funció encarregada de calcular el nombre de files de la graella
+     * Funcio encarregada de calcular el nombre de files de la graella
      * @param nBoxes Nombre de caixes
-     * @return
+     * @return Nombre de files
      */
     private int calculateNumberRows (int nBoxes) {
         if (nBoxes % numberOfColumns == 0) {

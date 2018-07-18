@@ -1,6 +1,7 @@
 package Controller.edition.project;
 
 import Controller.edition.EditionController;
+import model.DataManager;
 import model.project.Category;
 import model.project.Project;
 import View.edition.project.ProjectPanel;
@@ -15,7 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Classe encarregada de controlar els Action Event d'un ProjectPanel
+ * Classe encarregada de controlar els ActionEvent d'un ProjectPanel
  */
 public class ProjectActionController implements ActionListener {
 
@@ -30,7 +31,7 @@ public class ProjectActionController implements ActionListener {
     private Project project;
 
     /**
-     * Constructor que requereix d'un controlador extern, la vista a controlar i el model del projecte
+     * Constructor que requereix d'un controlador extern, la vista a controlar i el projecte
      * @param mainController Controlador extern
      * @param view Vista a controlar
      * @param project Projecte
@@ -42,7 +43,7 @@ public class ProjectActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'identificar l'acció a realitzar
+     * Metode encarregat d'identificar l'accio a realitzar
      * @param e Action Event
      */
     @Override
@@ -62,7 +63,7 @@ public class ProjectActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de manegar els canvis de nom
+     * Metode encarregat de manegar els canvis de nom
      */
     private void projectNameManagement() {
         if(!mainController.isEditing()) {
@@ -83,21 +84,21 @@ public class ProjectActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de manegar els canvis de fons de pantalla
+     * Metode encarregat de manegar els canvis de fons de pantalla
      */
     private void backgroundManagement() {
         if(!mainController.isEditing()) {
             JFileChooser jfc = new JFileChooser();
             int result = jfc.showOpenDialog(null);
-            if(result == JFileChooser.APPROVE_OPTION) {
+            if(result == JFileChooser.APPROVE_OPTION &&
+                    DataManager.getSharedInstance().getSelectedProject() != null &&
+                    DataManager.getSharedInstance().getSelectedProject().equals(project)) {
                 File file = jfc.getSelectedFile();
                 try {
                     BufferedImage image = ImageIO.read(file);
                     if(image != null) {
                         project.setBackground(image);
-                        Project p = project;
-                        p.setBackground(image);
-                        mainController.updateProject(p);
+                        mainController.updateProject(project);
                     } else {
                         JOptionPane.showMessageDialog(null, WRONG_FORMAT_MESSAGE, FILE_ERROR_TITLE,
                                 JOptionPane.WARNING_MESSAGE);
@@ -114,7 +115,7 @@ public class ProjectActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de manegar l'eliminació del projecte
+     * Metode encarregat de manegar l'eliminacio del projecte
      */
     private void deleteProject() {
         int result = JOptionPane.showConfirmDialog(null, PROJECT_REMOVE_MESSAGE + " '" +
@@ -133,7 +134,7 @@ public class ProjectActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat d'afegir categories
+     * Metode encarregat d'afegir categories
      */
     private void addCategory() {
         if(!mainController.isEditing() && !view.getNewCategoryName().isEmpty()) {
@@ -146,7 +147,7 @@ public class ProjectActionController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de tornar a la pantalla de selecció de projectes
+     * Metode encarregat de tornar a la pantalla de seleccio de projectes
      */
     private void projectBackManagement() {
         for(int i = 0; i < project.getCategoriesSize(); i++) {

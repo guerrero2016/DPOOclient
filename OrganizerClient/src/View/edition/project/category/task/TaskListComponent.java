@@ -2,7 +2,7 @@ package View.edition.project.category.task;
 
 import model.project.Tag;
 import model.project.Task;
-import View.edition.TransparentPanel;
+import View.utils.TransparentPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ public class TaskListComponent extends JPanel implements Transferable {
     public static DataFlavor localObjectFlavor;
     static {
         try {
-            localObjectFlavor = new DataFlavor (DataFlavor.javaJVMLocalObjectMimeType);
+            localObjectFlavor = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType);
         } catch(ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -87,16 +87,32 @@ public class TaskListComponent extends JPanel implements Transferable {
 
     }
 
+    /**
+     * Getter dels DataFlavors suportats per la classe
+     * @return DataFlavors
+     */
     @Override
     public DataFlavor[] getTransferDataFlavors() {
         return supportedFlavors;
     }
 
+    /**
+     * Getter de si un DataFalvor es suportat per la classe
+     * @param flavor DataFlavor a revisar
+     * @return Si es suportat o no
+     */
     @Override
     public boolean isDataFlavorSupported(DataFlavor flavor) {
         return flavor.equals(localObjectFlavor);
     }
 
+    /**
+     * Getter de la informacio que es transmet
+     * @param flavor Informacio
+     * @return Objecte en transmissio
+     * @throws UnsupportedFlavorException Si es suportat el DataFlavor
+     * @throws IOException Error
+     */
     @Override
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
         if(isDataFlavorSupported(flavor)) {

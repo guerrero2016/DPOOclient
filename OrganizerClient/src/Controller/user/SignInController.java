@@ -1,9 +1,10 @@
-package Controller;
+package Controller.user;
 
+import Controller.MainViewController;
 import model.user.UserRegister;
-import View.LogInPanel;
+import View.user.LogInPanel;
 import model.ServerObjectType;
-import View.SignInPanel;
+import View.user.SignInPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 /**
  * Classe Listener que controla la vista de registre.
- * Implementa ActionListener.
+ * Implementa ActionListener
  */
 public class SignInController implements ActionListener {
 
@@ -21,20 +22,24 @@ public class SignInController implements ActionListener {
 
     /**
      * Crea el controlador i li assigna una vista
-     * @param view Vista que controlarà.
+     * @param view Vista que controlara
      */
     public SignInController(SignInPanel view) {
         this.view = view;
     }
 
     /**
-     * Vincula el controlador general amb aquest.
-     * @param controller Controlador general que comunica els diferents controladors i la vista general.
+     * Vincula el controlador general amb aquest
+     * @param controller Controlador general que comunica els diferents controladors i la vista general
      */
     public void setController(MainViewController controller) {
         this.controller = controller;
     }
 
+    /**
+     * Metode encarregat de gestionar els ActionEvent
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String button = ((JButton)e.getSource()).getText();

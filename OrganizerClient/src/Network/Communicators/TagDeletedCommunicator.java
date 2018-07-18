@@ -8,9 +8,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
- * Comunicador que s'encarrega de controlar l'eliminació d'un tag
+ * Comunicador que s'encarrega de controlar l'eliminacio d'una etiqueta
  */
 public class TagDeletedCommunicator implements Communicable {
+    /**
+     * Metode usat com a resposta del servidor quan una etiqueta es eliminada
+     * @param controller Controlador de la vista general
+     * @param objectIn InputStream que comunica amb el servidor
+     */
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {

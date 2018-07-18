@@ -1,6 +1,7 @@
 package Controller.edition.task.user;
 
 import Controller.edition.EditionController;
+import model.DataManager;
 import model.project.Task;
 import model.user.User;
 import View.edition.user.UserPanel;
@@ -20,23 +21,20 @@ public class TaskAddUserController implements ActionListener {
 
     private EditionController mainController;
     private UserPanel view;
-    private Task task;
 
     /**
      * Constructor que requereix d'un controlador extern, de la vista a controlar i de la tasca on pertenyen els usuaris
      * @param mainController Controlador extern
      * @param view Vista a controlar
-     * @param task Tasca a controlar
      */
-    public TaskAddUserController(EditionController mainController, UserPanel view, Task task) {
+    public TaskAddUserController(EditionController mainController, UserPanel view) {
         this.mainController = mainController;
         this.view = view;
-        this.task = task;
     }
 
     /**
-     * Mètode que afegeix un usuari si es pot
-     * @param e Action Event
+     * Metode que afegeix un usuari si es pot
+     * @param e ActionEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -44,27 +42,18 @@ public class TaskAddUserController implements ActionListener {
 
             User user = mainController.getProjectUser(view.getNewUser());
 
-            if(user != null && !isUserAdded(user)) {
+            if(user != null && !mainController.isUserAdded(user)) {
                 view.cleanNewUser();
                 mainController.addMemberInDB(user);
             } else if(user == null) {
                 JOptionPane.showMessageDialog(null, USER_NOT_FOUND_MESSAGE, USER_MESSAGE_TITLE,
                         JOptionPane.WARNING_MESSAGE);
-            } else if(isUserAdded(user)) {
+            } else {
                 JOptionPane.showMessageDialog(null, USER_ALREADY_EXISTS_MESSAGE, USER_MESSAGE_TITLE,
                         JOptionPane.WARNING_MESSAGE);
             }
 
         }
-    }
-
-    /**
-     * Mètode auxliar que indica si ja està afegit l'usuari
-     * @param user Usuari a comprovar
-     * @return Si està afegit
-     */
-    private boolean isUserAdded(User user) {
-        return task.getUsers().contains(user);
     }
 
 }

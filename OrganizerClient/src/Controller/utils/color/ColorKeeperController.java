@@ -1,6 +1,6 @@
-package Controller.edition.color;
+package Controller.utils.color;
 
-import View.edition.color.PalettePanel;
+import View.utils.color.PalettePanel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,8 +14,8 @@ public class ColorKeeperController implements ActionListener {
     protected Color color;
 
     /**
-     * Mètode encarregat d'identificar quin color s'ha clickat
-     * @param e Action event
+     * Metode encarregat d'identificar quin color s'ha clickat
+     * @param e ActionEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -35,8 +35,8 @@ public class ColorKeeperController implements ActionListener {
     }
 
     /**
-     * Geter de l'útlim color clickat (null per defecte)
-     * @return Últim color seleccionat
+     * Geter de l'utlim color clickat (null per defecte)
+     * @return Ultim color seleccionat
      */
     public Color getColor() {
         return color;

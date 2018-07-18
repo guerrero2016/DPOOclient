@@ -1,4 +1,4 @@
-package View;
+package View.utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,12 +8,12 @@ import java.awt.*;
  */
 public class CustomDialog extends JDialog{
 
-    private final JPanel view;
-
+    /**
+     * Constructopr que requereix del titol i de la vista origen
+     * @param title Titol
+     * @param view Vista
+     */
     public CustomDialog (String title, JPanel view) {
-
-        this.view = view;
-
         this.getContentPane().add(view);
         this.setTitle(title);
         this.setSize(new Dimension(600, 300));
@@ -22,11 +22,12 @@ public class CustomDialog extends JDialog{
     }
 
     /**
-     * Funcio que fa visible el dialog.
+     * Funcio que fa visible el dialog
      * @param isVisible Estat
      */
     public void setDialogVisible(boolean isVisible) {
         this.setModal(isVisible);
         this.setVisible(isVisible);
     }
+
 }

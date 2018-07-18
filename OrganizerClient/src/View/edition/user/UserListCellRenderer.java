@@ -23,6 +23,7 @@ public class UserListCellRenderer implements ListCellRenderer<User> {
 
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public Component getListCellRendererComponent(JList list, User user, int index, boolean isSelected,
                                                   boolean cellHasFocus) {
@@ -32,7 +33,7 @@ public class UserListCellRenderer implements ListCellRenderer<User> {
         memberComponent.setFont(new Font(Font.DIALOG, Font.BOLD, 16));
         memberComponent.setOpaque(true);
 
-        if (isSelected) {
+        if(isSelected) {
             memberComponent.setBackground(list.getSelectionBackground());
             memberComponent.setForeground(list.getSelectionForeground());
         } else {

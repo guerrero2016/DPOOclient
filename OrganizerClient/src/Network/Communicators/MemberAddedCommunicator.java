@@ -8,9 +8,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
- * Comunicador que controla l'acció d'afegir un membre al projecte
+ * Comunicador que controla l'accio d'afegir un membre al projecte
  */
 public class MemberAddedCommunicator implements Communicable {
+    /**
+     * Metode usat com a resposta del servidor quan un membre es afegit a una tasca
+     * @param controller Controlador de la vista general
+     * @param objectIn InputStream que comunica amb el servidor
+     */
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {

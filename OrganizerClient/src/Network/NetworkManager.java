@@ -3,8 +3,6 @@ package Network;
 import Controller.MainViewController;
 import model.ServerObjectType;
 import Utils.Configuration;
-import model.project.Project;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,26 +10,24 @@ import java.net.Socket;
 import java.util.HashMap;
 
 /**
- * Classe encarregada de controlar la conexió entre client i servidor
+ * Classe encarregada de controlar la connexio entre client i servidor
  */
 public class NetworkManager extends Thread {
 
     private boolean isOn;
     private MainViewController controller;
-    private Socket socketToServer;
     private ObjectInputStream objectIn;
     private ObjectOutputStream objectOut;
     private HashMap<ServerObjectType, Communicable> communicables;
 
     /**
-     * Crea el network manager iniciant aquells atributs necessaris per a la comunicació
+     * Crea el network manager iniciant aquells atributs necessaris per a la comunicacio
      */
     public NetworkManager() {
         try {
             this.isOn = false;
-            this.controller = controller;
             this.communicables = new HashMap<>();
-            this.socketToServer = new Socket(Configuration.getInstance().getIPAddress(), Configuration.getInstance().
+            Socket socketToServer = new Socket(Configuration.getInstance().getIPAddress(), Configuration.getInstance().
                     getCommunicationPort());
             this.objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
             this.objectIn = new ObjectInputStream(socketToServer.getInputStream());
@@ -41,15 +37,15 @@ public class NetworkManager extends Thread {
     }
 
     /**
-     * Procediment per a assignar un controlador.
-     * @param controller controlador a assignar
+     * Procediment per a assignar un controlador
+     * @param controller Controlador a assignar
      */
     public void setController(MainViewController controller) {
         this.controller = controller;
     }
 
     /**
-     * Funció encarregada de començar la conexió
+     * Funcio encarregada de comencar la conexio
      */
     public void startCommunication() {
         isOn = true;
@@ -57,13 +53,16 @@ public class NetworkManager extends Thread {
     }
 
     /**
-     * Funció encarregada de desconectar el client del servidor
+     * Funcio encarregada de desconnectar el client del servidor
      */
     public void stopCommunication() {
         this.isOn = false;
         this.interrupt();
     }
 
+    /**
+     * Metode encarregat d'iniciar la comunicacio
+     */
     @Override
     public void run() {
         //Mentres estigui conectat comprovarem si algun comunicador es cridat desde el servidor
@@ -81,7 +80,7 @@ public class NetworkManager extends Thread {
     }
 
     /**
-     * Funció encarregada d'enviar dades al servidor
+     * Funcio encarregada d'enviar dades al servidor
      * @param type Tipus de dades a enviar
      * @param object Objecte a enviar
      * @throws IOException Error
@@ -95,7 +94,7 @@ public class NetworkManager extends Thread {
     }
 
     /**
-     * Funció encarregada d'afegir un comunicador
+     * Funcio encarregada d'afegir un comunicador
      * @param communicable Comunicador
      * @param type Tipus de dada associada al comunicador
      */
@@ -104,10 +103,11 @@ public class NetworkManager extends Thread {
     }
 
     /**
-     * Funció encarregada d'eliminar un comunicador
+     * Funcio encarregada d'eliminar un comunicador
      * @param type Tipus de dades associada al comunicador
      */
     public void removeCommunicator (ServerObjectType type) {
         communicables.remove(type);
     }
+
 }

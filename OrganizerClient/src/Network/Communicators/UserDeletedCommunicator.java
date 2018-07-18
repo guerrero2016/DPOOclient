@@ -10,15 +10,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
- * S'encarrega de la comunicació quan un usuari és eliminat del projecte
+ * S'encarrega de la comunicacio quan un usuari es eliminat del projecte
  */
 public class UserDeletedCommunicator implements Communicable {
+    /**
+     * Metode usat com a resposta del servidor quan s'elimina un usuari del projecte
+     * @param controller Controlador de la vista general
+     * @param objectIn InputStream que comunica amb el servidor
+     */
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
             User user = (User) objectIn.readObject();
             DataManager dataManager = DataManager.getSharedInstance();
-            if (!user.getUserName().equals(dataManager.getUserName())) {
+            if(!user.getUserName().equals(dataManager.getUserName())) {
                 controller.userLeftProject(user);
             } else {
                 dataManager.setSelectedProject(null);

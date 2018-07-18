@@ -1,6 +1,7 @@
-package View;
+package View.project;
 
-import Controller.ProjectBoxController;
+import Controller.project.ProjectBoxController;
+import View.utils.CustomProjectButton;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,39 +11,41 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Funcio que representa una caixa d'un projecte
+ * Classe que representa una caixa d'un projecte
  */
 public class ProjectBoxView extends JPanel {
-    public static final String INFO_AC = "INFO";
-    public static final String DELETE_AC = "DELETE";
 
-    final int HEIGHT = 80;  //50
-    final int WIDTH = 180;  //180
-    final int MAX_CHARS = 10;
+    private static final String DELETE_AC = "DELETE";
+
+    private final int HEIGHT = 80;  //50
+    private final int WIDTH = 180;  //180
+    private final int MAX_CHARS = 10;
     private final static String DELETE_ICON = "img/delete_icon.png";
 
-    final JLabel titleLabel;
     private String title;
     private CustomProjectButton jbDelete;
-    private final int index;
-    private final boolean isOwner;
     private ActionListener controller;
 
+    /**
+     * Constructor que requereix de diversos parametres que especifiquen com es la caixa
+     * @param title Titol
+     * @param color Color
+     * @param index Index del projecte
+     * @param isOwner Si es un projecte del propietari
+     * @param controller Controlador
+     */
     public ProjectBoxView (String title, Color color, int index, boolean isOwner, ProjectBoxController controller) {
         setLayout(new BorderLayout());
 
-        this.index = index;
         this.title  = title;
-        this.isOwner = isOwner;
 
         JPanel jpLabel = new JPanel(new BorderLayout());
-        titleLabel = new JLabel(configureLabelMaxTextWidth(title));
+        JLabel titleLabel = new JLabel(configureLabelMaxTextWidth(title));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(HEIGHT / 2 - 5, WIDTH / 2,
                 HEIGHT / 2 + 5,WIDTH / 2));
         jpLabel.add(titleLabel, BorderLayout.EAST);
 
-        Image infoImage = null;
         Image deleteImage = null;
         try {
             deleteImage = ImageIO.read(new File(DELETE_ICON)).
@@ -77,23 +80,35 @@ public class ProjectBoxView extends JPanel {
 
     }
 
+    /**
+     * Getter del titol
+     * @return Titol
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Metode encarregat de registrar el controlador
+     * @param controller Controlador
+     */
     public void registerButtonListener (ActionListener controller){
         this.controller = controller;
         jbDelete.addActionListener(controller);
     }
 
+    /**
+     * Getter del controlador
+     * @return
+     */
     public ActionListener getController() {
         return controller;
     }
 
     /**
-     * Funcio que detecta si un titol es molt llarg, si ho es subtitueix els ultims caracters per "..."
-     * @param text
-     * @return text amb la mida arreglada
+     * Funcio que detecta si un text es molt llarg. Si ho es, subtitueix els ultims caracters per "..."
+     * @param text Text
+     * @return Text amb la mida correcta
      */
     private String configureLabelMaxTextWidth (String text) {
         if (text.length() > MAX_CHARS) {

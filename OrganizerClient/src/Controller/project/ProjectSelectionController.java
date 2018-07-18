@@ -1,6 +1,8 @@
-package Controller;
+package Controller.project;
 
-import View.*;
+import Controller.MainViewController;
+import View.project.ProjectSelectionView;
+import View.project.ProjectsMainView;
 import model.ServerObjectType;
 import model.project.Project;
 import javax.swing.*;
@@ -10,20 +12,32 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Classe encarregada de controlar la vista de seleccio de projectes
+ */
 public class ProjectSelectionController implements ActionListener {
+
     private final ProjectSelectionView view;
     private MainViewController controller;
 
+    /**
+     * Constructor a partir de la vista a controlar
+     * @param view Vista dels projectes
+     */
     public ProjectSelectionController (ProjectSelectionView view) {
         this.view = view;
     }
 
+    /**
+     * Setter del controlador principal
+     * @param controller Controlador
+     */
     public void setController(MainViewController controller) {
         this.controller = controller;
     }
 
     /**
-     * Funcio que fa la peticio al network manager per afegir un projecte.
+     * Funcio que fa la peticio al network manager per afegir un projecte
      * @param project Projecte a demanar
      */
     public void requestProject(Project project) {
@@ -98,7 +112,7 @@ public class ProjectSelectionController implements ActionListener {
     }
 
     /**
-     * Funcio encarregada de crear la vista on l'usuari creara un nou projecte.
+     * Funcio encarregada de crear la vista on l'usuari creara un nou projecte
      */
     private void createAddProjectWindow () {
         final ProjectCreationController  projectCreationController =

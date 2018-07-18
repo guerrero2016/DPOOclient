@@ -7,9 +7,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
- * S'encarrega de la comunicació quan una tasca es marca com a no feta.
+ * S'encarrega de la comunicacio quan una tasca es marca com a no feta
  */
 public class TaskNotDoneCommunicator implements Communicable {
+    /**
+     * Metode usat com a resposta del servidor quan una tasca es marcada com a no acabada
+     * @param controller Controlador de la vista general
+     * @param objectIn InputStream que comunica amb el servidor
+     */
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {

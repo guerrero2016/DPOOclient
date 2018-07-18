@@ -1,5 +1,6 @@
-package Controller;
+package Controller.project;
 
+import Controller.MainViewController;
 import model.ServerObjectType;
 import model.project.Project;
 
@@ -10,20 +11,25 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 
 /**
- * Classe encarregada de controlar cada projecte.
+ * Classe encarregada de controlar cada projecte
  */
 public class ProjectBoxController implements MouseListener, ActionListener {
 
     private final Project project;
     private MainViewController controller;
 
+    /**
+     * Constructor a partir del projecte a controlar i del controlador principal
+     * @param project Projecte a controlar
+     * @param controller Controlador principal
+     */
     public ProjectBoxController(Project project, MainViewController controller) {
         this.project = project;
         this.controller = controller;
     }
 
     /**
-     * Mètode encarregat de demanar al servidor la informació del projecte clickat
+     * Metode encarregat de demanar al servidor la informacio del projecte clickat
      * @param e Mouse event
      */
     @Override
@@ -37,6 +43,10 @@ public class ProjectBoxController implements MouseListener, ActionListener {
         }
     }
 
+    /**
+     * Metode encarregat de demanar al servidor eliminar el projecte
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -46,12 +56,31 @@ public class ProjectBoxController implements MouseListener, ActionListener {
         }
     }
 
+    /**
+     * Metode no usat
+     * @param e MouseEvent
+     */
     @Override
     public void mousePressed(MouseEvent e) {}
+
+    /**
+     * Metode no usat
+     * @param e MouseEvent
+     */
     @Override
     public void mouseReleased(MouseEvent e) {}
+
+    /**
+     * Metode no usat
+     * @param e MouseEvent
+     */
     @Override
     public void mouseEntered(MouseEvent e) {}
+
+    /**
+     * Metode no usat
+     * @param e MouseEvent
+     */
     @Override
     public void mouseExited(MouseEvent e) {}
 

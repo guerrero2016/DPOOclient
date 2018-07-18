@@ -8,12 +8,16 @@ import Network.Communicable;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
 
 /**
- * Comunicador que s'encarrega de escoltar si algun usuari ha afegit o modificat alguna tasca.
+ * Comunicador que s'encarrega d'escoltar si algun usuari ha afegit o modificat alguna tasca
  */
 public class TaskSetCommunicator implements Communicable {
+    /**
+     * Metode usat com a resposta del servidor quan s'edita o afegeix una tasca
+     * @param controller Controlador de la vista general
+     * @param objectIn InputStream que comunica amb el servidor
+     */
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
@@ -31,7 +35,7 @@ public class TaskSetCommunicator implements Communicable {
                 }
             }
             for(i = 0; i < c.getTasksSize(); i++) {
-                if(task.getID().equals(c.getTasks().get(i).getID())) {
+                if(task.getId().equals(c.getTasks().get(i).getId())) {
                     exists = true;
                     break;
                 }
@@ -43,13 +47,11 @@ public class TaskSetCommunicator implements Communicable {
                         setDescription(task.getDescription());
                 controller.getEditionController().updateTaskInView(categoryID, task);
             } else {
-                DataManager.getSharedInstance().getSelectedProject().getCategories().get(j).getTasks().add(task);
                 controller.getEditionController().addTask(c.getOrder(), task);
             }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 }

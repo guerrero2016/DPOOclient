@@ -1,13 +1,13 @@
-package View;
+package View.project;
 
-import Controller.ProjectSelectionController;
-import Controller.ProjectsMainViewController;
-import model.project.Project;
+import Controller.project.ProjectsMainViewController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
+/**
+ * Classe que representa el panell dels projectes dels usuaris
+ */
 public class ProjectsMainView extends JPanel {
 
     public static final String VIEW_NAME = "ProjectsView";
@@ -20,6 +20,11 @@ public class ProjectsMainView extends JPanel {
 
     private final int S_WIDTH = 1200;
 
+    /**
+     * Constructor que requereix d'un panell de projectes del que s'es propietari i un dels projectes compartits
+     * @param ownerSelection Panell projectes propis
+     * @param sharedSelection Panell projectes compartits
+     */
     public ProjectsMainView (ProjectSelectionView ownerSelection, ProjectSelectionView sharedSelection) {
 
         JPanel ownerPane = new JPanel(new BorderLayout());
@@ -62,8 +67,13 @@ public class ProjectsMainView extends JPanel {
         add(jSplitPane, BorderLayout.CENTER);
 
         setVisible(true);
+
     }
 
+    /**
+     * Metode encarregat de registrar el controlador de la vista
+     * @param controller Controlador
+     */
     public void registerController (ProjectsMainViewController controller) {
         ownerProjectSelectionView.registerController(controller.getOwnerSelectionController());
         friendProjectSelectionView.registerController(controller.getSharedSelectionController());

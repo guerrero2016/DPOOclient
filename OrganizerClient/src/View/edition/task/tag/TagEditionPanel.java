@@ -1,12 +1,12 @@
 package View.edition.task.tag;
 
-import View.edition.color.ColorChooserPanel;
+import View.utils.color.ColorChooserPanel;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * Classe que representa el panell d'edició d'etiquetes.
+ * Classe que representa el panell d'edicio d'etiquetes
  */
 public class TagEditionPanel extends JPanel {
 
@@ -17,7 +17,7 @@ public class TagEditionPanel extends JPanel {
 
     /**
      * Crea un el panell i assigna el nom de l'etiqueta
-     * @param tagName nom de l'etiqueta a editar
+     * @param tagName Nom de l'etiqueta a editar
      */
     public TagEditionPanel(String tagName) {
 
@@ -41,16 +41,16 @@ public class TagEditionPanel extends JPanel {
     }
 
     /**
-     * Funció que recupera el nom de l'etiqueta
-     * @return nom de l'etiqueta
+     * Funcio que recupera el nom de l'etiqueta
+     * @return Nom de l'etiqueta
      */
     public String getTagName() {
         return jtfTagName.getText();
     }
 
     /**
-     * Funció que recupera el color elegit.
-     * @return color elegit.
+     * Funcio que recupera el color escollit
+     * @return Color escollit
      */
     public ColorChooserPanel getColorChooserPanel() {
         return colorChooserPanel;

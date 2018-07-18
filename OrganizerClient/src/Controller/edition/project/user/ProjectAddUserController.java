@@ -25,7 +25,7 @@ public class ProjectAddUserController implements ActionListener {
     }
 
     /**
-     * Mètode encarregat de generar una invitació
+     * Metode encarregat de generar una invitacio
      * @param e Action Event
      */
     @Override

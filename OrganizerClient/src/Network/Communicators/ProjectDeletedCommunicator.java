@@ -9,9 +9,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
- * Comunicador que s'encarrega de controlar l'eliminació d'un projecte
+ * Comunicador que s'encarrega de controlar l'eliminacio d'un projecte
  */
 public class ProjectDeletedCommunicator implements Communicable {
+    /**
+     * Metode usat com a resposta del servidor quan un projecte es eliminat
+     * @param controller Controlador de la vista general
+     * @param objectIn InputStream que comunica amb el servidor
+     */
     @Override
     public void communicate(MainViewController controller, ObjectInputStream objectIn) {
         try {
@@ -20,6 +25,10 @@ public class ProjectDeletedCommunicator implements Communicable {
 
             if (dataManager.getUserName().equals(p.getOwnerName())) {
                 p.setOwner(true);
+            }
+
+            if(p.equals(dataManager.getSelectedProject())) {
+                dataManager.setSelectedProject(null);
             }
 
             if (p.isOwner()) {

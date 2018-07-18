@@ -1,14 +1,14 @@
 package View.edition.task.tag;
 
 import model.project.Tag;
-import View.edition.TransparentPanel;
+import View.utils.TransparentPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * Classe que representa una etiqueta a la vista.
+ * Classe que representa una etiqueta a la vista
  */
 public class TagPanel extends JPanel {
 
@@ -30,10 +30,10 @@ public class TagPanel extends JPanel {
     private ActionListener actionListener;
 
     /**
-     * Crea el panell de la tasca amb els diferents botons i amb el nom de la tasca correcsponent.
-     * @param editorIcon icona d'edició
-     * @param deleteIcon icona d'eliminar
-     * @param tag tag que representa
+     * Crea el panell de la tasca amb els diferents botons i amb el nom de la tasca correcsponent
+     * @param editorIcon Icona d'edicio
+     * @param deleteIcon Icona d'eliminar
+     * @param tag Tag que representa
      */
     public TagPanel(Image editorIcon, Image deleteIcon, Tag tag) {
 
@@ -85,7 +85,7 @@ public class TagPanel extends JPanel {
     }
 
     /**
-     * Procediment que assigna el nom de la tasca. Si és massa llarg l'escurça
+     * Procediment que assigna el nom de la tasca. Si es massa llarg l'escurca
      * @param tagName Nom de l'etiqueta
      */
     public void setTagName(String tagName) {
@@ -98,15 +98,15 @@ public class TagPanel extends JPanel {
     }
 
     /**
-     * Procediment que assigna el color del panell.
-     * @param tagColor color de la tasca que representa
+     * Procediment que assigna el color del panell
+     * @param tagColor Color de la tasca que representa
      */
     public void setTagColor(Color tagColor) {
         setBackground(tagColor);
     }
 
     /**
-     * Funció que recupera l'ActionListener
+     * Funcio que recupera l'ActionListener
      * @return ActionListener del panell
      */
     public ActionListener getActionListener() {
@@ -123,7 +123,7 @@ public class TagPanel extends JPanel {
     }
 
     /**
-     * Procediment que registra un ActionListener als botons.
+     * Procediment que registra un ActionListener als botons
      * @param actionListener Controlador
      */
     public void registerActionController(ActionListener actionListener) {

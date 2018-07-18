@@ -1,6 +1,6 @@
-package Controller;
+package Controller.project;
 
-import View.AddProjectView;
+import View.project.AddProjectView;
 import model.project.Project;
 
 import javax.swing.*;
@@ -10,13 +10,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- * Classe que controla la pantalla de creacio de projectes.
+ * Classe que controla la pantalla de creacio de projectes
  */
 public class ProjectCreationController implements MouseListener, ActionListener {
 
     private ProjectSelectionController projectSelectionController;
     private AddProjectView view;
 
+    /**
+     * Constructor a partir del controlador de seleccio de projectes
+     * @param projectSelectionController Controlador de seleccio de projectes
+     */
     public ProjectCreationController(ProjectSelectionController projectSelectionController) {
         this.projectSelectionController = projectSelectionController;
     }
@@ -30,6 +34,10 @@ public class ProjectCreationController implements MouseListener, ActionListener 
         view.setDialogVisible(true);
     }
 
+    /**
+     * Metode encarregat de manegar ActionEvents
+     * @param e ActionEvent
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String button = ((JButton)e.getSource()).getText();
@@ -47,18 +55,41 @@ public class ProjectCreationController implements MouseListener, ActionListener 
         }
     }
 
+    /**
+     * Metode encarregat de controlar els clicks del ratoli
+     * @param e
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         JPanel colorPanel = (JPanel) e.getSource();
         view.selectColor(colorPanel);
     }
 
+    /**
+     * Metode no usat
+     * @param e MouseEvent
+     */
     @Override
     public void mousePressed(MouseEvent e) {}
+
+    /**
+     * Metode no usat
+     * @param e MouseEvent
+     */
     @Override
     public void mouseReleased(MouseEvent e) {}
+
+    /**
+     * Metode no usat
+     * @param e MouseEvent
+     */
     @Override
     public void mouseEntered(MouseEvent e) {}
+
+    /**
+     * Metode no usat
+     * @param e MouseEvent
+     */
     @Override
     public void mouseExited(MouseEvent e) {}
 

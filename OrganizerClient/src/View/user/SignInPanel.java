@@ -1,21 +1,19 @@
-package View;
+package View.user;
 
-import Controller.SignInController;
-import model.user.User;
 import model.user.UserRegister;
 
 import javax.swing.*;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * Classe que genera el panell per a registrar-se.
+ * Classe que genera el panell per a registrar-se
  */
 public class SignInPanel extends JPanel {
+
     public static final String SIGN = "REGISTER";
     public static final String LOG = "LOG IN";
-    public static final int SIGNIN = 0;
+    public static final int SIGN_IN = 0;
 
     private JTextField jtfEmail;
     private JTextField jtfUsername;
@@ -25,7 +23,7 @@ public class SignInPanel extends JPanel {
     private JButton jbLogIn;
 
     /**
-     * Crea el panell amb els diferents botons i zones de text.
+     * Crea el panell amb els diferents botons i zones de text
      */
     public SignInPanel() {
 
@@ -131,9 +129,9 @@ public class SignInPanel extends JPanel {
     }
 
     /**
-     * Funció que recupera allò escrit en les diferents zones de text.
-     * @return Un objecte de tipus <code>UserRegister</code> amb els atributs iniciats amb el que l'usuari ha escrit.
-     *         Si els camps de la contraseny no tenen majúscula, es posen a <code>null</code>
+     * Funcio que recupera allo escrit en les diferents zones de text
+     * @return Un objecte de tipus <code>UserRegister</code> amb els atributs iniciats amb allo escrit per l'usuari
+     *         Si els camps de la contrasenya no tenen majuscula, es posen a <code>null</code>
      */
     public UserRegister getRegister() {
         String username = jtfUsername.getText();
@@ -146,9 +144,9 @@ public class SignInPanel extends JPanel {
     }
 
     /**
-     * Procediment que s'encarrega de, donat un codi d'error, saber quins són els camps els quals contenen errors.
-     * Pinta els camps amb errors de color vermerll.
-     * @param error
+     * Procediment que s'encarrega de, donat un codi d'error, saber quins son els camps els quals contenen errors
+     * Pinta els camps amb errors de color vermerll
+     * @param error Codi d'error
      */
     private void setErrorsView(int error){
         clearFieldsBorder();
@@ -168,9 +166,9 @@ public class SignInPanel extends JPanel {
     }
 
     /**
-     * Procediment que pinta el Border del JTextField del correu.
-     * @param color camp que indica de quin color es vol pintar. Si es <code>null</code>, es retorna al color per
-     *              defecte.
+     * Procediment que pinta el Border del JTextField del correu
+     * @param color Camp que indica de quin color es vol pintar. Si es <code>null</code>, es retorna al color per
+     *              defecte
      */
     private void setEmailBorder(Color color) {
         if (color == null) {
@@ -181,9 +179,9 @@ public class SignInPanel extends JPanel {
     }
 
     /**
-     * Procediment que pinta el Border dels JTextField de contrasenya i de confirm.
-     * @param color camp que indica de quin color es vol pintar. Si es <code>null</code>, es retorna al color per
-     *              defecte.
+     * Procediment que pinta el Border dels JTextField de contrasenya i de confirm
+     * @param color Camp que indica de quin color es vol pintar. Si es <code>null</code>, es retorna al color per
+     *              defecte
      */
     private void setPasswordBorder(Color color) {
         if (color == null) {
@@ -197,9 +195,9 @@ public class SignInPanel extends JPanel {
     }
 
     /**
-     * Procediment que pinta el Border del JTextField d'usuari.
-     * @param color camp que indica de quin color es vol pintar. Si es <code>null</code>, es retorna al color per
-     *              defecte.
+     * Procediment que pinta el Border del JTextField d'usuari
+     * @param color Camp que indica de quin color es vol pintar. Si es <code>null</code>, es retorna al color per
+     *              defecte
      */
     private void setUsernameBorder(Color color) {
         if (color == null) {
@@ -210,7 +208,7 @@ public class SignInPanel extends JPanel {
     }
 
     /**
-     * Procediment que neteja els colors dels Borders dels JTextFields.
+     * Procediment que neteja els colors dels Borders dels JTextFields
      */
     private void clearFieldsBorder() {
         setEmailBorder(null);
@@ -219,10 +217,10 @@ public class SignInPanel extends JPanel {
     }
 
     /**
-     * Procediment que registra els botons amb un <code>ActionListener</code>.
-     * @param al <code>ActionListener</code> el qual serà notificat quan es premi un botó.
+     * Procediment que registra els botons amb un <code>ActionListener</code>
+     * @param al <code>ActionListener</code> el qual serà notificat quan es premi un boto
      */
-    public void addControllerButton (ActionListener al) {
+    public void addControllerButton(ActionListener al) {
         jbLogIn.addActionListener(al);
         jbSignIn.addActionListener(al);
     }
@@ -237,4 +235,5 @@ public class SignInPanel extends JPanel {
         jpfPassword.setText(null);
         jpfConfirm.setText(null);
     }
+
 }
