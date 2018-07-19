@@ -51,8 +51,8 @@ public class Category implements Serializable {
         name = category.name;
         order = category.order;
         tasks = new ArrayList<>();
-        for(int i = 0; i < category.tasks.size(); i++) {
-            tasks.add(new Task(tasks.get(i)));
+        for(int i = 0; category.tasks != null && i < category.tasks.size(); i++) {
+            tasks.add(new Task(category.tasks.get(i)));
         }
     }
 

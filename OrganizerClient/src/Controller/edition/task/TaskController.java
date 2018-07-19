@@ -88,7 +88,11 @@ public class TaskController implements ActionListener {
             view.setTaskNameEditable(true, task.getName());
         } else {
             if(view.isTaskNameEditable()) {
-                view.setTaskNameEditable(false, view.getTaskName());
+                String name = view.getTaskName();
+                if(name.isEmpty()) {
+                    name = task.getName();
+                }
+                view.setTaskNameEditable(false, name);
                 Task t =  new Task(task);
                 t.setName(view.getTaskName());
                 mainController.updateTask(t);
@@ -180,6 +184,14 @@ public class TaskController implements ActionListener {
      */
     private void taskNotDoneManagement() {
         mainController.setTaskNotDoneInDB();
+    }
+
+    /**
+     * Setter de la tasca
+     * @param task Tasca
+     */
+    public void setTask(Task task) {
+        this.task = task;
     }
 
 }
