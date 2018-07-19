@@ -129,11 +129,11 @@ public class Category implements Serializable {
      * @return Posicio de la tasca en la llista
      */
     public int getTaskIndex(Task task) {
-        if(tasks.contains(task)) {
-            return tasks.indexOf(task);
-        } else {
-            return INVALID_INDEX;
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getId().equals(task.getId()))
+                return i;
         }
+        return INVALID_INDEX;
     }
 
     /**
