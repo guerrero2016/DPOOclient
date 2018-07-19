@@ -24,7 +24,8 @@ public class TaskSwapCommunicator implements Communicable {
             final ArrayList<Task> tasks = (ArrayList<Task>) objectIn.readObject();
             final String categoryID = (String) objectIn.readObject();
             DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID).setTasks(tasks);
-            controller.getEditionController().swapTasksInView(categoryID);
+            controller.getEditionController().swapTasksInView(categoryID, tasks);
+            controller.getEditionController().updateTaskControllers(categoryID);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

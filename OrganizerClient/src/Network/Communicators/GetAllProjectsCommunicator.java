@@ -29,9 +29,9 @@ public class GetAllProjectsCommunicator implements Communicable {
         DataManager dataManager = DataManager.getSharedInstance();
         try {
 
-            DataManager.getSharedInstance().setSelectedProject(null);
             Object username = objectIn.readObject();
             if (username == null) {
+                DataManager.getSharedInstance().setSelectedProject(null);
                 controller.showDialog("El projecte en el que estaves s'ha eliminat.");
                 controller.getEditionController().removeCommunicators();
             } else {

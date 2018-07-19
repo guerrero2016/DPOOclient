@@ -85,19 +85,11 @@ public class TaskListController extends TransferHandler {
      */
     @Override
     public void exportDone(JComponent comp, Transferable trans, int action) {
-        if(action == MOVE) {
-            DefaultListModel<Task> taskModel = (DefaultListModel<Task>) jlTasks.getModel();
-            if(beforeIndex) {
-                taskModel.remove(oldIndex + 1);
-            } else {
-                taskModel.remove(oldIndex);
-                if(newIndex == taskModel.size()) {
-                    newIndex--;
-                }
-            }
-            if(oldIndex != newIndex) {
-                mainController.swapTask(category, oldIndex, newIndex);
-            }
+        if(newIndex > oldIndex) {
+            newIndex--;
+        }
+        if(action == MOVE && oldIndex != newIndex) {
+            mainController.swapTask(category, oldIndex, newIndex);
         }
     }
 
@@ -125,8 +117,6 @@ public class TaskListController extends TransferHandler {
             DefaultListModel<Task> model = (DefaultListModel<Task>) jlTasks.getModel();
 
             if(model.contains(transferredTask)) {
-                model.add(dl.getIndex(), transferredTask);
-                beforeIndex = dl.getIndex() < oldIndex;
                 newIndex = dl.getIndex();
                 return true;
             }

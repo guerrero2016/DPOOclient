@@ -65,7 +65,11 @@ public class CategoryActionController implements ActionListener {
             view.setCategoryNameEditable(true, category.getName());
         } else {
             if(view.isCategoryNameEditable()) {
-                view.setCategoryNameEditable(false, view.getCategoryName());
+                String name = view.getCategoryName();
+                if(name.isEmpty()) {
+                    name = category.getName();
+                }
+                view.setCategoryNameEditable(false, name);
                 Category c = new Category(category);
                 c.setName(view.getCategoryName());
                 mainController.updateCategory(c);

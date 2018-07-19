@@ -27,7 +27,6 @@ import View.edition.task.TaskPanel;
 import View.edition.task.tag.TagPanel;
 import View.edition.user.UserPanel;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -827,8 +826,10 @@ public class EditionController {
      * Metode encarregat de canviar l'ordre de les tasques al projecte
      * @param categoryID Id de la categoria de les tasques
      */
-    public void swapTasksInView(String categoryID) {
-        projectPanel.getCategoryPanel(project.getCategoryIndex(project.getCategoryWithId(categoryID))).updateTasksList();
+    public void swapTasksInView(String categoryID, ArrayList<Task> tasks) {
+        CategoryPanel categoryPanel =
+                projectPanel.getCategoryPanel(project.getCategoryIndex(project.getCategoryWithId(categoryID)));
+        categoryPanel.updateTasksList(tasks);
     }
 
     /**
@@ -862,6 +863,21 @@ public class EditionController {
     public boolean isUserAdded(User user) {
         Task targetTask = project.getCategoryWithId(category.getId()).getTaskWithId(task.getId());
         return targetTask.getUsers().contains(user);
+    }
+
+    /**
+     * Metode encarregat d'actualitzar els controladors de la tasca en edicio d'una categoria
+     * @param categoryId Id de la categoria
+     */
+    public void updateTaskControllers(String categoryId) {
+        if(task != null) {
+            Category targetCategory = project.getCategoryWithId(categoryId);
+            Task targetTask = targetCategory.getTaskWithId(task.getId());
+            if(targetTask != null) {
+                TaskController taskController = (TaskController) taskPanel.getActionListener();
+                taskController.setTask(targetTask);
+            }
+        }
     }
 
 }

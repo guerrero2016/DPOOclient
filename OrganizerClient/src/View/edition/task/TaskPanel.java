@@ -564,6 +564,14 @@ public class TaskPanel extends TransparentPanel implements DocumentEnablePanel {
     }
 
     /**
+     * Getter de l'ActionListener
+     * @return ActionListener
+     */
+    public ActionListener getActionListener() {
+        return actionListener;
+    }
+
+    /**
      * Procediment que assigna un DocumentListener al camp de text
      * @param documentListener Listener del text
      */
