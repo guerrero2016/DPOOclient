@@ -300,7 +300,11 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
     /**
      * Metode encarregat d'actualitzar la llista de tasques
      */
-    public void updateTasksList() {
+    public void updateTasksList(ArrayList<Task> tasks) {
+        tasksList.removeAllElements();
+        for (Task t : tasks) {
+            tasksList.addElement(t);
+        }
         revalidate();
         repaint();
     }

@@ -827,8 +827,8 @@ public class EditionController {
      * Metode encarregat de canviar l'ordre de les tasques al projecte
      * @param categoryID Id de la categoria de les tasques
      */
-    public void swapTasksInView(String categoryID) {
-        projectPanel.getCategoryPanel(project.getCategoryIndex(project.getCategoryWithId(categoryID))).updateTasksList();
+    public void swapTasksInView(String categoryID, ArrayList<Task> tasks) {
+        projectPanel.getCategoryPanel(project.getCategoryIndex(project.getCategoryWithId(categoryID))).updateTasksList(tasks);
     }
 
     /**
