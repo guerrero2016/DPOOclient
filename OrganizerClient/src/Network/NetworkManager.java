@@ -86,6 +86,7 @@ public class NetworkManager extends Thread {
      * @throws IOException Error
      */
     public void sendToServer(ServerObjectType type, Object object) throws IOException {
+        objectOut.reset();
         objectOut.flush();
         if (type != null) {
             objectOut.writeInt(type.getValue());
