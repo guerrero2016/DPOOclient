@@ -756,6 +756,8 @@ public class EditionController {
         Task targetTask = targetCategory.getTaskWithId(taskId);
 
         if(task != null && task.getId().equals(taskId)) {
+            TaskController taskController = (TaskController) taskPanel.getActionListener();
+            taskController.setTask(targetTask);
             taskPanel.setTaskFinished(true);
         }
 
@@ -785,6 +787,8 @@ public class EditionController {
         Task targetTask = targetCategory.getTaskWithId(taskId);
 
         if(task != null && task.getId().equals(taskId)) {
+            TaskController taskController = (TaskController) taskPanel.getActionListener();
+            taskController.setTask(targetTask);
             taskPanel.setTaskFinished(false);
         }
 

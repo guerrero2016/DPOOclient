@@ -85,6 +85,7 @@ public class AddProjectView extends JPanel {
      * @param isVisible Estat
      */
     public void setDialogVisible(boolean isVisible) {
+        dialog.setLocationRelativeTo(null);
         dialog.setDialogVisible(isVisible);
     }
 
