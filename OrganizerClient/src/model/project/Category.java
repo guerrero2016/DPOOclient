@@ -118,7 +118,7 @@ public class Category implements Serializable {
      */
     public void setTasks(ArrayList<Task> tasks) {
         if(tasks != null) {
-            this.tasks = new ArrayList<>();
+            this.tasks.clear();
             this.tasks.addAll(tasks);
         }
     }
@@ -167,7 +167,10 @@ public class Category implements Serializable {
      * @param task Tasca a esborrar
      */
     public void deleteTask(Task task) {
-        if (tasks.contains(task)) {
+        if(tasks.contains(task)) {
+            for(int i = tasks.indexOf(task); i < tasks.size(); i++) {
+                tasks.get(i).setOrder(i - 1);
+            }
             tasks.remove(task);
         }
     }

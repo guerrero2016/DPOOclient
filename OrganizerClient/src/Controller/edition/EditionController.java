@@ -426,18 +426,20 @@ public class EditionController {
 
     /**
      * Metode encarregat d'eliminar una tasca de la vista
-     * @param task Tasca a eliminar
+     * @param targetTask Tasca a eliminar
+     * @param categoryId Id de la categoria
      */
-    public void deleteTaskInView(Task task, Category category) {
+    public void deleteTaskInProject(Task targetTask, String categoryId) {
 
-        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(category));
-        categoryPanel.removeTask(task);
+        Category targetCategory = project.getCategoryWithId(categoryId);
+        CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory));
+        categoryPanel.removeTask(targetTask);
 
-        if(this.category != null && this.category.getId().equals(category.getId())) {
+        if(task != null && task.getId().equals(targetTask.getId())) {
             showProjectContent();
         }
 
-        category.deleteTask(task);
+        targetCategory.deleteTask(targetTask);
 
     }
 

@@ -23,10 +23,8 @@ public class TaskDeletedCommunicator implements Communicable {
         try {
             Task task = (Task)objectIn.readObject();
             String categoryID = objectIn.readObject().toString();
-            Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryID);
-            controller.getEditionController().deleteTaskInView(task, category);
+            controller.getEditionController().deleteTaskInProject(task, categoryID);
             DataManager.getSharedInstance().updateTasksOrder(categoryID, task.getOrder());
-            controller.getEditionController().showProjectContent();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

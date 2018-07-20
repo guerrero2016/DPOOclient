@@ -389,11 +389,7 @@ public class Task implements Serializable{
         }
 
         Task task = (Task) o;
-        return order == task.order &&
-                Objects.equals(name, task.name) &&
-                Objects.equals(description, task.description) &&
-                Objects.equals(tags, task.tags) &&
-                Objects.equals(users, task.users);
+        return Objects.equals(id, task.id);
 
     }
 
