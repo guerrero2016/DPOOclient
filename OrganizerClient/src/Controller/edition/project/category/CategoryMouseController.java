@@ -14,16 +14,16 @@ import java.awt.event.MouseListener;
 public class CategoryMouseController implements MouseListener{
 
     private EditionController mainController;
-    private Category category;
+    private String categoryId;
 
     /**
      * Constructor a partir del controlador d'edicio principal i de la categoria a controlar
      * @param mainController Controlador principal
-     * @param category Categoria
+     * @param categoryId Id de la categoria
      */
-    public CategoryMouseController(EditionController mainController, Category category) {
+    public CategoryMouseController(EditionController mainController, String categoryId) {
         this.mainController = mainController;
-        this.category = category;
+        this.categoryId = categoryId;
     }
 
     /**
@@ -38,7 +38,7 @@ public class CategoryMouseController implements MouseListener{
             int index = tasksList.locationToIndex(e.getPoint());
 
             if(index == tasksList.getSelectedIndex()) {
-                mainController.setTaskContent(category, tasksList.getSelectedValue());
+                mainController.setTaskContent(categoryId, tasksList.getSelectedValue().getId());
                 mainController.showTaskContent();
             }
 

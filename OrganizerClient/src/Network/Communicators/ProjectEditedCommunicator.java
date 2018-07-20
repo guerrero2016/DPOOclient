@@ -35,7 +35,6 @@ public class ProjectEditedCommunicator implements Communicable {
                 }
 
                 if (dataManager.getWhatPanel() == MainView.PROJECT_ID) {
-                    DataManager.getSharedInstance().setSelectedProject(p);
                     controller.updateProject(p);
                 } else if(dataManager.getWhatPanel() == ProjectsMainView.VIEW_TAG) {
                     if(p.isOwner()) {

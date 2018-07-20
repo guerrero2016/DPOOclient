@@ -28,18 +28,15 @@ public class ProjectActionController implements ActionListener {
 
     private EditionController mainController;
     private ProjectPanel view;
-    private Project project;
 
     /**
      * Constructor que requereix d'un controlador extern, la vista a controlar i el projecte
      * @param mainController Controlador extern
      * @param view Vista a controlar
-     * @param project Projecte
      */
-    public ProjectActionController(EditionController mainController, ProjectPanel view, Project project) {
+    public ProjectActionController(EditionController mainController, ProjectPanel view) {
         this.mainController = mainController;
         this.view = view;
-        this.project = project;
     }
 
     /**
@@ -66,6 +63,7 @@ public class ProjectActionController implements ActionListener {
      * Metode encarregat de manegar els canvis de nom
      */
     private void projectNameManagement() {
+        Project project = DataManager.getSharedInstance().getSelectedProject();
         if(!mainController.isEditing()) {
             mainController.setEditingState(true);
             view.setProjectNameEditable(true, project.getName());
@@ -87,6 +85,7 @@ public class ProjectActionController implements ActionListener {
      * Metode encarregat de manegar els canvis de fons de pantalla
      */
     private void backgroundManagement() {
+        Project project = DataManager.getSharedInstance().getSelectedProject();
         if(!mainController.isEditing()) {
             JFileChooser jfc = new JFileChooser();
             int result = jfc.showOpenDialog(null);
@@ -118,6 +117,7 @@ public class ProjectActionController implements ActionListener {
      * Metode encarregat de manegar l'eliminacio del projecte
      */
     private void deleteProject() {
+        Project project = DataManager.getSharedInstance().getSelectedProject();
         int result = JOptionPane.showConfirmDialog(null, PROJECT_REMOVE_MESSAGE + " '" +
                 project.getName() + "'?", PROJECT_REMOVE_TITLE, JOptionPane.
                 OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -150,6 +150,7 @@ public class ProjectActionController implements ActionListener {
      * Metode encarregat de tornar a la pantalla de seleccio de projectes
      */
     private void projectBackManagement() {
+        Project project = DataManager.getSharedInstance().getSelectedProject();
         for(int i = 0; i < project.getCategoriesSize(); i++) {
             CategoryPanel categoryPanel = view.getCategoryPanel(i);
             categoryPanel.setCategoryNameEditable(false, project.getCategory(i).getName());

@@ -1,6 +1,7 @@
 package Controller.edition.project.category.task;
 
 import Controller.edition.EditionController;
+import model.DataManager;
 import model.project.Category;
 import model.project.Task;
 import View.edition.project.category.task.TaskListComponent;
@@ -18,7 +19,7 @@ import java.util.Objects;
 public class TaskListController extends TransferHandler {
 
     private EditionController mainController;
-    private Category category;
+    private String categoryId;
     private JList<Task> jlTasks;
 
     private int oldIndex;
@@ -27,12 +28,12 @@ public class TaskListController extends TransferHandler {
     /**
      * Constructor que requereix d'un controlador extern, la categoria on pertany la llista i el component de la llista
      * @param mainController Controlador extern
-     * @param category Categoria de la llista
+     * @param categoryId Categoria de la llista
      * @param jlTasks Llista de tasques
      */
-    public TaskListController(EditionController mainController, Category category, JList<Task> jlTasks) {
+    public TaskListController(EditionController mainController, String categoryId, JList<Task> jlTasks) {
         this.mainController = mainController;
-        this.category = category;
+        this.categoryId = categoryId;
         this.jlTasks = jlTasks;
     }
 
@@ -88,6 +89,7 @@ public class TaskListController extends TransferHandler {
             newIndex--;
         }
         if(action == MOVE && oldIndex != newIndex) {
+            Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryId);
             mainController.swapTask(category, oldIndex, newIndex);
         }
     }

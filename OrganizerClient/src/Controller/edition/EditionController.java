@@ -27,6 +27,7 @@ import View.edition.task.TaskPanel;
 import View.edition.task.tag.TagPanel;
 import View.edition.user.UserPanel;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -47,13 +48,10 @@ public class EditionController {
     private TaskPanel taskPanel;
     private UserPanel taskUserPanel;
 
-    private Project project;
-    private Category category;
-    private Task task;
-
     private boolean isEditing;
 
     private MainViewController mainController;
+    private DataManager dataManager;
 
     /**
      * Constructor que deixa preparada la vista a espera d'inserir contingut
@@ -67,6 +65,7 @@ public class EditionController {
         projectUserPanel = editionPanel.getProjectUserPanel();
         taskPanel = editionPanel.getTaskPanel();
         taskUserPanel = editionPanel.getTaskUserPanel();
+        dataManager = DataManager.getSharedInstance();
 
         //Config project panel
         projectPanel.registerDocumentController(new DocumentController(projectPanel));
@@ -92,6 +91,7 @@ public class EditionController {
         mainController.addCommunicator(new CategorySwapCommunicator(), ServerObjectType.SWAP_CATEGORY);
         mainController.addCommunicator(new TaskSetCommunicator(), ServerObjectType.SET_TASK);
         mainController.addCommunicator(new TaskDeletedCommunicator(), ServerObjectType.DELETE_TASK);
+        mainController.addCommunicator(new TagSetCommunicator(), ServerObjectType.SET_TAG);
     }
 
     /**
@@ -103,6 +103,7 @@ public class EditionController {
         mainController.removeCommunicator(ServerObjectType.SWAP_CATEGORY);
         mainController.removeCommunicator(ServerObjectType.SET_TASK);
         mainController.removeCommunicator(ServerObjectType.DELETE_TASK);
+        mainController.removeCommunicator(ServerObjectType.SET_TAG);
     }
 
     /**
@@ -126,15 +127,16 @@ public class EditionController {
      * @param category Categoria a afegir
      */
     public void addCategory(Category category) {
+        Project project = dataManager.getSelectedProject();
         project.addCategory(category);
         projectPanel.cleanNewCategoryName();
         projectPanel.addCategoryToView(category);
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoriesSize() - 1);
-        categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel, category));
-        categoryPanel.registerMouseController(new CategoryMouseController(this, category));
+        categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel, category.getId()));
+        categoryPanel.registerMouseController(new CategoryMouseController(this, category.getId()));
         categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
         categoryPanel.resetDnDController();
-        categoryPanel.registerDnDController(new TaskListController(this, category,
+        categoryPanel.registerDnDController(new TaskListController(this, category.getId(),
                 categoryPanel.getListComponent()));
     }
 
@@ -144,6 +146,7 @@ public class EditionController {
      * @param task Tasca a afegir
      */
     public void addTask(int categoryIndex, Task task) {
+        Project project = dataManager.getSelectedProject();
         Category targetCategory = project.getCategory(categoryIndex);
         targetCategory.setTask(task);
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(categoryIndex);
@@ -160,9 +163,9 @@ public class EditionController {
         //Default config
         projectPanel.cleanCategories();
         projectUserPanel.cleanUserList();
-        this.project = project;
-        category = null;
-        task = null;
+        dataManager.setSelectedProject(project);
+        dataManager.setEditingCategory(null);
+        dataManager.setEditingTask(null);
 
         //Config project content
         projectPanel.setProjectOwner(project.isOwner());
@@ -175,24 +178,24 @@ public class EditionController {
             CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i);
             categoryPanel.resetActionController();
             categoryPanel.registerActionController(new CategoryActionController(this, categoryPanel,
-                    project.getCategory(i)));
+                    project.getCategory(i).getId()));
             categoryPanel.resetMouseController();
             categoryPanel.registerMouseController(new CategoryMouseController(this, project.
-                    getCategory(i)));
+                    getCategory(i).getId()));
             categoryPanel.registerDocumentController(new DocumentController(categoryPanel));
             categoryPanel.resetDnDController();
-            categoryPanel.registerDnDController(new TaskListController(this, project.getCategory(i),
+            categoryPanel.registerDnDController(new TaskListController(this, project.getCategory(i).getId(),
                     categoryPanel.getListComponent()));
         }
 
         //Config project controllers
         projectPanel.resetActionController();
-        projectPanel.registerActionController(new ProjectActionController(this, projectPanel, project));
+        projectPanel.registerActionController(new ProjectActionController(this, projectPanel));
 
         //Config users panel
         projectUserPanel.setUserList(project.getOtherUsers(user));
         projectUserPanel.resetActionController();
-        projectUserPanel.registerActionController(new ProjectAddUserController(project));
+        projectUserPanel.registerActionController(new ProjectAddUserController());
         projectUserPanel.resetMouseController();
 
         if(project.isOwner()) {
@@ -211,21 +214,24 @@ public class EditionController {
      */
     public void showProjectContent() {
         isEditing = false;
-        category = null;
-        task = null;
+        dataManager.setEditingCategory(null);
+        dataManager.setEditingTask(null);
         editionPanel.showProjectPanel();
     }
 
     /**
      * Mètode encarregat d'afegir el contingut d'una tasca a la vista
-     * @param category Categoria on pertany la tasca
-     * @param task Tasca a mostrar
+     * @param categoryId Id de la categoria on pertany la tasca
+     * @param taskId Id de la tasca a mostrar
      */
-    public void setTaskContent(Category category, Task task) {
+    public void setTaskContent(String categoryId, String taskId) {
+
+        Category category = dataManager.getSelectedProject().getCategoryWithId(categoryId);
+        Task task = category.getTaskWithId(taskId);
 
         //Default config
-        this.category = category;
-        this.task = task;
+        dataManager.setEditingCategory(category);
+        dataManager.setEditingTask(task);
 
         //Config task content
         taskPanel.setTaskFinished(task.isFinished());
@@ -235,7 +241,7 @@ public class EditionController {
 
         //Link controllers
         taskPanel.resetActionController();
-        TaskController taskController = new TaskController(this, editionPanel.getTaskPanel(), task, project);
+        TaskController taskController = new TaskController(this, editionPanel.getTaskPanel());
         taskPanel.registerActionController(taskController);
 
         for(int i = 0; i < task.getTagsSize(); i++) {
@@ -315,7 +321,7 @@ public class EditionController {
     public void updateTask(Task task) {
         if(mainController != null) {
             try {
-                mainController.sendToServer(ServerObjectType.SET_TASK, category.getId());
+                mainController.sendToServer(ServerObjectType.SET_TASK, dataManager.getEditingCategory().getId());
                 mainController.sendToServer(null, task);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -332,7 +338,7 @@ public class EditionController {
             try {
                 if(category.getOrder() == -1) { //New category case
                     projectPanel.cleanNewCategoryName();
-                    category.setOrder(project.getCategoriesSize());
+                    category.setOrder(dataManager.getSelectedProject().getCategoriesSize());
                 }
                 mainController.sendToServer(ServerObjectType.SET_CATEGORY, category);
             } catch (IOException e) {
@@ -346,9 +352,13 @@ public class EditionController {
      * @param p Projecte a actualitzar
      */
     public void updateProjectView(Project p) {
-        project = p;
+        dataManager.setSelectedProject(p);
         editionPanel.getProjectPanel().setProjectName(p.getName());
         editionPanel.setBackgroundImage(p.getBackground());
+        for(int i = 0; i < p.getCategoriesSize(); i++) {
+            CategoryPanel categoryPanel = projectPanel.getCategoryPanel(i);
+            categoryPanel.updateTasksList(p.getCategory(i).getTasks());
+        }
     }
 
     /**
@@ -357,7 +367,7 @@ public class EditionController {
      * @param category Categoria on pertany la tasca
      */
     public void createTask (Task task, Category category) {
-        if (task.getOrder() == -1) {
+        if(task.getOrder() == -1) {
             task.setOrder(category.getTasksSize());
         }
         try {
@@ -375,7 +385,6 @@ public class EditionController {
      */
     public void sendTag(Task task, Tag tag) {
         try {
-            mainController.addCommunicator(new TagSetCommunicator(), ServerObjectType.SET_TAG);
             mainController.sendToServer(ServerObjectType.SET_TAG, task.getId());
             mainController.sendToServer(null, tag);
         } catch (IOException e) {
@@ -390,7 +399,10 @@ public class EditionController {
      */
     public void updateTaskInView(String categoryId, Task task) {
 
-        if(this.task != null && this.task.getId().equals(task.getId())) {
+        Project project = dataManager.getSelectedProject();
+        Task editingTask = dataManager.getEditingTask();
+
+        if(editingTask != null && editingTask.getId().equals(task.getId())) {
             taskPanel.setTaskName(task.getName());
             taskPanel.setDescription(task.getDescription());
         }
@@ -416,8 +428,8 @@ public class EditionController {
     public void deleteTask() {
         if(mainController != null) {
             try {
-                mainController.sendToServer(ServerObjectType.DELETE_TASK, task);
-                mainController.sendToServer(null, category.getId());
+                mainController.sendToServer(ServerObjectType.DELETE_TASK, dataManager.getEditingTask());
+                mainController.sendToServer(null, dataManager.getEditingCategory().getId());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -431,11 +443,13 @@ public class EditionController {
      */
     public void deleteTaskInProject(Task targetTask, String categoryId) {
 
+        Project project = dataManager.getSelectedProject();
         Category targetCategory = project.getCategoryWithId(categoryId);
         CategoryPanel categoryPanel = projectPanel.getCategoryPanel(project.getCategoryIndex(targetCategory));
         categoryPanel.removeTask(targetTask);
+        Task editingTask = dataManager.getEditingTask();
 
-        if(task != null && task.getId().equals(targetTask.getId())) {
+        if(editingTask != null && editingTask.getId().equals(targetTask.getId())) {
             showProjectContent();
         }
 
@@ -453,10 +467,11 @@ public class EditionController {
 
     /**
      * MEtode encarregat d'eliminar una categoria a partir d'una Id
-     * @param idCategory Id
+     * @param categoryId Id
      */
-    public void deleteCategory(String idCategory) {
-        Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(idCategory);
+    public void deleteCategory(String categoryId) {
+        Project project = dataManager.getSelectedProject();
+        Category category = project.getCategoryWithId(categoryId);
         int index = project.getCategoryIndex(category);
         if(index >= 0 && index < project.getCategoriesSize()) {
             if(mainController != null) {
@@ -476,6 +491,7 @@ public class EditionController {
      * @return Usuari del projecte (null si no existeix)
      */
     public User getProjectUser(String userName) {
+        Project project = dataManager.getSelectedProject();
         for(int i = 0; i < project.getUsers().size(); i++) {
             if(userName.equals(project.getUser(i).getUserName())) {
                 return project.getUser(i);
@@ -498,6 +514,7 @@ public class EditionController {
      * @return Index de la categoria al projecte
      */
     public int getCategoryIndex(Category category) {
+        Project project = dataManager.getSelectedProject();
         return project.getCategoryIndex(category);
     }
 
@@ -525,6 +542,7 @@ public class EditionController {
      * @param secondCategoryIndex Index del projecte de la segona categoria
      */
     public void swapCategoriesInView(int firstCategoryIndex, int secondCategoryIndex) {
+        Project project = dataManager.getSelectedProject();
         project.swapCategories(firstCategoryIndex, secondCategoryIndex);
         projectPanel.swapCategories(firstCategoryIndex, secondCategoryIndex);
     }
@@ -535,9 +553,9 @@ public class EditionController {
     public void showProjectSelection() {
         if (mainController != null) {
             try {
-                project = null;
-                category = null;
-                task = null;
+                dataManager.setEditingTask(null);
+                dataManager.setEditingCategory(null);
+                dataManager.setSelectedProject(null);
                 mainController.sendToServer(ServerObjectType.EXIT_PROJECT, null);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -568,6 +586,8 @@ public class EditionController {
      * @param user Usuari a afegir
      */
     public void addMemberInDB(User user) {
+        Category category = dataManager.getEditingCategory();
+        Task task = dataManager.getEditingTask();
         if(mainController != null) {
             mainController.addMemberInDB(category.getId(), task.getId(), user);
         } else {
@@ -584,6 +604,8 @@ public class EditionController {
      */
     public void addMemberInProject(String categoryId, String taskId, User user) {
 
+        Project project = dataManager.getSelectedProject();
+        Task task = dataManager.getEditingTask();
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
 
@@ -602,6 +624,8 @@ public class EditionController {
      * @param user Usuari
      */
     public void removeMemberInDB(User user) {
+        Category category = dataManager.getEditingCategory();
+        Task task = dataManager.getEditingTask();
         if(mainController != null) {
             mainController.removeMemberInDB(category.getId(), task.getId(), user);
         } else {
@@ -618,6 +642,8 @@ public class EditionController {
      */
     public void removeMemberInProject(String categoryId, String taskId, User user) {
 
+        Project project = dataManager.getSelectedProject();
+        Task task = dataManager.getEditingTask();
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
 
@@ -630,7 +656,6 @@ public class EditionController {
             }
 
             taskUserPanel.removeUser(user);
-            task = targetTask;
 
         }
 
@@ -643,6 +668,8 @@ public class EditionController {
      * @param tag Etiqueta a eliminar
      */
     public void removeTagInDB(Tag tag) {
+        Category category = dataManager.getEditingCategory();
+        Task task = dataManager.getEditingTask();
         if(mainController != null) {
             mainController.removeTagInDB(category.getId(), task.getId(), tag);
         } else {
@@ -659,6 +686,8 @@ public class EditionController {
      */
     public void removeTagInProject(String categoryId, String taskId, Tag tag) {
 
+        Project project = dataManager.getSelectedProject();
+        Task task = dataManager.getEditingTask();
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
 
@@ -685,7 +714,7 @@ public class EditionController {
      * @param tag Etiqueta a actualitzar
      */
     public void editTagInDB(Tag tag) {
-        mainController.editTagInDB(task.getId(), tag);
+        mainController.editTagInDB(dataManager.getEditingTask().getId(), tag);
     }
 
     /**
@@ -695,6 +724,9 @@ public class EditionController {
      * @param tag Etiqueta a actualitzar
      */
     public void editTagInProject(String categoryId, String taskId, Tag tag) {
+
+        Project project = dataManager.getSelectedProject();
+        Task task = dataManager.getEditingTask();
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
         Tag targetTag = targetTask.getTagWithId(tag.getId());
@@ -723,6 +755,8 @@ public class EditionController {
      */
     public void addTagInProject(String categoryId, String taskId, Tag tag) {
 
+        Project project = dataManager.getSelectedProject();
+        Task task = dataManager.getEditingTask();
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
         targetTask.addTag(tag);
@@ -743,6 +777,8 @@ public class EditionController {
      */
     public void setTaskDoneInDB() {
         if(mainController != null) {
+            Category category = dataManager.getEditingCategory();
+            Task task = dataManager.getEditingTask();
             mainController.setTaskDoneInDB(category.getId(), task.getId());
         }
     }
@@ -754,12 +790,12 @@ public class EditionController {
      */
     public void setTaskDoneInProject(String categoryId, String taskId) {
 
+        Project project = dataManager.getSelectedProject();
+        Task task = dataManager.getEditingTask();
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
 
         if(task != null && task.getId().equals(taskId)) {
-            TaskController taskController = (TaskController) taskPanel.getActionListener();
-            taskController.setTask(targetTask);
             taskPanel.setTaskFinished(true);
         }
 
@@ -774,6 +810,8 @@ public class EditionController {
      */
     public void setTaskNotDoneInDB() {
         if(mainController != null) {
+            Category category = dataManager.getEditingCategory();
+            Task task = dataManager.getEditingTask();
             mainController.setTaskNotDoneInDB(category.getId(), task.getId());
         }
     }
@@ -785,12 +823,12 @@ public class EditionController {
      */
     public void setTaskNotDoneInProject(String categoryId, String taskId) {
 
+        Project project = dataManager.getSelectedProject();
+        Task task = dataManager.getEditingTask();
         Category targetCategory = project.getCategoryWithId(categoryId);
         Task targetTask = targetCategory.getTaskWithId(taskId);
 
         if(task != null && task.getId().equals(taskId)) {
-            TaskController taskController = (TaskController) taskPanel.getActionListener();
-            taskController.setTask(targetTask);
             taskPanel.setTaskFinished(false);
         }
 
@@ -836,6 +874,7 @@ public class EditionController {
      * @param categoryID Id de la categoria de les tasques
      */
     public void swapTasksInView(String categoryID, ArrayList<Task> tasks) {
+        Project project = dataManager.getSelectedProject();
         CategoryPanel categoryPanel =
                 projectPanel.getCategoryPanel(project.getCategoryIndex(project.getCategoryWithId(categoryID)));
         categoryPanel.updateTasksList(tasks);
@@ -847,6 +886,8 @@ public class EditionController {
      */
     public void userLeftProject(User deletedUser) {
 
+        Project project = dataManager.getSelectedProject();
+        Task task = dataManager.getEditingTask();
         projectUserPanel.removeUser(deletedUser);
         project.deleteUser(project.getUserIndex(deletedUser));
 
@@ -870,6 +911,9 @@ public class EditionController {
      * @return Si esta afegit
      */
     public boolean isUserAdded(User user) {
+        Project project = dataManager.getSelectedProject();
+        Task task = dataManager.getEditingTask();
+        Category category = dataManager.getEditingCategory();
         Task targetTask = project.getCategoryWithId(category.getId()).getTaskWithId(task.getId());
         return targetTask.getUsers().contains(user);
     }
@@ -879,13 +923,11 @@ public class EditionController {
      * @param categoryId Id de la categoria
      */
     public void updateTaskControllers(String categoryId) {
+        Project project = dataManager.getSelectedProject();
+        Task task = dataManager.getEditingTask();
         if(task != null) {
             Category targetCategory = project.getCategoryWithId(categoryId);
             Task targetTask = targetCategory.getTaskWithId(task.getId());
-            if(targetTask != null) {
-                TaskController taskController = (TaskController) taskPanel.getActionListener();
-                taskController.setTask(targetTask);
-            }
         }
     }
 

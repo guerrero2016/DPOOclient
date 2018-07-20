@@ -23,18 +23,18 @@ public class CategoryActionController implements ActionListener {
 
     private EditionController mainController;
     private CategoryPanel view;
-    private Category category;
+    private String categoryId;
 
     /**
      * Constructor que requereix d'un controlador extern, de la vista a controlar i de la categoria usada
      * @param mainController Controlador extern
      * @param view Vista a controlar
-     * @param category Categoria corresponent a la vista
+     * @param categoryId Id de la categoria corresponent a la vista
      */
-    public CategoryActionController(EditionController mainController, CategoryPanel view, Category category) {
+    public CategoryActionController(EditionController mainController, CategoryPanel view, String categoryId) {
         this.mainController = mainController;
         this.view = view;
-        this.category = category;
+        this.categoryId = categoryId;
     }
 
     /**
@@ -60,6 +60,7 @@ public class CategoryActionController implements ActionListener {
      * Metode encarregat de manegar els canvis de nom
      */
     private void categoryNameManagement() {
+        Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryId);
         if(!mainController.isEditing()) {
             mainController.setEditingState(true);
             view.setCategoryNameEditable(true, category.getName());
@@ -86,6 +87,7 @@ public class CategoryActionController implements ActionListener {
      * @param orderBy Ordenat dret o esquerre (TO_RIGHT, TO_LEFT)
      */
     private void categoryReorder(int orderBy) {
+        Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryId);
         if(!mainController.isEditing()) {
             int index = mainController.getCategoryIndex(category);
             switch(orderBy) {
@@ -107,6 +109,7 @@ public class CategoryActionController implements ActionListener {
      * Metode encarregat d'eliminar la categoria
      */
     private void categoryDelete() {
+        Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryId);
         int result = JOptionPane.showConfirmDialog(null, CATEGORY_REMOVE_MESSAGE + " '" +
                category.getName() + "'?", CATEGORY_REMOVE_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.
                 WARNING_MESSAGE);
@@ -122,6 +125,7 @@ public class CategoryActionController implements ActionListener {
      * Metode encarregat d'afegir una tasca
      */
     private void addTask() {
+        Category category = DataManager.getSharedInstance().getSelectedProject().getCategoryWithId(categoryId);
         if(!mainController.isEditing() && !view.getNewTaskName().isEmpty()) {
             Task task = new Task(view.getNewTaskName());
             mainController.createTask(task, category);

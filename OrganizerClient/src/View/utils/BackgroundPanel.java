@@ -35,6 +35,7 @@ public class BackgroundPanel extends JPanel {
     public void setBackgroundImage(Image background) {
         setOpaque(false);
         this.background = background;
+        revalidate();
         repaint();
     }
 

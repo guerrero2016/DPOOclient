@@ -19,6 +19,7 @@ public class DataManager {
     private ArrayList<Project> projectSharedList;
     private Project selectedProject;
     private int whatPanel;
+    private Category editingCategory;
     private Task editingTask;
 
     /**
@@ -226,6 +227,22 @@ public class DataManager {
                 t.setOrder(t.getOrder() - 1);
             }
         }
+    }
+
+    /**
+     * Getter de la categoria en edicio
+     * @return
+     */
+    public Category getEditingCategory() {
+        return editingCategory;
+    }
+
+    /**
+     * Setter de la categoria en edicio
+     * @param editingCategory Categoria
+     */
+    public void setEditingCategory(Category editingCategory) {
+        this.editingCategory = editingCategory;
     }
 
     /**

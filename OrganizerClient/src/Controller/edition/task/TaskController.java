@@ -26,22 +26,15 @@ public class TaskController implements ActionListener {
 
     private EditionController mainController;
     private TaskPanel view;
-    private Task task;
-    private Project project;
 
     /**
      * Constructor que requereix d'un controlador extern, la vista a controlar i la tasca origen
      * @param mainController Controlador extern
      * @param view Vista a controlar
-     * @param task Tasca origen
-     * @param project Projecte
      */
-    public TaskController(EditionController mainController, TaskPanel view, Task task, Project project) {
+    public TaskController(EditionController mainController, TaskPanel view) {
         this.mainController = mainController;
         this.view = view;
-        this.task = task;
-        this.project = project;
-        DataManager.getSharedInstance().setEditingTask(task);
     }
 
     /**
@@ -71,6 +64,7 @@ public class TaskController implements ActionListener {
      * Metode encarregat de tancar la tasca
      */
     private void closeTask() {
+        Task task = DataManager.getSharedInstance().getEditingTask();
         view.setDescriptionEditable(false);
         view.setDescription(task.getDescription());
         view.setTaskNameEditable(false, task.getName());
@@ -83,6 +77,7 @@ public class TaskController implements ActionListener {
      * Metode encarregat de la modificacio del nom
      */
     private void taskNameManagement() {
+        Task task = DataManager.getSharedInstance().getEditingTask();
         if(!mainController.isEditing()) {
             mainController.setEditingState(true);
             view.setTaskNameEditable(true, task.getName());
@@ -108,6 +103,7 @@ public class TaskController implements ActionListener {
      * Metode encarregat d'eliminar la tasca
      */
     private void deleteTask() {
+        Task task = DataManager.getSharedInstance().getEditingTask();
         int result = JOptionPane.showConfirmDialog(null,TASK_DELETE_MESSAGE + " '" +
                 task.getName() + "'?", TASK_DELETE_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
         if(result != JOptionPane.CANCEL_OPTION && result != JOptionPane.CLOSED_OPTION) {
@@ -123,6 +119,7 @@ public class TaskController implements ActionListener {
             mainController.setEditingState(true);
             view.setDescriptionEditable(true);
         } else {
+            Task task = DataManager.getSharedInstance().getEditingTask();
             if(view.isDescriptionEditable()) {
                 view.setDescriptionEditable(false);
                 task.setDescription(view.getDescription());
@@ -139,6 +136,9 @@ public class TaskController implements ActionListener {
      * Metode encarregat d'afegir una etiqueta
      */
     private void addTag() {
+
+        Project project = DataManager.getSharedInstance().getSelectedProject();
+        Task task = DataManager.getSharedInstance().getEditingTask();
 
         if(!mainController.isEditing() && !view.getNewTagName().isEmpty()) {
 
@@ -184,14 +184,6 @@ public class TaskController implements ActionListener {
      */
     private void taskNotDoneManagement() {
         mainController.setTaskNotDoneInDB();
-    }
-
-    /**
-     * Setter de la tasca
-     * @param task Tasca
-     */
-    public void setTask(Task task) {
-        this.task = task;
     }
 
 }

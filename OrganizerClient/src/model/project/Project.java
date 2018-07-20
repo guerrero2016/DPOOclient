@@ -389,12 +389,7 @@ public class Project implements Serializable{
         }
 
         Project project = (Project) o;
-        return Objects.equals(id, project.id) &&
-                Objects.equals(name, project.name) &&
-                Objects.equals(color, project.color) &&
-                Objects.equals(categories, project.categories) &&
-                Objects.equals(users, project.users) &&
-                Objects.equals(background, project.background);
+        return Objects.equals(id, project.id);
 
     }
 
