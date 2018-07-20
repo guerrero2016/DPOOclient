@@ -23,7 +23,6 @@ public class TaskListController extends TransferHandler {
 
     private int oldIndex;
     private int newIndex;
-    private boolean beforeIndex = false;
 
     /**
      * Constructor que requereix d'un controlador extern, la categoria on pertany la llista i el component de la llista
