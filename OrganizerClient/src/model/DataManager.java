@@ -220,10 +220,10 @@ public class DataManager {
      * Procediment encarregat d'actualitzar l'ordre de les tasques
      * @param order Posicio de la tasca eliminada
      */
-    public void updateTasksOrder(int order) {
-        for(Category c: selectedProject.getCategories()) {
-            if(c.getOrder() > order) {
-                c.setOrder(c.getOrder() - 1);
+    public void updateTasksOrder(String categoryId, int order) {
+        for(Task t: selectedProject.getCategoryWithId(categoryId).getTasks()) {
+            if(t.getOrder() > order) {
+                t.setOrder(t.getOrder() - 1);
             }
         }
     }
