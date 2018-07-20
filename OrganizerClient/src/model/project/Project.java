@@ -154,11 +154,12 @@ public class Project implements Serializable{
      * @return Index de la categoria
      */
     public int getCategoryIndex(Category category) {
-        if(categories.contains(category)) {
-            return categories.indexOf(category);
-        } else {
-            return INVALID_INDEX;
+        for (int i = 0; i < categories.size(); i++) {
+            if (categories.get(i).getId().equals(category.getId())) {
+                return i;
+            }
         }
+        return INVALID_INDEX;
     }
 
     /**
