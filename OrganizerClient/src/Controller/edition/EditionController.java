@@ -805,16 +805,19 @@ public class EditionController {
             ArrayList<Task> tasks = new ArrayList<>();
             for(int i = 0; i < category.getTasksSize(); i++) {
                 Task task;
-                if(i == newIndex) {
+                if(i >= oldIndex && i < newIndex) {
+                    task = new Task(category.getTask(i + 1));
+                } else if(i > newIndex && i <= oldIndex) {
+                    task = new Task(category.getTask(i - 1));
+                } else if(i == newIndex) {
                     task = new Task(category.getTask(oldIndex));
-                } else if(i != oldIndex) {
+                } else {    //Interval without change
                     task = new Task(category.getTask(i));
-                } else {
-                    task = new Task(category.getTask(newIndex));
                 }
                 task.setOrder(i);
                 tasks.add(task);
             }
+
             mainController.sendToServer(ServerObjectType.SWAP_TASK, tasks);
             mainController.sendToServer(null, category.getId());
         } catch (IOException e) {
