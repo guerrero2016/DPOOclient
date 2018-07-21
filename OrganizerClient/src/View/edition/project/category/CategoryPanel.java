@@ -299,6 +299,7 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
 
     /**
      * Metode encarregat d'actualitzar la llista de tasques
+     * @param tasks llista de tasques a actualitzar
      */
     public void updateTasksList(ArrayList<Task> tasks) {
         tasksList.clear();
@@ -370,7 +371,7 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Metode encarregat d'eliminar el controlador drag & drop (DnD)
+     * Metode encarregat d'eliminar el controlador drag and drop (DnD)
      */
     public void resetDnDController() {
         jlTasks.setTransferHandler(null);
@@ -379,7 +380,7 @@ public class CategoryPanel extends JPanel implements DocumentEnablePanel {
     }
 
     /**
-     * Metode encarregat de registrar un controlador drag & drop (DnD)
+     * Metode encarregat de registrar un controlador drag and drop (DnD)
      * @param transferHandler Controlador
      */
     public void registerDnDController(TransferHandler transferHandler) {

@@ -157,6 +157,7 @@ public class EditionController {
     /**
      * Metode encarregat d'afegir el contingut d'un projecte a la vista
      * @param project Projecte a mostrar
+     * @param user Usuari del client
      */
     public void loadProject(Project project, User user) {
 
@@ -872,6 +873,7 @@ public class EditionController {
     /**
      * Metode encarregat de canviar l'ordre de les tasques al projecte
      * @param categoryID Id de la categoria de les tasques
+     * @param tasks llista de tasques de la categoria
      */
     public void swapTasksInView(String categoryID, ArrayList<Task> tasks) {
         Project project = dataManager.getSelectedProject();

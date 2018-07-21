@@ -219,6 +219,7 @@ public class DataManager {
 
     /**
      * Procediment encarregat d'actualitzar l'ordre de les tasques
+     * @param categoryId Identificador de la categoria que conté les tasques
      * @param order Posicio de la tasca eliminada
      */
     public void updateTasksOrder(String categoryId, int order) {
@@ -231,7 +232,7 @@ public class DataManager {
 
     /**
      * Getter de la categoria en edicio
-     * @return
+     * @return categoria que està sent editada
      */
     public Category getEditingCategory() {
         return editingCategory;

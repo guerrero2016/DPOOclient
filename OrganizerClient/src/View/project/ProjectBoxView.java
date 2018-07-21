@@ -99,7 +99,7 @@ public class ProjectBoxView extends JPanel {
 
     /**
      * Getter del controlador
-     * @return
+     * @return Controlador
      */
     public ActionListener getController() {
         return controller;

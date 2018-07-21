@@ -57,7 +57,7 @@ public class ProjectCreationController implements MouseListener, ActionListener 
 
     /**
      * Metode encarregat de controlar els clicks del ratoli
-     * @param e
+     * @param e Event
      */
     @Override
     public void mouseClicked(MouseEvent e) {

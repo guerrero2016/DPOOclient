@@ -54,7 +54,7 @@ public class ProjectsMainViewController implements ActionListener {
 
     /**
      * Getter del controlador dels projectes compartits
-     * @return
+     * @return Controlador
      */
     public ProjectSelectionController getSharedSelectionController() {
         return sharedSelectionController;

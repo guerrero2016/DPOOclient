@@ -71,6 +71,7 @@ public class MainViewController extends WindowAdapter implements ActionListener{
     /**
      * Metode encarregat de mostrar el contingut d'un projecte
      * @param project Projecte a mostrar
+     * @param user Usuari del client
      */
     public void loadProject(Project project, User user) {
         editionController.loadProject(project, user);
